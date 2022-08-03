@@ -1,0 +1,132 @@
+{
+    "metadata": [
+
+        {
+            "src": [
+                {
+                    "src": "../Lineweights.Core/src",
+                    "files": [ "bin/Release/**/Lineweights.Core.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                },
+                {
+                    "src": "../StudioLE.Core/src",
+                    "files": [ "bin/Release/**/StudioLE.Core.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                }
+            ],
+            "dest": "Core",
+            "disableDefaultFilter": false,
+            "force": true
+        },
+        {
+            "src": [
+                {
+                    "src": "../Lineweights.Flex/src",
+                    "files": [ "bin/Release/**/Lineweights.Flex.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                }
+            ],
+            "dest": "Distribution",
+            "disableDefaultFilter": false,
+            "force": true
+        },
+        {
+            "src": [
+                {
+                    "src": "../Lineweights.Drawings/src",
+                    "files": [ "bin/Release/**/Lineweights.Drawings.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                },
+                {
+                    "src": "../Lineweights.PDF/src",
+                    "files": [ "bin/Release/**/Lineweights.PDF.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                },
+                {
+                    "src": "../Lineweights.SVG/src",
+                    "files": [ "bin/Release/**/Lineweights.SVG.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                }
+            ],
+            "dest": "Drawings",
+            "disableDefaultFilter": false,
+            "force": true
+        },
+        {
+            "src": [
+                {
+                    "src": "../Lineweights.Curves/src",
+                    "files": [ "bin/Release/**/Lineweights.Curves.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                }
+            ],
+            "dest": "Geometry",
+            "disableDefaultFilter": false,
+            "force": true
+        },
+        {
+            "src": [
+                {
+                    "src": "../Lineweights.Masterplanning/src",
+                    "files": [ "bin/Release/**/Lineweights.Masterplanning.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                }
+            ],
+            "dest": "Masterplanning",
+            "disableDefaultFilter": false,
+            "force": true
+        },
+        {
+            "src": [
+                {
+                    "src": "../Lineweights.Results/src",
+                    "files": [ "bin/Release/**/Lineweights.Results.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                },
+                {
+                    "src": "../Lineweights.Dashboard/src",
+                    "files": [ "bin/Release/**/Lineweights.Dashboard.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                },
+                {
+                    "src": "../Lineweights.Results.NUnit/src",
+                    "files": [ "bin/Release/**/Lineweights.Results.NUnit.dll" ],
+                    "exclude": [ "**/obj/**" ]
+                }
+            ],
+            "dest": "Results",
+            "disableDefaultFilter": false,
+            "force": true
+        }
+    ],
+    "build": {
+        "content": [
+            {
+                "files": [
+                    "**/*.yml",
+                    "toc.yml",
+                    "*.md"
+                ]
+            }
+        ],
+        "resource": [],
+        "overwrite": [],
+        "dest": "public",
+        "globalMetadataFiles": [],
+        "fileMetadataFiles": [],
+        "template": [
+            "default",
+            "templates/singulinkfx"
+        ],
+        "postProcessors": [],
+        "markdownEngineName": "markdig",
+        "noLangKeyword": false,
+        "keepFileLink": false,
+        "cleanupCacheHistory": true,
+        "disableGitFeatures": false,
+        "xref": [
+            "https://hypar-io.github.io/Elements/xrefmap.yml"
+        ],
+        "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ]
+    }
+}

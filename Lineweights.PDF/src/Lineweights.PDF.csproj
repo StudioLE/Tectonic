@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Convert geometric elements to 2d PDF visual representatons.</Description>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all src projects -->
+  <Import Project="..\..\GlobalProperties.src.props" />
+
+  <!-- Use consistent global usings across all src projects -->
+  <Import Project="..\..\GlobalUsings.src.props" />
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Lineweights.PDF.Tests" />
+    <InternalsVisibleTo Include="Lineweights.Drawings.Benchmarks" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="QuestPDF.Fluent" />
+    <Using Include="QuestPDF.Helpers" />
+    <Using Include="QuestPDF.Infrastructure" />
+    <Using Include="SkiaSharp" />
+    <Using Include="StudioLE.Core.Conversion" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="QuestPDF" Version="2022.4.1" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Lineweights.Drawings\src\Lineweights.Drawings.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Flex\src\Lineweights.Flex.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,20 @@
+﻿<Project>
+
+  <ItemGroup>
+    <Using Remove="System.IO" />
+    <Using Include="Elements" />
+    <Using Include="Elements.Geometry" />
+    <Using Include="Elements.Geometry.Solids" />
+    <Using Include="GeometryEx" />
+    <Using Include="NUnit.Framework" />
+    <Using Include="Lineweights.Core.Constraints" />
+    <Using Include="Lineweights.Core.Elements" />
+    <Using Include="Lineweights.Core.Geometry" />
+    <Using Include="Lineweights.Results.NUnit" />
+    <Using Include="Lineweights.Results" />
+    <Using Alias="Is" Include="Lineweights.Results.NUnit.Constraints.Is" />
+    <Using Alias="Verify" Include="Lineweights.Results.Constraints.Verify" />
+    <Using Static="true" Include="Lineweights.Core.Elements.MaterialHelpers" />
+  </ItemGroup>
+
+</Project>

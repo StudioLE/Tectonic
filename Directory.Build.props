@@ -1,0 +1,8 @@
+﻿<Project>
+
+  <PropertyGroup>
+    <!--<NoWarn>$(NoWarn);1591</NoWarn>-->
+    <!--<WarningLevel>3</WarningLevel>-->
+  </PropertyGroup>
+
+</Project>

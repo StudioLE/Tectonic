@@ -1,0 +1,84 @@
+﻿@page "/"
+@using Lineweights.Results
+@inherits DashboardBase
+
+<PageTitle>Dashboard@(Results.Count > 0 ? $" ({Results.Count})" : string.Empty)</PageTitle>
+
+<div class="columns is-vcentered">
+
+    <div class="column is-narrow">
+        <button class="button is-white is-large has-background-light">
+            <span class="icon is-medium">
+                <i class="mdi mdi-tablet-dashboard"></i>
+            </span>
+            <span>
+                Dashboard
+            </span>
+        </button>
+    </div>
+
+    <div class="column">
+        <div class="columns is-multiline is-vcentered">
+
+            <div class="column is-full is-4-desktop">
+                <p class="control has-icons-left">
+                    <input class="input" type="text" @bind="@Runner.SelectedPackage" placeholder="C:\Users\...\Elements.Tests.dll">
+                    <span class="icon is-small is-left">
+                        <i class="mdi mdi-upload"></i>
+                    </span>
+                </p>
+            </div>
+
+            <div class="column is-full is-2-desktop">
+                <button class="button is-info is-fullwidth" @onclick="@Runner.Load">
+                    Load
+                </button>
+            </div>
+
+            <div class="column is-full is-4-desktop">
+                <p class="control">
+                    <div class="select is-fullwidth">
+                        <select @bind="@Runner.SelectedTest">
+                            @foreach (string test in Runner.Tests)
+                            {
+                                <option>@test</option>
+                            }
+                        </select>
+                    </div>
+                </p>
+            </div>
+
+            <div class="column is-full is-2-desktop">
+                <button class="button is-info is-fullwidth" @onclick="Runner.Execute">
+                    Run
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="column is-narrow">
+        <p class="tags has-addons">
+            <span class="tag">
+                status
+            </span>
+            @if (SignalR.IsConnected)
+            {
+                <span class="tag is-success" @onclick="SignalR.Disconnect">
+                    connected
+                </span>
+            }
+            @if (!SignalR.IsConnected)
+            {
+                <span class="tag is-danger" @onclick="SignalR.Connect">
+                    disconnected
+                </span>
+            }
+        </p>
+    </div>
+</div>
+
+@foreach (Result result in Results.Reverse())
+{
+    <Card @key="result.Metadata.Id" Result="result"></Card>
+}
+

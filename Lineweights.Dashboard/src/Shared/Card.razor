@@ -1,0 +1,46 @@
+﻿@using System.IO
+@using Elements.Serialization.glTF
+@using Humanizer
+@using Lineweights.Drawings
+@using Lineweights.Results
+@using Lineweights.SVG
+@using Lineweights.SVG.From.Elements
+@inherits CardBase
+
+<div class="card block has-background-white @(IsHidden ? "is-hidden" : "")" id="card-@Result.Metadata.Id">
+    <header class="card-header">
+        <p class="card-header-title">
+            @(string.IsNullOrEmpty(Result.Metadata.Name) ? Result.Metadata.Id : Result.Metadata.Name) 
+        </p>
+        <p class="card-header-title" style="font-weight: normal; flex-grow: 0;">
+            <time datetime="@Result.Metadata.LastRevisionTime">@Result.Metadata.LastRevisionTime.Humanize()</time>
+        </p>
+        <button class="card-header-icon" aria-label="close" @onclick="e => Hide()">
+            <span class="icon">
+                <i class="mdi mdi-close" aria-hidden="true"></i>
+            </span>
+        </button>
+    </header>
+
+    <div class="card-content">
+        <div class="columns">
+            <div class="column is-4" style="background: none;">
+                <div id="model-@Result.Metadata.Id" class="view" style="height: 100%; min-height: 400px;">
+                </div>
+            </div>
+            <div class="column is-8" style="background: none; padding: 0;">
+                <div class="" style="background: none; width: 100%; height: 100%; display: flex; justify-content: stretch; flex-wrap: wrap; align-items: stretch;">
+                    @foreach (Result child in Result.Children)
+                    {
+                        @if (@child.Metadata.Location?.AbsoluteUri.EndsWith(".svg") ?? false)
+                        {
+                            <div class="view" style="margin: 0.75rem; flex-grow: 1; min-width: 200px; min-height: 150px;">
+                                <img src="@child.Metadata.Location" alt="@child.Metadata.Name"/>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

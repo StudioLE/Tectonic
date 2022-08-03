@@ -1,0 +1,28 @@
+﻿[
+  {
+    discriminator: Elements.Geometry.BBox3,
+    Max: {
+      X: 2.0,
+      Y: 0.3875,
+      Z: -0.785
+    },
+    Min: {
+      X: -2.0,
+      Y: 0.285,
+      Z: -1.0
+    }
+  },
+  {
+    discriminator: Elements.Geometry.BBox3,
+    Max: {
+      X: 2.0,
+      Y: 0.5,
+      Z: -0.785
+    },
+    Min: {
+      X: -2.0,
+      Y: 0.3975,
+      Z: -1.0
+    }
+  }
+]

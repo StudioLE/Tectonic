@@ -1,0 +1,455 @@
+[
+  [
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 1,
+        "Y": 3.5,
+        "Z": 0
+      },
+      "End": {
+        "X": 1.253,
+        "Y": 3.27275,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 0.20725,
+        "Y": 2.3304,
+        "Z": 0
+      },
+      "Radius": 1.4077,
+      "StartAngle": 19.88676,
+      "EndAngle": 42.02257
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": -0.47811,
+        "Y": 2.1613,
+        "Z": 0
+      },
+      "Radius": 2.11101,
+      "StartAngle": 4.95807,
+      "EndAngle": 17.87475
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 7.89997,
+        "Y": 2.8567,
+        "Z": 0
+      },
+      "Radius": 6.2959,
+      "StartAngle": 184.67331,
+      "EndAngle": 188.84853
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 2.92981,
+        "Y": 2.11748,
+        "Z": 0
+      },
+      "Radius": 1.27164,
+      "StartAngle": 190.38515,
+      "EndAngle": 223.01394
+    },
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 2,
+        "Y": 1.25,
+        "Z": 0
+      },
+      "End": {
+        "X": 2.172,
+        "Y": 1.09725,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 2.37403,
+        "Y": 1.34623,
+        "Z": 0
+      },
+      "Radius": 0.32063,
+      "StartAngle": 230.94297,
+      "EndAngle": 271.78222
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 2.24346,
+        "Y": 1.26748,
+        "Z": 0
+      },
+      "Radius": 0.27962,
+      "StartAngle": 300.17342,
+      "EndAngle": 336.5595
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 3.76732,
+        "Y": 0.55684,
+        "Z": 0
+      },
+      "Radius": 1.40192,
+      "StartAngle": 145.20946,
+      "EndAngle": 154.68718
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 2.93582,
+        "Y": 1.08573,
+        "Z": 0
+      },
+      "Radius": 0.41921,
+      "StartAngle": 81.19357,
+      "EndAngle": 139.72218
+    },
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 3,
+        "Y": 1.5,
+        "Z": 0
+      },
+      "End": {
+        "X": 3.172,
+        "Y": 1.4455,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 2.87931,
+        "Y": 0.96518,
+        "Z": 0
+      },
+      "Radius": 0.56247,
+      "StartAngle": 26.19827,
+      "EndAngle": 58.64344
+    },
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 3.384,
+        "Y": 1.2135,
+        "Z": 0
+      },
+      "End": {
+        "X": 3.448,
+        "Y": 1.072,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 5.29368,
+        "Y": 1.71452,
+        "Z": 0
+      },
+      "Radius": 1.95432,
+      "StartAngle": 199.19407,
+      "EndAngle": 206.9762
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 3.67551,
+        "Y": 0.89229,
+        "Z": 0
+      },
+      "Radius": 0.13924,
+      "StartAngle": 207.49954,
+      "EndAngle": 281.80811
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 3.18808,
+        "Y": 1.68342,
+        "Z": 0
+      },
+      "Radius": 1.06126,
+      "StartAngle": 299.0873,
+      "EndAngle": 319.91187
+    },
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 4,
+        "Y": 1,
+        "Z": 0
+      },
+      "End": {
+        "X": 4.172,
+        "Y": 1.26825,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 1.28272,
+        "Y": 2.51056,
+        "Z": 0
+      },
+      "Radius": 3.14504,
+      "StartAngle": 336.7337,
+      "EndAngle": 350.43118
+    },
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 4.384,
+        "Y": 1.98775,
+        "Z": 0
+      },
+      "End": {
+        "X": 4.448,
+        "Y": 2.388,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 38.17553,
+        "Y": -1.8799,
+        "Z": 0
+      },
+      "Radius": 33.99648,
+      "StartAngle": 171.50528,
+      "EndAngle": 172.78809
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 6.36417,
+        "Y": 2.89745,
+        "Z": 0
+      },
+      "Radius": 1.8286,
+      "StartAngle": 155.21579,
+      "EndAngle": 172.31438
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 4.89978,
+        "Y": 3.54254,
+        "Z": 0
+      },
+      "Radius": 0.2304,
+      "StartAngle": 64.21601,
+      "EndAngle": 148.18544
+    },
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 5,
+        "Y": 3.75,
+        "Z": 0
+      },
+      "End": {
+        "X": 5.172,
+        "Y": 3.5775,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 3.05766,
+        "Y": 2.55031,
+        "Z": 0
+      },
+      "Radius": 2.35065,
+      "StartAngle": 8.24731,
+      "EndAngle": 25.91146
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": -9.11853,
+        "Y": 0.63458,
+        "Z": 0
+      },
+      "Radius": 14.67648,
+      "StartAngle": 5.09319,
+      "EndAngle": 8.83012
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 21.8561,
+        "Y": 3.40155,
+        "Z": 0
+      },
+      "Radius": 16.4215,
+      "StartAngle": 185.11497,
+      "EndAngle": 188.52399
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 7.46824,
+        "Y": 1.1427,
+        "Z": 0
+      },
+      "Radius": 1.86051,
+      "StartAngle": 185.40341,
+      "EndAngle": 217.89277
+    },
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 6,
+        "Y": 0,
+        "Z": 0
+      },
+      "End": {
+        "X": 6.163,
+        "Y": -0.07875,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 6.08262,
+        "Y": 0.14686,
+        "Z": 0
+      },
+      "Radius": 0.2395,
+      "StartAngle": 289.61038,
+      "EndAngle": 354.46357
+    },
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 6.321,
+        "Y": 0.12375,
+        "Z": 0
+      },
+      "End": {
+        "X": 6.352,
+        "Y": 0.36,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 22.28829,
+        "Y": -0.73907,
+        "Z": 0
+      },
+      "Radius": 15.97414,
+      "StartAngle": 173.78603,
+      "EndAngle": 176.05476
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 9.14158,
+        "Y": 0.68988,
+        "Z": 0
+      },
+      "Radius": 2.75001,
+      "StartAngle": 158.89729,
+      "EndAngle": 173.73467
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 7.84027,
+        "Y": 1.18226,
+        "Z": 0
+      },
+      "Radius": 1.35872,
+      "StartAngle": 128.20131,
+      "EndAngle": 158.51055
+    },
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 7,
+        "Y": 2.25,
+        "Z": 0
+      },
+      "End": {
+        "X": 7.163,
+        "Y": 2.25725,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 7.05113,
+        "Y": 2.00683,
+        "Z": 0
+      },
+      "Radius": 0.27427,
+      "StartAngle": 10.27354,
+      "EndAngle": 65.9278
+    },
+    {
+      "discriminator": "Elements.Geometry.Line",
+      "Start": {
+        "X": 7.321,
+        "Y": 2.05575,
+        "Z": 0
+      },
+      "End": {
+        "X": 7.352,
+        "Y": 1.874,
+        "Z": 0
+      }
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 15.0972,
+        "Y": 2.58859,
+        "Z": 0
+      },
+      "Radius": 7.77809,
+      "StartAngle": 185.2713,
+      "EndAngle": 188.67069
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 8.95299,
+        "Y": 1.66585,
+        "Z": 0
+      },
+      "Radius": 1.56506,
+      "StartAngle": 189.18629,
+      "EndAngle": 208.37809
+    },
+    {
+      "discriminator": "Elements.Geometry.Arc",
+      "Center": {
+        "X": 8.62244,
+        "Y": 1.5494,
+        "Z": 0
+      },
+      "Radius": 1.22011,
+      "StartAngle": 210.94489,
+      "EndAngle": 239.32601
+    }
+  ]
+]

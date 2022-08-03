@@ -1,0 +1,13 @@
+[
+  {
+    "discriminator": "Elements.Geometry.Arc",
+    "Center": {
+      "X": 7.625,
+      "Y": 3.25,
+      "Z": 0
+    },
+    "Radius": 4.79094,
+    "StartAngle": 97.49586,
+    "EndAngle": 195.12401
+  }
+]

@@ -1,0 +1,262 @@
+[
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 0.03,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 0.245,
+      "Y": 0.1025,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 0.305,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 0.37,
+      "Y": 0.1025,
+      "Z": 0.215
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 0.43,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 0.645,
+      "Y": 0.1025,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 0.705,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 0.77,
+      "Y": 0.1025,
+      "Z": 0.215
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 0.83,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.045,
+      "Y": 0.1025,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1.105,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.17,
+      "Y": 0.1025,
+      "Z": 0.215
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1.23,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.445,
+      "Y": 0.1025,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1.505,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.57,
+      "Y": 0.1025,
+      "Z": 0.215
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1.63,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.845,
+      "Y": 0.1025,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1.905,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.97,
+      "Y": 0.1025,
+      "Z": 0.215
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 2.03,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 2.245,
+      "Y": 0.1025,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 2.305,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 2.37,
+      "Y": 0.1025,
+      "Z": 0.215
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 2.43,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 2.645,
+      "Y": 0.1025,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 2.705,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 2.77,
+      "Y": 0.1025,
+      "Z": 0.215
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 2.83,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.045,
+      "Y": 0.1025,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 3.105,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.17,
+      "Y": 0.1025,
+      "Z": 0.215
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 3.23,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.445,
+      "Y": 0.1025,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 3.505,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.57,
+      "Y": 0.1025,
+      "Z": 0.215
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 3.63,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.845,
+      "Y": 0.1025,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 3.905,
+      "Y": 0,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.97,
+      "Y": 0.1025,
+      "Z": 0.215
+    }
+  }
+]

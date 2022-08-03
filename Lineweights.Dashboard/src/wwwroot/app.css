@@ -1,0 +1,11 @@
+﻿
+html, body {
+    background-color: whitesmoke;
+    width: 100%;
+    height: 100%;
+}
+
+.view {
+    background-color: whitesmoke;
+    border-radius: 0.25rem;
+}

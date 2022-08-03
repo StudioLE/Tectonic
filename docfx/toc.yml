@@ -1,0 +1,16 @@
+- name: Home
+  href: index.md
+- name: Changes
+  href: changelog.md
+- name: Core
+  href: Core/
+- name: Distribution
+  href: Distribution/
+- name: Drawings
+  href: Drawings/
+- name: Geometry
+  href: Geometry/
+- name: Masterplanning
+  href: Masterplanning/
+- name: Results
+  href: Results/

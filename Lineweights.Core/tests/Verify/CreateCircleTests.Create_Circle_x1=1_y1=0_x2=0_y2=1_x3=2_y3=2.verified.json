@@ -1,0 +1,13 @@
+[
+  {
+    "discriminator": "Elements.Geometry.Circle",
+    "Center": {
+      "X": 1.16667,
+      "Y": 1.16667,
+      "Z": 0
+    },
+    "Radius": 1.17851,
+    "StartAngle": 0,
+    "EndAngle": 360
+  }
+]

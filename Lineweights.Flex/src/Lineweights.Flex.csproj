@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Arrange, position, align, place, repeat, array, and distribute geometric elements of different sizes inside a cuboid container *(for example a building, room, or car park)* or along a curve *(e.g. a road, train track, or linear structure)*.</Description>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all src projects -->
+  <Import Project="..\..\GlobalProperties.src.props" />
+
+  <!-- Use consistent global usings across all src projects -->
+  <Import Project="..\..\GlobalUsings.src.props" />
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).Samples" />
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\StudioLE.Core\src\Workarounds\InitWorkaround.cs" Link="InitWorkaround.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="morelinq" Version="3.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj" />
+  </ItemGroup>
+
+</Project>

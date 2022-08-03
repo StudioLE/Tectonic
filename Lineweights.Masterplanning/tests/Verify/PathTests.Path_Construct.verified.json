@@ -1,0 +1,15 @@
+[
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1,
+      "Y": -0.12856,
+      "Z": 0
+    },
+    "Max": {
+      "X": 8,
+      "Y": 3.82182,
+      "Z": 0.005
+    }
+  }
+]

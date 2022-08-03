@@ -1,0 +1,234 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+
+####################################################################################################
+
+  analysis:
+    name: Analysis
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.metadata.outputs.version }}
+      configuration: ${{ steps.metadata.outputs.configuration }}
+    steps:
+
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release ${{ env.DRY_RUN }}
+
+      - name: Set Metadata
+        id: metadata
+        run: |
+          echo "::set-output name=configuration::Release"
+          echo "::set-output name=version::$(git describe --tags --abbrev=0 | cut -c 2-)"
+
+      - name: Read Metadata
+        run: |
+          echo "Configuration: ${{ steps.metadata.outputs.configuration }}"
+          echo "Version: ${{ steps.metadata.outputs.version }}"
+
+####################################################################################################
+
+  build-and-test:
+    name: Build and Test
+    needs: analysis
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+        - ubuntu-latest
+        - windows-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+
+      - name: Read Metadata
+        run: |
+          echo "Configuration: ${{ needs.analysis.outputs.configuration }}"
+          echo "Version: ${{ needs.analysis.outputs.version }}"
+
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Load Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore Dependencies
+        run: >
+          dotnet restore
+          --nologo
+          --verbosity minimal
+
+      - name: Build Solution
+        run: >
+          dotnet build
+          --configuration "${{ needs.analysis.outputs.configuration }}"
+          -p:Version="${{ needs.analysis.outputs.version }}"
+          -p:ContinuousIntegrationBuild=true
+          -p:PublishRepositoryUrl=true
+          -p:EmbedUntrackedSources=true
+          -p:IncludeSymbols=true
+          -p:SymbolPackageFormat=snupkg
+          --nologo
+          --no-restore
+          --verbosity minimal
+
+      - name: Test Solution
+        run: >
+          dotnet test
+          --configuration "${{ needs.analysis.outputs.configuration }}"
+          --nologo
+          --no-build
+          --verbosity quiet
+          --logger trx
+          --results-directory "Tests-${{ runner.os }}-${{ runner.arch }}"
+
+      - name: Upload Test Artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Tests-${{ runner.os }}-${{ runner.arch }}
+          path: Tests-${{ runner.os }}-${{ runner.arch }}
+
+      - name: Pack Solution
+        run: >
+          dotnet pack
+          --configuration "${{ needs.analysis.outputs.configuration }}"
+          -p:Version="${{ needs.analysis.outputs.version }}"
+          -p:ContinuousIntegrationBuild=true
+          -p:PublishRepositoryUrl=true
+          -p:EmbedUntrackedSources=true
+          -p:IncludeSymbols=true
+          -p:SymbolPackageFormat=snupkg
+          --no-build
+          --output artifacts
+          
+      - name: Upload NuGet Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: NuGet-${{runner.os}}-v${{ needs.analysis.outputs.version }}
+          path: artifacts
+        if: ${{ always() }}
+
+####################################################################################################
+
+  publish-nuget:
+    name: Publish NuGet
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
+    needs: 
+      - analysis
+      - build-and-test
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+
+      - name: Read Metadata
+        run: |
+          echo "Configuration: ${{ needs.analysis.outputs.configuration }}"
+          echo "Version: ${{ needs.analysis.outputs.version }}"
+          
+      - name: Download NuGet Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: NuGet-${{runner.os}}-v${{ needs.analysis.outputs.version }}
+          path: artifacts
+
+      - name: Read Directory
+        run: |
+          ls -1 artifacts
+
+      - name: Push To GitHub Packages
+        run: >
+          dotnet nuget push "artifacts/*"
+          --skip-duplicate
+          --source "https://nuget.pkg.github.com/StudioLE/index.json"
+          --symbol-source "https://nuget.pkg.github.com/StudioLE/index.json"
+          --api-key "${{ secrets.GITHUB_TOKEN }}"
+
+
+####################################################################################################
+
+  publish-docs:
+    name: Publish Docs
+    # if: ${{ github.ref == 'refs/heads/main' }}
+    needs: 
+      - analysis
+      - build-and-test
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+
+      - name: Read Metadata
+        run: |
+          echo "Configuration: ${{ needs.analysis.outputs.configuration }}"
+          echo "Version: ${{ needs.analysis.outputs.version }}"
+
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Load Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Build Solution
+        run: >
+          dotnet build
+          --configuration "${{ needs.analysis.outputs.configuration }}"
+          -p:Version="${{ needs.analysis.outputs.version }}"
+          -p:GenerateDocumentationFile=true
+          -p:ProduceReferenceAssembly=true
+          --nologo
+          --verbosity minimal
+
+      - name: Install DocFX
+        run: |
+          wget https://github.com/dotnet/docfx/releases/download/v2.59.3/docfx.zip
+          unzip docfx.zip -d bin
+          chmod u+x ./bin/docfx.exe
+
+      - name: Run DocFX
+        run: mono ./bin/docfx.exe docfx/docfx.json
+
+      - name: Upload Docs Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Docs
+          path: docfx/public
+        if: ${{ always() }}
+
+      - name: Deploy Docs
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        run: |
+          aws s3 cp --recursive docfx/public s3://${{ secrets.S3_BUCKET }}/docs/v${{ needs.analysis.outputs.version }}
+          aws s3 rm --recursive s3://${{ secrets.S3_BUCKET }}/docs/latest
+          aws s3 cp --recursive s3://${{ secrets.S3_BUCKET }}/docs/v${{ needs.analysis.outputs.version }} s3://lineweights/docs/latest
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DOCS }} --paths "/latest/*"
+

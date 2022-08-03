@@ -1,0 +1,262 @@
+[
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 0.03929,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 0.25429,
+      "Y": -0.1125,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 0.29357,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 0.39607,
+      "Y": 0,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 0.43536,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 0.65036,
+      "Y": -0.1125,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 0.68964,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 0.79214,
+      "Y": 0,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 0.83143,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.04643,
+      "Y": -0.1125,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1.08571,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.18821,
+      "Y": 0,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1.2275,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.4425,
+      "Y": -0.1125,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1.48179,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.58429,
+      "Y": 0,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1.62357,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.83857,
+      "Y": -0.1125,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 1.87786,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 1.98036,
+      "Y": 0,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 2.01964,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 2.23464,
+      "Y": -0.1125,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 2.27393,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 2.37643,
+      "Y": 0,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 2.41571,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 2.63071,
+      "Y": -0.1125,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 2.67,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 2.7725,
+      "Y": 0,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 2.81179,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.02679,
+      "Y": -0.1125,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 3.06607,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.16857,
+      "Y": 0,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 3.20786,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.42286,
+      "Y": -0.1125,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 3.46214,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.56464,
+      "Y": 0,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 3.60393,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.81893,
+      "Y": -0.1125,
+      "Z": 0.065
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": 3.85821,
+      "Y": -0.215,
+      "Z": 0
+    },
+    "Max": {
+      "X": 3.96071,
+      "Y": 0,
+      "Z": 0.065
+    }
+  }
+]

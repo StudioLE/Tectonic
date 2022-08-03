@@ -1,0 +1,262 @@
+[
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": -1
+    },
+    "Max": {
+      "X": -0.785,
+      "Y": -0.8975,
+      "Z": -0.935
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": -0.925
+    },
+    "Max": {
+      "X": -0.935,
+      "Y": -0.8975,
+      "Z": -0.71
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": -0.7
+    },
+    "Max": {
+      "X": -0.785,
+      "Y": -0.8975,
+      "Z": -0.635
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": -0.625
+    },
+    "Max": {
+      "X": -0.935,
+      "Y": -0.8975,
+      "Z": -0.41
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": -0.4
+    },
+    "Max": {
+      "X": -0.785,
+      "Y": -0.8975,
+      "Z": -0.335
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": -0.325
+    },
+    "Max": {
+      "X": -0.935,
+      "Y": -0.8975,
+      "Z": -0.11
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": -0.1
+    },
+    "Max": {
+      "X": -0.785,
+      "Y": -0.8975,
+      "Z": -0.035
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": -0.025
+    },
+    "Max": {
+      "X": -0.935,
+      "Y": -0.8975,
+      "Z": 0.19
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 0.2
+    },
+    "Max": {
+      "X": -0.785,
+      "Y": -0.8975,
+      "Z": 0.265
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 0.275
+    },
+    "Max": {
+      "X": -0.935,
+      "Y": -0.8975,
+      "Z": 0.49
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 0.5
+    },
+    "Max": {
+      "X": -0.785,
+      "Y": -0.8975,
+      "Z": 0.565
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 0.575
+    },
+    "Max": {
+      "X": -0.935,
+      "Y": -0.8975,
+      "Z": 0.79
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 0.8
+    },
+    "Max": {
+      "X": -0.785,
+      "Y": -0.8975,
+      "Z": 0.865
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 0.875
+    },
+    "Max": {
+      "X": -0.935,
+      "Y": -0.8975,
+      "Z": 1.09
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 1.1
+    },
+    "Max": {
+      "X": -0.785,
+      "Y": -0.8975,
+      "Z": 1.165
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 1.175
+    },
+    "Max": {
+      "X": -0.935,
+      "Y": -0.8975,
+      "Z": 1.39
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 1.4
+    },
+    "Max": {
+      "X": -0.785,
+      "Y": -0.8975,
+      "Z": 1.465
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 1.475
+    },
+    "Max": {
+      "X": -0.935,
+      "Y": -0.8975,
+      "Z": 1.69
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 1.7
+    },
+    "Max": {
+      "X": -0.785,
+      "Y": -0.8975,
+      "Z": 1.765
+    }
+  },
+  {
+    "discriminator": "Elements.Geometry.BBox3",
+    "Min": {
+      "X": -1,
+      "Y": -1,
+      "Z": 1.775
+    },
+    "Max": {
+      "X": -0.935,
+      "Y": -0.8975,
+      "Z": 1.99
+    }
+  }
+]
