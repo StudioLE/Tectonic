@@ -7,7 +7,7 @@ namespace Lineweights.PDF.From.Elements;
 /// <summary>
 /// Convert a <see cref="Canvas"/> to a PDF and save it to the context path.
 /// </summary>
-internal sealed class CanvasToPdfFile : IConverter<Canvas, FileInfo, FileInfo>
+public sealed class CanvasToPdfFile : IConverter<Canvas, FileInfo, FileInfo>
 {
     /// <inheritdoc cref="CanvasToPdfFile"/>
     public FileInfo Convert(Canvas canvas, FileInfo file)

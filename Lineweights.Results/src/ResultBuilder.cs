@@ -2,7 +2,9 @@ using System.IO;
 using Elements.Serialization.glTF;
 using Elements.Serialization.IFC;
 using Lineweights.Drawings;
+using Lineweights.PDF.From.Elements;
 using Lineweights.SVG.From.Elements;
+using StudioLE.Core.System.IO;
 
 namespace Lineweights.Results;
 
@@ -22,19 +24,31 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddModelConvertedToGlb(Model model, string title)
+    public ResultBuilder AddDocumentInformation(Model model)
     {
-        FileInfo file = GetTempFile(".glb");
+        foreach (DocumentInformation metadata in model.AllElementsOfType<DocumentInformation>())
+        {
+            Result result = new()
+            {
+                Metadata = metadata
+            };
+            _result.Children.Add(result);
+        }
+
+        return this;
+    }
+
+    /// <inheritdoc cref="Result"/>
+    public ResultBuilder AddModelConvertedToGlb(Model model, DocumentInformation? metadata = null)
+    {
+        metadata ??= new() { Name = "GlTF of Model" };
+        FileInfo file = PathHelpers.GetTempFile(".glb");
         // TODO: Skip if no GeometricElement
         model.ToGlTF(file.FullName, out List<BaseError> errors);
 
-        Result result = new();
-        if (!errors.Any())
-        {
-            result.Metadata.Name = title;
-            result.Metadata.Location = new(file.FullName);
-        }
-        else
+        metadata.Location = new(file.FullName);
+        Result result = new() { Metadata = metadata };
+        if (errors.Any())
         {
             result.Errors = errors
                 .Select(x => x.Message)
@@ -47,21 +61,17 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddModelConvertedToIfc(Model model, string title)
+    public ResultBuilder AddModelConvertedToIfc(Model model, DocumentInformation? metadata = null)
     {
-        FileInfo file = GetTempFile(".ifc");
+        metadata ??= new() { Name = "IFC of Model" };
+        FileInfo file = PathHelpers.GetTempFile(".ifc");
         using StringWriter sw = new();
         Console.SetOut(sw);
         model.ToIFC(file.FullName);
         string console = sw.ToString();
-
-        Result result = new();
-        if (string.IsNullOrWhiteSpace(console))
-        {
-            result.Metadata.Name = title;
-            result.Metadata.Location = new(file.FullName);
-        }
-        else
+        metadata.Location = new(file.FullName);
+        Result result = new() { Metadata = metadata };
+        if (!string.IsNullOrWhiteSpace(console))
         {
             result.Errors = new[]
             {
@@ -69,26 +79,19 @@ public class ResultBuilder
             };
         }
         _result.Children.Add(result);
-        
+
         return this;
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddModelConvertedToJson(Model model, string title)
+    public ResultBuilder AddModelConvertedToJson(Model model, DocumentInformation? metadata = null)
     {
-        FileInfo file = GetTempFile(".json");
+        metadata ??= new() { Name = "JSON of Model" };
+        FileInfo file = PathHelpers.GetTempFile(".json");
         model.ToJson(file.FullName);
-
-        Result result = new()
-        {
-            Metadata =
-            {
-                Name = title,
-                Location = new(file.FullName)
-            }
-        };
+        metadata.Location = new(file.FullName);
+        Result result = new() { Metadata = metadata };
         _result.Children.Add(result);
-
         return this;
     }
 
@@ -104,8 +107,36 @@ public class ResultBuilder
     /// <inheritdoc cref="Result"/>
     public ResultBuilder AddCanvasConvertedToSvg(Canvas canvas)
     {
-        FileInfo file = GetTempFile(".svg");
+        FileInfo file = PathHelpers.GetTempFile(".svg");
         CanvasToSvgFile converter = new();
+        converter.Convert(canvas, file);
+
+        Result result = new();
+        result.Metadata = new()
+        {
+            Id = canvas.Id,
+            Name = canvas.Name,
+            Location = new(file.FullName)
+        };
+        _result.Children.Add(result);
+
+        return this;
+    }
+
+    /// <inheritdoc cref="Result"/>
+    public ResultBuilder AddCanvasesConvertedToPdf(Model model)
+    {
+        foreach (Canvas canvas in model.AllElementsOfType<Canvas>())
+            AddCanvasConvertedToPdf(canvas);
+
+        return this;
+    }
+
+    /// <inheritdoc cref="Result"/>
+    public ResultBuilder AddCanvasConvertedToPdf(Canvas canvas)
+    {
+        FileInfo file = PathHelpers.GetTempFile(".pdf");
+        CanvasToPdfFile converter = new();
         converter.Convert(canvas, file);
 
         Result result = new();
@@ -126,18 +157,17 @@ public class ResultBuilder
         return _result;
     }
 
-    private static FileInfo GetTempFile(string extension)
-    {
-        return new(Path.GetTempFileName() + extension);
-    }
-
     /// <inheritdoc cref="Result"/>
     public static Result Default(Model model, DocumentInformation metadata)
     {
         return new ResultBuilder()
             .Metadata(metadata)
-            .AddModelConvertedToGlb(model, metadata.Name)
+            .AddModelConvertedToGlb(model)
+            .AddModelConvertedToIfc(model)
+            .AddCanvasesConvertedToPdf(model)
             .AddCanvasesConvertedToSvg(model)
+            .AddDocumentInformation(model)
+            .AddModelConvertedToJson(model)
             .Build();
     }
 }

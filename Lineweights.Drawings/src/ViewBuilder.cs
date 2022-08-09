@@ -47,6 +47,7 @@ public sealed class ViewBuilder
 {
     #region Fields
 
+    private string _name = string.Empty;
     private Vector3 _right = Vector3.XAxis;
     private Vector3 _up = Vector3.YAxis.Negate();
     private Vector3 _facing = Vector3.ZAxis.Negate();
@@ -88,6 +89,7 @@ public sealed class ViewBuilder
     /// </summary>
     public ViewBuilder ViewDirection(ViewDirection direction)
     {
+        _name = direction.ToString();
         switch (direction)
         {
             case Drawings.ViewDirection.Top:
@@ -123,6 +125,7 @@ public sealed class ViewBuilder
             default:
                 throw new EnumSwitchException<ViewDirection>("Failed to set view direction.", direction);
         }
+
         return this;
     }
 
@@ -171,6 +174,7 @@ public sealed class ViewBuilder
 
         return new()
         {
+            Name = _name,
             IsElementDefinition = true,
             Scope = new()
             {

@@ -1,3 +1,5 @@
+using Elements.Serialization.JSON;
+using Lineweights.Core.Serialisation;
 using Newtonsoft.Json;
 
 namespace Lineweights.Results.Tests;
@@ -25,6 +27,34 @@ internal sealed class SerialisationTests : ResultModel
             Result? deserialisedGlb = deserialised?.Children.FirstOrDefault();
             Assert.That(deserialisedGlb, Is.Not.Null, "Child not null");
             Assert.That(deserialisedGlb?.Metadata.Id, Is.EqualTo(glb?.Metadata.Id), "Child Metadata Id");
+        });
+    }
+
+    [Test]
+    public void Serialisation_DocumentInformation()
+    {
+        // Arrange
+        DocumentInformation metadata = new()
+        {
+            Name = "Example",
+            Description = "Hello, world.",
+            Location = new("https://localhost/my/file.txt")
+        };
+        JsonSerializerSettings settings = new()
+        {
+            ContractResolver = new IgnoreConverterResolver(typeof(JsonInheritanceConverter))
+        };
+
+        // Act
+        string json = JsonConvert.SerializeObject(metadata, settings);
+        DocumentInformation? deserialised = JsonConvert.DeserializeObject<DocumentInformation>(json, settings);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(deserialised, Is.Not.Null, "Not null");
+            Assert.That(deserialised?.Id, Is.EqualTo(metadata.Id), "Id");
+            Assert.That(deserialised?.Location, Is.EqualTo(metadata.Location), "Location");
         });
     }
 }

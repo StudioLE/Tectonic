@@ -28,11 +28,11 @@ public sealed class OpenAsFile : IResultStrategy
             ResultBuilder builder = new ResultBuilder()
                 .Metadata(metadata);
             if (fileExtensions.Contains(".glb"))
-                builder = builder.AddModelConvertedToGlb(model, metadata.Name);
+                builder = builder.AddModelConvertedToGlb(model);
             if (fileExtensions.Contains(".ifc"))
-                builder = builder.AddModelConvertedToIfc(model, metadata.Name);
+                builder = builder.AddModelConvertedToIfc(model);
             if (fileExtensions.Contains(".json"))
-                builder = builder.AddModelConvertedToJson(model, metadata.Name);
+                builder = builder.AddModelConvertedToJson(model);
             if (fileExtensions.Contains(".svg"))
                 builder = builder.AddCanvasesConvertedToSvg(model);
             return builder.Build();

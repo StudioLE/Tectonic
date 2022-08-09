@@ -232,3 +232,7 @@ end_of_line = lf
 [*.{cmd,bat}]
 end_of_line = crlf
 
+# Web files
+[*.{js,json,css,html,cshtml,razor}]
+indent_size = 2
+

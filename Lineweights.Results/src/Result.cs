@@ -1,3 +1,6 @@
+using Lineweights.Core.Serialisation;
+using Newtonsoft.Json;
+
 namespace Lineweights.Results;
 
 /// <summary>
@@ -8,7 +11,8 @@ public sealed class Result
     /// <summary>
     /// The document metadata.
     /// </summary>
-    public DocumentInformation Metadata { get; internal set; } = new();
+    [JsonConverter(typeof(OverrideInheritanceConverter))]
+    public DocumentInformation Metadata { get; set; } = new();
 
     /// <summary>
     /// The uri of any additional files.
@@ -18,7 +22,7 @@ public sealed class Result
     /// <summary>
     /// The title of the tile.
     /// </summary>
-    public IReadOnlyCollection<string> Errors { get; internal set; } = Array.Empty<string>();
+    public IReadOnlyCollection<string> Errors { get; set; } = Array.Empty<string>();
 
     /// <inheritdoc cref="Result"/>
     internal Result()

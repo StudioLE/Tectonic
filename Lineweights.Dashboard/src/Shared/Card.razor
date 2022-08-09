@@ -7,40 +7,106 @@
 @using Lineweights.SVG.From.Elements
 @inherits CardBase
 
-<div class="card block has-background-white @(IsHidden ? "is-hidden" : "")" id="card-@Result.Metadata.Id">
-    <header class="card-header">
-        <p class="card-header-title">
-            @(string.IsNullOrEmpty(Result.Metadata.Name) ? Result.Metadata.Id : Result.Metadata.Name) 
-        </p>
-        <p class="card-header-title" style="font-weight: normal; flex-grow: 0;">
-            <time datetime="@Result.Metadata.LastRevisionTime">@Result.Metadata.LastRevisionTime.Humanize()</time>
-        </p>
-        <button class="card-header-icon" aria-label="close" @onclick="e => Hide()">
-            <span class="icon">
-                <i class="mdi mdi-close" aria-hidden="true"></i>
-            </span>
-        </button>
-    </header>
+<div class="card parent @(IsHidden ? "is-hidden" : "")" id="card-@Result.Metadata.Id">
+  <header class="card-header">
+    <p class="card-header-title">
+      @Result.GetTitle()
+    </p>
+    <p class="card-header-title" style="font-weight: normal; flex-grow: 0;">
+      <time datetime="@Result.Metadata.LastRevisionTime">@Result.Metadata.LastRevisionTime.Humanize()</time>
+    </p>
+    <button class="card-header-icon" aria-label="close" @onclick="e => Hide()">
+      <span class="icon">
+        <i class="mdi mdi-close" aria-hidden="true"></i>
+      </span>
+    </button>
+  </header>
 
-    <div class="card-content">
-        <div class="columns">
-            <div class="column is-4" style="background: none;">
-                <div id="model-@Result.Metadata.Id" class="view" style="height: 100%; min-height: 400px;">
-                </div>
-            </div>
-            <div class="column is-8" style="background: none; padding: 0;">
-                <div class="" style="background: none; width: 100%; height: 100%; display: flex; justify-content: stretch; flex-wrap: wrap; align-items: stretch;">
-                    @foreach (Result child in Result.Children)
-                    {
-                        @if (@child.Metadata.Location?.AbsoluteUri.EndsWith(".svg") ?? false)
-                        {
-                            <div class="view" style="margin: 0.75rem; flex-grow: 1; min-width: 200px; min-height: 150px;">
-                                <img src="@child.Metadata.Location" alt="@child.Metadata.Name"/>
-                            </div>
-                        }
-                    }
-                </div>
-            </div>
+  <div class="card-content">
+    <div class="columns">
+      <div class="column is-4">
+        <div class="card major">
+          <div class="card-image">
+            <figure id="model-@Result.Metadata.Id"></figure>
+          </div>
+          <footer class="card-footer">
+            <p class="card-footer-item">@Result.Metadata.Name</p>
+          </footer>
         </div>
+      </div>
+      <div class="column is-8 px-0 py-0">
+        <div class="is-flex is-flex-wrap-wrap">
+          @foreach (Result child in Result.Children)
+          {
+            <div class="card minor mx-3 my-3">
+              @if (child.IsFileType(".svg", ".jpg", ".png", ".png"))
+              {
+                <figure class="card-image">
+                  <img src="@child.Metadata.Location" alt="@child.Metadata.Name"/>
+                </figure>
+              }
+              else if (child.IsFileType(".pdf"))
+              {
+                <figure class="card-image">
+                  <object type="@child.GetMimeType()" data="@child.Metadata.Location"></object>
+                </figure>
+              }
+              else if (child.IsFileType(".txt", ".md"))
+              {
+                <div class="card-content">
+                  @child.GetFileAsString()
+                </div>
+              }
+              else if (child.IsFileType(".csv", ".md"))
+              {
+                <div class="card-content is-scrollable">
+                  <table class="table is-fullwidth is-hoverable is-striped">
+                    @{ IReadOnlyCollection<IReadOnlyCollection<string>> table = child.GetFileAsString().ToTable(); }
+                    <thead>
+                      <tr>
+                        @foreach (string field in table.FirstOrDefault() ?? Array.Empty<string>())
+                        {
+                          <th>@field</th>
+                        }
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach (IReadOnlyCollection<string> row in table.Skip(1))
+                      {
+                        <tr>
+                          @foreach (string field in row)
+                          {
+                            <td>@field</td>
+                          }
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              }
+              else if (child.IsFileType(".json"))
+              {
+                <div class="card-image is-scrollable">
+                  <code>
+                    <pre>@child.GetFileAsString().FormatJson()</pre>
+                  </code>
+                </div>
+              }
+              else
+              {
+                <div class="card-content">
+                  <a class="button" href="@child.Metadata.Location">@child.Metadata.Location?.Segments.Last()</a>
+                </div>
+              }
+              <footer class="card-footer">
+                <p class="card-footer-item">
+                  @child.GetTitle()
+                </p>
+              </footer>
+            </div>
+          }
+        </div>
+      </div>
     </div>
+  </div>
 </div>
