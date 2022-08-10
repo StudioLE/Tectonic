@@ -10,7 +10,10 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+
+
 // Inject states
+builder.Services.AddScoped<ThreeModelState>();
 builder.Services.AddScoped<SignalRState>();
 builder.Services.AddScoped<TestRunnerState>();
 

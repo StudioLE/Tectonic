@@ -85,4 +85,4 @@ const initialize3D = (key) => {
   animate();
 }
 
-window.model = {initialize3D, loadModel};
+export { initialize3D, loadModel };
