@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace Lineweights.Dashboard;
+namespace Lineweights.Dashboard.Scripts;
 
 /// <summary>
 /// The Three.js model state.
@@ -15,25 +15,21 @@ namespace Lineweights.Dashboard;
 /// This class can be registered as scoped DI service and then injected into Blazor
 /// components for use.
 /// </remarks>
-public class ThreeModelState : IAsyncDisposable
-{
+public class ModelViewerFacade : IAsyncDisposable {
+
+    private readonly IJSRuntime _js;
+
     private readonly Lazy<Task<IJSObjectReference>> _moduleTask;
 
-    public ThreeModelState(IJSRuntime js)
+    public ModelViewerFacade(IJSRuntime js)
     {
-        _moduleTask = new (() => js.InvokeAsync<IJSObjectReference>("import", "./ThreeModelState.js").AsTask());
+        _js = js;
+        _moduleTask = new (() => js.InvokeAsync<IJSObjectReference>("import", "./dist/bundle.js").AsTask());
     }
 
-    public async Task Initialize3D(string id)
+    public async Task Init(string id, string uri)
     {
-        IJSObjectReference module = await _moduleTask.Value;
-        await module.InvokeVoidAsync("initialize3D", id);
-    }
-
-    public async Task LoadModel(string id, string uri)
-    {
-        IJSObjectReference module = await _moduleTask.Value;
-        await module.InvokeVoidAsync("loadModel", id, uri);
+        await _js.InvokeVoidAsync("ModelViewer.init", id, uri);
     }
 
     public async ValueTask DisposeAsync()

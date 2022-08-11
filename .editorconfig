@@ -233,6 +233,6 @@ end_of_line = lf
 end_of_line = crlf
 
 # Web files
-[*.{js,json,css,html,cshtml,razor}]
+[*.{ts,js,json,css,html,cshtml,razor}]
 indent_size = 2
 

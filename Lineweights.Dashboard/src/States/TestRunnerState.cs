@@ -1,10 +1,10 @@
-﻿using NUnit.Engine;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
-using System.Xml.Linq;
 using System.Xml;
+using System.Xml.Linq;
+using NUnit.Engine;
 
-namespace Lineweights.Dashboard;
+namespace Lineweights.Dashboard.States;
 
 /// <summary>
 /// The SignalR connection state.

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Collections.ObjectModel;
+using Lineweights.Dashboard.States;
 using Lineweights.Results;
 
 namespace Lineweights.Dashboard.Pages;

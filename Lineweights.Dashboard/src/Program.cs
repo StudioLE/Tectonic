@@ -1,6 +1,7 @@
 using Lineweights.Results;
-using Lineweights.Dashboard;
 using Lineweights.Dashboard.Hubs;
+using Lineweights.Dashboard.Scripts;
+using Lineweights.Dashboard.States;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
 
@@ -13,7 +14,7 @@ builder.Services.AddServerSideBlazor();
 
 
 // Inject states
-builder.Services.AddScoped<ThreeModelState>();
+builder.Services.AddScoped<ModelViewerFacade>();
 builder.Services.AddScoped<SignalRState>();
 builder.Services.AddScoped<TestRunnerState>();
 

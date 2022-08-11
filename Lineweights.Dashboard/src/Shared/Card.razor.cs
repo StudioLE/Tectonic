@@ -1,7 +1,7 @@
 ﻿using System.IO;
+using Lineweights.Dashboard.Scripts;
 using Lineweights.Results;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace Lineweights.Dashboard.Shared;
 
@@ -22,9 +22,9 @@ public class CardBase : ComponentBase
     [Inject]
     protected IWebHostEnvironment Env { get; set; } = default!;
 
-    /// <inheritdoc cref="ThreeModelState"/>
+    /// <inheritdoc cref="ModelViewerFacade"/>
     [Inject]
-    protected ThreeModelState Three { get; set; } = default!;
+    protected ModelViewerFacade Three { get; set; } = default!;
 
     /// <summary>
     /// The id of the card.
@@ -66,14 +66,12 @@ public class CardBase : ComponentBase
     /// </summary>
     private async Task LoadGlb()
     {
-        await Three.Initialize3D(Result.Metadata.Id.ToString());
-
         Result glb = Result
                          .Children
                          .FirstOrDefault(x => x.Metadata.Location?.AbsoluteUri.EndsWith(".glb") ?? false)
                      ?? throw new("Signal didn't contain a .glb");
 
-        await Three.LoadModel(Result.Metadata.Id.ToString(), glb.Metadata.Location!.AbsoluteUri);
+        await Three.Init(Result.Metadata.Id.ToString(), glb.Metadata.Location!.AbsoluteUri);
     }
 
     /// <summary>
