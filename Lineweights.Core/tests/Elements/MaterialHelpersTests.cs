@@ -1,4 +1,6 @@
-﻿namespace Lineweights.Core.Tests.Elements;
+﻿using Lineweights.Workflows.Results;
+
+namespace Lineweights.Core.Tests.Elements;
 
 [SendToDashboardAfterTest]
 internal sealed class MaterialHelpersTests : ResultModel

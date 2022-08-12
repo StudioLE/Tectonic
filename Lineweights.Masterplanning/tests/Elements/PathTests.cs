@@ -1,6 +1,7 @@
 using Lineweights.Masterplanning.Elements;
 using Lineweights.Curves;
 using Lineweights.Curves.Interpolation;
+using Lineweights.Workflows.Results;
 
 namespace Lineweights.Masterplanning.Tests.Elements;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Collections.ObjectModel;
 using Lineweights.Dashboard.States;
-using Lineweights.Results;
+using Lineweights.Workflows.Results;
 
 namespace Lineweights.Dashboard.Pages;
 
@@ -28,7 +28,7 @@ public class DashboardBase : ComponentBase, IDisposable
     /// The available signals.
     /// </summary>
     public ObservableCollection<Result> Results { get; } = new();
-    
+
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {

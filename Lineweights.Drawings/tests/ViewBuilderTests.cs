@@ -1,3 +1,5 @@
+using Lineweights.Workflows.Results;
+
 namespace Lineweights.Drawings.Tests;
 
 [SendToDashboardAfterTest]

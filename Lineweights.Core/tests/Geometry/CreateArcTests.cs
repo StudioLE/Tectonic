@@ -1,4 +1,6 @@
-﻿namespace Lineweights.Core.Tests.Geometry;
+﻿using Lineweights.Workflows.Results;
+
+namespace Lineweights.Core.Tests.Geometry;
 
 [SendToDashboardAfterTest]
 internal sealed class CreateArcTests : ResultModel

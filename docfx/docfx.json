@@ -79,8 +79,8 @@
         {
             "src": [
                 {
-                    "src": "../Lineweights.Results/src",
-                    "files": [ "bin/Release/**/Lineweights.Results.dll" ],
+                    "src": "../Lineweights.Workflows/src",
+                    "files": [ "bin/Release/**/Lineweights.Workflows.dll" ],
                     "exclude": [ "**/obj/**" ]
                 },
                 {
@@ -89,8 +89,8 @@
                     "exclude": [ "**/obj/**" ]
                 },
                 {
-                    "src": "../Lineweights.Results.NUnit/src",
-                    "files": [ "bin/Release/**/Lineweights.Results.NUnit.dll" ],
+                    "src": "../Lineweights.Workflows.NUnit/src",
+                    "files": [ "bin/Release/**/Lineweights.Workflows.NUnit.dll" ],
                     "exclude": [ "**/obj/**" ]
                 }
             ],

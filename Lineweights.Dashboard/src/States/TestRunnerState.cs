@@ -34,7 +34,7 @@ public class TestRunnerState
     /// <summary>
     /// The currently selected test assembly.
     /// </summary>
-    public string SelectedPackage { get; set; } = @"E:\Repos\Hypar\Lineweights\Lineweights.Results\tests\bin\Debug\net6.0\Lineweights.Results.Tests.dll";
+    public string SelectedPackage { get; set; } = @"E:\Repos\Hypar\Lineweights\Lineweights.Workflows\tests\bin\Debug\net6.0\Lineweights.Workflows.Tests.dll";
 
     /// <summary>
     /// The currently selected test.

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Results.NUnit", "Lineweights.Results.NUnit\src\Lineweights.Results.NUnit.csproj", "{18E202EE-C9BF-4715-824D-3EBCDDB847B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Workflows.NUnit", "Lineweights.Workflows.NUnit\src\Lineweights.Workflows.NUnit.csproj", "{18E202EE-C9BF-4715-824D-3EBCDDB847B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Curves", "Lineweights.Curves\src\Lineweights.Curves.csproj", "{B4AE41A8-DF28-4405-9CAD-6922FE869740}"
 EndProject
@@ -48,9 +48,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.SVG", "Lineweig
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.SVG.Tests", "Lineweights.SVG\tests\Lineweights.SVG.Tests.csproj", "{EE6CF303-F48F-4676-9A10-BA9638A8A7C3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Results", "Results", "{1DA041CF-77AA-4489-A353-99206FC09556}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Results.NUnit.Tests", "Lineweights.Results.NUnit\tests\Lineweights.Results.NUnit.Tests.csproj", "{E48BB748-983E-4B8A-844E-FC093A5455D0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{1DA041CF-77AA-4489-A353-99206FC09556}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.PDF", "Lineweights.PDF\src\Lineweights.PDF.csproj", "{6DFED7D0-2C62-46BE-8F84-EAE558D128A1}"
 EndProject
@@ -58,9 +56,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.PDF.Tests", "Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Drawings.Benchmarks", "Lineweights.Drawings\benchmarks\Lineweights.Drawings.Benchmarks.csproj", "{A791B401-4CFF-4343-BB66-BCD785564C82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Results", "Lineweights.Results\src\Lineweights.Results.csproj", "{6E37DC57-D794-4387-B71F-C91A3976BB49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Workflows", "Lineweights.Workflows\src\Lineweights.Workflows.csproj", "{6E37DC57-D794-4387-B71F-C91A3976BB49}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Results.Tests", "Lineweights.Results\tests\Lineweights.Results.Tests.csproj", "{702519F8-76FE-4D41-9F1F-642905ECD3F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Workflows.Tests", "Lineweights.Workflows\tests\Lineweights.Workflows.Tests.csproj", "{702519F8-76FE-4D41-9F1F-642905ECD3F3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Dashboard", "Lineweights.Dashboard\src\Lineweights.Dashboard.csproj", "{3F0C9FBA-1F51-4037-B195-26F8B60154E6}"
 EndProject
@@ -156,10 +154,6 @@ Global
 		{EE6CF303-F48F-4676-9A10-BA9638A8A7C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE6CF303-F48F-4676-9A10-BA9638A8A7C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE6CF303-F48F-4676-9A10-BA9638A8A7C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E48BB748-983E-4B8A-844E-FC093A5455D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E48BB748-983E-4B8A-844E-FC093A5455D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E48BB748-983E-4B8A-844E-FC093A5455D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E48BB748-983E-4B8A-844E-FC093A5455D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6DFED7D0-2C62-46BE-8F84-EAE558D128A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6DFED7D0-2C62-46BE-8F84-EAE558D128A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DFED7D0-2C62-46BE-8F84-EAE558D128A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -212,7 +206,6 @@ Global
 		{E802F69B-99C0-487D-A741-457FB348E72C} = {0B6826CF-C410-4CDA-9051-C9E52C3133F0}
 		{3CC40E96-798B-4673-AE2F-ED3EDFF54D9C} = {0B6826CF-C410-4CDA-9051-C9E52C3133F0}
 		{EE6CF303-F48F-4676-9A10-BA9638A8A7C3} = {0B6826CF-C410-4CDA-9051-C9E52C3133F0}
-		{E48BB748-983E-4B8A-844E-FC093A5455D0} = {1DA041CF-77AA-4489-A353-99206FC09556}
 		{6DFED7D0-2C62-46BE-8F84-EAE558D128A1} = {0B6826CF-C410-4CDA-9051-C9E52C3133F0}
 		{F55374A1-A303-4FC1-8E79-FBF401BBBF43} = {0B6826CF-C410-4CDA-9051-C9E52C3133F0}
 		{A791B401-4CFF-4343-BB66-BCD785564C82} = {0B6826CF-C410-4CDA-9051-C9E52C3133F0}

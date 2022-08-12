@@ -1,4 +1,4 @@
-﻿using Lineweights.Results;
+﻿using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Lineweights.Dashboard.Hubs;

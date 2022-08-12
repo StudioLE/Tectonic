@@ -139,14 +139,14 @@ Libraries that provide additional mechanisms for visualising and verifying the r
 
 ---
 
-🧪 **Lineweights.Results**
+🧪 **Lineweights.Workflows**
 
 ![](https://img.shields.io/badge/status-alpha-informational)
 
 Visualise and verify the results of Elements logic.
 
-*→ [Documentation](https://docs.lineweights.io/latest/Results/Lineweights.Results.html)*
-/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.Results/src)*
+*→ [Documentation](https://docs.lineweights.io/latest/Results/Lineweights.Workflows.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.Workflows/src)*
 
 ---
 
@@ -161,14 +161,14 @@ A [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) clien
 
 ---
 
-🔬 **Lineweights.Results.NUnit**
+🔬 **Lineweights.Workflows.NUnit**
 
 ![](https://img.shields.io/badge/status-alpha-informational)
 
 Visualise and verify the results of Elements logic in NUnit tests.
 
-*→ [Documentation](https://docs.lineweights.io/latest/Results/Lineweights.Results.NUnit.html)*
-/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.Results.NUnit/src)*
+*→ [Documentation](https://docs.lineweights.io/latest/Results/Lineweights.Workflows.NUnit.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.Workflows.NUnit/src)*
 
 ---
 
@@ -190,7 +190,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 ### Proprietary
 
-The GNU Affero General Public License requires that you must disclose your source code when you distribute, publish or provide access to modified or derivative software therefore developers who wish to keep their projects proprietary or closed source must enter a commercial license agreement with Laurence Elsdon. 
+The GNU Affero General Public License requires that you must disclose your source code when you distribute, publish or provide access to modified or derivative software therefore developers who wish to keep their projects proprietary or closed source must enter a commercial license agreement with Laurence Elsdon.
 
 → [Get in touch regarding commercial license agreements](https://studiole.uk/contact/)
 

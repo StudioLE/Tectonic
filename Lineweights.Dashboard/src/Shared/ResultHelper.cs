@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.IO;
 using CsvHelper;
-using Lineweights.Results;
+using Lineweights.Workflows.Results;
 using Newtonsoft.Json;
 
 namespace Lineweights.Dashboard.Shared;

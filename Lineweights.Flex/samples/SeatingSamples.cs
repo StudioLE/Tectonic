@@ -1,5 +1,6 @@
 using Lineweights.Flex.Samples.Elements;
 using Lineweights.Flex.Sequences;
+using Lineweights.Workflows.Results;
 
 namespace Lineweights.Flex.Samples;
 

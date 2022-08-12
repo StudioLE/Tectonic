@@ -1,4 +1,6 @@
-﻿namespace Lineweights.Drawings.Tests.Samples;
+﻿using Lineweights.Workflows.Results;
+
+namespace Lineweights.Drawings.Tests.Samples;
 
 [SendToDashboardAfterTest]
 internal sealed class GeometricElementsScene : ResultModel

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using Lineweights.Dashboard.Scripts;
-using Lineweights.Results;
+using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.Components;
 
 namespace Lineweights.Dashboard.Shared;

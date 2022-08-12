@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Visualise and verify the results of Elements logic.</Description>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all src projects -->
+  <Import Project="..\..\GlobalProperties.src.props" />
+
+  <!-- Use consistent global usings across all src projects -->
+  <Import Project="..\..\GlobalUsings.src.props" />
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+    <InternalsVisibleTo Include="Lineweights.Workflows.NUnit" />
+    <InternalsVisibleTo Include="Lineweights.Dashboard.Mock" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="28.0.1" />
+    <PackageReference Include="DiffEngine" Version="9.0.6" />
+    <PackageReference Include="Hypar.Elements.Serialization.IFC" Version="1.0.0" />
+    <PackageReference Include="JsonDiffPatch.Net" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="6.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Drawings\src\Lineweights.Drawings.csproj" />
+    <ProjectReference Include="..\..\Lineweights.PDF\src\Lineweights.PDF.csproj" />
+    <ProjectReference Include="..\..\Lineweights.SVG\src\Lineweights.SVG.csproj" />
+  </ItemGroup>
+
+</Project>

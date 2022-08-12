@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Visualise and verify the results of Elements logic in NUnit tests.</Description>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all src projects -->
+  <Import Project="..\..\GlobalProperties.src.props" />
+
+  <!-- Use consistent global usings across all src projects -->
+  <Import Project="..\..\GlobalUsings.src.props" />
+
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hypar.Elements.Serialization.IFC" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.4" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Workflows\src\Lineweights.Workflows.csproj" />
+  </ItemGroup>
+
+</Project>

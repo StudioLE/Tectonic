@@ -1,8 +1,8 @@
 using System.IO;
 using System.Reflection;
 using System.Xml;
-using Lineweights.Results;
-using Lineweights.Results.NUnit;
+using Lineweights.Workflows.NUnit;
+using Lineweights.Workflows.Results;
 using NUnit.Engine;
 using NUnit.Framework;
 

@@ -1,7 +1,7 @@
-using Lineweights.Results;
 using Lineweights.Dashboard.Hubs;
 using Lineweights.Dashboard.Scripts;
 using Lineweights.Dashboard.States;
+using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
 

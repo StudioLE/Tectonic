@@ -1,4 +1,5 @@
 using Lineweights.Curves.Interpolation;
+using Lineweights.Workflows.Results;
 
 namespace Lineweights.Curves.Tests;
 
