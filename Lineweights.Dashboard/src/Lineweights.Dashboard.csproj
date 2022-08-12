@@ -25,6 +25,19 @@
 
   <ItemGroup>
     <Content Update="wwwroot\temp\**" Watch="false" />
+    <Content Include=".gitignore">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <None Include="Styles\card.scss">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <None Include="Styles\blazor.scss">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <Content Remove="wwwroot\bundle.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,9 +45,15 @@
     <Watch Include="Scripts\*.ts" />
   </ItemGroup>
 
+  <Target Name="PostRestore" AfterTargets="_GenerateRestoreProjectSpec">
+    <Exec Command="echo Executing npm install" />
+    <Exec Command="npm install" />
+  </Target>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Condition="'$(Configuraton)' == 'Debug'" Command="npm run dev" />
-    <Exec Condition="'$(Configuraton)' != 'Debug'" Command="npm run dev" />
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Condition="'$(Configuraton)' == 'Debug'" Command="echo Executing npm run build-dev" />
+    <Exec Condition="'$(Configuraton)' == 'Debug'" Command="npm run build-dev" />
+    <Exec Condition="'$(Configuraton)' != 'Debug'" Command="echo Executing npm run build-dev" />
+    <Exec Condition="'$(Configuraton)' != 'Debug'" Command="npm run build-dev" />
   </Target>
 </Project>
