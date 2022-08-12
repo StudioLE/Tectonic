@@ -94,7 +94,7 @@
                     "exclude": [ "**/obj/**" ]
                 }
             ],
-            "dest": "Results",
+            "dest": "Workflows",
             "disableDefaultFilter": false,
             "force": true
         }
