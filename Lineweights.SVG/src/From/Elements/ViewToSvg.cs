@@ -5,7 +5,7 @@ namespace Lineweights.SVG.From.Elements;
 /// <summary>
 /// Convert a <see cref="View"/> to a <see cref="SvgElement"/>
 /// </summary>
-public sealed class ViewToSvg : IConverter<View, SvgElement>
+internal sealed class ViewToSvg : IConverter<View, SvgElement>
 {
     /// <inheritdoc cref="ViewToSvg"/>
     public SvgElement Convert(View view)

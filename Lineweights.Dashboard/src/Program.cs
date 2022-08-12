@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Lineweights.Dashboard.Hubs;
 using Lineweights.Dashboard.Scripts;
 using Lineweights.Dashboard.States;
@@ -45,6 +46,15 @@ builder.Services.Configure<StaticFileOptions>(options =>
         }
     };
 });
+
+// Launch Azurite
+Process? azurite = Process.Start(new ProcessStartInfo
+{
+    FileName = "npm",
+    Arguments = "run azurite",
+    UseShellExecute = true
+});
+
 
 WebApplication app = builder.Build();
 

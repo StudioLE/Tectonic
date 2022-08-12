@@ -23,6 +23,8 @@ internal sealed class ResultAfterTests : ResultModel
     [TestCase(".glb")]
     [TestCase(".ifc")]
     [TestCase(".json")]
+    [Explicit("Broken due to ResultBuilder uploading to Blob storage")]
+    [Category("Broken")]
     public void ResultAfterTest_OpenAsFile(string fileExtension)
     {
         // Arrange
@@ -50,7 +52,8 @@ internal sealed class ResultAfterTests : ResultModel
     }
 
     [Test]
-    [Explicit]
+    [Explicit("Requires Dashboard")]
+    [Category("Dashboard")]
     public void ResultAfterTest_SendToDashboard()
     {
         // Arrange
@@ -72,9 +75,9 @@ internal sealed class ResultAfterTests : ResultModel
     }
 
     [Test]
-    [Explicit]
+    [Explicit("Requires Dashboard")]
+    [Category("Dashboard")]
     [SendToDashboardAfterTest(IsEnabled = true)]
-    [Repeat(1)]
     public void ResultAfterTest_SendToDashboard_Attribute()
     {
     }

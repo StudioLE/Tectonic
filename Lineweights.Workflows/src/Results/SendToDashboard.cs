@@ -17,10 +17,6 @@ public sealed class SendToDashboard : IResultStrategy
 {
     #region Constants
 
-    private const string HubProtocol = "http:";
-    private const string HubHostName = "localhost";
-    private const string HubPort = "5242";
-
     /// <summary>
     /// The path of the results hub.
     /// </summary>
@@ -29,7 +25,7 @@ public sealed class SendToDashboard : IResultStrategy
     /// <summary>
     /// The full url of the results hub.
     /// </summary>
-    public const string HubUrl = $"{HubProtocol}//{HubHostName}:{HubPort}{HubPath}";
+    public const string HubUrl = $"http://localhost:5242{HubPath}";
 
     /// <summary>
     /// The name of the hub method used to send to the hub.
@@ -43,23 +39,23 @@ public sealed class SendToDashboard : IResultStrategy
 
     #endregion
 
-    private readonly HubConnection _connection;
+    private readonly HubConnection _connection = GetHubConnectionInstance();
 
     internal HubConnectionState State => _connection.State;
 
-    /// <inheritdoc cref="SendToDashboard"/>
-    public SendToDashboard(string url = HubUrl)
+    internal static HubConnection GetHubConnectionInstance()
     {
-        _connection = Singleton<HubConnection>.GetInstance(() =>
+        return Singleton<HubConnection>.GetInstance(() =>
         {
             HubConnection connection = new HubConnectionBuilder()
                 .WithAutomaticReconnect(new NoRetries())
-                .WithUrl(url)
+                .WithUrl(HubUrl)
                 .AddNewtonsoftJsonProtocol()
                 .Build();
             connection.StartAsync();
             return connection;
         });
+
     }
 
     /// <inheritdoc cref="SendToDashboard"/>

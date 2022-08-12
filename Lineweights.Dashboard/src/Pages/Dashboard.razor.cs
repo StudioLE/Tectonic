@@ -10,6 +10,10 @@ namespace Lineweights.Dashboard.Pages;
 /// </summary>
 public class DashboardBase : ComponentBase, IDisposable
 {
+    /// <inheritdoc cref="ILogger"/>
+    [Inject]
+    protected ILogger<DashboardBase> Logger { get; set; } = default!;
+
     /// <summary>
     /// Manage the URI navigation.
     /// </summary>
@@ -46,6 +50,7 @@ public class DashboardBase : ComponentBase, IDisposable
     /// </summary>
     private async void OnResultsChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
+        Logger.LogDebug($"{nameof(OnResultsChanged)}() called.");
         await InvokeAsync(StateHasChanged);
     }
 

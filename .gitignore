@@ -1,4 +1,5 @@
 # Custom
+.azurite
 .env
 .secrets
 *.received.txt

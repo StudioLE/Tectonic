@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "azurite": "node node_modules/azurite/dist/src/blob/main.js -l .azurite",
     "build": "npm run build-css && npm run build-js && npm run build-icons",
     "build-dev": "npm run build-css && npm run build-js-dev && npm run build-icons",
     "build-css": "node-sass Styles/app.scss wwwroot/dist/bundle.css",
@@ -13,6 +14,7 @@
   "dependencies": {
     "@mdi/font": "^7.0.96",
     "@types/three": "^0.143.0",
+    "azurite": "^3.18.0",
     "bulma": "^0.9.4",
     "three": "^0.143.0"
   },

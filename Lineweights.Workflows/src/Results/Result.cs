@@ -17,7 +17,7 @@ public sealed class Result
     /// <summary>
     /// The uri of any additional files.
     /// </summary>
-    public ICollection<Result> Children { get; } = new List<Result>();
+    public IReadOnlyCollection<Result> Children { get; set; } = Array.Empty<Result>();
 
     /// <summary>
     /// The title of the tile.

@@ -11,14 +11,6 @@ public static class ModelHelpers
     /// <summary>
     /// Get all <see cref="Element"/> from the model.
     /// </summary>
-    public static IEnumerable<Element> AllElements(this Model @this)
-    {
-        return @this.Elements.Select(x => x.Value);
-    }
-
-    /// <summary>
-    /// Get all <see cref="Element"/> from the model.
-    /// </summary>
     public static Result<Model> TryGetFromJsonFile(FileInfo file)
     {
         if (!file.Exists)

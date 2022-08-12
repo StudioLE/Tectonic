@@ -18,18 +18,27 @@ namespace Lineweights.Dashboard.Scripts;
 public class ModelViewerFacade : IAsyncDisposable {
 
     private readonly IJSRuntime _js;
-
+    private readonly ILogger<ModelViewerFacade> _logger;
     private readonly Lazy<Task<IJSObjectReference>> _moduleTask;
 
-    public ModelViewerFacade(IJSRuntime js)
+    public ModelViewerFacade(IJSRuntime js, ILogger<ModelViewerFacade> logger)
     {
         _js = js;
+        _logger = logger;
         _moduleTask = new (() => js.InvokeAsync<IJSObjectReference>("import", "./dist/bundle.js").AsTask());
     }
 
     public async Task Init(string id, string uri)
     {
-        await _js.InvokeVoidAsync("ModelViewer.init", id, uri);
+        _logger.LogDebug($"{nameof(Init)}() called.");
+        try
+        {
+            await _js.InvokeVoidAsync("ModelViewer.init", id, uri);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Failed to init the ModelViewer. A {e.GetType()} exception was thrown: {e.Message}");
+        }
     }
 
     public async ValueTask DisposeAsync()

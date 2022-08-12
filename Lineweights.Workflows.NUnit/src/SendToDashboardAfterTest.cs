@@ -11,8 +11,8 @@ public sealed class SendToDashboardAfterTest : ResultAfterTestAttribute
     public override IResultStrategy? Strategy { get; }
 
     /// <inheritdoc cref="SendToDashboardAfterTest"/>
-    public SendToDashboardAfterTest(string url = SendToDashboard.HubUrl)
+    public SendToDashboardAfterTest()
     {
-        Strategy = new SendToDashboard(url);
+        Strategy = new SendToDashboard();
     }
 }

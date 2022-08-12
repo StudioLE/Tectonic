@@ -12,8 +12,9 @@
   <Import Project="..\..\GlobalUsings.src.props" />
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Lineweights.PDF.Tests" />
     <InternalsVisibleTo Include="Lineweights.Drawings.Benchmarks" />
+    <InternalsVisibleTo Include="Lineweights.PDF.Tests" />
+    <InternalsVisibleTo Include="Lineweights.Workflows" />
   </ItemGroup>
 
   <ItemGroup>

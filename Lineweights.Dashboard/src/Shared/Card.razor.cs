@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Lineweights.Dashboard.Scripts;
+﻿using Lineweights.Dashboard.Scripts;
 using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.Components;
 
@@ -10,17 +9,9 @@ namespace Lineweights.Dashboard.Shared;
 /// </summary>
 public class CardBase : ComponentBase
 {
-    /// <summary>
-    /// Manage the URI navigation.
-    /// </summary>
+    /// <inheritdoc cref="ILogger"/>
     [Inject]
-    protected NavigationManager NavigationManager { get; set; } = default!;
-
-    /// <summary>
-    /// The web environment.
-    /// </summary>
-    [Inject]
-    protected IWebHostEnvironment Env { get; set; } = default!;
+    protected ILogger<CardBase> Logger { get; set; } = default!;
 
     /// <inheritdoc cref="ModelViewerFacade"/>
     [Inject]
@@ -36,13 +27,6 @@ public class CardBase : ComponentBase
     /// Should the card be hidden?
     /// </summary>
     protected bool IsHidden { get; set; } = false;
-
-    /// <inheritdoc />
-    protected override void OnInitialized()
-    {
-        foreach (Result child in Result.Children)
-            Publish(child);
-    }
 
     /// <inheritdoc />
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -66,32 +50,17 @@ public class CardBase : ComponentBase
     /// </summary>
     private async Task LoadGlb()
     {
-        Result glb = Result
-                         .Children
-                         .FirstOrDefault(x => x.Metadata.Location?.AbsoluteUri.EndsWith(".glb") ?? false)
-                     ?? throw new("Signal didn't contain a .glb");
+        Logger.LogDebug($"{nameof(LoadGlb)}() called on result {Result.Metadata.Id}.");
+        Result? glb = Result
+            .Children
+            .FirstOrDefault(x => x.Metadata.Location?.AbsoluteUri.EndsWith(".glb") ?? false);
+        if (glb is null)
+        {
+            Logger.LogError($"Failed to load glb. Result {Result.Metadata.Id} did not contain a glb.");
+            return;
+        }
 
         await Three.Init(Result.Metadata.Id.ToString(), glb.Metadata.Location!.AbsoluteUri);
-    }
-
-    /// <summary>
-    /// Publish the contents of the tile.
-    /// </summary>
-    private void Publish(Result result)
-    {
-        // Only process files
-        if (result.Metadata.Location is null || !result.Metadata.Location.IsFile)
-            return;
-        FileInfo file = new(result.Metadata.Location.LocalPath);
-        if (!file.Exists)
-            throw new("File path does not exist.");
-
-        const string relativeTempPath = "temp/";
-        FileInfo published = new(Path.Combine(Env.WebRootPath, relativeTempPath, file.Name));
-        if (!published.Exists)
-            File.Copy(file.FullName, published.FullName);
-
-        result.Metadata.Location = NavigationManager.ToAbsoluteUri(relativeTempPath + file.Name);
     }
 
     /// <summary>
@@ -99,7 +68,8 @@ public class CardBase : ComponentBase
     /// </summary>
     protected void Hide()
     {
-        // TODO: Remove from observable
+        Logger.LogDebug($"{nameof(Hide)}() called on result {Result.Metadata.Id}.");
+        // TODO: Instead of this remove it from the observable collection
         IsHidden = true;
         //InvokeAsync(StateHasChanged);
     }

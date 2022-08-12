@@ -14,6 +14,8 @@ namespace Lineweights.Dashboard.States;
 /// </remarks>
 public class TestRunnerState
 {
+    private readonly ILogger<TestRunnerState> _logger;
+
     // TODO: Rename to NUnitTestRunner and implement as interface.
 
     /// <summary>
@@ -41,15 +43,24 @@ public class TestRunnerState
     /// </summary>
     public string SelectedTest { get; set; } = string.Empty;
 
+    public TestRunnerState(ILogger<TestRunnerState> logger)
+    {
+        _logger = logger;
+    }
+
     /// <summary>
     /// Load the test assembly.
     /// </summary>
     public void Load()
     {
+        _logger.LogDebug($"{nameof(Load)} called on {SelectedPackage}.");
         FileInfo dll = new(SelectedPackage);
 
         if (!dll.Exists)
-            throw new("Failed to load test assembly. File not found.");
+        {
+            _logger.LogError($"Failed to load test assembly. File not found.");
+            return;
+        }
 
         Assembly assembly = Assembly.LoadFrom(dll.FullName);
 
@@ -74,15 +85,26 @@ public class TestRunnerState
     /// </summary>
     public void Execute()
     {
+        _logger.LogDebug($"{nameof(Execute)}() called on {SelectedPackage} {SelectedTest}.");
         if (Runner is null)
         {
-            Console.WriteLine("_testRunner is null");
+            _logger.LogError($"{nameof(Runner)} was null");
             return;
         }
 
         TestFilter filter = new($"<filter><test>{SelectedTest}</test></filter>");
 
         // Run all the tests in the assembly
-        XmlNode testResult = Runner.Run(null, filter);
+        _logger.LogDebug("Runner started.");
+        try
+        {
+            XmlNode testResult = Runner.Run(null, filter);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Failed to execute runner. A {e.GetType()} exception was thrown: {e.Message}");
+        }
+
+        _logger.LogDebug("Runner finished.");
     }
 }
