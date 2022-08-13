@@ -63,7 +63,7 @@ public sealed class SendToDashboard : IResultStrategy
     {
         if (_connection.State == HubConnectionState.Disconnected)
             throw new("Failed to SendToDashboard. The dashboard is disconnected.");
-        Result result = ResultBuilder.Default(model, metadata);
+        Result result = ResultBuilder.Default(new BlobStorageStrategy(), model, metadata);
         SendToHub(result);
         return result;
     }

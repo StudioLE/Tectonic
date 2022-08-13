@@ -23,8 +23,6 @@ internal sealed class ResultAfterTests : ResultModel
     [TestCase(".glb")]
     [TestCase(".ifc")]
     [TestCase(".json")]
-    [Explicit("Broken due to ResultBuilder uploading to Blob storage")]
-    [Category("Broken")]
     public void ResultAfterTest_OpenAsFile(string fileExtension)
     {
         // Arrange

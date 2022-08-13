@@ -2,11 +2,10 @@ using Lineweights.Workflows.Results;
 
 namespace Lineweights.Workflows.Tests;
 
-[Explicit("Requires Azurite")]
-[Category("Azurite")]
 internal sealed class ResultBuilderTests
 {
     private readonly GeometricElement[] _geometry = Scenes.GeometricElements();
+    private readonly IStorageStrategy _storageStrategy = new FileStorageStrategy();
 
     [Test]
     public void ResultBuilder_AddModelConvertedToGlb()
@@ -16,7 +15,7 @@ internal sealed class ResultBuilderTests
         model.AddElements(_geometry);
 
         // Act
-        ResultBuilder builder = new ResultBuilder()
+        ResultBuilder builder = new ResultBuilder(_storageStrategy)
             .AddModelConvertedToGlb(model);
         Result result = builder.Build();
 
@@ -25,7 +24,6 @@ internal sealed class ResultBuilderTests
         Assert.That(result.Children.Count, Is.EqualTo(1), "Children count");
         Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
-        Assert.That(uri?.IsFile, Is.False, "Uri IsFile");
     }
 
     [Test]
@@ -36,7 +34,7 @@ internal sealed class ResultBuilderTests
         model.AddElements(_geometry);
 
         // Act
-        ResultBuilder builder = new ResultBuilder()
+        ResultBuilder builder = new ResultBuilder(_storageStrategy)
             .AddModelConvertedToIfc(model);
         Result result = builder.Build();
 
@@ -45,7 +43,6 @@ internal sealed class ResultBuilderTests
         Assert.That(result.Children.Count, Is.EqualTo(1), "Children count");
         Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
-        Assert.That(uri?.IsFile, Is.False, "Uri IsFile");
     }
 
     [Test]
@@ -56,7 +53,7 @@ internal sealed class ResultBuilderTests
         model.AddElements(_geometry);
 
         // Act
-        ResultBuilder builder = new ResultBuilder()
+        ResultBuilder builder = new ResultBuilder(_storageStrategy)
             .AddModelConvertedToJson(model);
         Result result = builder.Build();
 
@@ -65,7 +62,6 @@ internal sealed class ResultBuilderTests
         Assert.That(result.Children.Count, Is.EqualTo(1), "Children count");
         Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
-        Assert.That(uri?.IsFile, Is.False, "Uri IsFile");
     }
 
     [Test]
@@ -77,7 +73,7 @@ internal sealed class ResultBuilderTests
         model.AddElements(WorkflowSamples.Views(_geometry));
 
         // Act
-        ResultBuilder builder = new ResultBuilder()
+        ResultBuilder builder = new ResultBuilder(_storageStrategy)
             .AddCanvasesConvertedToSvg(model);
         Result result = builder.Build();
 
@@ -86,7 +82,6 @@ internal sealed class ResultBuilderTests
         Assert.That(result.Children.Count, Is.EqualTo(3), "Children count");
         Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
-        Assert.That(uri?.IsFile, Is.False, "Uri IsFile");
     }
 
     [Test]
@@ -98,7 +93,7 @@ internal sealed class ResultBuilderTests
         model.AddElements(WorkflowSamples.Views(_geometry));
 
         // Act
-        ResultBuilder builder = new ResultBuilder()
+        ResultBuilder builder = new ResultBuilder(_storageStrategy)
             .AddCanvasesConvertedToPdf(model);
         Result result = builder.Build();
 
@@ -107,7 +102,6 @@ internal sealed class ResultBuilderTests
         Assert.That(result.Children.Count, Is.EqualTo(3), "Children count");
         Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
-        Assert.That(uri?.IsFile, Is.False, "Uri IsFile");
     }
 
     [Test]
@@ -120,7 +114,7 @@ internal sealed class ResultBuilderTests
         model.AddElements(doc);
 
         // Act
-        ResultBuilder builder = new ResultBuilder()
+        ResultBuilder builder = new ResultBuilder(_storageStrategy)
             .AddDocumentInformation(doc);
         Result result = builder.Build();
 
@@ -129,7 +123,6 @@ internal sealed class ResultBuilderTests
         Assert.That(result.Children.Count, Is.EqualTo(1), "Children count");
         Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
-        Assert.That(uri?.IsFile, Is.False, "Uri IsFile");
     }
 
     [Test]
@@ -140,13 +133,12 @@ internal sealed class ResultBuilderTests
         model.AddElements(WorkflowSamples.All());
 
         // Act
-        Result result = ResultBuilder.Default(model, new());
+        Result result = ResultBuilder.Default(_storageStrategy, model, new());
 
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");
         Assert.That(result.Children.Count, Is.EqualTo(10), "Children count");
         Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
-        Assert.That(uri?.IsFile, Is.False, "Uri IsFile");
     }
 }

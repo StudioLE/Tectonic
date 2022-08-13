@@ -13,7 +13,7 @@ internal sealed class SerialisationTests : ResultModel
         // Arrange
         Model model = new();
 
-        Result result = ResultBuilder.Default(model, new());
+        Result result = ResultBuilder.Default(new FileStorageStrategy(), model, new());
 
         // Act
         string json = JsonConvert.SerializeObject(result);

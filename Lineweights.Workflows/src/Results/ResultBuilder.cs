@@ -1,8 +1,5 @@
 using System.IO;
 using System.Xml.Linq;
-using Azure.Core;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 using Elements.Serialization.glTF;
 using Elements.Serialization.IFC;
 using Lineweights.Drawings;
@@ -20,24 +17,14 @@ namespace Lineweights.Workflows.Results;
 /// </summary>
 public class ResultBuilder
 {
-    // TODO: BlobStorage should be injected
-    // TODO: Add a local file storage alternative strategy for OpenAsFile. Must override AsyncUpload
-    private const string BlobConnectionString = "UseDevelopmentStorage=true";
-    private const string BlobContainer = "dashboard";
-    private static readonly BlobClientOptions _blobOptions = new()
-    {
-        Retry =
-        {
-            MaxRetries = 0,
-            NetworkTimeout = TimeSpan.FromMilliseconds(300),
-            Delay = TimeSpan.Zero,
-            MaxDelay = TimeSpan.Zero,
-            Mode = RetryMode.Fixed
-        },
-    };
-    private readonly BlobContainerClient _container = new(BlobConnectionString, BlobContainer, _blobOptions);
+    private readonly IStorageStrategy _storageStrategy;
     private readonly List<Task<Result>> _results = new();
     private DocumentInformation? _metadata;
+
+    public ResultBuilder(IStorageStrategy storageStrategy)
+    {
+        _storageStrategy = storageStrategy;
+    }
 
     /// <inheritdoc cref="Result"/>
     public ResultBuilder Metadata(DocumentInformation metadata)
@@ -65,7 +52,7 @@ public class ResultBuilder
             throw new("Failed to upload DocumentInformation. The document is not a file.");
         string filePath = metadata.Location.AbsolutePath;
         string fileExtension = GetFileExtension(metadata.Location);
-        Task<Result> task = UploadAsync(metadata, fileExtension, null, result =>
+        Task<Result> task = _storageStrategy.WriteAsync(metadata, fileExtension, null, result =>
         {
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("Failed to upload DocumentInformation. The file does not exist.");
@@ -85,7 +72,7 @@ public class ResultBuilder
         if (!model.AllElementsOfType<GeometricElement>().Any())
             return this;
 
-        Task<Result> task = UploadAsync(metadata, ".glb", "model/gltf-binary", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(metadata, ".glb", "model/gltf-binary", result =>
         {
             string tempPath = Path.GetTempFileName();
 
@@ -113,7 +100,7 @@ public class ResultBuilder
     {
         metadata ??= new() { Name = "IFC of Model" };
 
-        Task<Result> task = UploadAsync(metadata, ".ifc", "application/x-step", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(metadata, ".ifc", "application/x-step", result =>
         {
             string tempPath = Path.GetTempFileName();
             string console;
@@ -147,7 +134,7 @@ public class ResultBuilder
     {
         metadata ??= new() { Name = "JSON of Model" };
 
-        Task<Result> task = UploadAsync(metadata, ".json", "application/json", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(metadata, ".json", "application/json", result =>
         {
             string json = model.ToJson();
             MemoryStream stream = new();
@@ -181,7 +168,7 @@ public class ResultBuilder
             Name = canvas.Name
         };
 
-        Task<Result> task = UploadAsync(metadata, ".svg", "image/svg+xml", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(metadata, ".svg", "image/svg+xml", result =>
         {
             SvgDocument svgDocument = canvas switch
             {
@@ -219,7 +206,7 @@ public class ResultBuilder
             Name = canvas.Name
         };
 
-        Task<Result> task = UploadAsync(metadata, ".pdf", "application/pdf", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(metadata, ".pdf", "application/pdf", result =>
         {
             PdfDocument pdfDocument = canvas switch
             {
@@ -251,9 +238,9 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public static Result Default(Model model, DocumentInformation metadata)
+    public static Result Default(IStorageStrategy storageStrategy, Model model, DocumentInformation metadata)
     {
-        return new ResultBuilder()
+        return new ResultBuilder(storageStrategy)
             .Metadata(metadata)
             .AddModelConvertedToGlb(model)
             .AddModelConvertedToIfc(model)
@@ -262,53 +249,6 @@ public class ResultBuilder
             .AddDocumentInformation(model)
             .AddModelConvertedToJson(model)
             .Build();
-    }
-
-    /// <summary>
-    /// Upload asynchronously to blob storage via a stream.
-    /// </summary>
-    private async Task<Result> UploadAsync(
-        DocumentInformation metadata,
-        string fileExtension,
-        string? mimeType,
-        Func<Result, Stream> source)
-    {
-        Result result = new()
-        {
-            Metadata = metadata
-        };
-        try
-        {
-            string fileName = metadata.Id + fileExtension;
-            BlobClient blob = _container.GetBlobClient(fileName);
-            while (blob.Exists())
-            {
-                fileName = Guid.NewGuid() + fileExtension;
-                blob = _container.GetBlobClient(fileName);
-            }
-
-            metadata.Location = blob.Uri;
-
-            Stream stream = source.Invoke(result);
-            BlobHttpHeaders headers = mimeType is not null
-                ? new()
-                {
-                    ContentType = mimeType
-                }
-                : new();
-            await blob.UploadAsync(stream, headers).ConfigureAwait(false);
-            stream.Close();
-            stream.Dispose();
-        }
-        catch (Exception e)
-        {
-            result.Errors = new[]
-            {
-                "Failed to upload.",
-                e.Message
-            };
-        }
-        return result;
     }
 
     private static string GetFileExtension(Uri uri)

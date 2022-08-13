@@ -16,16 +16,16 @@ public sealed class OpenAsFile : IResultStrategy
     /// <summary>
     /// The path of the created file.
     /// </summary>
-    public Func<Model, DocumentInformation, Result> Builder { get; set; } = ResultBuilder.Default;
+    public Func<IStorageStrategy, Model, DocumentInformation, Result> Builder { get; set; } = ResultBuilder.Default;
 
     /// <inheritdoc cref="OpenAsFile"/>
     public OpenAsFile(params string[] fileExtensions)
     {
         if (!fileExtensions.Any())
             return;
-        Builder = (model, metadata) =>
+        Builder = (storageStrategy, model, metadata) =>
         {
-            ResultBuilder builder = new ResultBuilder()
+            ResultBuilder builder = new ResultBuilder(storageStrategy)
                 .Metadata(metadata);
             if (fileExtensions.Contains(".glb"))
                 builder = builder.AddModelConvertedToGlb(model);
@@ -42,7 +42,7 @@ public sealed class OpenAsFile : IResultStrategy
     /// <inheritdoc cref="OpenAsFile"/>
     public Result Execute(Model model, DocumentInformation metadata)
     {
-        Result result = Builder(model, metadata);
+        Result result = Builder(new FileStorageStrategy(), model, metadata);
         if (IsOpenEnabled)
             RecursiveOpen(result);
         return result;
