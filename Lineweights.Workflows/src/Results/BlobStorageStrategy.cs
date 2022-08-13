@@ -31,18 +31,18 @@ public class BlobStorageStrategy : IStorageStrategy
     /// Upload asynchronously to blob storage via a stream.
     /// </summary>
     public async Task<Result> WriteAsync(
-        DocumentInformation metadata,
+        DocumentInformation doc,
         string fileExtension,
         string? mimeType,
         Func<Result, Stream> source)
     {
         Result result = new()
         {
-            Metadata = metadata
+            Metadata = doc
         };
         try
         {
-            string fileName = metadata.Id + fileExtension;
+            string fileName = doc.Id + fileExtension;
             BlobClient blob = _container.GetBlobClient(fileName);
             while (blob.Exists())
             {
@@ -50,7 +50,7 @@ public class BlobStorageStrategy : IStorageStrategy
                 blob = _container.GetBlobClient(fileName);
             }
 
-            metadata.Location = blob.Uri;
+            doc.Location = blob.Uri;
 
             Stream stream = source.Invoke(result);
             BlobHttpHeaders headers = mimeType is not null

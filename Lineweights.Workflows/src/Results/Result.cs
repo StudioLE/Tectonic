@@ -9,7 +9,7 @@ namespace Lineweights.Workflows.Results;
 public sealed class Result
 {
     /// <summary>
-    /// The document metadata.
+    /// The document doc.
     /// </summary>
     [JsonConverter(typeof(OverrideInheritanceConverter))]
     public DocumentInformation Metadata { get; set; } = new();

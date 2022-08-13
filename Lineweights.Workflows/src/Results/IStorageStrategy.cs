@@ -11,7 +11,7 @@ public interface IStorageStrategy
     /// Upload asynchronously to blob storage via a stream.
     /// </summary>
     Task<Result> WriteAsync(
-        DocumentInformation metadata,
+        DocumentInformation doc,
         string fileExtension,
         string? mimeType,
         Func<Result, Stream> source);

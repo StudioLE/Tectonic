@@ -13,18 +13,18 @@ public class FileStorageStrategy : IStorageStrategy
     /// Upload asynchronously to blob storage via a stream.
     /// </summary>
     public async Task<Result> WriteAsync(
-        DocumentInformation metadata,
+        DocumentInformation doc,
         string fileExtension,
         string? mimeType,
         Func<Result, Stream> source)
     {
         Result result = new()
         {
-            Metadata = metadata
+            Metadata = doc
         };
         try
         {
-            string fileName = metadata.Id + fileExtension;
+            string fileName = doc.Id + fileExtension;
 
             FileInfo file = new(Path.Combine(_directory, fileName));
             while (file.Exists)
@@ -33,7 +33,7 @@ public class FileStorageStrategy : IStorageStrategy
                 file = new(Path.Combine(_directory, fileName));
             }
 
-            metadata.Location = new(file.FullName);
+            doc.Location = new(file.FullName);
 
             Stream stream = source.Invoke(result);
 

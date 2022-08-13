@@ -19,7 +19,7 @@ public abstract class PdfDocument : IDocument
     }
 
     /// <summary>
-    /// The document metadata.
+    /// The document doc.
     /// </summary>
     public virtual DocumentMetadata GetMetadata()
     {

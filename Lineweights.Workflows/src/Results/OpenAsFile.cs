@@ -23,10 +23,9 @@ public sealed class OpenAsFile : IResultStrategy
     {
         if (!fileExtensions.Any())
             return;
-        Builder = (storageStrategy, model, metadata) =>
+        Builder = (storageStrategy, model, doc) =>
         {
-            ResultBuilder builder = new ResultBuilder(storageStrategy)
-                .Metadata(metadata);
+            ResultBuilder builder = new(storageStrategy, doc);
             if (fileExtensions.Contains(".glb"))
                 builder = builder.AddModelConvertedToGlb(model);
             if (fileExtensions.Contains(".ifc"))
@@ -40,9 +39,9 @@ public sealed class OpenAsFile : IResultStrategy
     }
 
     /// <inheritdoc cref="OpenAsFile"/>
-    public Result Execute(Model model, DocumentInformation metadata)
+    public Result Execute(Model model, DocumentInformation doc)
     {
-        Result result = Builder(new FileStorageStrategy(), model, metadata);
+        Result result = Builder(new FileStorageStrategy(), model, doc);
         if (IsOpenEnabled)
             RecursiveOpen(result);
         return result;

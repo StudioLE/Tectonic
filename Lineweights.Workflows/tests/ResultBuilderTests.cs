@@ -133,7 +133,7 @@ internal sealed class ResultBuilderTests
         model.AddElements(WorkflowSamples.All());
 
         // Act
-        Result result = ResultBuilder.Default(_storageStrategy, model, new());
+        Result result = ResultBuilder.Default(_storageStrategy, model);
 
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");

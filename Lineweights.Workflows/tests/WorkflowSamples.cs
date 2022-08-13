@@ -53,7 +53,7 @@ internal static class WorkflowSamples
             .ToArray();
 
         FileInfo file = PathHelpers.GetTempFile(".csv");
-        DocumentInformation metadata = new()
+        DocumentInformation doc = new()
         {
             Name = "Elements",
             Location = new(file.FullName)
@@ -62,7 +62,7 @@ internal static class WorkflowSamples
         using CsvWriter csv = new (writer, CultureInfo.InvariantCulture);
         csv.WriteRecords(table);
 
-        return metadata;
+        return doc;
     }
 
     public static IReadOnlyCollection<Element> All()

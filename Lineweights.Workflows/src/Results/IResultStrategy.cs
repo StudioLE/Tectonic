@@ -6,5 +6,5 @@ namespace Lineweights.Workflows.Results;
 public interface IResultStrategy
 {
     /// <inheritdoc cref="IResultStrategy"/>
-    public Result Execute(Model model, DocumentInformation metadata);
+    public Result Execute(Model model, DocumentInformation doc);
 }

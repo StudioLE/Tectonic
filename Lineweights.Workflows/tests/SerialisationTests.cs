@@ -13,7 +13,7 @@ internal sealed class SerialisationTests : ResultModel
         // Arrange
         Model model = new();
 
-        Result result = ResultBuilder.Default(new FileStorageStrategy(), model, new());
+        Result result = ResultBuilder.Default(new FileStorageStrategy(), model);
 
         // Act
         string json = JsonConvert.SerializeObject(result);
@@ -35,7 +35,7 @@ internal sealed class SerialisationTests : ResultModel
     public void Serialisation_DocumentInformation()
     {
         // Arrange
-        DocumentInformation metadata = new()
+        DocumentInformation doc = new()
         {
             Name = "Example",
             Description = "Hello, world.",
@@ -47,15 +47,15 @@ internal sealed class SerialisationTests : ResultModel
         };
 
         // Act
-        string json = JsonConvert.SerializeObject(metadata, settings);
+        string json = JsonConvert.SerializeObject(doc, settings);
         DocumentInformation? deserialised = JsonConvert.DeserializeObject<DocumentInformation>(json, settings);
 
         // Assert
         Assert.Multiple(() =>
         {
             Assert.That(deserialised, Is.Not.Null, "Not null");
-            Assert.That(deserialised?.Id, Is.EqualTo(metadata.Id), "Id");
-            Assert.That(deserialised?.Location, Is.EqualTo(metadata.Location), "Location");
+            Assert.That(deserialised?.Id, Is.EqualTo(doc.Id), "Id");
+            Assert.That(deserialised?.Location, Is.EqualTo(doc.Location), "Location");
         });
     }
 }

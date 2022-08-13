@@ -53,12 +53,12 @@ public abstract class ResultAfterTestAttribute : Attribute, ITestAction
 
         name.Append(")");
 
-        DocumentInformation metadata = new()
+        DocumentInformation doc = new()
         {
             Name = name.ToString(),
             Description = string.Join(Environment.NewLine, test.Tests.Select(x => x.Name))
         };
 
-        Strategy?.Execute(fixture.Model, metadata);
+        Strategy?.Execute(fixture.Model, doc);
     }
 }

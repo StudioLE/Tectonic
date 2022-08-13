@@ -19,40 +19,33 @@ public class ResultBuilder
 {
     private readonly IStorageStrategy _storageStrategy;
     private readonly List<Task<Result>> _results = new();
-    private DocumentInformation? _metadata;
+    private readonly DocumentInformation _doc;
 
-    public ResultBuilder(IStorageStrategy storageStrategy)
+    public ResultBuilder(IStorageStrategy storageStrategy, DocumentInformation? doc = null)
     {
         _storageStrategy = storageStrategy;
-    }
-
-    /// <inheritdoc cref="Result"/>
-    public ResultBuilder Metadata(DocumentInformation metadata)
-    {
-        _metadata = metadata;
-
-        return this;
+        _doc = doc ?? new();
     }
 
     /// <inheritdoc cref="Result"/>
     public ResultBuilder AddDocumentInformation(Model model)
     {
-        foreach (DocumentInformation metadata in model.AllElementsOfType<DocumentInformation>())
-            AddDocumentInformation(metadata);
+        foreach (DocumentInformation doc in model.AllElementsOfType<DocumentInformation>())
+            AddDocumentInformation(doc);
 
         return this;
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddDocumentInformation(DocumentInformation metadata)
+    public ResultBuilder AddDocumentInformation(DocumentInformation doc)
     {
-        if (metadata.Location is null)
+        if (doc.Location is null)
             throw new("Failed to upload DocumentInformation. The document location is null.");
-        if (!metadata.Location.IsFile)
+        if (!doc.Location.IsFile)
             throw new("Failed to upload DocumentInformation. The document is not a file.");
-        string filePath = metadata.Location.AbsolutePath;
-        string fileExtension = GetFileExtension(metadata.Location);
-        Task<Result> task = _storageStrategy.WriteAsync(metadata, fileExtension, null, result =>
+        string filePath = doc.Location.AbsolutePath;
+        string fileExtension = GetFileExtension(doc.Location);
+        Task<Result> task = _storageStrategy.WriteAsync(doc, fileExtension, null, result =>
         {
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("Failed to upload DocumentInformation. The file does not exist.");
@@ -65,14 +58,14 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddModelConvertedToGlb(Model model, DocumentInformation? metadata = null)
+    public ResultBuilder AddModelConvertedToGlb(Model model, DocumentInformation? doc = null)
     {
-        metadata ??= new() { Name = "GlTF of Model" };
+        doc ??= new() { Name = "GlTF of Model" };
 
         if (!model.AllElementsOfType<GeometricElement>().Any())
             return this;
 
-        Task<Result> task = _storageStrategy.WriteAsync(metadata, ".glb", "model/gltf-binary", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, ".glb", "model/gltf-binary", result =>
         {
             string tempPath = Path.GetTempFileName();
 
@@ -96,11 +89,11 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddModelConvertedToIfc(Model model, DocumentInformation? metadata = null)
+    public ResultBuilder AddModelConvertedToIfc(Model model, DocumentInformation? doc = null)
     {
-        metadata ??= new() { Name = "IFC of Model" };
+        doc ??= new() { Name = "IFC of Model" };
 
-        Task<Result> task = _storageStrategy.WriteAsync(metadata, ".ifc", "application/x-step", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, ".ifc", "application/x-step", result =>
         {
             string tempPath = Path.GetTempFileName();
             string console;
@@ -130,11 +123,11 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddModelConvertedToJson(Model model, DocumentInformation? metadata = null)
+    public ResultBuilder AddModelConvertedToJson(Model model, DocumentInformation? doc = null)
     {
-        metadata ??= new() { Name = "JSON of Model" };
+        doc ??= new() { Name = "JSON of Model" };
 
-        Task<Result> task = _storageStrategy.WriteAsync(metadata, ".json", "application/json", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, ".json", "application/json", result =>
         {
             string json = model.ToJson();
             MemoryStream stream = new();
@@ -162,13 +155,13 @@ public class ResultBuilder
     /// <inheritdoc cref="Result"/>
     public ResultBuilder AddCanvasConvertedToSvg(Canvas canvas)
     {
-        DocumentInformation metadata = new()
+        DocumentInformation doc = new()
         {
             Id = canvas.Id,
             Name = canvas.Name
         };
 
-        Task<Result> task = _storageStrategy.WriteAsync(metadata, ".svg", "image/svg+xml", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, ".svg", "image/svg+xml", result =>
         {
             SvgDocument svgDocument = canvas switch
             {
@@ -200,13 +193,13 @@ public class ResultBuilder
     /// <inheritdoc cref="Result"/>
     public ResultBuilder AddCanvasConvertedToPdf(Canvas canvas)
     {
-        DocumentInformation metadata = new()
+        DocumentInformation doc = new()
         {
             Id = canvas.Id,
             Name = canvas.Name
         };
 
-        Task<Result> task = _storageStrategy.WriteAsync(metadata, ".pdf", "application/pdf", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, ".pdf", "application/pdf", result =>
         {
             PdfDocument pdfDocument = canvas switch
             {
@@ -232,16 +225,15 @@ public class ResultBuilder
         Result[] result = task.GetAwaiter().GetResult();
         return new()
         {
-            Metadata = _metadata ?? new(),
+            Metadata = _doc,
             Children = result
         };
     }
 
     /// <inheritdoc cref="Result"/>
-    public static Result Default(IStorageStrategy storageStrategy, Model model, DocumentInformation metadata)
+    public static Result Default(IStorageStrategy storageStrategy, Model model, DocumentInformation? doc = null)
     {
-        return new ResultBuilder(storageStrategy)
-            .Metadata(metadata)
+        return new ResultBuilder(storageStrategy, doc)
             .AddModelConvertedToGlb(model)
             .AddModelConvertedToIfc(model)
             .AddCanvasesConvertedToPdf(model)
