@@ -15,12 +15,11 @@ public class FileStorageStrategy : IStorageStrategy
     public async Task<Result> WriteAsync(
         DocumentInformation doc,
         string fileExtension,
-        string? mimeType,
         Func<Result, Stream> source)
     {
         Result result = new()
         {
-            Metadata = doc
+            Info = doc
         };
         try
         {

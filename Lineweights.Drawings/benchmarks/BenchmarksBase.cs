@@ -36,7 +36,6 @@ public abstract class BenchmarksBase
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
         SheetBuilder builder = new SheetBuilder()

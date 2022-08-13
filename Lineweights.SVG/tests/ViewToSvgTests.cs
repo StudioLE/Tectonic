@@ -1,11 +1,16 @@
+using System.IO;
 using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.SVG.From.Elements;
+using Lineweights.Workflows.Results;
 
 namespace Lineweights.SVG.Tests;
 
-internal sealed class ViewToSvgTests
+[SendToDashboardAfterTest]
+internal sealed class ViewToSvgTests : ResultModel
 {
+    private readonly ViewToSvg _converter = new();
+
     [TestCase(ViewDirection.Back)]
     [TestCase(ViewDirection.Bottom)]
     [TestCase(ViewDirection.Front)]
@@ -22,17 +27,16 @@ internal sealed class ViewToSvgTests
         View view = builder.Build();
 
         // Act
-        var converter = new ViewToSvg();
-        SvgElement svgElement = converter.Convert(view);
+        SvgElement svgElement = _converter.Convert(view);
         SvgDocument svgDocument = new();
         svgDocument.Add(svgElement);
         string svgString = svgDocument.ToString();
 
         // Preview
-        //SampleHelpers.OpenInDebug(svgDocument);
+        Preview(svgDocument);
 
         // Assert
-        Verify.String(svgString);
+        Verify.String(svgString, ".svg");
     }
 
     [TestCase(ViewDirection.Back)]
@@ -51,17 +55,16 @@ internal sealed class ViewToSvgTests
         View view = builder.Build();
 
         // Act
-        var converter = new ViewToSvg();
-        SvgElement svgElement = converter.Convert(view);
+        SvgElement svgElement = _converter.Convert(view);
         SvgDocument svgDocument = new();
         svgDocument.Add(svgElement);
         string svgString = svgDocument.ToString();
 
         // Preview
-        //SampleHelpers.OpenInDebug(svgDocument);
+        Preview(svgDocument);
 
         // Assert
-        Verify.String(svgString);
+        Verify.String(svgString, ".svg");
     }
     [TestCase(ViewDirection.Back)]
     [TestCase(ViewDirection.Bottom)]
@@ -80,17 +83,16 @@ internal sealed class ViewToSvgTests
         View view = builder.Build();
 
         // Act
-        var converter = new ViewToSvg();
-        SvgElement svgElement = converter.Convert(view);
+        SvgElement svgElement = _converter.Convert(view);
         SvgDocument svgDocument = new();
         svgDocument.Add(svgElement);
         string svgString = svgDocument.ToString();
 
         // Preview
-        //SampleHelpers.OpenInDebug(svgDocument);
+        Preview(svgDocument);
 
         // Assert
-        Verify.String(svgString);
+        Verify.String(svgString, ".svg");
     }
 
     [TestCase(ViewDirection.Back)]
@@ -110,16 +112,22 @@ internal sealed class ViewToSvgTests
         View view = builder.Build();
 
         // Act
-        var converter = new ViewToSvg();
-        SvgElement svgElement = converter.Convert(view);
+        SvgElement svgElement = _converter.Convert(view);
         SvgDocument svgDocument = new();
         svgDocument.Add(svgElement);
         string svgString = svgDocument.ToString();
 
         // Preview
-        //SampleHelpers.OpenInDebug(svgDocument);
+        Preview(svgDocument);
 
         // Assert
-        Verify.String(svgString);
+        Verify.String(svgString, ".svg");
+    }
+
+    private void Preview(SvgDocument svgDocument)
+    {
+        FileInfo file = TestHelpers.FileByTestContext("svg");
+        svgDocument.Save(file.FullName);
+        Model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

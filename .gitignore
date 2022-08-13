@@ -2,8 +2,9 @@
 .azurite
 .env
 .secrets
-*.received.txt
 *.received.json
+*.received.svg
+*.received.txt
 **/Verify/BC*.html
 .idea/
 

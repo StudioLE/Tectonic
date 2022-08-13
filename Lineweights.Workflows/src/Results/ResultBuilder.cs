@@ -45,7 +45,7 @@ public class ResultBuilder
             throw new("Failed to upload DocumentInformation. The document is not a file.");
         string filePath = doc.Location.AbsolutePath;
         string fileExtension = GetFileExtension(doc.Location);
-        Task<Result> task = _storageStrategy.WriteAsync(doc, fileExtension, null, result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, fileExtension, result =>
         {
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("Failed to upload DocumentInformation. The file does not exist.");
@@ -65,7 +65,7 @@ public class ResultBuilder
         if (!model.AllElementsOfType<GeometricElement>().Any())
             return this;
 
-        Task<Result> task = _storageStrategy.WriteAsync(doc, ".glb", "model/gltf-binary", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, ".glb", result =>
         {
             string tempPath = Path.GetTempFileName();
 
@@ -93,7 +93,7 @@ public class ResultBuilder
     {
         doc ??= new() { Name = "IFC of Model" };
 
-        Task<Result> task = _storageStrategy.WriteAsync(doc, ".ifc", "application/x-step", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, ".ifc", result =>
         {
             string tempPath = Path.GetTempFileName();
             string console;
@@ -127,7 +127,7 @@ public class ResultBuilder
     {
         doc ??= new() { Name = "JSON of Model" };
 
-        Task<Result> task = _storageStrategy.WriteAsync(doc, ".json", "application/json", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, ".json", result =>
         {
             string json = model.ToJson();
             MemoryStream stream = new();
@@ -161,7 +161,7 @@ public class ResultBuilder
             Name = canvas.Name
         };
 
-        Task<Result> task = _storageStrategy.WriteAsync(doc, ".svg", "image/svg+xml", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, ".svg", result =>
         {
             SvgDocument svgDocument = canvas switch
             {
@@ -199,7 +199,7 @@ public class ResultBuilder
             Name = canvas.Name
         };
 
-        Task<Result> task = _storageStrategy.WriteAsync(doc, ".pdf", "application/pdf", result =>
+        Task<Result> task = _storageStrategy.WriteAsync(doc, ".pdf", result =>
         {
             PdfDocument pdfDocument = canvas switch
             {
@@ -225,7 +225,7 @@ public class ResultBuilder
         Result[] result = task.GetAwaiter().GetResult();
         return new()
         {
-            Metadata = _doc,
+            Info = _doc,
             Children = result
         };
     }
@@ -235,11 +235,7 @@ public class ResultBuilder
     {
         return new ResultBuilder(storageStrategy, doc)
             .AddModelConvertedToGlb(model)
-            .AddModelConvertedToIfc(model)
-            .AddCanvasesConvertedToPdf(model)
-            .AddCanvasesConvertedToSvg(model)
             .AddDocumentInformation(model)
-            .AddModelConvertedToJson(model)
             .Build();
     }
 

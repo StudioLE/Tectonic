@@ -22,7 +22,7 @@ internal sealed class ResultBuilderTests
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");
         Assert.That(result.Children.Count, Is.EqualTo(1), "Children count");
-        Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
+        Uri? uri = result.Children.FirstOrDefault()?.Info.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
     }
 
@@ -41,7 +41,7 @@ internal sealed class ResultBuilderTests
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");
         Assert.That(result.Children.Count, Is.EqualTo(1), "Children count");
-        Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
+        Uri? uri = result.Children.FirstOrDefault()?.Info.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
     }
 
@@ -60,7 +60,7 @@ internal sealed class ResultBuilderTests
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");
         Assert.That(result.Children.Count, Is.EqualTo(1), "Children count");
-        Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
+        Uri? uri = result.Children.FirstOrDefault()?.Info.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
     }
 
@@ -80,7 +80,7 @@ internal sealed class ResultBuilderTests
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");
         Assert.That(result.Children.Count, Is.EqualTo(3), "Children count");
-        Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
+        Uri? uri = result.Children.FirstOrDefault()?.Info.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
     }
 
@@ -100,7 +100,7 @@ internal sealed class ResultBuilderTests
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");
         Assert.That(result.Children.Count, Is.EqualTo(3), "Children count");
-        Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
+        Uri? uri = result.Children.FirstOrDefault()?.Info.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
     }
 
@@ -121,7 +121,7 @@ internal sealed class ResultBuilderTests
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");
         Assert.That(result.Children.Count, Is.EqualTo(1), "Children count");
-        Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
+        Uri? uri = result.Children.FirstOrDefault()?.Info.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
     }
 
@@ -137,8 +137,32 @@ internal sealed class ResultBuilderTests
 
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");
+        Assert.That(result.Children.Count, Is.EqualTo(2), "Children count");
+        Uri? uri = result.Children.FirstOrDefault()?.Info.Location;
+        Assert.That(uri, Is.Not.Null, "Uri is not null");
+    }
+
+    [Test]
+    public void ResultBuilder_All()
+    {
+        // Arrange
+        Model model = new();
+        model.AddElements(WorkflowSamples.All());
+
+        // Act
+        Result result = new ResultBuilder(_storageStrategy)
+            .AddModelConvertedToGlb(model)
+            .AddModelConvertedToIfc(model)
+            .AddCanvasesConvertedToPdf(model)
+            .AddCanvasesConvertedToSvg(model)
+            .AddDocumentInformation(model)
+            .AddModelConvertedToJson(model)
+            .Build();
+
+        // Assert
+        Assert.That(result, Is.Not.Null, "Not null");
         Assert.That(result.Children.Count, Is.EqualTo(10), "Children count");
-        Uri? uri = result.Children.FirstOrDefault()?.Metadata.Location;
+        Uri? uri = result.Children.FirstOrDefault()?.Info.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
     }
 }

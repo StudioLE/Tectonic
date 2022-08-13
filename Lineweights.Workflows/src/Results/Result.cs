@@ -9,10 +9,10 @@ namespace Lineweights.Workflows.Results;
 public sealed class Result
 {
     /// <summary>
-    /// The document doc.
+    /// The document information.
     /// </summary>
     [JsonConverter(typeof(OverrideInheritanceConverter))]
-    public DocumentInformation Metadata { get; set; } = new();
+    public DocumentInformation Info { get; set; } = new();
 
     /// <summary>
     /// The uri of any additional files.

@@ -89,7 +89,6 @@ internal sealed class SerialisationTests : ResultModel
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
@@ -141,7 +140,6 @@ internal sealed class SerialisationTests : ResultModel
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 

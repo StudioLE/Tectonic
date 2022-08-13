@@ -8,13 +8,13 @@
 @using Lineweights.Workflows.Results
 @inherits CardBase
 
-<div class="card parent @(IsHidden ? "is-hidden" : "")" id="card-@Result.Metadata.Id">
+<div class="card parent @(IsHidden ? "is-hidden" : "")" id="card-@Result.Info.Id">
   <header class="card-header">
     <p class="card-header-title">
       @Result.GetTitle()
     </p>
     <p class="card-header-title" style="font-weight: normal; flex-grow: 0;">
-      <time datetime="@Result.Metadata.LastRevisionTime">@Result.Metadata.LastRevisionTime.Humanize()</time>
+      <time datetime="@Result.Info.LastRevisionTime">@Result.Info.LastRevisionTime.Humanize()</time>
     </p>
     <button class="card-header-icon" aria-label="close" @onclick="e => Hide()">
       <span class="icon">
@@ -28,10 +28,10 @@
       <div class="column is-4">
         <div class="card major">
           <div class="card-image">
-            <figure id="model-@Result.Metadata.Id"></figure>
+            <figure id="model-@Result.Info.Id"></figure>
           </div>
           <footer class="card-footer">
-            <p class="card-footer-item">@Result.Metadata.Name</p>
+            <p class="card-footer-item">@Result.Info.Name</p>
           </footer>
         </div>
       </div>
@@ -43,13 +43,13 @@
               @if (child.IsFileType(".svg", ".jpg", ".png", ".png"))
               {
                 <figure class="card-image">
-                  <img src="@child.Metadata.Location" alt="@child.Metadata.Name"/>
+                  <img src="@child.Info.Location" alt="@child.Info.Name"/>
                 </figure>
               }
               else if (child.IsFileType(".pdf"))
               {
                 <figure class="card-image">
-                  <object type="@child.GetMimeType()" data="@child.Metadata.Location"></object>
+                  <object type="@child.GetMimeType()" data="@child.Info.Location"></object>
                 </figure>
               }
               else if (child.IsFileType(".txt", ".md"))
@@ -96,7 +96,7 @@
               else
               {
                 <div class="card-content">
-                  <a class="button" href="@child.Metadata.Location">@child.Metadata.Location?.Segments.Last()</a>
+                  <a class="button" href="@child.Info.Location">@child.Info.Location?.Segments.Last()</a>
                 </div>
               }
               <footer class="card-footer">

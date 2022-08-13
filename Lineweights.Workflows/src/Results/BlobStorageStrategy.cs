@@ -33,12 +33,11 @@ public class BlobStorageStrategy : IStorageStrategy
     public async Task<Result> WriteAsync(
         DocumentInformation doc,
         string fileExtension,
-        string? mimeType,
         Func<Result, Stream> source)
     {
         Result result = new()
         {
-            Metadata = doc
+            Info = doc
         };
         try
         {
@@ -53,12 +52,7 @@ public class BlobStorageStrategy : IStorageStrategy
             doc.Location = blob.Uri;
 
             Stream stream = source.Invoke(result);
-            BlobHttpHeaders headers = mimeType is not null
-                ? new()
-                {
-                    ContentType = mimeType
-                }
-                : new();
+            BlobHttpHeaders headers = GetHeaders(fileExtension);
             await blob.UploadAsync(stream, headers).ConfigureAwait(false);
             stream.Close();
             stream.Dispose();
@@ -72,5 +66,21 @@ public class BlobStorageStrategy : IStorageStrategy
             };
         }
         return result;
+    }
+
+    private static BlobHttpHeaders GetHeaders(string fileExtension)
+    {
+        string? contentType = fileExtension switch
+        {
+            ".glb" => "model/gltf-binary",
+            ".ifc" => "application/x-step",
+            ".json" => "application/json",
+            ".svg" => "image/svg+xml",
+            ".pdf" => "application/pdf",
+            _ => null
+        };
+        return contentType is null
+            ? new()
+            : new() { ContentType = contentType };
     }
 }

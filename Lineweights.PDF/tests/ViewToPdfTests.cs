@@ -3,10 +3,12 @@ using QuestPDF.Fluent;
 using Lineweights.Drawings;
 using Lineweights.PDF.From.Elements;
 using Lineweights.Drawings.Rendering;
+using Lineweights.Workflows.Results;
 
 namespace Lineweights.PDF.Tests;
 
-internal sealed class ViewToPdfTests
+[SendToDashboardAfterTest]
+internal sealed class ViewToPdfTests : ResultModel
 {
     [TestCase(ViewDirection.Back)]
     [TestCase(ViewDirection.Bottom)]
@@ -24,16 +26,11 @@ internal sealed class ViewToPdfTests
         View view = builder.Build();
 
         // Act
-        var converter = new ViewToPdf();
+        ViewToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(view);
-        FileInfo file = TestHelpers.FileByTestContext("pdf");
-        pdfDocument.GeneratePdf(file.FullName);
 
         // Preview
-        //TestHelpers.OpenInDebug(file);
-
-        // Assert
-        //Verify.File(file);
+        Preview(pdfDocument);
     }
 
     [TestCase(ViewDirection.Back)]
@@ -52,16 +49,11 @@ internal sealed class ViewToPdfTests
         View view = builder.Build();
 
         // Act
-        var converter = new ViewToPdf();
+        ViewToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(view);
-        FileInfo file = TestHelpers.FileByTestContext("pdf");
-        pdfDocument.GeneratePdf(file.FullName);
 
         // Preview
-        //TestHelpers.OpenInDebug(file);
-
-        // Assert
-        //Verify.File(file);
+        Preview(pdfDocument);
     }
     [TestCase(ViewDirection.Back)]
     [TestCase(ViewDirection.Bottom)]
@@ -80,16 +72,11 @@ internal sealed class ViewToPdfTests
         View view = builder.Build();
 
         // Act
-        var converter = new ViewToPdf();
+        ViewToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(view);
-        FileInfo file = TestHelpers.FileByTestContext("pdf");
-        pdfDocument.GeneratePdf(file.FullName);
 
         // Preview
-        //TestHelpers.OpenInDebug(file);
-
-        // Assert
-        //Verify.File(file);
+        Preview(pdfDocument);
     }
 
     [TestCase(ViewDirection.Back)]
@@ -109,15 +96,17 @@ internal sealed class ViewToPdfTests
         View view = builder.Build();
 
         // Act
-        var converter = new ViewToPdf();
+        ViewToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(view);
-        FileInfo file = TestHelpers.FileByTestContext("pdf");
-        pdfDocument.GeneratePdf(file.FullName);
 
         // Preview
-        //TestHelpers.OpenInDebug(file);
+        Preview(pdfDocument);
+    }
 
-        // Assert
-        //Verify.File(file);
+    private void Preview(PdfDocument pdfDocument)
+    {
+        FileInfo file = TestHelpers.FileByTestContext("pdf");
+        pdfDocument.GeneratePdf(file.FullName);
+        Model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

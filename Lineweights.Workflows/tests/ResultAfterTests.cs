@@ -44,7 +44,7 @@ internal sealed class ResultAfterTests : ResultModel
 
         // Assert
         Assert.That(result.Children.Count, Is.EqualTo(1), "Result children count");
-        string? path = result.Children.First().Metadata.Location?.LocalPath;
+        string? path = result.Children.First().Info.Location?.LocalPath;
         Assert.That(path, Does.EndWith($"{fileExtension}"), "File extension");
         Assert.That(File.Exists(path), "File exists");
     }

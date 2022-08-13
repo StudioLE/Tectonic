@@ -1,6 +1,4 @@
-using System.Diagnostics;
 using System.IO;
-using StudioLE.Core.System;
 using StudioLE.Core.System.IO;
 
 namespace Lineweights.Workflows.NUnit;
@@ -14,7 +12,6 @@ public static class TestHelpers
     /// Get a temp file with <paramref name="fileExtension"/>
     /// and named by TestContext.CurrentContext.Test.FullName plus the current date and time.
     /// </summary>
-    // TODO: Any calls to this should be replaced by SendToDashboard...
     public static FileInfo FileByTestContext(string fileExtension)
     {
         TestContext context = TestContext.CurrentContext;
@@ -23,23 +20,5 @@ public static class TestHelpers
         string fileName = $"{testName}-{now}.{fileExtension}";
         fileName = PathHelpers.ReplaceInvalidFileNameChars(fileName);
         return new(Path.GetTempPath() + fileName);
-    }
-
-    /// <summary>
-    /// Open <paramref name="file"/> when the calling assembly is a DEBUG build.
-    /// </summary>
-    // TODO: Any calls to this should be replaced by SendToDashboard...
-    public static void OpenInDebug(FileInfo file)
-    {
-        if (!AssemblyHelpers.IsDebugBuild())
-            return;
-
-        if (file is null || !file.Exists)
-            throw new FileNotFoundException("Failed to open the sample file. It does not exist.");
-
-        Process.Start(new ProcessStartInfo(file.FullName)
-        {
-            UseShellExecute = true
-        });
     }
 }

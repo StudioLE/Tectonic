@@ -4,10 +4,12 @@ using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.PDF.From.Elements;
 using Lineweights.Flex;
+using Lineweights.Workflows.Results;
 
 namespace Lineweights.PDF.Tests;
 
-internal sealed class SheetToPdfTests
+[SendToDashboardAfterTest]
+internal sealed class SheetToPdfTests : ResultModel
 {
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
@@ -34,7 +36,6 @@ internal sealed class SheetToPdfTests
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
@@ -50,16 +51,11 @@ internal sealed class SheetToPdfTests
         Sheet sheet = builder.Build();
 
         // Act
-        var converter = new SheetToPdf();
+        SheetToPdf converter = new();
         PdfSheet pdfDocument = converter.Convert(sheet);
-        FileInfo file = TestHelpers.FileByTestContext("pdf");
-        pdfDocument.GeneratePdf(file.FullName);
 
         // Preview
-        //TestHelpers.OpenInDebug(file);
-
-        // Assert
-        //Verify.File(file);
+        Preview(pdfDocument);
     }
 
     [Test]
@@ -84,7 +80,6 @@ internal sealed class SheetToPdfTests
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
@@ -100,16 +95,13 @@ internal sealed class SheetToPdfTests
         Sheet sheet = builder.Build();
 
         // Act
-        var converter = new SheetToPdf();
+        SheetToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(sheet);
         FileInfo file = TestHelpers.FileByTestContext("pdf");
         pdfDocument.GeneratePdf(file.FullName);
 
         // Preview
-        //TestHelpers.OpenInDebug(file);
-
-        // Assert
-        //Verify.File(file);
+        Preview(pdfDocument);
     }
 
     [Test]
@@ -135,7 +127,6 @@ internal sealed class SheetToPdfTests
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
@@ -151,16 +142,11 @@ internal sealed class SheetToPdfTests
         Sheet sheet = builder.Build();
 
         // Act
-        var converter = new SheetToPdf();
+        SheetToPdf converter = new();
         PdfSheet pdfDocument = converter.Convert(sheet);
-        FileInfo file = TestHelpers.FileByTestContext("pdf");
-        pdfDocument.GeneratePdf(file.FullName);
 
         // Preview
-        //TestHelpers.OpenInDebug(file);
-
-        // Assert
-        //Verify.File(file);
+        Preview(pdfDocument);
     }
 
     [Test]
@@ -186,7 +172,6 @@ internal sealed class SheetToPdfTests
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
@@ -202,15 +187,17 @@ internal sealed class SheetToPdfTests
         Sheet sheet = builder.Build();
 
         // Act
-        var converter = new SheetToPdf();
+        SheetToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(sheet);
-        FileInfo file = TestHelpers.FileByTestContext("pdf");
-        pdfDocument.GeneratePdf(file.FullName);
 
         // Preview
-        //TestHelpers.OpenInDebug(file);
+        Preview(pdfDocument);
+    }
 
-        // Assert
-        //Verify.File(file);
+    private void Preview(PdfDocument pdfDocument)
+    {
+        FileInfo file = TestHelpers.FileByTestContext("pdf");
+        pdfDocument.GeneratePdf(file.FullName);
+        Model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

@@ -12,6 +12,7 @@ internal sealed class SerialisationTests : ResultModel
     {
         // Arrange
         Model model = new();
+        model.AddElements(Scenes.GeometricElements());
 
         Result result = ResultBuilder.Default(new FileStorageStrategy(), model);
 
@@ -23,11 +24,11 @@ internal sealed class SerialisationTests : ResultModel
         Assert.Multiple(() =>
         {
             Assert.That(deserialised, Is.Not.Null, "Not null");
-            Assert.That(deserialised?.Metadata.Id, Is.EqualTo(result.Metadata.Id), "Parent Metadata Id");
+            Assert.That(deserialised?.Info.Id, Is.EqualTo(result.Info.Id), "Parent Id");
             Result? glb = result.Children.FirstOrDefault();
             Result? deserialisedGlb = deserialised?.Children.FirstOrDefault();
             Assert.That(deserialisedGlb, Is.Not.Null, "Child not null");
-            Assert.That(deserialisedGlb?.Metadata.Id, Is.EqualTo(glb?.Metadata.Id), "Child Metadata Id");
+            Assert.That(deserialisedGlb?.Info.Id, Is.EqualTo(glb?.Info.Id), "Child Id");
         });
     }
 

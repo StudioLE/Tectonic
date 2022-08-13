@@ -50,17 +50,17 @@ public class CardBase : ComponentBase
     /// </summary>
     private async Task LoadGlb()
     {
-        Logger.LogDebug($"{nameof(LoadGlb)}() called on result {Result.Metadata.Id}.");
+        Logger.LogDebug($"{nameof(LoadGlb)}() called on result {Result.Info.Id}.");
         Result? glb = Result
             .Children
-            .FirstOrDefault(x => x.Metadata.Location?.AbsoluteUri.EndsWith(".glb") ?? false);
+            .FirstOrDefault(x => x.Info.Location?.AbsoluteUri.EndsWith(".glb") ?? false);
         if (glb is null)
         {
-            Logger.LogError($"Failed to load glb. Result {Result.Metadata.Id} did not contain a glb.");
+            Logger.LogError($"Failed to load glb. Result {Result.Info.Id} did not contain a glb.");
             return;
         }
 
-        await Three.Init(Result.Metadata.Id.ToString(), glb.Metadata.Location!.AbsoluteUri);
+        await Three.Init(Result.Info.Id.ToString(), glb.Info.Location!.AbsoluteUri);
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public class CardBase : ComponentBase
     /// </summary>
     protected void Hide()
     {
-        Logger.LogDebug($"{nameof(Hide)}() called on result {Result.Metadata.Id}.");
+        Logger.LogDebug($"{nameof(Hide)}() called on result {Result.Info.Id}.");
         // TODO: Instead of this remove it from the observable collection
         IsHidden = true;
         //InvokeAsync(StateHasChanged);

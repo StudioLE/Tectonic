@@ -1,12 +1,16 @@
+using System.IO;
 using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.Flex;
 using Lineweights.SVG.From.Elements;
+using Lineweights.Workflows.Results;
 
 namespace Lineweights.SVG.Tests;
 
-internal sealed class SheetToSvgTests
+[SendToDashboardAfterTest]
+internal sealed class SheetToSvgTests : ResultModel
 {
+    private readonly SheetToSvg _converter = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
 
@@ -32,7 +36,6 @@ internal sealed class SheetToSvgTests
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
@@ -48,15 +51,14 @@ internal sealed class SheetToSvgTests
         Sheet sheet = builder.Build();
 
         // Act
-        var converter = new SheetToSvg();
-        SvgDocument svgDocument = converter.Convert(sheet);
+        SvgDocument svgDocument = _converter.Convert(sheet);
         string svgString = svgDocument.ToString();
 
         // Preview
-        //SampleHelpers.OpenInDebug(svgDocument);
+        Preview(svgDocument);
 
         // Assert
-        Verify.String(svgString);
+        Verify.String(svgString, ".svg");
     }
 
     [Test]
@@ -81,7 +83,6 @@ internal sealed class SheetToSvgTests
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
@@ -97,15 +98,14 @@ internal sealed class SheetToSvgTests
         Sheet sheet = builder.Build();
 
         // Act
-        var converter = new SheetToSvg();
-        SvgDocument svgDocument = converter.Convert(sheet);
+        SvgDocument svgDocument = _converter.Convert(sheet);
         string svgString = svgDocument.ToString();
 
         // Preview
-        //SampleHelpers.OpenInDebug(svgDocument);
+        Preview(svgDocument);
 
         // Assert
-        Verify.String(svgString);
+        Verify.String(svgString, ".svg");
     }
     [Test]
     public void SheetToSvg_Flat_Brickwork()
@@ -130,7 +130,6 @@ internal sealed class SheetToSvgTests
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
@@ -146,15 +145,14 @@ internal sealed class SheetToSvgTests
         Sheet sheet = builder.Build();
 
         // Act
-        var converter = new SheetToSvg();
-        SvgDocument svgDocument = converter.Convert(sheet);
+        SvgDocument svgDocument = _converter.Convert(sheet);
         string svgString = svgDocument.ToString();
 
         // Preview
-        //SampleHelpers.OpenInDebug(svgDocument);
+        Preview(svgDocument);
 
         // Assert
-        Verify.String(svgString);
+        Verify.String(svgString, ".svg");
     }
 
     [Test]
@@ -180,7 +178,6 @@ internal sealed class SheetToSvgTests
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
@@ -196,14 +193,20 @@ internal sealed class SheetToSvgTests
         Sheet sheet = builder.Build();
 
         // Act
-        var converter = new SheetToSvg();
-        SvgDocument svgDocument = converter.Convert(sheet);
+        SvgDocument svgDocument = _converter.Convert(sheet);
         string svgString = svgDocument.ToString();
 
         // Preview
-        //SampleHelpers.OpenInDebug(svgDocument);
+        Preview(svgDocument);
 
         // Assert
-        Verify.String(svgString);
+        Verify.String(svgString, ".svg");
+    }
+
+    private void Preview(SvgDocument svgDocument)
+    {
+        FileInfo file = TestHelpers.FileByTestContext("svg");
+        svgDocument.Save(file.FullName);
+        Model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

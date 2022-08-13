@@ -13,15 +13,15 @@ public static class ResultHelper
 {
     public static bool IsFileType(this Result @this, params string[] extensions)
     {
-        return @this.Metadata.Location is not null
-               && extensions.Any(@this.Metadata.Location.AbsoluteUri.EndsWith);
+        return @this.Info.Location is not null
+               && extensions.Any(@this.Info.Location.AbsoluteUri.EndsWith);
     }
 
     public static string GetTitle(this Result @this)
     {
-        return string.IsNullOrEmpty(@this.Metadata.Name)
-            ? @this.Metadata.Id.ToString()
-            : @this.Metadata.Name;
+        return string.IsNullOrEmpty(@this.Info.Name)
+            ? @this.Info.Id.ToString()
+            : @this.Info.Name;
     }
 
     public static string GetMimeType(this Result @this)
@@ -31,10 +31,10 @@ public static class ResultHelper
 
     public static string GetFileAsString(this Result @this)
     {
-        if (@this.Metadata.Location is null)
+        if (@this.Info.Location is null)
             return string.Empty;
         return new HttpClient()
-            .GetStringAsync(@this.Metadata.Location.AbsoluteUri)
+            .GetStringAsync(@this.Info.Location.AbsoluteUri)
             .Result;
     }
 

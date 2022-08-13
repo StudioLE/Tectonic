@@ -49,8 +49,8 @@ public sealed class OpenAsFile : IResultStrategy
 
     private static void RecursiveOpen(Result result)
     {
-        if (File.Exists(result.Metadata.Location?.AbsolutePath))
-            Process.Start(new ProcessStartInfo(result.Metadata.Location!.AbsolutePath)
+        if (File.Exists(result.Info.Location?.AbsolutePath))
+            Process.Start(new ProcessStartInfo(result.Info.Location!.AbsolutePath)
             {
                 UseShellExecute = true
             });

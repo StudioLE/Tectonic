@@ -13,6 +13,5 @@ public interface IStorageStrategy
     Task<Result> WriteAsync(
         DocumentInformation doc,
         string fileExtension,
-        string? mimeType,
         Func<Result, Stream> source);
 }

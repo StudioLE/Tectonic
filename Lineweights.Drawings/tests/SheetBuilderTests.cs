@@ -38,7 +38,6 @@ internal sealed class SheetBuilderTests : ResultModel
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
@@ -86,7 +85,6 @@ internal sealed class SheetBuilderTests : ResultModel
         View[] views = viewDirections
             .Select(direction => viewBuilder
                 .ViewDirection(direction)
-                // TODO: Set Name
                 .Build())
             .ToArray();
 
