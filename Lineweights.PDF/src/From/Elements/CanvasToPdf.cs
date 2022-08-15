@@ -1,5 +1,5 @@
-using StudioLE.Core.Exceptions;
 using Lineweights.Drawings;
+using StudioLE.Core.Exceptions;
 
 namespace Lineweights.PDF.From.Elements;
 
@@ -20,7 +20,7 @@ internal sealed class CanvasToPdf : IConverter<Canvas, SKCanvas, SKCanvas>
         };
 
         var converter = new ElementToPdf();
-        foreach(GeometricElement element in geometry)
+        foreach (GeometricElement element in geometry)
             converter.Convert(element, skCanvas);
 
         return skCanvas;

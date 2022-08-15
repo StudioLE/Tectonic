@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Lineweights.Dashboard.States;
 using Lineweights.Workflows.Results;
+using Microsoft.AspNetCore.Components;
 
 namespace Lineweights.Dashboard.Pages;
 

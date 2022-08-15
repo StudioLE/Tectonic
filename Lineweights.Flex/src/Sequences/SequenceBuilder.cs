@@ -11,7 +11,6 @@ namespace Lineweights.Flex.Sequences;
 public abstract class SequenceBuilder
 {
     #region Fields
-    // ReSharper disable InconsistentNaming
 
     /// <summary>
     /// The index to start the sequence at.
@@ -46,7 +45,6 @@ public abstract class SequenceBuilder
     /// <inheritdoc cref="Sequences.ConstraintMode"/>
     internal ConstraintMode _mode = Sequences.ConstraintMode.And;
 
-    // ReSharper restore InconsistentNaming
     #endregion
 
     /// <inheritdoc cref="SequenceBuilder"/>

@@ -28,7 +28,7 @@ internal sealed class GeometricElementsScene : ResultModel
         // Write to file
         Scenes.ToJson(Scenes.Name.GeometricElements, geometry);
     }
-    
+
     private static ModelArrows OriginAsModelArrows()
     {
         return CreateModelArrows.ByTransform(new(-.400, -.400, -.400), .200);

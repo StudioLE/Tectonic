@@ -1,6 +1,6 @@
-using Lineweights.Masterplanning.Elements;
 using Lineweights.Curves;
 using Lineweights.Curves.Interpolation;
+using Lineweights.Masterplanning.Elements;
 using Lineweights.Workflows.Results;
 
 namespace Lineweights.Masterplanning.Tests.Elements;
@@ -76,6 +76,6 @@ internal sealed class PathTests : ResultModel
         Model.AddElements(path);
 
         // Assert
-        Verify.ElementsByBounds(new [] { path });
+        Verify.ElementsByBounds(new[] { path });
     }
 }

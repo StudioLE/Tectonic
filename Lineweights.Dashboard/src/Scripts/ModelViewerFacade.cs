@@ -15,7 +15,8 @@ namespace Lineweights.Dashboard.Scripts;
 /// This class can be registered as scoped DI service and then injected into Blazor
 /// components for use.
 /// </remarks>
-public class ModelViewerFacade : IAsyncDisposable {
+public class ModelViewerFacade : IAsyncDisposable
+{
 
     private readonly IJSRuntime _js;
     private readonly ILogger<ModelViewerFacade> _logger;
@@ -25,7 +26,7 @@ public class ModelViewerFacade : IAsyncDisposable {
     {
         _js = js;
         _logger = logger;
-        _moduleTask = new (() => js.InvokeAsync<IJSObjectReference>("import", "./dist/bundle.js").AsTask());
+        _moduleTask = new(() => js.InvokeAsync<IJSObjectReference>("import", "./dist/bundle.js").AsTask());
     }
 
     public async Task Init(string id, string uri)

@@ -35,7 +35,7 @@ internal sealed class CircleToSvg : IConverter<Circle, SvgElement>
     /// <see href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/circle">SVG circle documentation</see>
     /// </remarks>
     public SvgElement Convert(Circle circle)
-{
+    {
         return new("circle ",
             new XAttribute("cx", circle.Center.X),
             new XAttribute("cy", circle.Center.Y),

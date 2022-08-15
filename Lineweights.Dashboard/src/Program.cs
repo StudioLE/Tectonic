@@ -21,11 +21,8 @@ builder.Services.AddScoped<TestRunnerState>();
 
 // Add SignalR services
 // https://docs.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor?view=aspnetcore-6.0&tabs=visual-studio&pivots=server
-builder.Services.AddResponseCompression(opts =>
-{
-    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-        new[] { "application/octet-stream" });
-});
+builder.Services.AddResponseCompression(opts => opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" }));
 
 // Use Newtonsoft's Json.NET for signal serialisation
 // https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-6.0&tabs=visual-studio#use-newtonsoftjson-in-an-aspnet-core-30-signalr-project
@@ -34,17 +31,14 @@ builder.Services.AddSignalR().AddNewtonsoftJsonProtocol();
 // Add JSRuntime
 //builder.Services.AddSingleton(serviceProvider => (IJSUnmarshalledRuntime)serviceProvider.GetRequiredService<IJSRuntime>());
 
-builder.Services.Configure<StaticFileOptions>(options =>
+builder.Services.Configure<StaticFileOptions>(options => options.ContentTypeProvider = new FileExtensionContentTypeProvider
 {
-    options.ContentTypeProvider = new FileExtensionContentTypeProvider
-    {
-        Mappings =
+    Mappings =
         {
             [".gltf"] = "model/gltf+json",
             [".glb"] = "model/gltf-binary",
             [".bin"] = "application/octet-stream"
         }
-    };
 });
 
 // Launch Azurite

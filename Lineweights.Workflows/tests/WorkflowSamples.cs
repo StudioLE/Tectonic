@@ -36,7 +36,8 @@ internal static class WorkflowSamples
             {
                 TableRow row = new()
                 {
-                    Type = grouping.Key.Name, Count = grouping.Count()
+                    Type = grouping.Key.Name,
+                    Count = grouping.Count()
                 };
                 Element prototype = grouping.First();
                 if (prototype is not GeometricElement geometric)
@@ -59,7 +60,7 @@ internal static class WorkflowSamples
             Location = new(file.FullName)
         };
         using StreamWriter writer = new(file.FullName);
-        using CsvWriter csv = new (writer, CultureInfo.InvariantCulture);
+        using CsvWriter csv = new(writer, CultureInfo.InvariantCulture);
         csv.WriteRecords(table);
 
         return doc;

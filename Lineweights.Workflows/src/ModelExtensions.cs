@@ -16,7 +16,7 @@ public static class ModelExtensions
     {
         material ??= MaterialByName("White");
         Result<BBox3> result = element.TryGetTransformedBounds();
-        if(result.IsSuccess)
+        if (result.IsSuccess)
             @this.AddElements(result.Value.ToModelCurves(null, material));
     }
 

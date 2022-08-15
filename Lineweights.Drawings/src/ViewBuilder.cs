@@ -1,6 +1,6 @@
-﻿using StudioLE.Core.Exceptions;
-using Lineweights.Drawings.Rendering;
+﻿using Lineweights.Drawings.Rendering;
 using Lineweights.Flex.Coordination;
+using StudioLE.Core.Exceptions;
 
 namespace Lineweights.Drawings;
 

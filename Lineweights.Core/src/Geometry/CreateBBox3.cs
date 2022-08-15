@@ -34,7 +34,7 @@ public static class CreateBBox3
             {
                 Result<BBox3> result = element.TryGetTransformedBounds();
                 return result.IsSuccess
-                    ? new [] { result.Value }
+                    ? new[] { result.Value }
                     : Enumerable.Empty<BBox3>();
             })
             .Merged();

@@ -3,7 +3,7 @@
 /// <summary>
 /// Methods to help with <see cref="ICloneable"/>.
 /// </summary>
-public static class ICloneableHelpers
+public static class CloneableHelpers
 {
     /// <summary>
     /// <inheritdoc cref="ICloneable.Clone"/>

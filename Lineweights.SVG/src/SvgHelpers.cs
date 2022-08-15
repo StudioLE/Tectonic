@@ -1,5 +1,5 @@
-using StudioLE.Core.System;
 using Lineweights.Drawings;
+using StudioLE.Core.System;
 
 namespace Lineweights.SVG;
 
@@ -14,7 +14,7 @@ internal static class SvgHelpers
     /// </summary>
     internal static XAttribute PointsAttribute(IEnumerable<Vector3> vertices)
     {
-        string value = string.Join(" " , vertices.Select(v => $"{v.X.Round()},{v.Y.InvertY().Round()}"));
+        string value = string.Join(" ", vertices.Select(v => $"{v.X.Round()},{v.Y.InvertY().Round()}"));
         return new("points", value);
     }
 

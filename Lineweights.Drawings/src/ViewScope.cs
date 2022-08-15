@@ -58,7 +58,8 @@ public sealed class ViewScope : Element
     /// <summary>
     /// Get the outline of the view scope plane.
     /// </summary>
-    public Polygon Border {
+    public Polygon Border
+    {
         get
         {
             Vector3 bottomLeft = Origin

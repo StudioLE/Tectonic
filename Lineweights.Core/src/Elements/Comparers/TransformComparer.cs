@@ -12,7 +12,7 @@ public sealed class TransformComparer : IEqualityComparer<Transform>
             return true;
         if (first.GetType() != second.GetType())
             return false;
-        
+
         return first.Matrix.Equals(second.Matrix);
     }
 

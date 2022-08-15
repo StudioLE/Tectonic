@@ -1,6 +1,6 @@
-﻿using StudioLE.Core.Exceptions;
-using Lineweights.Flex.Coordination;
+﻿using Lineweights.Flex.Coordination;
 using Lineweights.Flex.Sequences;
+using StudioLE.Core.Exceptions;
 
 namespace Lineweights.Flex;
 
@@ -243,7 +243,7 @@ public sealed class Flex2d : FlexBase
         Assembly assembly = new(instances, assemblyBounds);
         Vector3 containerOrigin = _container!.Bounds.PointAt(0.5, 0.5, 0.5);
 
-        if(isMainArrangement)
+        if (isMainArrangement)
         {
             Vector3 settingOut = _normalSettingOut switch
             {

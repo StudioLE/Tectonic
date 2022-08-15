@@ -63,7 +63,7 @@ public static class Helpers
             .Segments()
             .Batch(spline.SamplesPerSegment)
             .Select(lines => new Polyline(lines
-                .SelectMany(line => new [] { line.Start, line.End })
+                .SelectMany(line => new[] { line.Start, line.End })
                 .ToArray()));
 
         return polylines

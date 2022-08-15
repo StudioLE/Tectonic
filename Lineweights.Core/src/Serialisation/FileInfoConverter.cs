@@ -11,7 +11,7 @@ public class FileInfoConverter : JsonConverter
     /// <inheritdoc/>
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
-        if(value is not FileInfo file)
+        if (value is not FileInfo file)
             throw new($"Failed to serialise {nameof(FileInfo)}.");
         writer.WriteValue(file.FullName);
     }

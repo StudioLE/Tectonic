@@ -32,10 +32,10 @@ public sealed class Hermite : IInterpolation
 
         double mu2 = mu * mu;
         double mu3 = mu2 * mu;
-        double m0 = (startVector - (double) previousVector) * (1 + Bias) * (1 - Tension) / 2;
+        double m0 = (startVector - (double)previousVector) * (1 + Bias) * (1 - Tension) / 2;
         m0 += (endVector - startVector) * (1 - Bias) * (1 - Tension) / 2;
         double m1 = (endVector - startVector) * (1 + Bias) * (1 - Tension) / 2;
-        m1 += ((double) nextVector - endVector) * (1 - Bias) * (1 - Tension) / 2;
+        m1 += ((double)nextVector - endVector) * (1 - Bias) * (1 - Tension) / 2;
         double a0 = 2 * mu3 - 3 * mu2 + 1;
         double a1 = mu3 - 2 * mu2 + mu;
         double a2 = mu3 - mu2;

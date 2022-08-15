@@ -32,7 +32,7 @@ public sealed class WrappingSequence : SequenceBuilder
         _startIndex = initialIndex;
         return patterns;
     }
-    
+
     /// <summary>
     /// A pattern which wraps to a new line when it meets its constraint.
     /// </summary>

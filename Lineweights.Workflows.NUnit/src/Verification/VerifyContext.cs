@@ -67,21 +67,12 @@ internal class VerifyContext : IVerifyContext
     private Test GetTest()
     {
         TestContext.TestAdapter adapter = _context.Test;
-        FieldInfo? temp = typeof(TestContext.TestAdapter)
-            .GetField("_test", BindingFlags.Instance | BindingFlags.NonPublic);
-
-        if (temp is null)
-            throw new("Could not find field `_test` on TestContext.TestAdapter.");
-
-        FieldInfo field = temp;
-
-        //object? val = field.GetValue(adapter);
-
-        var test = (Test)field.GetValue(adapter);
+        FieldInfo field = typeof(TestContext.TestAdapter)
+                              .GetField("_test", BindingFlags.Instance | BindingFlags.NonPublic)
+                          ?? throw new("Could not find field `_test` on TestContext.TestAdapter.");
+        Test test = (Test)field.GetValue(adapter);
         if (test.TypeInfo == null || test.Method is null)
-        {
             throw new("Expected Test.TypeInfo and Test.Method to not be null. Raise a Pull Request with a test that replicates this problem.");
-        }
         return test;
     }
 
@@ -109,9 +100,7 @@ internal class VerifyContext : IVerifyContext
             return "";
 
         if (methodParameters.Length != parameterValues.Length)
-        {
             throw new($"The number of passed in parameters ({parameterValues.Length}) must match the number of parameters for the method ({methodParameters.Length}).");
-        }
 
         var dictionary = new Dictionary<string, object?>();
         for (int index = 0; index < methodParameters.Length; index++)

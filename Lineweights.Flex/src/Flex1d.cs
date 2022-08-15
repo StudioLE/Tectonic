@@ -1,6 +1,6 @@
-﻿using StudioLE.Core.Exceptions;
-using Lineweights.Flex.Coordination;
+﻿using Lineweights.Flex.Coordination;
 using Lineweights.Flex.Sequences;
+using StudioLE.Core.Exceptions;
 
 namespace Lineweights.Flex;
 
@@ -269,23 +269,16 @@ public sealed class Flex1d : FlexBase
 
     private double MainRemainder(Justification justification, Proxy[] components)
     {
-        double total;
-        switch (justification)
+        double total = justification switch
         {
-            case Justification.Start:
-            case Justification.End:
-            case Justification.Center:
-                total = MainDimensionWithMinSpacing(components);
-                break;
-            case Justification.SpaceAround:
-            case Justification.SpaceBetween:
-            case Justification.SpaceEvenly:
-                total = MainDimensionWithoutMinSpacing(components);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-
+            Justification.Start
+                or Justification.End
+                or Justification.Center => MainDimensionWithMinSpacing(components),
+            Justification.SpaceAround
+                or Justification.SpaceBetween
+                or Justification.SpaceEvenly => MainDimensionWithoutMinSpacing(components),
+            _ => throw new EnumSwitchException<Justification>("Failed to get remainder.", justification),
+        };
         return TargetLength - total;
     }
 

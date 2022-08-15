@@ -6,9 +6,9 @@ internal sealed class Program
 {
     public static void Main(string[] args)
     {
-        #if DEBUG
+#if DEBUG
         throw new("Benchmarks must be run as Release configuration.");
-        #endif
+#endif
         BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
     }
 }

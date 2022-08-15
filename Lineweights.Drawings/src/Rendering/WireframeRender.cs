@@ -14,7 +14,7 @@ public sealed class WireframeRender : RenderBase<ModelCurve>
 
     /// <inheritdoc />
     public override Result<ModelCurve> FromCurve(Curve curve, Transform transform, Material material)
-{
+    {
         Curve transformed = curve.Transformed(transform);
         Result<Curve> result = transformed.TryProject(Plane);
         return result.IsSuccess

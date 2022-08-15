@@ -59,7 +59,7 @@ public static class TransformHelpers
             comparison = source.Concatenated(rotation);
         }
 
-        #if false
+#if false
         double checkXAroundX = target.XAxis.SignedPlaneAngleTo(comparison.XAxis, target.XAxis);
         double checkXAroundY = target.XAxis.SignedPlaneAngleTo(comparison.XAxis, target.YAxis);
         double checkXAroundZ = target.XAxis.SignedPlaneAngleTo(comparison.XAxis, target.ZAxis);
@@ -71,7 +71,7 @@ public static class TransformHelpers
         double checkZAroundX = target.ZAxis.SignedPlaneAngleTo(comparison.ZAxis, target.XAxis);
         double checkZAroundY = target.ZAxis.SignedPlaneAngleTo(comparison.ZAxis, target.YAxis);
         double checkZAroundZ = target.ZAxis.SignedPlaneAngleTo(comparison.ZAxis, target.ZAxis);
-        #endif
+#endif
 
         return rotation;
     }
@@ -111,7 +111,7 @@ public static class TransformHelpers
         if (!double.IsNaN(rotationYAroundZ))
             source.Rotate(target.ZAxis, rotationYAroundZ * -1);
 
-        #if false
+#if false
         double checkXAroundX = target.XAxis.SignedPlaneAngleTo(result.XAxis, target.XAxis);
         double checkXAroundY = target.XAxis.SignedPlaneAngleTo(result.XAxis, target.YAxis);
         double checkXAroundZ = target.XAxis.SignedPlaneAngleTo(result.XAxis, target.ZAxis);
@@ -123,7 +123,7 @@ public static class TransformHelpers
         double checkZAroundX = target.ZAxis.SignedPlaneAngleTo(result.ZAxis, target.XAxis);
         double checkZAroundY = target.ZAxis.SignedPlaneAngleTo(result.ZAxis, target.YAxis);
         double checkZAroundZ = target.ZAxis.SignedPlaneAngleTo(result.ZAxis, target.ZAxis);
-        #endif
+#endif
 
         source.Move(translation.Negate());
     }

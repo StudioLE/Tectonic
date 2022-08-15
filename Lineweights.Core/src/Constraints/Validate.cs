@@ -38,7 +38,7 @@ public static class Validate
     /// </summary>
     public static T IsTypeOrThrow<T>(object obj, string contextMessage)
     {
-        if(obj is T tValue)
+        if (obj is T tValue)
             return tValue;
         string message = contextMessage;
         message += $" Expected the {obj.GetType()} to be a {nameof(T)}.";

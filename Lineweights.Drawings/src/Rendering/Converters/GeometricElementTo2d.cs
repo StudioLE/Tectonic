@@ -11,8 +11,8 @@ internal sealed class GeometricElementTo2d<T> : IConverter<GeometricElement, IEn
     /// <inheritdoc cref="GeometricElementTo2d{T}"/>
     public IEnumerable<Result<T>> Convert(GeometricElement element, RenderBase<T> render)
     {
-        if(element.Representation is null)
-            return new [] { Result<T>.Error("GeometricElement didn't have a representation") };
+        if (element.Representation is null)
+            return new[] { Result<T>.Error("GeometricElement didn't have a representation") };
         return element
             .Representation
             .SolidOperations

@@ -1,6 +1,4 @@
-﻿// ReSharper disable InconsistentNaming
-
-namespace Lineweights.Flex.Coordination;
+﻿namespace Lineweights.Flex.Coordination;
 
 /// <summary>
 /// Methods to help with coordinating dimensions such as those used in brickwork.
@@ -8,6 +6,7 @@ namespace Lineweights.Flex.Coordination;
 /// <remarks>
 /// <see href="https://www.brick.org.uk/admin/resources/designing-to-brickwork-dimensions.pdf">PDF with more information on brickwork dimensions.</see>
 /// </remarks>
+// ReSharper disable once InconsistentNaming
 public static class CO
 {
     /// <summary>
@@ -20,7 +19,10 @@ public static class CO
     /// <param name="core">The core size of an element without any spacing.</param>
     /// <param name="spacing">The size of one spacing.</param>
     /// <returns>The core size without any spacing.</returns>
-    public static double Minus(double core, double spacing = 0) => core;
+    public static double Minus(double core, double spacing = 0)
+    {
+        return core;
+    }
 
     /// <summary>
     /// Get the core size + 1 spacing or join.
@@ -32,7 +34,10 @@ public static class CO
     /// <param name="core">The core size of an element without any spacing.</param>
     /// <param name="spacing">The size of one spacing.</param>
     /// <returns>The core size without any spacing.</returns>
-    public static double Nominal(double core, double spacing) => core + spacing;
+    public static double Nominal(double core, double spacing)
+    {
+        return core + spacing;
+    }
 
     /// <summary>
     /// Get the core size + 2 spacing or joins.
@@ -44,5 +49,8 @@ public static class CO
     /// <param name="core">The core size of an element without any spacing.</param>
     /// <param name="spacing">The size of one spacing.</param>
     /// <returns>The core size without any spacing.</returns>
-    public static double Positive(double core, double spacing) => core + spacing * 2;
+    public static double Positive(double core, double spacing)
+    {
+        return core + spacing * 2;
+    }
 }

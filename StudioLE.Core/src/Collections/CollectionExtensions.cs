@@ -12,7 +12,7 @@ public static class CollectionExtensions
     {
         return index >= 0 && index < @this.Count;
     }
-    
+
     /// <summary>
     /// Try and get the element at <paramref name="index"/>.
     /// </summary>

@@ -1,5 +1,5 @@
-﻿using Lineweights.Flex.Coordination;
-using Lineweights.Flex;
+﻿using Lineweights.Flex;
+using Lineweights.Flex.Coordination;
 using Lineweights.Flex.Sequences;
 
 namespace Lineweights.Drawings;
@@ -233,7 +233,7 @@ public sealed class SheetBuilder
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = _viewArrangement.ToComponents();
 
         // TODO: Rather than ToComponents can we just Build, inspect the proxy and then manually apply the Proxy translation?
-        
+
         content.Views = components.SelectMany(x => x).ToArray();
 
         return content;

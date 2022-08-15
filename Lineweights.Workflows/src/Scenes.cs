@@ -8,10 +8,8 @@ namespace Lineweights.Workflows;
 /// </summary>
 public static class Scenes
 {
-    // ReSharper disable once InconsistentNaming
     private static readonly string _pathFromRootToSamples = "Lineweights.Workflows/samples";
 
-    // ReSharper disable once InconsistentNaming
     private static readonly string[] _possiblePathsToRoot =
     {
         "../../../../../", "../../"
@@ -81,6 +79,6 @@ public static class Scenes
         FileInfo? file = _possiblePathsToRoot
             .Select(pathToRoot => new FileInfo(Path.Combine(cwd, pathToRoot, _pathFromRootToSamples, $"{name}.json")))
             .FirstOrDefault(x => x.Exists);
-        return file ?? throw new FileNotFoundException("Could not find the sample file: " + name); ;
+        return file ?? throw new FileNotFoundException("Could not find the sample file: " + name);
     }
 }

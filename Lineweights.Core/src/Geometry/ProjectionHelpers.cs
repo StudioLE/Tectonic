@@ -102,7 +102,7 @@ public static class ProjectionHelpers
     {
         Vector3 previous = new();
         return vertices
-            .Select<Vector3, Vector3?> ((current, i) =>
+            .Select<Vector3, Vector3?>((current, i) =>
             {
                 if (i == 0)
                 {

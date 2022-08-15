@@ -44,7 +44,7 @@ public sealed class View : Canvas
         ParallelQuery<GeometricElement> render = RenderStrategy.Render(Scope);
 
         return BorderVisible
-            ? render.Concat(new GeometricElement [] { Scope.Border }.AsParallel())
+            ? render.Concat(new GeometricElement[] { Scope.Border }.AsParallel())
             : render;
     }
 

@@ -32,7 +32,7 @@ internal sealed class LineToPdf : IConverter<Line, SKPath>
     {
         Vector3ToPdf converter = new();
         SKPath path = new();
-        path.AddPoly(new [] { line.Start, line.End }.Select(converter.Convert).ToArray());
+        path.AddPoly(new[] { line.Start, line.End }.Select(converter.Convert).ToArray());
         return path;
     }
 }

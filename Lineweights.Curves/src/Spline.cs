@@ -1,8 +1,8 @@
-﻿using StudioLE.Core.Exceptions;
-using StudioLE.Core.System;
+﻿using Lineweights.Core.Serialisation;
 using Lineweights.Curves.Interpolation;
 using Newtonsoft.Json;
-using Lineweights.Core.Serialisation;
+using StudioLE.Core.Exceptions;
+using StudioLE.Core.System;
 
 namespace Lineweights.Curves;
 
@@ -227,7 +227,7 @@ public sealed class Spline : Polyline, ICloneable
             .Range(0, SampleCount + 1)
             .Select(i => PointAt((double)i / SampleCount))
             .ToArray();
-        
+
     }
 
     /// <summary>
@@ -342,7 +342,7 @@ public sealed class Spline : Polyline, ICloneable
             .ToArray();
         return newSpline;
     }
-    
+
     #endregion
 
     #region Clone methods

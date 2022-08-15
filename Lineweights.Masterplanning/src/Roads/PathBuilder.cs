@@ -1,6 +1,6 @@
-﻿using Lineweights.Masterplanning.Elements;
-using Lineweights.Curves;
+﻿using Lineweights.Curves;
 using Lineweights.Masterplanning.Distribution;
+using Lineweights.Masterplanning.Elements;
 
 namespace Lineweights.Masterplanning.Roads;
 
@@ -35,7 +35,7 @@ public sealed class PathBuilder
     /// The thickness of the <see cref="Path"/>.
     /// </summary>
     public double Thickness { get; init; } = DefaultThickness;
-    
+
     /// <inheritdoc cref="GeometricElement.Material"/>
     public Material Material { get; init; } = BuiltInMaterials.Default;
 

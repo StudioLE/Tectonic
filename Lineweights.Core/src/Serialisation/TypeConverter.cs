@@ -12,7 +12,7 @@ internal class TypeConverter : JsonConverter
     /// <inheritdoc/>
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
-        if(value is not Type type)
+        if (value is not Type type)
             throw new("Failed to serialise FileInfo.");
 
         string[] typeQualifiers = type

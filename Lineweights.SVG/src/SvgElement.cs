@@ -5,8 +5,7 @@ namespace Lineweights.SVG;
 /// </summary>
 public sealed class SvgElement : XElement
 {
-    // ReSharper disable once InconsistentNaming
-    private static readonly XNamespace Namespace = "http://www.w3.org/2000/svg";
+    public static readonly XNamespace Namespace = "http://www.w3.org/2000/svg";
 
     /// <inheritdoc cref="SvgElement" />
     public SvgElement(XElement other) : base(other)

@@ -88,6 +88,9 @@ public sealed class SendToDashboard : IResultStrategy
     private class NoRetries : IRetryPolicy
     {
         /// <inheritdoc />
-        public TimeSpan? NextRetryDelay(RetryContext retryContext) => null;
+        public TimeSpan? NextRetryDelay(RetryContext retryContext)
+        {
+            return null;
+        }
     }
 }

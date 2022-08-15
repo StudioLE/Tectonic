@@ -17,7 +17,7 @@ public sealed class IndexConstraint : Constraint<int?>
 
     /// <inheritdoc/>
     public override bool IsValid()
-{
+    {
         return Value >= 0 || Value < _collectionCount;
     }
 

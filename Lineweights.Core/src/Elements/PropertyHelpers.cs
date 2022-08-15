@@ -18,7 +18,7 @@ public static class PropertyHelpers
             .TryGetValue(key, out object obj);
         if (!isSet)
             return Result<T>.NotFound();
-        if(obj is not T value)
+        if (obj is not T value)
             return Result<T>.Error("InvalidType");
         return value;
     }
