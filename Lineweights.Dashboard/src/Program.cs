@@ -4,69 +4,82 @@ using Lineweights.Dashboard.Scripts;
 using Lineweights.Dashboard.States;
 using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.AspNetCore.StaticFiles;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+namespace Lineweights.Dashboard;
 
-// Add Blazor services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
-
-
-
-// Inject states
-builder.Services.AddScoped<ModelViewerFacade>();
-builder.Services.AddScoped<SignalRState>();
-builder.Services.AddScoped<TestRunnerState>();
-
-// Add SignalR services
-// https://docs.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor?view=aspnetcore-6.0&tabs=visual-studio&pivots=server
-builder.Services.AddResponseCompression(opts => opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-        new[] { "application/octet-stream" }));
-
-// Use Newtonsoft's Json.NET for signal serialisation
-// https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-6.0&tabs=visual-studio#use-newtonsoftjson-in-an-aspnet-core-30-signalr-project
-builder.Services.AddSignalR().AddNewtonsoftJsonProtocol();
-
-// Add JSRuntime
-//builder.Services.AddSingleton(serviceProvider => (IJSUnmarshalledRuntime)serviceProvider.GetRequiredService<IJSRuntime>());
-
-builder.Services.Configure<StaticFileOptions>(options => options.ContentTypeProvider = new FileExtensionContentTypeProvider
+public class Program
 {
-    Mappings =
-        {
-            [".gltf"] = "model/gltf+json",
-            [".glb"] = "model/gltf-binary",
-            [".bin"] = "application/octet-stream"
-        }
-});
+    private readonly WebApplicationBuilder _builder;
+    private Process? _azurite;
 
-// Launch Azurite
-Process? azurite = Process.Start(new ProcessStartInfo
-{
-    FileName = "npm",
-    Arguments = "run azurite",
-    UseShellExecute = true
-});
+    private Program(string[] args)
+    {
+        _builder = WebApplication.CreateBuilder(args);
+        InjectServices();
+        StartAzurite();
+        RunApp();
+        StopAzurite();
+    }
 
+   private void InjectServices()
+    {
+        // Add Blazor services to the container.
+        _builder.Services.AddRazorPages();
+        _builder.Services.AddServerSideBlazor();
 
-WebApplication app = builder.Build();
+        // Inject states
+        _builder.Services.AddScoped<ModelViewerFacade>();
+        _builder.Services.AddScoped<SignalRState>();
+        _builder.Services.AddScoped<TestRunnerState>();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-    app.UseExceptionHandler("/Error");
+        // Add SignalR services
+        // https://docs.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor?view=aspnetcore-6.0&tabs=visual-studio&pivots=server
+        _builder.Services.AddResponseCompression(opts => opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+            new[] { "application/octet-stream" }));
 
-app.UseStaticFiles();
+        // Use Newtonsoft's Json.NET for signal serialisation
+        // https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-6.0&tabs=visual-studio#use-newtonsoftjson-in-an-aspnet-core-30-signalr-project
+        _builder.Services.AddSignalR().AddNewtonsoftJsonProtocol();
+    }
 
-//app.UsePathBase();
+   private void StartAzurite()
+   {
+       _azurite = Process.Start(new ProcessStartInfo
+       {
+           FileName = "npm",
+           Arguments = "run azurite",
+           UseShellExecute = true
+       });
+       // TODO: Azurite console to logger.
+   }
 
-app.UseRouting();
+   private void StopAzurite()
+   {
+       // TODO: Stop azurite
+       if (_azurite is null)
+           return;
+       _azurite.Kill();
+       _azurite.WaitForExit();
+       _azurite.Dispose();
+   }
 
-app.MapBlazorHub();
+   private void RunApp()
+    {
+        WebApplication app = _builder.Build();
+        // Configure the HTTP request pipeline.
+        if (!app.Environment.IsDevelopment())
+            app.UseExceptionHandler("/Error");
+        app.UseStaticFiles();
+        //app.UsePathBase();
+        app.UseRouting();
+        app.MapBlazorHub();
+        app.MapHub<SignalRHub>(SendToDashboard.HubPath);
+        app.MapFallbackToPage("/_Host");
+        app.Run();
+    }
 
-// Add SignalR hub
-app.MapHub<SignalRHub>(SendToDashboard.HubPath);
-
-app.MapFallbackToPage("/_Host");
-
-app.Run();
+   public static void Main(string[] args)
+   {
+       Program program = new(args);
+   }
+}

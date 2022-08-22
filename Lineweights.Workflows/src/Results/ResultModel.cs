@@ -53,7 +53,7 @@ public class ResultModel
     public static Arc TestArc = new(Vector3.Origin, 2.0, 0.0, 90.0);
 
     /// <summary>
-    /// A test  <see cref="Polyline"/>..
+    /// A test <see cref="Polyline"/>..
     /// </summary>
     public static Polyline TestPolyline = new(new Vector3(0, 0), new Vector3(0, 2), new Vector3(0, 3, 1));
 

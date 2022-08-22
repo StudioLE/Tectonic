@@ -1,7 +1,7 @@
 namespace Lineweights.Workflows;
 
 /// <summary>
-/// The doc of the document.
+/// The metadata of the document.
 /// This is loosely based on
 /// <see href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/link/ifcdocumentinformation.htm">IfcDocumentInformation</see>.
 /// </summary>

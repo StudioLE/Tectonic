@@ -1,6 +1,6 @@
 using Lineweights.Workflows.Results;
 
-namespace Lineweights.Workflows.Tests;
+namespace Lineweights.Workflows.Tests.Results;
 
 internal sealed class ResultBuilderTests
 {
@@ -70,7 +70,7 @@ internal sealed class ResultBuilderTests
         // Arrange
         Model model = new();
         model.AddElements(_geometry);
-        model.AddElements(WorkflowSamples.Views(_geometry));
+        model.AddElements(ResultSamples.Views(_geometry));
 
         // Act
         ResultBuilder builder = new ResultBuilder(_storageStrategy)
@@ -90,7 +90,7 @@ internal sealed class ResultBuilderTests
         // Arrange
         Model model = new();
         model.AddElements(_geometry);
-        model.AddElements(WorkflowSamples.Views(_geometry));
+        model.AddElements(ResultSamples.Views(_geometry));
 
         // Act
         ResultBuilder builder = new ResultBuilder(_storageStrategy)
@@ -110,7 +110,7 @@ internal sealed class ResultBuilderTests
         // Arrange
         Model model = new();
         model.AddElements(_geometry);
-        DocumentInformation doc = WorkflowSamples.CsvDocumentInformation(_geometry);
+        DocumentInformation doc = ResultSamples.CsvDocumentInformation(_geometry);
         model.AddElements(doc);
 
         // Act
@@ -130,7 +130,7 @@ internal sealed class ResultBuilderTests
     {
         // Arrange
         Model model = new();
-        model.AddElements(WorkflowSamples.All());
+        model.AddElements(ResultSamples.All());
 
         // Act
         Result result = ResultBuilder.Default(_storageStrategy, model);
@@ -147,7 +147,7 @@ internal sealed class ResultBuilderTests
     {
         // Arrange
         Model model = new();
-        model.AddElements(WorkflowSamples.All());
+        model.AddElements(ResultSamples.All());
 
         // Act
         Result result = new ResultBuilder(_storageStrategy)

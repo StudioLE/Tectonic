@@ -11,7 +11,11 @@
   <Import Project="..\..\GlobalUsings.src.props" />
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Lineweights.Flex.csproj" />
+    <InternalsVisibleTo Include="Lineweights.Workflows.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Lineweights.Workflows.csproj" />
   </ItemGroup>
 
 </Project>

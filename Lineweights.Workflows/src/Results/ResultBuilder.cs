@@ -71,12 +71,10 @@ public class ResultBuilder
 
             model.ToGlTF(tempPath, out List<BaseError> errors);
             if (errors.Any())
-            {
                 result.Errors = errors
                     .Select(x => x.Message)
                     .Prepend("Failed to convert Model to GLB.")
                     .ToArray();
-            }
 
             if (!File.Exists(tempPath))
                 throw new FileNotFoundException("Failed to write GLB. Temp file does not exist.");
@@ -104,13 +102,11 @@ public class ResultBuilder
                 console = consoleWriter.ToString();
             }
             if (!string.IsNullOrWhiteSpace(console))
-            {
                 result.Errors = new[]
                 {
                     "Failed to convert Model to IFC.",
                     console
                 };
-            }
 
             if (!File.Exists(tempPath))
                 throw new FileNotFoundException("Failed to write GLB. Temp file does not exist.");

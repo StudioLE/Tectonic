@@ -1,6 +1,6 @@
 using Elements;
 using Lineweights.Flex;
-using Lineweights.Workflows;
+using Lineweights.Workflows.Samples;
 
 namespace Lineweights.Drawings.Benchmarks;
 

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace Lineweights.Workflows.Results;
 
+// TODO: Rename to Document output
 /// <summary>
 /// The composite results of a workflow.
 /// </summary>

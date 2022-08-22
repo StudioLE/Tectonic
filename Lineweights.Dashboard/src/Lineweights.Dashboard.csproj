@@ -15,7 +15,6 @@
   <ItemGroup>
     <PackageReference Include="Humanizer.Core" Version="2.14.1" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.4" />
-    <PackageReference Include="NUnit.Engine" Version="3.15.2" />
   </ItemGroup>
 
   <ItemGroup>

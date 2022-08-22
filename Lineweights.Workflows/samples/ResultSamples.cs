@@ -5,11 +5,11 @@ using CsvHelper.Configuration.Attributes;
 using Lineweights.Drawings;
 using StudioLE.Core.System.IO;
 
-namespace Lineweights.Workflows.Tests;
+namespace Lineweights.Workflows.Samples;
 
-internal static class WorkflowSamples
+internal static class ResultSamples
 {
-    public static IReadOnlyCollection<View> Views(IReadOnlyCollection<GeometricElement> geometry)
+    internal static IReadOnlyCollection<View> Views(IReadOnlyCollection<GeometricElement> geometry)
     {
         ViewDirection[] viewDirections = {
             ViewDirection.Top,
@@ -28,7 +28,7 @@ internal static class WorkflowSamples
             .ToArray();
     }
 
-    public static DocumentInformation CsvDocumentInformation(IEnumerable<Element> elements)
+    internal static DocumentInformation CsvDocumentInformation(IEnumerable<Element> elements)
     {
         TableRow[] table = elements
             .GroupBy(x => x.GetType())
@@ -66,7 +66,7 @@ internal static class WorkflowSamples
         return doc;
     }
 
-    public static IReadOnlyCollection<Element> All()
+    internal static IReadOnlyCollection<Element> All()
     {
         IReadOnlyCollection<GeometricElement> geometry = Scenes.GeometricElements();
         Model model = new();
@@ -88,7 +88,6 @@ internal static class WorkflowSamples
 
         [Name("Is Geometric?")]
         public bool IsGeometricElement { get; set; } = false;
-
 
         [Name("Representation Types")]
         public string Representations { get; set; } = string.Empty;

@@ -2,7 +2,7 @@ using System.IO;
 using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace Lineweights.Workflows.Tests;
+namespace Lineweights.Workflows.Tests.NUnit;
 
 internal sealed class ResultAfterTests : ResultModel
 {

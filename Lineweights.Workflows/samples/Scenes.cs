@@ -1,7 +1,7 @@
 using System.IO;
 using Ardalis.Result;
 
-namespace Lineweights.Workflows;
+namespace Lineweights.Workflows.Samples;
 
 /// <summary>
 /// Sample scenes.
