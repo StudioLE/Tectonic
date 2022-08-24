@@ -19,7 +19,7 @@ public class BlobStorageStrategy : IStorageStrategy
         Retry =
         {
             MaxRetries = 0,
-            NetworkTimeout = TimeSpan.FromMilliseconds(300),
+            NetworkTimeout = TimeSpan.FromMilliseconds(1000),
             Delay = TimeSpan.Zero,
             MaxDelay = TimeSpan.Zero,
             Mode = RetryMode.Fixed

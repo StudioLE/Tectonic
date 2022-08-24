@@ -1,0 +1,36 @@
+﻿<div class="columns is-multiline is-vcentered">
+
+  <div class="column is-full is-4-desktop">
+    <p class="control has-icons-left">
+      <input class="input" type="text" @bind="@Runner.SelectedPackage" placeholder="C:\Users\...\Elements.Tests.dll">
+      <span class="icon is-small is-left">
+        <i class="mdi mdi-upload"></i>
+      </span>
+    </p>
+  </div>
+
+  <div class="column is-full is-2-desktop">
+    <button class="button is-info is-fullwidth" @onclick="@Runner.LoadPackage">
+      Load
+    </button>
+  </div>
+
+  <div class="column is-full is-4-desktop">
+    <p class="control">
+      <div class="select is-fullwidth">
+        <select @bind="@Runner.SelectedActivity">
+          @foreach (string test in Runner.Activities)
+          {
+            <option>@test</option>
+          }
+        </select>
+      </div>
+    </p>
+  </div>
+
+  <div class="column is-full is-2-desktop">
+    <button class="button is-info is-fullwidth" @onclick="Runner.Execute">
+      Run
+    </button>
+  </div>
+</div>

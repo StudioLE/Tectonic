@@ -1,0 +1,40 @@
+﻿@page "/"
+@using Lineweights.Workflows.Results
+@using Lineweights.Dashboard.Core.Shared
+@inherits DashboardBase
+
+<PageTitle>
+  Dashboard@(Results.Collection.Count > 0
+             ? $" ({Results.Collection.Count})"
+             : string.Empty)
+</PageTitle>
+
+<div class="container is-fluid">
+  <div class="columns is-vcentered">
+
+    <div class="column is-narrow">
+      <button class="button is-white is-large has-background-light">
+        <span class="icon is-medium">
+          <i class="mdi mdi-tablet-dashboard"></i>
+        </span>
+        <span>
+          Dashboard
+        </span>
+      </button>
+    </div>
+
+    <div class="column">
+      <ActivityRunnerComponent></ActivityRunnerComponent>
+    </div>
+
+    <div class="column is-narrow">
+      <SignalRComponent></SignalRComponent>
+    </div>
+
+  </div>
+
+  @foreach (Result result in Results.Collection.Reverse())
+  {
+    <ResultComponent @key="result.Info.Id" Result="result"></ResultComponent>
+  }
+</div>

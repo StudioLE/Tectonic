@@ -1,0 +1,50 @@
+﻿@using Lineweights.Workflows.Results
+@using System.Linq
+@using Lineweights.Dashboard.Core.Shared
+
+<div class="card parent @(IsHidden ? "is-hidden" : "")" id="card-@Result.Info.Id">
+  <header class="card-header">
+    <p class="card-header-title">
+      @Result.GetTitle()
+    </p>
+    <p class="card-header-title" style="font-weight: normal; flex-grow: 0;">
+      <TimeComponent DateTime="@Result.Info.LastRevisionTime"></TimeComponent>
+    </p>
+    <button class="card-header-icon" aria-label="close" @onclick="e => Hide()">
+      <span class="icon">
+        <i class="mdi mdi-close" aria-hidden="true"></i>
+      </span>
+    </button>
+  </header>
+
+  <div class="card-content">
+    <div class="columns">
+      <div class="column is-4">
+        <div class="card major">
+            @if (Result.Info.Location is not null)
+            {
+              <ViewerComponent Result="Result"></ViewerComponent>
+            }
+            else if (Result.Children.Any())
+            {
+              <ViewerComponent Result="Result.Children.FirstOrDefault()"></ViewerComponent>
+            }
+            else
+            {
+              <ViewerComponent Result="Result"></ViewerComponent>
+            }
+        </div>
+      </div>
+      <div class="column is-8 px-0 py-0">
+        <div class="is-flex is-flex-wrap-wrap">
+          @foreach (Result child in Result.Children)
+          {
+            <div class="card minor mx-3 my-3">
+              <ViewerComponent Result="child"></ViewerComponent>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

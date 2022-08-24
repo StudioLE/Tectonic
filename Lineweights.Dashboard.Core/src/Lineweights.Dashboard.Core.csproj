@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Description>A [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) client application to visualise the results of Elements logic.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <!-- Use consistent properties across all src projects -->
+  <Import Project="..\..\GlobalProperties.src.props" />
+
+  <!-- Use consistent global usings across all src projects -->
+  <Import Project="..\..\GlobalUsings.src.props" />
+
+  <ItemGroup>
+    <PackageReference Include="Humanizer.Core" Version="2.14.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Lineweights.Workflows\src\Lineweights.Workflows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Include="Scripts\*.js" />
+    <Watch Include="Scripts\*.ts" />
+  </ItemGroup>
+
+  <!--Target Name="PostRestore" AfterTargets="_GenerateRestoreProjectSpec">
+    <Exec Command="echo Executing npm install" />
+    <Exec Command="npm install" />
+  </Target-->
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Condition="'$(Configuraton)' == 'Debug'" Command="echo Executing npm run build-dev" />
+    <Exec Condition="'$(Configuraton)' == 'Debug'" Command="npm run build-dev" />
+    <Exec Condition="'$(Configuraton)' != 'Debug'" Command="echo Executing npm run build-dev" />
+    <Exec Condition="'$(Configuraton)' != 'Debug'" Command="npm run build-dev" />
+  </Target>
+</Project>

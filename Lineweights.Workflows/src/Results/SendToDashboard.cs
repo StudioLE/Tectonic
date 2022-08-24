@@ -25,7 +25,7 @@ public sealed class SendToDashboard : IResultStrategy
     /// <summary>
     /// The full url of the results hub.
     /// </summary>
-    public const string HubUrl = $"http://localhost:5242{HubPath}";
+    public const string HubUrl = $"http://localhost:3000{HubPath}";
 
     /// <summary>
     /// The name of the hub method used to send to the hub.

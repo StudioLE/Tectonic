@@ -1,0 +1,82 @@
+﻿
+@if (Result.Errors.Any())
+{
+  <article class="message is-danger">
+   <div class="message-body">
+     @foreach (string error in Result.Errors)
+     {
+       <p>@error</p>
+     }
+   </div>
+ </article>
+}
+
+@if (Result.IsFileType(".glb"))
+{
+  <figure class="card-image" id="model-@ComponentId"></figure>
+}
+else if (Result.IsFileType(".svg", ".jpg", ".png", ".png"))
+{
+  <figure class="card-image">
+    <img src="@Result.Info.Location" alt="@Result.Info.Name"/>
+  </figure>
+}
+else if (Result.IsFileType(".pdf"))
+{
+  <figure class="card-image">
+    <object type="@Result.GetMimeType()" data="@Result.Info.Location"></object>
+  </figure>
+}
+else if (Result.IsFileType(".txt", ".md"))
+{
+  <div class="card-content">
+    @Result.GetFileAsString()
+  </div>
+}
+else if (Result.IsFileType(".csv", ".md"))
+{
+  <div class="card-content is-scrollable">
+    <table class="table is-fullwidth is-hoverable is-striped">
+      @{ IReadOnlyCollection<IReadOnlyCollection<string>> table = Result.GetFileAsString().ToTable(); }
+      <thead>
+        <tr>
+          @foreach (string field in table.FirstOrDefault() ?? Array.Empty<string>())
+          {
+            <th>@field</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (IReadOnlyCollection<string> row in table.Skip(1))
+        {
+          <tr>
+            @foreach (string field in row)
+            {
+              <td>@field</td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+else if (Result.IsFileType(".json"))
+{
+  <div class="card-image is-scrollable">
+    <code>
+      <pre>@Result.GetFileAsString().FormatJson()</pre>
+    </code>
+  </div>
+}
+else if(Result.Info.Location is not null)
+{
+  <div class="card-content">
+    <a class="button" href="@Result.Info.Location">@Result.Info.Location?.Segments.Last()</a>
+  </div>
+}
+
+<footer class="card-footer">
+  <p class="card-footer-item">
+    @Result.GetTitle()
+  </p>
+</footer>
