@@ -94,6 +94,8 @@ public class ResultBuilder
         Task<Result> task = _storageStrategy.WriteAsync(doc, ".ifc", result =>
         {
             string tempPath = Path.GetTempFileName();
+
+            // Temporarily capture the console output from ToIFC
             string console;
             using (StringWriter consoleWriter = new())
             {
@@ -101,6 +103,12 @@ public class ResultBuilder
                 model.ToIFC(tempPath);
                 console = consoleWriter.ToString();
             }
+
+            // Reset the console output
+            StreamWriter standardOutputWriter = new (Console.OpenStandardOutput());
+            standardOutputWriter.AutoFlush = true;
+            Console.SetOut(standardOutputWriter);
+
             if (!string.IsNullOrWhiteSpace(console))
                 result.Errors = new[]
                 {
