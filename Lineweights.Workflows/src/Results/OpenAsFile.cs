@@ -27,13 +27,13 @@ public sealed class OpenAsFile : IResultStrategy
         {
             ResultBuilder builder = new(storageStrategy, doc);
             if (fileExtensions.Contains(".glb"))
-                builder = builder.AddModelConvertedToGlb(model);
+                builder = builder.ConvertModelToGlb(model);
             if (fileExtensions.Contains(".ifc"))
-                builder = builder.AddModelConvertedToIfc(model);
+                builder = builder.ConvertModelToIfc(model);
             if (fileExtensions.Contains(".json"))
-                builder = builder.AddModelConvertedToJson(model);
+                builder = builder.ConvertModelToJson(model);
             if (fileExtensions.Contains(".svg"))
-                builder = builder.AddCanvasesConvertedToSvg(model);
+                builder = builder.ExtractViewsAndConvertToSvg(model);
             return builder.Build();
         };
     }

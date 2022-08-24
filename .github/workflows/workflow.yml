@@ -69,7 +69,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - name: Restore Dependencies
+      - name: Restore npm Dependencies
+        working-directory: Lineweights.Dashboard/src
+        run: npm install
+
+      - name: Restore NuGet Dependencies
         run: >
           dotnet restore
           --nologo

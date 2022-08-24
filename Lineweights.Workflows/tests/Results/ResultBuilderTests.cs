@@ -8,7 +8,7 @@ internal sealed class ResultBuilderTests
     private readonly IStorageStrategy _storageStrategy = new FileStorageStrategy();
 
     [Test]
-    public void ResultBuilder_AddModelConvertedToGlb()
+    public void ResultBuilder_ConvertModelToGlb()
     {
         // Arrange
         Model model = new();
@@ -16,7 +16,7 @@ internal sealed class ResultBuilderTests
 
         // Act
         ResultBuilder builder = new ResultBuilder(_storageStrategy)
-            .AddModelConvertedToGlb(model);
+            .ConvertModelToGlb(model);
         Result result = builder.Build();
 
         // Assert
@@ -27,7 +27,7 @@ internal sealed class ResultBuilderTests
     }
 
     [Test]
-    public void ResultBuilder_AddModelConvertedToIfc()
+    public void ResultBuilder_ConvertModelToIfc()
     {
         // Arrange
         Model model = new();
@@ -35,7 +35,7 @@ internal sealed class ResultBuilderTests
 
         // Act
         ResultBuilder builder = new ResultBuilder(_storageStrategy)
-            .AddModelConvertedToIfc(model);
+            .ConvertModelToIfc(model);
         Result result = builder.Build();
 
         // Assert
@@ -46,7 +46,7 @@ internal sealed class ResultBuilderTests
     }
 
     [Test]
-    public void ResultBuilder_AddModelConvertedToJson()
+    public void ResultBuilder_ConvertModelToJson()
     {
         // Arrange
         Model model = new();
@@ -54,7 +54,7 @@ internal sealed class ResultBuilderTests
 
         // Act
         ResultBuilder builder = new ResultBuilder(_storageStrategy)
-            .AddModelConvertedToJson(model);
+            .ConvertModelToJson(model);
         Result result = builder.Build();
 
         // Assert
@@ -65,16 +65,17 @@ internal sealed class ResultBuilderTests
     }
 
     [Test]
-    public void ResultBuilder_AddCanvasConvertedToSvg()
+    public void ResultBuilder_ExtractViewsAndConvertToSvg()
     {
         // Arrange
         Model model = new();
         model.AddElements(_geometry);
-        model.AddElements(ResultSamples.Views(_geometry));
+        var views = ResultSamples.Views(_geometry);
+        model.AddElements(views);
 
         // Act
         ResultBuilder builder = new ResultBuilder(_storageStrategy)
-            .AddCanvasesConvertedToSvg(model);
+            .ExtractViewsAndConvertToSvg(model);
         Result result = builder.Build();
 
         // Assert
@@ -85,7 +86,7 @@ internal sealed class ResultBuilderTests
     }
 
     [Test]
-    public void ResultBuilder_AddCanvasConvertedToPdf()
+    public void ResultBuilder_ExtractViewsAndConvertToPdf()
     {
         // Arrange
         Model model = new();
@@ -94,7 +95,7 @@ internal sealed class ResultBuilderTests
 
         // Act
         ResultBuilder builder = new ResultBuilder(_storageStrategy)
-            .AddCanvasesConvertedToPdf(model);
+            .ExtractViewsAndConvertToPdf(model);
         Result result = builder.Build();
 
         // Assert
@@ -110,7 +111,7 @@ internal sealed class ResultBuilderTests
         // Arrange
         Model model = new();
         model.AddElements(_geometry);
-        DocumentInformation doc = ResultSamples.CsvDocumentInformation(_geometry);
+        DocumentInformation doc = ResultSamples.CsvDocumentInformation(model);
         model.AddElements(doc);
 
         // Act
@@ -137,7 +138,7 @@ internal sealed class ResultBuilderTests
 
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");
-        Assert.That(result.Children.Count, Is.EqualTo(2), "Children count");
+        Assert.That(result.Children.Count, Is.EqualTo(7), "Children count");
         Uri? uri = result.Children.FirstOrDefault()?.Info.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
     }
@@ -151,17 +152,19 @@ internal sealed class ResultBuilderTests
 
         // Act
         Result result = new ResultBuilder(_storageStrategy)
-            .AddModelConvertedToGlb(model)
-            .AddModelConvertedToIfc(model)
-            .AddCanvasesConvertedToPdf(model)
-            .AddCanvasesConvertedToSvg(model)
-            .AddDocumentInformation(model)
-            .AddModelConvertedToJson(model)
+            .ConvertModelToGlb(model)
+            .ConvertModelToIfc(model)
+            .ExtractSheetsAndConvertToPdf(model)
+            .ExtractSheetsAndConvertToSvg(model)
+            .ExtractViewsAndConvertToPdf(model)
+            .ExtractViewsAndConvertToSvg(model)
+            .ExtractDocumentInformation(model)
+            .ConvertModelToJson(model)
             .Build();
 
         // Assert
         Assert.That(result, Is.Not.Null, "Not null");
-        Assert.That(result.Children.Count, Is.EqualTo(10), "Children count");
+        Assert.That(result.Children.Count, Is.EqualTo(12), "Children count");
         Uri? uri = result.Children.FirstOrDefault()?.Info.Location;
         Assert.That(uri, Is.Not.Null, "Uri is not null");
     }

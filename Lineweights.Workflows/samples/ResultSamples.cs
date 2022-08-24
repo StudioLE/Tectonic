@@ -2,6 +2,7 @@ using System.Globalization;
 using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
+using Elements.Serialization.IFC;
 using Lineweights.Drawings;
 using StudioLE.Core.System.IO;
 
@@ -28,9 +29,9 @@ internal static class ResultSamples
             .ToArray();
     }
 
-    internal static DocumentInformation CsvDocumentInformation(IEnumerable<Element> elements)
+    internal static DocumentInformation CsvDocumentInformation(Model model)
     {
-        TableRow[] table = elements
+        TableRow[] table = model.Elements.Values
             .GroupBy(x => x.GetType())
             .Select(grouping =>
             {
@@ -66,6 +67,30 @@ internal static class ResultSamples
         return doc;
     }
 
+    internal static DocumentInformation IfcDocumentInformation(Model model)
+    {
+        FileInfo file = PathHelpers.GetTempFile(".ifc");
+        DocumentInformation doc = new()
+        {
+            Name = "Elements",
+            Location = new(file.FullName)
+        };
+        model.ToIFC(file.FullName);
+        return doc;
+    }
+
+    internal static DocumentInformation JsonDocumentInformation(Model model)
+    {
+        FileInfo file = PathHelpers.GetTempFile(".json");
+        DocumentInformation doc = new()
+        {
+            Name = "Elements",
+            Location = new(file.FullName)
+        };
+        model.ToJson(file.FullName);
+        return doc;
+    }
+
     internal static IReadOnlyCollection<Element> All()
     {
         IReadOnlyCollection<GeometricElement> geometry = Scenes.GeometricElements();
@@ -74,7 +99,9 @@ internal static class ResultSamples
         model.AddElements(geometry);
 
         model.AddElements(Views(geometry));
-        model.AddElements(CsvDocumentInformation(model.Elements.Values));
+        model.AddElements(CsvDocumentInformation(model));
+        model.AddElements(IfcDocumentInformation(model));
+        model.AddElements(JsonDocumentInformation(model));
         return model.Elements.Values.ToArray();
     }
 

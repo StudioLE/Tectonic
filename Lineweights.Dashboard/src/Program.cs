@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Lineweights.Dashboard.Hubs;
 using Lineweights.Dashboard.Scripts;
 using Lineweights.Dashboard.States;
+using Lineweights.Workflows.Execution;
 using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.ResponseCompression;
 
@@ -27,10 +28,14 @@ public class Program
         _builder.Services.AddRazorPages();
         _builder.Services.AddServerSideBlazor();
 
-        // Inject states
+        // Inject runner
+        _builder.Services.AddScoped<IActivityRunner, ActivityRunner>();
+
+        // Inject
+        _builder.Services.AddScoped<ResultsState>();
         _builder.Services.AddScoped<ModelViewerFacade>();
         _builder.Services.AddScoped<SignalRState>();
-        _builder.Services.AddScoped<TestRunnerState>();
+        _builder.Services.AddScoped<ActivityRunnerState>();
 
         // Add SignalR services
         // https://docs.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor?view=aspnetcore-6.0&tabs=visual-studio&pivots=server

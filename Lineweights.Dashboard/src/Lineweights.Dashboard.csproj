@@ -23,99 +23,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\temp\**" Watch="false" />
-    <Content Include=".gitignore">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <None Include="Styles\card.scss">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
-    <None Include="Styles\blazor.scss">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
-    <Content Remove="wwwroot\bundle.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Watch Include="Scripts\*.js" />
     <Watch Include="Scripts\*.ts" />
   </ItemGroup>
 
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\temp\.gitignore" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp4773.tmp.csv" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp47A3.tmp.glb" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp4811.tmp.ifc" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp4851.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp48A0.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp48B1.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp48B2.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp48D2.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp48E2.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp48F3.tmp.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp6D5F.tmp.csv" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp6D8F.tmp.glb" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp6DFD.tmp.ifc" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp6E2D.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp6E8C.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp6E9D.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp6EAD.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp6EBE.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp6ECE.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp6EDF.tmp.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp7A5B.tmp.csv" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp7A9B.tmp.glb" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp7B19.tmp.ifc" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp7B48.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp7B98.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp7BA8.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp7BE8.tmp.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9075.tmp.csv" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp90B3.tmp.glb" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9131.tmp.ifc" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9161.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp91BF.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp91C0.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9200.tmp.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9968.tmp.csv" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp99B8.tmp.glb" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9A64.tmp.ifc" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9B11.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9BED.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9BFE.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9C0E.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9C1F.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9C20.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmp9C31.tmp.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpBE4D.tmp.csv" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpBE7D.tmp.glb" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpBEFB.tmp.ifc" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpBF4A.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpBFB9.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpBFCA.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpBFCB.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpBFEB.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpBFFB.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpC00C.tmp.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpE496.tmp.csv" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpE4B6.tmp.glb" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpE544.tmp.ifc" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpE583.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpE611.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpE622.tmp.pdf" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpE632.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpE643.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpE644.tmp.svg" />
-    <_ContentIncludedByDefault Remove="wwwroot\temp\tmpE664.tmp.json" />
-  </ItemGroup>
-
-  <Target Name="PostRestore" AfterTargets="_GenerateRestoreProjectSpec">
+  <!--Target Name="PostRestore" AfterTargets="_GenerateRestoreProjectSpec">
     <Exec Command="echo Executing npm install" />
     <Exec Command="npm install" />
-  </Target>
+  </Target-->
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Condition="'$(Configuraton)' == 'Debug'" Command="echo Executing npm run build-dev" />

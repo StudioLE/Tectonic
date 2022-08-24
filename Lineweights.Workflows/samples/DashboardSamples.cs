@@ -30,7 +30,28 @@ public sealed class DashboardSamples
         GeometricElement[] geometry = Scenes.GeometricElements();
         Outputs outputs = new();
         outputs.Model.AddElements(geometry);
-        outputs.Model.AddElements(ResultSamples.CsvDocumentInformation(geometry));
+        DocumentInformation doc = ResultSamples.CsvDocumentInformation(outputs.Model);
+        outputs.Model.AddElement(doc);
+        return outputs;
+    }
+
+    public static Outputs Dashboard_Sample_Ifc()
+    {
+        GeometricElement[] geometry = Scenes.GeometricElements();
+        Outputs outputs = new();
+        outputs.Model.AddElements(geometry);
+        DocumentInformation doc = ResultSamples.IfcDocumentInformation(outputs.Model);
+        outputs.Model.AddElement(doc);
+        return outputs;
+    }
+
+    public static Outputs Dashboard_Sample_Json()
+    {
+        GeometricElement[] geometry = Scenes.GeometricElements();
+        Outputs outputs = new();
+        outputs.Model.AddElements(geometry);
+        DocumentInformation doc = ResultSamples.JsonDocumentInformation(outputs.Model);
+        outputs.Model.AddElement(doc);
         return outputs;
     }
 

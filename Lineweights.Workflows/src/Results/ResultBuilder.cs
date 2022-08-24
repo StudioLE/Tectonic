@@ -28,7 +28,7 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddDocumentInformation(Model model)
+    public ResultBuilder ExtractDocumentInformation(Model model)
     {
         foreach (DocumentInformation doc in model.AllElementsOfType<DocumentInformation>())
             AddDocumentInformation(doc);
@@ -58,7 +58,7 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddModelConvertedToGlb(Model model, DocumentInformation? doc = null)
+    public ResultBuilder ConvertModelToGlb(Model model, DocumentInformation? doc = null)
     {
         doc ??= new() { Name = "GlTF of Model" };
 
@@ -87,7 +87,7 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddModelConvertedToIfc(Model model, DocumentInformation? doc = null)
+    public ResultBuilder ConvertModelToIfc(Model model, DocumentInformation? doc = null)
     {
         doc ??= new() { Name = "IFC of Model" };
 
@@ -119,7 +119,7 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddModelConvertedToJson(Model model, DocumentInformation? doc = null)
+    public ResultBuilder ConvertModelToJson(Model model, DocumentInformation? doc = null)
     {
         doc ??= new() { Name = "JSON of Model" };
 
@@ -140,16 +140,25 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddCanvasesConvertedToSvg(Model model)
+    public ResultBuilder ExtractSheetsAndConvertToSvg(Model model)
     {
-        foreach (Canvas canvas in model.AllElementsOfType<Canvas>())
-            AddCanvasConvertedToSvg(canvas);
+        foreach (Canvas canvas in model.AllElementsOfType<Sheet>())
+            ConvertCanvasToSvg(canvas);
 
         return this;
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddCanvasConvertedToSvg(Canvas canvas)
+    public ResultBuilder ExtractViewsAndConvertToSvg(Model model)
+    {
+        foreach (Canvas canvas in model.AllElementsOfType<View>())
+            ConvertCanvasToSvg(canvas);
+
+        return this;
+    }
+
+    /// <inheritdoc cref="Result"/>
+    private ResultBuilder ConvertCanvasToSvg(Canvas canvas)
     {
         DocumentInformation doc = new()
         {
@@ -178,16 +187,25 @@ public class ResultBuilder
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddCanvasesConvertedToPdf(Model model)
+    public ResultBuilder ExtractSheetsAndConvertToPdf(Model model)
     {
-        foreach (Canvas canvas in model.AllElementsOfType<Canvas>())
-            AddCanvasConvertedToPdf(canvas);
+        foreach (Canvas canvas in model.AllElementsOfType<Sheet>())
+            ConvertCanvasToPdf(canvas);
 
         return this;
     }
 
     /// <inheritdoc cref="Result"/>
-    public ResultBuilder AddCanvasConvertedToPdf(Canvas canvas)
+    public ResultBuilder ExtractViewsAndConvertToPdf(Model model)
+    {
+        foreach (Canvas canvas in model.AllElementsOfType<View>())
+            ConvertCanvasToPdf(canvas);
+
+        return this;
+    }
+
+    /// <inheritdoc cref="Result"/>
+    private ResultBuilder ConvertCanvasToPdf(Canvas canvas)
     {
         DocumentInformation doc = new()
         {
@@ -230,8 +248,10 @@ public class ResultBuilder
     public static Result Default(IStorageStrategy storageStrategy, Model model, DocumentInformation? doc = null)
     {
         return new ResultBuilder(storageStrategy, doc)
-            .AddModelConvertedToGlb(model)
-            .AddDocumentInformation(model)
+            .ConvertModelToGlb(model)
+            .ExtractDocumentInformation(model)
+            .ExtractViewsAndConvertToSvg(model)
+            .ExtractSheetsAndConvertToPdf(model)
             .Build();
     }
 

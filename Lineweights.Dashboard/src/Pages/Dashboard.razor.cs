@@ -1,12 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using Lineweights.Dashboard.States;
+﻿using Lineweights.Dashboard.States;
 using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.Components;
 
 namespace Lineweights.Dashboard.Pages;
 
 /// <summary>
-/// Code-behind the index page.
+/// Code-behind the dashboard page.
 /// </summary>
 public class DashboardBase : ComponentBase, IDisposable
 {
@@ -20,18 +19,17 @@ public class DashboardBase : ComponentBase, IDisposable
     [Inject]
     protected NavigationManager NavigationManager { get; set; } = default!;
 
+    /// <inheritdoc cref="ResultsState"/>
+    [Inject]
+    protected ResultsState Results { get; set; } = default!;
+
     /// <inheritdoc cref="SignalRState"/>
     [Inject]
     protected SignalRState SignalR { get; set; } = default!;
 
-    /// <inheritdoc cref="TestRunnerState"/>
+    /// <inheritdoc cref="ActivityRunnerState"/>
     [Inject]
-    protected TestRunnerState Runner { get; set; } = default!;
-
-    /// <summary>
-    /// The available signals.
-    /// </summary>
-    public ObservableCollection<Result> Results { get; } = new();
+    protected ActivityRunnerState Runner { get; set; } = default!;
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -41,8 +39,8 @@ public class DashboardBase : ComponentBase, IDisposable
         await SignalR.Connect();
 
         // Bind the results collection
-        Results.CollectionChanged += OnResultsChanged;
-        SendToDashboard.OnReceiveFromHub(SignalR.Connection!, Results.Add);
+        Results.Collection.CollectionChanged += OnResultsChanged;
+        SendToDashboard.OnReceiveFromHub(SignalR.Connection!, Results.Collection.Add);
     }
 
     /// <summary>
@@ -57,6 +55,6 @@ public class DashboardBase : ComponentBase, IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
-        Results.CollectionChanged -= OnResultsChanged;
+        Results.Collection.CollectionChanged -= OnResultsChanged;
     }
 }

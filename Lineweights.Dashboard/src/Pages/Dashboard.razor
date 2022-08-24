@@ -3,8 +3,8 @@
 @inherits DashboardBase
 
 <PageTitle>
-  Dashboard@(Results.Count > 0
-             ? $" ({Results.Count})"
+  Dashboard@(Results.Collection.Count > 0
+             ? $" ({Results.Collection.Count})"
              : string.Empty)
 </PageTitle>
 
@@ -34,7 +34,7 @@
       </div>
 
       <div class="column is-full is-2-desktop">
-        <button class="button is-info is-fullwidth" @onclick="@Runner.Load">
+        <button class="button is-info is-fullwidth" @onclick="@Runner.LoadPackage">
           Load
         </button>
       </div>
@@ -42,8 +42,8 @@
       <div class="column is-full is-4-desktop">
         <p class="control">
           <div class="select is-fullwidth">
-            <select @bind="@Runner.SelectedTest">
-              @foreach (string test in Runner.Tests)
+            <select @bind="@Runner.SelectedActivity">
+              @foreach (string test in Runner.Activities)
               {
                 <option>@test</option>
               }
@@ -81,7 +81,7 @@
   </div>
 </div>
 
-@foreach (Result result in Results.Reverse())
+@foreach (Result result in Results.Collection.Reverse())
 {
   <Card @key="result.Info.Id" Result="result"></Card>
 }
