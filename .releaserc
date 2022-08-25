@@ -1,3 +1,5 @@
+repositoryUrl: https://github.com/StudioLE/Lineweights.git
+
 branches:
   - name: main
     prerelease: false

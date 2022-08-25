@@ -1,3 +1,7 @@
+#
+# Debug this workflow locally with act:
+# https://github.com/StudioLE/act-dotnet
+#
 name: CI/CD
 
 on:
@@ -70,7 +74,7 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Restore npm Dependencies
-        working-directory: Lineweights.Dashboard/src
+        working-directory: Lineweights.Dashboard.Core/src
         run: npm install
 
       - name: Restore NuGet Dependencies
@@ -232,4 +236,3 @@ jobs:
           aws s3 rm --recursive s3://${{ secrets.S3_BUCKET }}/docs/latest
           aws s3 cp --recursive s3://${{ secrets.S3_BUCKET }}/docs/v${{ needs.analysis.outputs.version }} s3://lineweights/docs/latest
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DOCS }} --paths "/latest/*"
-
