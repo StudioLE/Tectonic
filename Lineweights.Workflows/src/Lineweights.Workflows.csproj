@@ -34,4 +34,8 @@
     <ProjectReference Include="..\..\Lineweights.SVG\src\Lineweights.SVG.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\StudioLE.Core\src\Workarounds\InitWorkaround.cs" Link="InitWorkaround.cs" />
+  </ItemGroup>
+
 </Project>

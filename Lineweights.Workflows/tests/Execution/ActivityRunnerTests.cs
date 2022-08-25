@@ -1,6 +1,5 @@
 using System.IO;
 using System.Reflection;
-using Ardalis.Result;
 using Lineweights.Workflows.Execution;
 
 namespace Lineweights.Workflows.Tests.Execution;
@@ -10,34 +9,58 @@ internal sealed class ActivityRunnerTests
     private static readonly Assembly _assembly = GetAssembly();
 
     [Test]
-    public void ActivityRunner_ExtractActivities()
+    public void ActivityRunner_All()
     {
         // Arrange
-        ActivityRunner runner = new();
+        BasicActivityBuilder builder = new();
 
         // Act
-        Result<IReadOnlyCollection<string>> result = runner.ExtractActivities(_assembly);
+        builder.SetAssembly(_assembly);
 
         // Assert
-        IReadOnlyCollection<string> activities = Validate.OrThrow(result, string.Empty);
-        Assert.That(activities.Count, Is.EqualTo(5), "Activity count");
-    }
+        if (builder.State is not ActivityBuilder.AssemblySetState assemblySetState)
+            throw new("Incorrect state.");
+        Assert.That(assemblySetState.Activities.Count, Is.EqualTo(5), "Activity count");
 
-    [Test]
-    public void ActivityRunner_Execute()
-    {
         // Arrange
-        ActivityRunner runner = new();
-        Result<IReadOnlyCollection<string>> activities = runner.ExtractActivities(_assembly);
-        string activityId = activities.Value.FirstOrDefault() ?? throw new("Failed to extract activities.");
+        string activityName = assemblySetState.ActivityNames.First();
 
         // Act
-        Result<object> result = runner.Execute(activityId);
+        var result = builder.SetActivity(activityName);
 
         // Assert
-        dynamic outputs = Validate.OrThrow(result, string.Empty);
+        Assert.That(result.Errors.Count, Is.EqualTo(0), "Error count");
+        if (builder.State is not ActivityBuilder.ActivitySetState activitySetState)
+            throw new("Incorrect state.");
+        Assert.That(activitySetState.Inputs, Is.Not.Null, "Not null");
+        Assert.That(activitySetState.Inputs.Count, Is.EqualTo(1), "Inputs count");
+
+        // Arrange
+        // Act
+        builder.Build();
+
+        // Assert
+        if (builder.State is not ActivityBuilder.BuiltState builtState)
+            throw new("Incorrect state.");
+        Assert.That(builtState.Command, Is.Not.Null, "Command is not null");
+        Assert.That(builtState.Command.Name, Is.Not.Empty, "Command name");
+        Assert.That(builtState.Command.Inputs, Is.Not.Empty, "Command inputs");
+
+        // Arrange
+        ActivityCommand activity = builtState.Command;
+
+        // Act
+        dynamic outputs = activity.Execute();
+
+        // Assert
+        if (builder.State is not ActivityBuilder.BuiltState)
+            throw new("Incorrect state.");
         Assert.That(outputs, Is.Not.Null, "Not null");
         Assert.That(outputs.Model.Elements.Count, Is.EqualTo(24), "Output model count");
+
+        // Arrange
+        // Act
+        activity.Execute();
     }
 
     private static Assembly GetAssembly()

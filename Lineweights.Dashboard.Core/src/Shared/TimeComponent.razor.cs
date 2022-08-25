@@ -2,7 +2,7 @@
 
 namespace Lineweights.Dashboard.Core.Shared;
 
-public partial class TimeComponent
+public class TimeComponentBase : ComponentBase
 {
     /// <summary>
     /// The TimeSpan.

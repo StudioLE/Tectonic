@@ -1,8 +1,9 @@
 ﻿@using Lineweights.Workflows.Results
 @using System.Linq
 @using Lineweights.Dashboard.Core.Shared
+@inherits ResultComponentBase
 
-<div class="card parent @(IsHidden ? "is-hidden" : "")" id="card-@Result.Info.Id">
+<div class="mb-5 card parent @(IsHidden ? "is-hidden" : "")" id="card-@Result.Info.Id">
   <header class="card-header">
     <p class="card-header-title">
       @Result.GetTitle()

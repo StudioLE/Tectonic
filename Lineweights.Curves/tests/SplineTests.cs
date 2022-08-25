@@ -347,7 +347,7 @@ internal sealed class SplineTests : ResultModel
         Assert.Multiple(() =>
         {
             Assert.That(result.IsSuccess, "Serialisation succeeded.");
-            Assert.That(string.Join("\n", result.Errors), Is.Empty, "Serialisation errors.");
+            Assert.That(result.Errors, Is.Empty, "Serialisation errors.");
             Spline spline = (Spline)model
                 .AllElementsOfType<ModelCurve>()
                 .First()

@@ -1,36 +1,137 @@
-﻿<div class="columns is-multiline is-vcentered">
+﻿@using System.Reflection
+@using System.CodeDom
+@using Lineweights.Workflows.Execution
+@inherits ActivityRunnerComponentBase
 
-  <div class="column is-full is-4-desktop">
-    <p class="control has-icons-left">
-      <input class="input" type="text" @bind="@Runner.SelectedPackage" placeholder="C:\Users\...\Elements.Tests.dll">
-      <span class="icon is-small is-left">
-        <i class="mdi mdi-upload"></i>
-      </span>
-    </p>
-  </div>
 
-  <div class="column is-full is-2-desktop">
-    <button class="button is-info is-fullwidth" @onclick="@Runner.LoadPackage">
-      Load
-    </button>
-  </div>
-
-  <div class="column is-full is-4-desktop">
-    <p class="control">
-      <div class="select is-fullwidth">
-        <select @bind="@Runner.SelectedActivity">
-          @foreach (string test in Runner.Activities)
+<div class="mb-5 card parent">
+  <header class="card-header">
+    <p class="card-header-title" style="font-weight: normal;">
+      <nav class="breadcrumb has-succeeds-separator" aria-label="breadcrumbs">
+        <ul>
+          @if (Builder.State is ActivityBuilder.AssemblySetState state1)
           {
-            <option>@test</option>
+            <li>
+              <a @onclick="SetInitialState">@state1.AssemblyName</a>
+            </li>
           }
-        </select>
-      </div>
+          @if (Builder.State is ActivityBuilder.ActivitySetState state2)
+          {
+            <li>
+              <a @onclick="SetAssembly">@state2.ActivityName</a>
+            </li>
+          }
+          @switch (Builder.State)
+          {
+            case BasicActivityBuilder.ActivitySetState activitySetState:
+            {
+              <li class="is-active">
+                <a>Set inputs</a>
+              </li>
+              break;
+            }
+            case BasicActivityBuilder.AssemblySetState assemblySetState:
+            {
+              <li class="is-active">
+                <a>Select an activity</a>
+              </li>
+              break;
+            }
+            default:
+              <li class="is-active">
+                <a>Select an assembly</a>
+              </li>
+              break;
+          }
+        </ul>
+      </nav>
     </p>
-  </div>
-
-  <div class="column is-full is-2-desktop">
-    <button class="button is-info is-fullwidth" @onclick="Runner.Execute">
-      Run
-    </button>
+  </header>
+  <div class="card-content">
+    <div class="columns">
+      <div class="column is-offset-2 is-8">
+        <MessagesComponent Messages="Messages"></MessagesComponent>
+        @switch (Builder.State)
+        {
+          case BasicActivityBuilder.ActivitySetState activitySetState:
+          {
+            if (activitySetState.Inputs.Count == 0)
+            {
+              <div class="field is-horizontal">
+                <div class="field-label">
+                  <!-- Left empty for spacing -->
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control is-narrow">
+                      <article class="message">
+                        <div class="message-body">
+                          This activity has no inputs.
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+            <DynamicFormComponent Inputs="@activitySetState.Inputs" OnValidSubmit="@BuildAndExecute"></DynamicFormComponent>
+            break;
+          }
+          case BasicActivityBuilder.AssemblySetState assemblySetState:
+          {
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Activity</label>
+              </div>
+              <fieldset class="field-body">
+                <div class="field has-addons">
+                  <div class="control is-expanded">
+                    <div class="select is-fullwidth">
+                      <select @bind="@ActivityNameSelect">
+                        @foreach (string activity in assemblySetState.ActivityNames)
+                        {
+                          <option>@activity</option>
+                        }
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control">
+                    <button class="button is-primary" @onclick="@SetActivity">
+                      <span>Load</span>
+                      <span class="icon">
+                        <i class="mdi mdi-arrow-right"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            break;
+          }
+          default:
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Assembly</label>
+              </div>
+              <fieldset class="field-body">
+                <div class="field has-addons">
+                  <div class="control is-expanded">
+                    <input class="input" type="text" @bind="@AssemblyPathInput" placeholder="C:\Users\...\Elements.Tests.dll">
+                  </div>
+                  <div class="control">
+                    <button class="button is-primary" @onclick="@SetAssembly">
+                      <span>Load</span>
+                      <span class="icon">
+                        <i class="mdi mdi-arrow-right"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            break;
+        }
+      </div>
+    </div>
   </div>
 </div>

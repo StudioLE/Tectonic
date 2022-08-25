@@ -72,10 +72,12 @@ class ModelViewer {
   };
 
   InitCamera = (): void => {
-    this.Camera = new THREE.PerspectiveCamera( 45, this.Container.clientWidth / this.Container.clientHeight, 0.25, 20 );
-    this.Camera.position.x = this.Near * 2.5;
-    this.Camera.position.y = this.Near * 2.5;
-    this.Camera.position.z = this.Near * 2.5;
+    const near = 0.1;
+    const far = this.Near * 10;
+    this.Camera = new THREE.PerspectiveCamera( 45, this.Container.clientWidth / this.Container.clientHeight, near, far);
+    this.Camera.position.x = this.Near;
+    this.Camera.position.y = this.Near * 0.666;
+    this.Camera.position.z = this.Near;
   };
 
   InitLights = (): void => {
@@ -105,7 +107,7 @@ class ModelViewer {
     this.Scene.add( ground );
 
     this.Scene.background = new THREE.Color( '#1f2e54' );
-    // this.Scene.fog = new THREE.Fog( '#1f2e54', this.Near * 2.5, this.Near * 10 );
+    this.Scene.fog = new THREE.Fog( '#1f2e54', this.Near * 2.5, this.Near * 10 );
 
     return ground;
   };

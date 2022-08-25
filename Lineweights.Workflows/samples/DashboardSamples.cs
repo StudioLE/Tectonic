@@ -61,4 +61,9 @@ public sealed class DashboardSamples
         outputs.Model.AddElements(ResultSamples.All());
         return outputs;
     }
+
+    public static Outputs Dashboard_Sample_Throw_NotImplementedException()
+    {
+        throw new("This exception is thrown intentionally to test exception handling.");
+    }
 }

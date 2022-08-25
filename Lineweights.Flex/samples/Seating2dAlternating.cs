@@ -1,4 +1,5 @@
-﻿using Lineweights.Flex.Samples.Elements;
+﻿using System.ComponentModel.DataAnnotations;
+using Lineweights.Flex.Samples.Elements;
 using Lineweights.Flex.Sequences;
 
 namespace Lineweights.Flex.Samples;
@@ -7,11 +8,17 @@ public static class Seating2dAlternating
 {
     public class Inputs
     {
-        public double Width { get; set; } = 3;
+        [Required]
+        [Range(0, 50)]
+        public double AuditoriumWidth { get; set; } = 3;
 
-        public double Length { get; set; } = 5;
+        [Required]
+        [Range(0, 50)]
+        public double AuditoriumLength { get; set; } = 5;
 
-        public double Height { get; set; } = 5;
+        [Required]
+        [Range(0, 50)]
+        public double AuditoriumHeight { get; set; } = 5;
     }
 
     public class Outputs
@@ -22,7 +29,7 @@ public static class Seating2dAlternating
     public static Outputs Execute(Inputs inputs)
     {
         ElementInstance seat = new Seat("Seat").CreateInstance();
-        Space auditorium = new(Polygon.Rectangle(inputs.Width, inputs.Length), inputs.Height);
+        Space auditorium = new(Polygon.Rectangle(inputs.AuditoriumWidth, inputs.AuditoriumLength), inputs.AuditoriumHeight);
 
         // Configure the pattern
         var patternA = RepeatingSequence.WithoutOverflow(seat);

@@ -4,6 +4,7 @@ using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using Elements.Serialization.IFC;
 using Lineweights.Drawings;
+using StudioLE.Core.System;
 using StudioLE.Core.System.IO;
 
 namespace Lineweights.Workflows.Samples;
@@ -49,7 +50,7 @@ internal static class ResultSamples
                                                               .Select(x => x.GetType().Name)
                                                           ?? Enumerable.Empty<string>();
                 row.IsGeometricElement = true;
-                row.Representations = string.Join(", ", representationNames);
+                row.Representations = representationNames.Join(", ");
                 return row;
             })
             .ToArray();

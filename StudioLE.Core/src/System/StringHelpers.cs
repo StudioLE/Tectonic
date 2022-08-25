@@ -7,6 +7,15 @@ namespace StudioLE.Core.System;
 public static class StringHelpers
 {
     /// <summary>
+    /// <inheritdoc cref="string.Join(string, IEnumerable{string})"/>
+    /// </summary>
+    public static string Join(this IEnumerable<string> @this, string? separator = null)
+    {
+        separator ??= Environment.NewLine;
+        return string.Join(separator, @this);
+    }
+
+    /// <summary>
     /// Replaces all "\r\n" sequences in the current string with "\n".
     /// </summary>
     /// <remarks>

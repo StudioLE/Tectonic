@@ -9,14 +9,11 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Inject runner
-builder.Services.AddScoped<IActivityRunner, ActivityRunner>();
-
 // Inject
+builder.Services.AddScoped<BasicActivityBuilder>();
 builder.Services.AddScoped<ResultsState>();
 builder.Services.AddScoped<ModelViewerFacade>();
 builder.Services.AddScoped<SignalRState>();
-builder.Services.AddScoped<ActivityRunnerState>();
 
 builder.Services.AddScoped(sp => new HttpClient
 {

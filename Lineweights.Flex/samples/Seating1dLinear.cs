@@ -1,4 +1,5 @@
-﻿using Lineweights.Flex.Samples.Elements;
+﻿using System.ComponentModel.DataAnnotations;
+using Lineweights.Flex.Samples.Elements;
 using Lineweights.Flex.Sequences;
 
 namespace Lineweights.Flex.Samples;
@@ -7,7 +8,9 @@ public static class Seating1dLinear
 {
     public class Inputs
     {
-        public int Count { get; set; } = 10;
+        [Required]
+        [Range(0, 50)]
+        public int LineLength { get; set; } = 10;
     }
 
     public class Outputs
@@ -17,7 +20,7 @@ public static class Seating1dLinear
 
     public static Outputs Execute(Inputs inputs)
     {
-        Line line = new(Vector3.Origin, Vector3.XAxis, inputs.Count);
+        Line line = new(Vector3.Origin, Vector3.XAxis, inputs.LineLength);
         ElementInstance seat = new Seat("Seat").CreateInstance();
 
         // Configure the pattern

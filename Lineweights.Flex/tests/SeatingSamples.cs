@@ -26,8 +26,10 @@ internal sealed class SeatingSamples : ResultModel
     public void Seating_1d_Radial()
     {
         // Arrange
+        Samples.Seating1dRadial.Inputs inputs = new();
+
         // Act
-        Samples.Seating1dRadial.Outputs outputs = Samples.Seating1dRadial.Execute();
+        Samples.Seating1dRadial.Outputs outputs = Samples.Seating1dRadial.Execute(inputs);
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();

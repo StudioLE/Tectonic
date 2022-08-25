@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Lineweights.Flex.Samples.Elements;
 using Lineweights.Flex.Sequences;
 
@@ -5,14 +6,33 @@ namespace Lineweights.Flex.Samples;
 
 public static class Seating1dRadial
 {
+    public class Inputs
+    {
+        [Required]
+        [Range(0, 50)]
+        public int ArcRadius { get; set; } = 10;
+
+        [Required]
+        [Range(-180, 360)]
+        public int ArcStartAngle { get; set; } = 0;
+
+        [Required]
+        [Range(-180, 360)]
+        public int ArcEndAngle { get; set; } = 30;
+
+        [Required]
+        [Range(-180, 360)]
+        public int Rotation { get; set; } = 180;
+    }
+
     public class Outputs
     {
         public Model Model { get; set; } = new();
     }
 
-    public static Outputs Execute()
+    public static Outputs Execute(Inputs inputs)
     {
-        Arc arc = new(10, 0, 30);
+        Arc arc = new(inputs.ArcRadius, inputs.ArcStartAngle, inputs.ArcEndAngle);
         ElementInstance seat = new Seat("Seat").CreateInstance();
 
         // Configure the pattern
@@ -32,7 +52,7 @@ public static class Seating1dRadial
         IReadOnlyCollection<ElementInstance> components = builder.ToComponents();
 
         // Rotate the seats
-        Transform rotation = new(Vector3.Origin, 180);
+        Transform rotation = new(Vector3.Origin, inputs.Rotation);
         var rotatedComponents = components.Select(instance => instance
             .BaseDefinition
             .CreateInstance(

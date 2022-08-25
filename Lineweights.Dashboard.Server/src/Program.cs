@@ -28,14 +28,11 @@ public class Program
         _builder.Services.AddRazorPages();
         _builder.Services.AddServerSideBlazor();
 
-        // Inject runner
-        _builder.Services.AddScoped<IActivityRunner, ActivityRunner>();
-
         // Inject
+        _builder.Services.AddScoped<BasicActivityBuilder>();
         _builder.Services.AddScoped<ResultsState>();
         _builder.Services.AddScoped<ModelViewerFacade>();
         _builder.Services.AddScoped<SignalRState>();
-        _builder.Services.AddScoped<ActivityRunnerState>();
 
         // Add SignalR services
         // https://docs.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor?view=aspnetcore-6.0&tabs=visual-studio&pivots=server

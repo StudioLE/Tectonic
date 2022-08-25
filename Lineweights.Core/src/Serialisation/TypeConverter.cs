@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using StudioLE.Core.System;
 
 namespace Lineweights.Core.Serialisation;
 
@@ -22,7 +23,7 @@ internal class TypeConverter : JsonConverter
                                       .ToArray()
                                   ?? new[] { type.FullName };
 
-        writer.WriteValue(string.Join(",", typeQualifiers));
+        writer.WriteValue(typeQualifiers.Join(","));
     }
 
     /// <inheritdoc/>

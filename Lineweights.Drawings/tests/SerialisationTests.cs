@@ -29,7 +29,7 @@ internal sealed class SerialisationTests : ResultModel
         Assert.Multiple(() =>
         {
             Assert.That(result.IsSuccess, "Serialisation succeeded.");
-            Assert.That(string.Join("\n", result.Errors), Is.Empty, "Serialisation errors.");
+            Assert.That(result.Errors, Is.Empty, "Serialisation errors.");
             View deserialised = model
                 .AllElementsOfType<View>()
                 .First();
@@ -57,7 +57,7 @@ internal sealed class SerialisationTests : ResultModel
         Assert.Multiple(() =>
         {
             Assert.That(result.IsSuccess, "result.IsSuccess");
-            Assert.That(string.Join("\n", result.Errors), Is.Empty, "Serialisation errors.");
+            Assert.That(result.Errors, Is.Empty, "Serialisation errors.");
             ViewScope deserialised = model
                 .AllElementsOfType<ViewScope>()
                 .First();
@@ -109,7 +109,7 @@ internal sealed class SerialisationTests : ResultModel
         Assert.Multiple(() =>
         {
             Assert.That(result.IsSuccess, "Serialisation succeeded.");
-            Assert.That(string.Join("\n", result.Errors), Is.Empty, "Serialisation errors.");
+            Assert.That(result.Errors, Is.Empty, "Serialisation errors.");
             SheetContent deserialised = model
                 .AllElementsOfType<SheetContent>()
                 .First();
@@ -160,7 +160,7 @@ internal sealed class SerialisationTests : ResultModel
         Assert.Multiple(() =>
         {
             Assert.That(result.IsSuccess, "Serialisation succeeded.");
-            Assert.That(string.Join("\n", result.Errors), Is.Empty, "Serialisation errors.");
+            Assert.That(result.Errors, Is.Empty, "Serialisation errors.");
             Sheet deserialised = model
                 .AllElementsOfType<Sheet>()
                 .First();

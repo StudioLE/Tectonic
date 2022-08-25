@@ -1,0 +1,22 @@
+﻿@inherits MessagesComponentBase
+
+@foreach (Message message in Messages)
+{
+  <article class="message @message.CssClass()">
+    @if (!string.IsNullOrEmpty(message.Title))
+    {
+      <div class="message-header">
+        <p>@message.Title</p>
+      </div>
+    }
+    @if (!string.IsNullOrEmpty(message.Body))
+    {
+      <div class="message-body">
+        @foreach (string line in message.Body.Split(Environment.NewLine))
+        {
+          <p>@message.Body</p>
+        }
+      </div>
+    }
+  </article>
+}

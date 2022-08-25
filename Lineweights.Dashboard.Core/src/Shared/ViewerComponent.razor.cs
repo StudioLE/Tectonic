@@ -3,9 +3,10 @@ using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
+
 namespace Lineweights.Dashboard.Core.Shared;
 
-public partial class ViewerComponent
+public class ViewerComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]

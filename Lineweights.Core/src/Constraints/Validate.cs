@@ -22,13 +22,15 @@ public static class Validate
     /// Validate the <paramref name="result"/>.
     /// Throw an exception if it is not a success.
     /// </summary>
-    public static T OrThrow<T>(Result<T> result, string contextMessage)
+    public static T OrThrow<T>(Result<T> result, string? contextMessage = null)
     {
         if (result.IsSuccess)
             return result;
-        string message = contextMessage;
+        string message = contextMessage is null
+            ? string.Empty
+            : contextMessage + Environment.NewLine;
         if (result.Errors.Any())
-            message += Environment.NewLine + string.Join(Environment.NewLine, result.Errors);
+            message += string.Join(Environment.NewLine, result.Errors) + Environment.NewLine;
         throw new(message);
     }
 

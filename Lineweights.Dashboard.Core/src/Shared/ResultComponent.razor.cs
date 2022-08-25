@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Lineweights.Dashboard.Core.Shared;
 
-public partial class ResultComponent
+public class ResultComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]

@@ -14,7 +14,9 @@ internal static class SvgHelpers
     /// </summary>
     internal static XAttribute PointsAttribute(IEnumerable<Vector3> vertices)
     {
-        string value = string.Join(" ", vertices.Select(v => $"{v.X.Round()},{v.Y.InvertY().Round()}"));
+        string value = vertices
+            .Select(v => $"{v.X.Round()},{v.Y.InvertY().Round()}")
+            .Join(" ");
         return new("points", value);
     }
 
