@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Lineweights.Dashboard.Core.Shared;
 
-public class DynamicFormComponentBase : ComponentBase
+public class DynamicFormComponentBase : ComponentBase, IDisposable
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]

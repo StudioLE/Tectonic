@@ -119,9 +119,9 @@
                   <div class="control is-expanded">
                     <div class="select is-fullwidth">
                       <select @bind="AssemblySelectValue">
-                        @foreach (string assembly in AssemblySelectOptions)
+                        @foreach (KeyValuePair<string, Assembly> assembly in AssemblySelectOptions)
                         {
-                          <option>@assembly</option>
+                          <option>@assembly.Key</option>
                         }
                       </select>
                     </div>

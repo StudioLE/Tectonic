@@ -3,9 +3,11 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Reflection;
 using Ardalis.Result;
+using Lineweights.Flex.Samples;
 using Lineweights.Workflows;
 using Lineweights.Workflows.Execution;
 using Lineweights.Workflows.Results;
+using Lineweights.Workflows.Samples;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using StudioLE.Core.System;
@@ -28,22 +30,24 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
 
     protected string AssemblyInputValue { get; set; } = string.Empty;
 
-    protected IReadOnlyCollection<string> AssemblySelectOptions { get; } = new []
-    {
-        "Lineweights.Flex.Samples.dll",
-        "Lineweights.Workflows.Samples.dll"
-    };
+    protected Dictionary<string, Assembly> AssemblySelectOptions { get; } = new();
 
     protected string AssemblySelectValue { get; set; } = string.Empty;
 
     protected string ActivitySelectValue { get; set; } = string.Empty;
 
-    protected ObservableCollection<Message> Messages { get; set; } = new();
+    protected ObservableCollection<Message> Messages { get; } = new();
 
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        AssemblySelectValue = AssemblySelectOptions.First();
+        Assembly[] assemblies = {
+            typeof(DashboardSamples).Assembly,
+            typeof(WallFlemishBond).Assembly
+        };
+        foreach (Assembly assembly in assemblies)
+            AssemblySelectOptions.Add(assembly.GetName().Name ?? "Unnamed", assembly);
+        AssemblySelectValue = AssemblySelectOptions.First().Key;
         Messages.CollectionChanged += OnMessagesChanged;
     }
 
@@ -54,33 +58,39 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
         Builder = new();
     }
 
-    protected void SetAssembly(string assemblyName)
+    protected void SetAssembly(string key)
     {
-        AssemblyInputValue = assemblyName;
-        SetAssembly();
+        ClearMessages();
+        Logger.LogDebug($"{nameof(SetAssembly)} called with key {key}.");
+        if(!AssemblySelectOptions.TryGetValue(key, out Assembly? assembly))
+        {
+            ShowWarning("Failed to load assembly. Key not found.");
+            return;
+        }
+        SetAssembly(assembly);
     }
 
     protected void SetAssembly()
     {
         ClearMessages();
-
         string assemblyPath = AssemblyInputValue;
         Logger.LogDebug($"{nameof(SetAssembly)} called with {assemblyPath}.");
-
         if (!Path.IsPathFullyQualified(assemblyPath))
         {
             string assemblyDir = AppDomain.CurrentDomain.BaseDirectory;
             assemblyPath = Path.Combine(assemblyDir, assemblyPath);
         }
-
         if (!File.Exists(assemblyPath))
         {
             ShowWarning("Failed to load assembly. File not found.");
             return;
         }
-
         Assembly assembly = Assembly.LoadFrom(assemblyPath);
+        SetAssembly(assembly);
+    }
 
+    private void SetAssembly(Assembly assembly)
+    {
         Result<object> result = Builder.SetAssembly(assembly);
         if (!result.IsSuccess)
             ShowError(result.Errors.Join());

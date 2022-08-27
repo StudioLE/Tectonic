@@ -21,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Lineweights.Flex\samples\Lineweights.Flex.Samples.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Workflows\samples\Lineweights.Workflows.Samples.csproj" />
     <ProjectReference Include="..\..\Lineweights.Workflows\src\Lineweights.Workflows.csproj" />
   </ItemGroup>
 
