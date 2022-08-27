@@ -34,10 +34,10 @@
     <Exec Command="npm install" />
   </Target-->
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <!--Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Condition="'$(Configuraton)' == 'Debug'" Command="echo Executing npm run build-dev" />
     <Exec Condition="'$(Configuraton)' == 'Debug'" Command="npm run build-dev" />
     <Exec Condition="'$(Configuraton)' != 'Debug'" Command="echo Executing npm run build-dev" />
     <Exec Condition="'$(Configuraton)' != 'Debug'" Command="npm run build-dev" />
-  </Target>
+  </Target-->
 </Project>

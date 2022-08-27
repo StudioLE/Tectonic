@@ -26,11 +26,26 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
     [Inject]
     protected ResultsState Results { get; set; } = default!;
 
-    protected string AssemblyPathInput { get; set; } = "E:/Repos/Hypar/Lineweights/Lineweights.Flex/samples/bin/Debug/netstandard2.0/Lineweights.Flex.Samples.dll";
+    protected string AssemblyInputValue { get; set; } = string.Empty;
 
-    protected string ActivityNameSelect { get; set; } = string.Empty;
+    protected IReadOnlyCollection<string> AssemblySelectOptions { get; } = new []
+    {
+        "Lineweights.Flex.Samples.dll",
+        "Lineweights.Workflows.Samples.dll"
+    };
+
+    protected string AssemblySelectValue { get; set; } = string.Empty;
+
+    protected string ActivitySelectValue { get; set; } = string.Empty;
 
     protected ObservableCollection<Message> Messages { get; set; } = new();
+
+    /// <inheritdoc />
+    protected override void OnInitialized()
+    {
+        AssemblySelectValue = AssemblySelectOptions.First();
+        Messages.CollectionChanged += OnMessagesChanged;
+    }
 
     protected void SetInitialState()
     {
@@ -39,38 +54,47 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
         Builder = new();
     }
 
-    /// <inheritdoc />
-    protected override void OnInitialized()
+    protected void SetAssembly(string assemblyName)
     {
-        Messages.CollectionChanged += OnMessagesChanged;
+        AssemblyInputValue = assemblyName;
+        SetAssembly();
     }
 
     protected void SetAssembly()
     {
         ClearMessages();
 
-        // TODO: Select box of loaded assemblies.
+        string assemblyPath = AssemblyInputValue;
+        Logger.LogDebug($"{nameof(SetAssembly)} called with {assemblyPath}.");
 
-        Logger.LogDebug($"{nameof(SetAssembly)} called with {AssemblyPathInput}.");
-        if (!File.Exists(AssemblyPathInput))
+        if (!Path.IsPathFullyQualified(assemblyPath))
+        {
+            string assemblyDir = AppDomain.CurrentDomain.BaseDirectory;
+            assemblyPath = Path.Combine(assemblyDir, assemblyPath);
+        }
+
+        if (!File.Exists(assemblyPath))
         {
             ShowWarning("Failed to load assembly. File not found.");
             return;
         }
 
-        Assembly assembly = Assembly.LoadFrom(AssemblyPathInput);
+        Assembly assembly = Assembly.LoadFrom(assemblyPath);
 
         Result<object> result = Builder.SetAssembly(assembly);
         if (!result.IsSuccess)
             ShowError(result.Errors.Join());
+
+        if(Builder.State is ActivityBuilder.AssemblySetState state)
+            ActivitySelectValue = state.ActivityNames.First();
     }
 
     protected void SetActivity()
     {
         ClearMessages();
 
-        Logger.LogDebug($"{nameof(SetActivity)} called with {ActivityNameSelect}.");
-        Result<object> result = Builder.SetActivity(ActivityNameSelect);
+        Logger.LogDebug($"{nameof(SetActivity)} called with {ActivitySelectValue}.");
+        Result<object> result = Builder.SetActivity(ActivitySelectValue);
         if (!result.IsSuccess)
             ShowError(result.Errors.Join());
     }
@@ -131,7 +155,7 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
         DocumentInformation doc = new()
         {
             Name = builtState.Command.Name,
-            Description = $"Executed {ActivityNameSelect} from {AssemblyPathInput}."
+            Description = $"Executed {ActivitySelectValue} from {AssemblyInputValue}."
         };
         Result result = ResultBuilder.Default(new BlobStorageStrategy(), model, doc);
         Results.Collection.Add(result);
