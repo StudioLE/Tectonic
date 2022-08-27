@@ -10,7 +10,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 // Inject
-builder.Services.AddScoped<BasicActivityBuilder>();
+builder.Services.AddScoped<ActivityBuilder>();
 builder.Services.AddScoped<ResultsState>();
 builder.Services.AddScoped<ModelViewerFacade>();
 builder.Services.AddScoped<SignalRState>();

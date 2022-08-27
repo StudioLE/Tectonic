@@ -29,7 +29,7 @@ public class Program
         _builder.Services.AddServerSideBlazor();
 
         // Inject
-        _builder.Services.AddScoped<BasicActivityBuilder>();
+        _builder.Services.AddScoped<ActivityBuilder>();
         _builder.Services.AddScoped<ResultsState>();
         _builder.Services.AddScoped<ModelViewerFacade>();
         _builder.Services.AddScoped<SignalRState>();

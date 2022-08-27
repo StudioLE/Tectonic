@@ -12,7 +12,7 @@ internal sealed class ActivityRunnerTests
     public void ActivityRunner_All()
     {
         // Arrange
-        BasicActivityBuilder builder = new();
+        ActivityBuilder builder = new();
 
         // Act
         builder.SetAssembly(_assembly);

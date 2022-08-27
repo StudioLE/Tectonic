@@ -18,9 +18,9 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
     [Inject]
     protected ILogger<ActivityRunnerComponent> Logger { get; set; } = default!;
 
-    /// <inheritdoc cref="BasicActivityBuilder"/>
+    /// <inheritdoc cref="ActivityBuilder"/>
     [Inject]
-    protected BasicActivityBuilder Builder { get; set; } = default!;
+    protected ActivityBuilder Builder { get; set; } = default!;
 
     /// <inheritdoc cref="ResultsState"/>
     [Inject]
