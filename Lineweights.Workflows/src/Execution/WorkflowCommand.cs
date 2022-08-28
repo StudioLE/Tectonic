@@ -1,3 +1,4 @@
+using Lineweights.Workflows.Containers;
 using Lineweights.Workflows.Results;
 using Microsoft.Extensions.Logging;
 
@@ -23,7 +24,7 @@ public class WorkflowCommand
     }
 
     /// <summary>
-    /// The method called each time a <see cref="Result"/> is produced by the workflow.
+    /// The method called each time a <see cref="Container"/> is produced by the workflow.
     /// </summary>
     public void OnResult(object outputs)
     {

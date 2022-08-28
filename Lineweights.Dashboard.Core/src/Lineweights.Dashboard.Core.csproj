@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Watch Include="Scripts\*.js" />
-    <Watch Include="Scripts\*.ts" />
+    <Watch Include="wwwroot\*.js" />
+    <Watch Include="wwwroot\*.css" />
   </ItemGroup>
 
   <!--Target Name="PostRestore" AfterTargets="_GenerateRestoreProjectSpec">

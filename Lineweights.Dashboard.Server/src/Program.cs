@@ -1,7 +1,7 @@
-using System.Diagnostics;
 using Lineweights.Dashboard.Core.Scripts;
 using Lineweights.Dashboard.Core.Shared;
 using Lineweights.Dashboard.Server.Hubs;
+using Lineweights.Workflows.Containers;
 using Lineweights.Workflows.Execution;
 using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -11,15 +11,12 @@ namespace Lineweights.Dashboard.Server;
 public class Program
 {
     private readonly WebApplicationBuilder _builder;
-    private Process? _azurite;
 
     private Program(string[] args)
     {
         _builder = WebApplication.CreateBuilder(args);
         InjectServices();
-        StartAzurite();
         RunApp();
-        StopAzurite();
     }
 
    private void InjectServices()
@@ -30,8 +27,10 @@ public class Program
 
         // Inject
         _builder.Services.AddScoped<ActivityBuilder>();
-        _builder.Services.AddScoped<ResultsState>();
-        _builder.Services.AddScoped<ModelViewerFacade>();
+        _builder.Services.AddScoped<GlobalState>();
+        _builder.Services.AddScoped<ModelViewer>();
+        _builder.Services.AddScoped<ObjectUrlStorage>();
+        _builder.Services.AddScoped<IStorageStrategy, ObjectUrlStorageStrategy>();
         _builder.Services.AddScoped<SignalRState>();
 
         // Add SignalR services
@@ -43,27 +42,6 @@ public class Program
         // https://docs.microsoft.com/en-us/aspnet/core/migration/22-to-30?view=aspnetcore-6.0&tabs=visual-studio#use-newtonsoftjson-in-an-aspnet-core-30-signalr-project
         _builder.Services.AddSignalR().AddNewtonsoftJsonProtocol();
     }
-
-   private void StartAzurite()
-   {
-       _azurite = Process.Start(new ProcessStartInfo
-       {
-           FileName = "npm",
-           Arguments = "run azurite",
-           UseShellExecute = true
-       });
-       // TODO: Azurite console to logger.
-   }
-
-   private void StopAzurite()
-   {
-       // TODO: Stop azurite
-       if (_azurite is null)
-           return;
-       _azurite.Kill();
-       _azurite.WaitForExit();
-       _azurite.Dispose();
-   }
 
    private void RunApp()
     {

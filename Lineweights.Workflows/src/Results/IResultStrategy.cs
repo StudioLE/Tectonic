@@ -1,3 +1,5 @@
+using Lineweights.Workflows.Containers;
+
 namespace Lineweights.Workflows.Results;
 
 /// <summary>
@@ -6,5 +8,5 @@ namespace Lineweights.Workflows.Results;
 public interface IResultStrategy
 {
     /// <inheritdoc cref="IResultStrategy"/>
-    public Result Execute(Model model, DocumentInformation doc);
+    public Task<Container> Execute(Model model, DocumentInformation doc);
 }

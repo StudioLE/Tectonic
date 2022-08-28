@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Lineweights.Workflows.Containers;
 using Lineweights.Workflows.Results;
 using NUnit.Framework.Interfaces;
 using StudioLE.Core.System;
@@ -59,6 +60,6 @@ public abstract class ResultAfterTestAttribute : Attribute, ITestAction
             Description = string.Join(Environment.NewLine, test.Tests.Select(x => x.Name))
         };
 
-        Strategy?.Execute(fixture.Model, doc);
+        Container? container = Strategy?.Execute(fixture.Model, doc).Result;
     }
 }

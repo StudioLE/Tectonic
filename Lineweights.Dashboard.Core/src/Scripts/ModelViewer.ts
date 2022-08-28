@@ -11,7 +11,7 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 // import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
-class ModelViewer {
+export class ModelViewer {
 
   private Container!: HTMLElement;
   private Scene: THREE.Scene = new THREE.Scene();
@@ -143,8 +143,8 @@ class ModelViewer {
   Render = () => {
     this.Renderer.render( this.Scene, this.Camera );
   };
-}
 
-export const init = (id: string, uri: string) => {
-  return new ModelViewer(id, uri);
-};
+  static Create = (id: string, uri: string) => {
+    return new ModelViewer(id, uri);
+  };
+}

@@ -20,9 +20,9 @@ public class SignalRComponentBase : ComponentBase
     [Inject]
     protected SignalRState SignalR { get; set; } = default!;
 
-    /// <inheritdoc cref="ResultsState"/>
+    /// <inheritdoc cref="GlobalState"/>
     [Inject]
-    protected ResultsState Results { get; set; } = default!;
+    protected GlobalState State { get; set; } = default!;
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -35,6 +35,6 @@ public class SignalRComponentBase : ComponentBase
         await SignalR.Connect();
 
         // Add to collection on receive
-        SendToDashboard.OnReceiveFromHub(SignalR.Connection ?? throw new("SignalR connection was null"), Results.Collection.Add);
+        SendToDashboard.OnReceiveFromHub(SignalR.Connection ?? throw new("SignalR connection was null"), State.Containers.Add);
     }
 }

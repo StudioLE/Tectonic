@@ -1,12 +1,12 @@
 ﻿const path = require('path');
 
 module.exports = {
-  entry: './Scripts/ModelViewer.ts',
+  entry: './Scripts/Bundle.ts',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'wwwroot/dist'),
     library: {
-      name: 'ModelViewer',
+      name: 'exports',
       type: 'umd',
     },
   },

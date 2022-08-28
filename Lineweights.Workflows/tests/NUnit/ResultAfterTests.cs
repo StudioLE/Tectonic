@@ -1,4 +1,5 @@
 using System.IO;
+using Lineweights.Workflows.Containers;
 using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -23,7 +24,7 @@ internal sealed class ResultAfterTests : ResultModel
     [TestCase(".glb")]
     [TestCase(".ifc")]
     [TestCase(".json")]
-    public void ResultAfterTest_OpenAsFile(string fileExtension)
+    public async Task ResultAfterTest_OpenAsFile(string fileExtension)
     {
         // Arrange
         OpenAsFileAfterTest attribute = new(fileExtension)
@@ -40,11 +41,11 @@ internal sealed class ResultAfterTests : ResultModel
         strategy.IsOpenEnabled = false;
 
         // Act
-        Result result = strategy.Execute(Model, new());
+        Container container = await strategy.Execute(Model, new());
 
         // Assert
-        Assert.That(result.Children.Count, Is.EqualTo(1), "Result children count");
-        string? path = result.Children.First().Info.Location?.LocalPath;
+        Assert.That(container.Children.Count, Is.EqualTo(1), "Children count");
+        string? path = container.Children.First().Info.Location?.LocalPath;
         Assert.That(path, Does.EndWith($"{fileExtension}"), "File extension");
         Assert.That(File.Exists(path), "File exists");
     }
@@ -52,7 +53,7 @@ internal sealed class ResultAfterTests : ResultModel
     [Test]
     [Explicit("Requires Dashboard")]
     [Category("Dashboard")]
-    public void ResultAfterTest_SendToDashboard()
+    public async Task ResultAfterTest_SendToDashboard()
     {
         // Arrange
         SendToDashboardAfterTest attribute = new()
@@ -66,10 +67,11 @@ internal sealed class ResultAfterTests : ResultModel
         }
 
         // Act
-        strategy.Execute(Model, new());
+        Container container = await strategy.Execute(Model, new());
 
         // Assert
         Assert.That(strategy.State, Is.EqualTo(HubConnectionState.Connected), "Connection state");
+        Assert.That(container.Children.Count, Is.EqualTo(1), "Children count");
     }
 
     [Test]

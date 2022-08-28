@@ -1,11 +1,15 @@
+using System.IO;
+using System.Text;
+using Lineweights.Workflows.Containers;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 using StudioLE.Core.Patterns;
+using StudioLE.Core.System.IO;
 
 namespace Lineweights.Workflows.Results;
 
 /// <summary>
-/// A <see cref="IResultStrategy"/> to send a <see cref="Model"/> to the dashboard as a <see cref="Result"/>.
+/// A <see cref="IResultStrategy"/> to send a <see cref="Model"/> to the dashboard as a <see cref="Container"/>.
 /// The result is then visualised on the dashboard.
 /// </summary>
 /// <remarks>
@@ -39,6 +43,8 @@ public sealed class SendToDashboard : IResultStrategy
 
     #endregion
 
+    private readonly IStorageStrategy _storageStrategy = new BlobStorageStrategy();
+
     private readonly HubConnection _connection = GetHubConnectionInstance();
 
     internal HubConnectionState State => _connection.State;
@@ -59,8 +65,9 @@ public sealed class SendToDashboard : IResultStrategy
     }
 
     /// <inheritdoc cref="SendToDashboard"/>
-    public Result Execute(Model model, DocumentInformation doc)
+    public async Task<Container> Execute(Model model, DocumentInformation doc)
     {
+        // TODO: Add task cancellation if the Hub is disconnected.
         if (_connection.State == HubConnectionState.Disconnected)
         {
             Console.WriteLine("Failed to SendToDashboard. The dashboard is disconnected.");
@@ -69,23 +76,31 @@ public sealed class SendToDashboard : IResultStrategy
                 Errors = new [] { "Failed to SendToDashboard. The dashboard is disconnected." }
             };
         }
-        Result result = ResultBuilder.Default(new BlobStorageStrategy(), model, doc);
-        SendToHub(result);
-        return result;
+        ContainerBuilder builder = ContainerBuilder.Default(_storageStrategy, model, doc);
+        Container container = await builder.Build();
+        await RecursiveWriteContent(container);
+        try
+        {
+            await _connection.SendAsync(ToHub, container);
+        }
+        catch (Exception e)
+        {
+            container.Errors = container
+                .Errors
+                .Concat(new[]
+                {
+                    "Failed to SendToDashboard.",
+                    e.Message
+                })
+                .ToArray();
+        }
+        return container;
     }
 
     /// <summary>
-    /// Send a <see cref="Result"/> from a client to the hub.
+    /// On receiving a <see cref="Container"/> .
     /// </summary>
-    private void SendToHub(Result result)
-    {
-        _connection.SendAsync(ToHub, result);
-    }
-
-    /// <summary>
-    /// On receiving a <see cref="Result"/> .
-    /// </summary>
-    public static void OnReceiveFromHub(HubConnection connection, Action<Result> handler)
+    public static void OnReceiveFromHub(HubConnection connection, Action<Container> handler)
     {
         connection.On(ToAllClients, handler);
     }
@@ -98,5 +113,18 @@ public sealed class SendToDashboard : IResultStrategy
         {
             return null;
         }
+    }
+
+    private async Task RecursiveWriteContent(Container container)
+    {
+        if (container.Content is not null)
+        {
+            string fileName = container.Info.Id + (container.ContentType.GetExtensionByContentType() ?? ".txt");
+            byte[] byteArray = Encoding.ASCII.GetBytes(container.Content);
+            MemoryStream stream = new(byteArray);
+            _ = await _storageStrategy.WriteAsync(container, fileName, stream);
+        }
+        foreach (Container child in container.Children)
+            await RecursiveWriteContent(child);
     }
 }

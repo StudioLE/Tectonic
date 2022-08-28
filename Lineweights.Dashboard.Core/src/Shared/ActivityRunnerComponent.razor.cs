@@ -5,8 +5,8 @@ using System.Reflection;
 using Ardalis.Result;
 using Lineweights.Flex.Samples;
 using Lineweights.Workflows;
+using Lineweights.Workflows.Containers;
 using Lineweights.Workflows.Execution;
-using Lineweights.Workflows.Results;
 using Lineweights.Workflows.Samples;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
@@ -24,9 +24,13 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
     [Inject]
     protected ActivityBuilder Builder { get; set; } = default!;
 
-    /// <inheritdoc cref="ResultsState"/>
+    /// <inheritdoc cref="GlobalState"/>
     [Inject]
-    protected ResultsState Results { get; set; } = default!;
+    protected GlobalState State { get; set; } = default!;
+
+    /// <inheritdoc cref="GlobalState"/>
+    [Inject]
+    protected IStorageStrategy StorageStrategy { get; set; } = default!;
 
     protected string AssemblyInputValue { get; set; } = string.Empty;
 
@@ -42,7 +46,7 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
     protected override void OnInitialized()
     {
         Assembly[] assemblies = {
-            typeof(DashboardSamples).Assembly,
+            typeof(GeometricScene).Assembly,
             typeof(WallFlemishBond).Assembly
         };
         foreach (Assembly assembly in assemblies)
@@ -109,7 +113,7 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
             ShowError(result.Errors.Join());
     }
 
-    protected void BuildAndExecute()
+    protected async void BuildAndExecute()
     {
         ClearMessages();
 
@@ -166,9 +170,10 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
         {
             Name = builtState.Command.Name,
             Description = $"Executed {ActivitySelectValue} from {AssemblyInputValue}."
-        };
-        Result result = ResultBuilder.Default(new BlobStorageStrategy(), model, doc);
-        Results.Collection.Add(result);
+        };;
+        ContainerBuilder builder = ContainerBuilder.Default(StorageStrategy, model, doc);
+        Container container = await builder.Build();
+        State.Containers.Add(container);
     }
 
     private void ShowWarning(string message, string? title = null)
@@ -206,6 +211,6 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
-        Results.Collection.CollectionChanged -= OnMessagesChanged;
+        State.Containers.CollectionChanged -= OnMessagesChanged;
     }
 }

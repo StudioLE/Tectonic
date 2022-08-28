@@ -1,5 +1,8 @@
 using System.Diagnostics;
 using System.IO;
+using System.Text;
+using Lineweights.Workflows.Containers;
+using StudioLE.Core.System.IO;
 
 namespace Lineweights.Workflows.Results;
 
@@ -8,6 +11,8 @@ namespace Lineweights.Workflows.Results;
 /// </summary>
 public sealed class OpenAsFile : IResultStrategy
 {
+    private readonly IStorageStrategy _storageStrategy = new FileStorageStrategy();
+
     /// <summary>
     /// Should the file be opened.
     /// </summary>
@@ -16,7 +21,7 @@ public sealed class OpenAsFile : IResultStrategy
     /// <summary>
     /// The path of the created file.
     /// </summary>
-    public Func<IStorageStrategy, Model, DocumentInformation, Result> Builder { get; set; } = ResultBuilder.Default;
+    public Func<IStorageStrategy, Model, DocumentInformation, ContainerBuilder> Builder { get; set; } = ContainerBuilder.Default;
 
     /// <inheritdoc cref="OpenAsFile"/>
     public OpenAsFile(params string[] fileExtensions)
@@ -25,7 +30,7 @@ public sealed class OpenAsFile : IResultStrategy
             return;
         Builder = (storageStrategy, model, doc) =>
         {
-            ResultBuilder builder = new(storageStrategy, doc);
+            ContainerBuilder builder = new(storageStrategy, doc);
             if (fileExtensions.Contains(".glb"))
                 builder = builder.ConvertModelToGlb(model);
             if (fileExtensions.Contains(".ifc"))
@@ -34,27 +39,42 @@ public sealed class OpenAsFile : IResultStrategy
                 builder = builder.ConvertModelToJson(model);
             if (fileExtensions.Contains(".svg"))
                 builder = builder.ExtractViewsAndConvertToSvg(model);
-            return builder.Build();
+            return builder;
         };
     }
 
     /// <inheritdoc cref="OpenAsFile"/>
-    public Result Execute(Model model, DocumentInformation doc)
+    public async Task<Container> Execute(Model model, DocumentInformation doc)
     {
-        Result result = Builder(new FileStorageStrategy(), model, doc);
+        ContainerBuilder builder = Builder(_storageStrategy, model, doc);
+        Container container = await builder.Build();
+        await RecursiveWriteContent(container);
         if (IsOpenEnabled)
-            RecursiveOpen(result);
-        return result;
+            RecursiveOpen(container);
+        return container;
     }
 
-    private static void RecursiveOpen(Result result)
+    private async Task RecursiveWriteContent(Container container)
     {
-        if (File.Exists(result.Info.Location?.AbsolutePath))
-            Process.Start(new ProcessStartInfo(result.Info.Location!.AbsolutePath)
+        if (container.Content is not null)
+        {
+            string fileName = container.Info.Id + (container.ContentType.GetExtensionByContentType() ?? ".txt");
+            byte[] byteArray = Encoding.ASCII.GetBytes(container.Content);
+            MemoryStream stream = new(byteArray);
+            _ = await _storageStrategy.WriteAsync(container, fileName, stream);
+        }
+        foreach (Container child in container.Children)
+            await RecursiveWriteContent(child);
+    }
+
+    private static void RecursiveOpen(Container container)
+    {
+        if (File.Exists(container.Info.Location?.AbsolutePath))
+            Process.Start(new ProcessStartInfo(container.Info.Location!.AbsolutePath)
             {
                 UseShellExecute = true
             });
-        foreach (Result child in result.Children)
+        foreach (Container child in container.Children)
             RecursiveOpen(child);
     }
 }
