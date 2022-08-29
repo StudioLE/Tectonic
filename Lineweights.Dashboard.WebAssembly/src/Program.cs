@@ -2,7 +2,7 @@ using Lineweights.Dashboard.Core.Scripts;
 using Lineweights.Dashboard.Core.Shared;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Lineweights.Dashboard.Web;
+using Lineweights.Dashboard.WebAssembly;
 using Lineweights.Workflows.Containers;
 using Lineweights.Workflows.Execution;
 

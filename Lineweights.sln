@@ -88,7 +88,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8066AE8C-6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.Workflows.Samples", "Lineweights.Workflows\samples\Lineweights.Workflows.Samples.csproj", "{0A84A66C-A063-47F7-8161-AEC8022EA911}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.Dashboard.Web", "Lineweights.Dashboard.Web\src\Lineweights.Dashboard.Web.csproj", "{1834A1DD-5E94-4C2C-ACE4-BCA40C490782}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.Dashboard.WebAssemblyAssembly", "Lineweights.Dashboard.WebAssembly\src\Lineweights.Dashboard.WebAssembly.csproj", "{1834A1DD-5E94-4C2C-ACE4-BCA40C490782}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.Dashboard.Core", "Lineweights.Dashboard.Core\src\Lineweights.Dashboard.Core.csproj", "{F5D4093C-518F-4D0A-B1CA-1AC672B2D4CF}"
 EndProject
