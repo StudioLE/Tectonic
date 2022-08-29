@@ -14,7 +14,7 @@
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Lineweights.Workflows.NUnit" />
-    <InternalsVisibleTo Include="Lineweights.Dashboard.Mock" />
+    <InternalsVisibleTo Include="Lineweights.App.Mock" />
   </ItemGroup>
 
   <ItemGroup>

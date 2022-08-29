@@ -7,7 +7,7 @@ using QuestPDF.Fluent;
 
 namespace Lineweights.PDF.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class ViewToPdfTests : ResultModel
 {
     [TestCase(ViewDirection.Back)]

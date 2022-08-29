@@ -7,7 +7,7 @@ using StudioLE.Core.System.IO;
 namespace Lineweights.Workflows.Results;
 
 /// <summary>
-/// A <see cref="IResultStrategy"/> to open results.
+/// An <see cref="IResultStrategy"/> to visualise a <see cref="Model"/> by saving it to a file and opening it locally.
 /// </summary>
 public sealed class OpenAsFile : IResultStrategy
 {
@@ -19,7 +19,7 @@ public sealed class OpenAsFile : IResultStrategy
     public bool IsOpenEnabled { get; set; } = true;
 
     /// <summary>
-    /// The path of the created file.
+    /// The builder that determines what
     /// </summary>
     public Func<IStorageStrategy, Model, DocumentInformation, ContainerBuilder> Builder { get; set; } = ContainerBuilder.Default;
 

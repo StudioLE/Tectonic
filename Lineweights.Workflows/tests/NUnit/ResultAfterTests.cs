@@ -51,16 +51,16 @@ internal sealed class ResultAfterTests : ResultModel
     }
 
     [Test]
-    [Explicit("Requires Dashboard")]
-    [Category("Dashboard")]
-    public async Task ResultAfterTest_SendToDashboard()
+    [Explicit("Requires SignalR")]
+    [Category("Requires SignalR")]
+    public async Task ResultAfterTest_SendToServer()
     {
         // Arrange
-        SendToDashboardAfterTest attribute = new()
+        SendToServerAfterTest attribute = new()
         {
             IsEnabled = true
         };
-        if (attribute.Strategy is not SendToDashboard strategy)
+        if (attribute.Strategy is not SendToServer strategy)
         {
             Assert.Fail("Strategy type");
             return;
@@ -75,10 +75,10 @@ internal sealed class ResultAfterTests : ResultModel
     }
 
     [Test]
-    [Explicit("Requires Dashboard")]
-    [Category("Dashboard")]
-    [SendToDashboardAfterTest(IsEnabled = true)]
-    public void ResultAfterTest_SendToDashboard_Attribute()
+    [Explicit("Requires SignalR")]
+    [Category("Requires SignalR")]
+    [SendToServerAfterTest(IsEnabled = true)]
+    public void ResultAfterTest_SendToServer_Attribute()
     {
     }
 }

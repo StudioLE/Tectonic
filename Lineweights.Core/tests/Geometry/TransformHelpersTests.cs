@@ -2,7 +2,7 @@
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class TransformHelpersTests : ResultModel
 {
     [Test]

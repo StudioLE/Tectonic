@@ -3,7 +3,7 @@ using Lineweights.Workflows.Results;
 
 namespace Lineweights.Curves.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class HelpersTests : ResultModel
 {
     [TestCase(0.1)]

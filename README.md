@@ -139,14 +139,14 @@ Libraries that provide additional mechanisms for visualising and verifying the r
 
 ---
 
-📡 **Lineweights.Dashboard**
+📡 **Lineweights.App**
 
 ![](https://img.shields.io/badge/status-alpha-informational)
 
 A [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) client application to visualise the results of Elements logic.
 
-*→ [Documentation](https://docs.lineweights.io/latest/Workflows/Lineweights.Dashboard.html)*
-/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.Dashboard/src)*
+*→ [Documentation](https://docs.lineweights.io/latest/Workflows/Lineweights.App.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.App/src)*
 
 ---
 

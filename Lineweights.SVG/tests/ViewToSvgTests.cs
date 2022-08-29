@@ -6,7 +6,7 @@ using Lineweights.Workflows.Results;
 
 namespace Lineweights.SVG.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class ViewToSvgTests : ResultModel
 {
     private readonly ViewToSvg _converter = new();

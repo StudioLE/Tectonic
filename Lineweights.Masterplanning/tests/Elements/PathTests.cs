@@ -5,7 +5,7 @@ using Lineweights.Workflows.Results;
 
 namespace Lineweights.Masterplanning.Tests.Elements;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class PathTests : ResultModel
 {
     //private readonly IReadOnlyCollection<Vector3> _points = new[]

@@ -3,7 +3,7 @@ using Lineweights.Workflows.Results;
 
 namespace Lineweights.Flex.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class Flex2dTests : ResultModel
 {
     private Brick Container { get; }

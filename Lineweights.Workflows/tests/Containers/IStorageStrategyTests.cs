@@ -33,6 +33,7 @@ internal sealed class StorageStrategyTests
 
     [Test]
     [Explicit("Requires Azurite")]
+    [Category("Requires Azurite")]
     public async Task BlobStorageStrategy_WriteAsync()
     {
         // Arrange

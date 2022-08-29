@@ -4,7 +4,7 @@ using Lineweights.Workflows.Results;
 
 namespace Lineweights.Curves.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class SplineTests : ResultModel
 {
     internal static readonly IReadOnlyCollection<Vector3> _points = new[]

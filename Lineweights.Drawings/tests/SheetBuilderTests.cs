@@ -3,7 +3,7 @@ using Lineweights.Workflows.Results;
 
 namespace Lineweights.Drawings.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class SheetBuilderTests : ResultModel
 {
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();

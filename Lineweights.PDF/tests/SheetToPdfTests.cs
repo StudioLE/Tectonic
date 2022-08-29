@@ -8,7 +8,7 @@ using QuestPDF.Fluent;
 
 namespace Lineweights.PDF.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class SheetToPdfTests : ResultModel
 {
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();

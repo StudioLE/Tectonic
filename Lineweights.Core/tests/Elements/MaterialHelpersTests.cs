@@ -2,7 +2,7 @@
 
 namespace Lineweights.Core.Tests.Elements;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class MaterialHelpersTests : ResultModel
 {
     [TestCase("blue", "bed58e79-27fb-5c9e-a631-6489bd1bf316")]

@@ -2,7 +2,7 @@ using Lineweights.Workflows.Results;
 
 namespace Lineweights.Flex.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class SeatingSamples : ResultModel
 {
     [Test]

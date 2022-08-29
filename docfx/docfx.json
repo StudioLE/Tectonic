@@ -84,8 +84,8 @@
                     "exclude": [ "**/obj/**" ]
                 },
                 {
-                    "src": "../Lineweights.Dashboard/src",
-                    "files": [ "bin/Release/**/Lineweights.Dashboard.dll" ],
+                    "src": "../Lineweights.App/src",
+                    "files": [ "bin/Release/**/Lineweights.App.dll" ],
                     "exclude": [ "**/obj/**" ]
                 },
                 {

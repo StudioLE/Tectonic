@@ -6,7 +6,7 @@ namespace Lineweights.Workflows.Results;
 /// </para>
 /// <para>
 /// When executed in a DEBUG build the <see cref="Model"/> is serialised to json
-/// and sent to via SignalR to the Dashboard to be visualised.
+/// and sent to via SignalR to the server to be visualised.
 /// </para>
 /// </summary>
 /// <remarks>

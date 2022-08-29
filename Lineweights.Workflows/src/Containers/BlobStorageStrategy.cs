@@ -13,7 +13,7 @@ namespace Lineweights.Workflows.Containers;
 public class BlobStorageStrategy : IStorageStrategy
 {
     private const string BlobConnectionString = "UseDevelopmentStorage=true";
-    private const string BlobContainer = "dashboard";
+    private const string BlobContainer = "assets";
     private static readonly BlobClientOptions _blobOptions = new()
     {
         Retry =

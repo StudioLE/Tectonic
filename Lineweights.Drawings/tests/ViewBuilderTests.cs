@@ -2,7 +2,7 @@ using Lineweights.Workflows.Results;
 
 namespace Lineweights.Drawings.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class ViewBuilderTests : ResultModel
 {
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();

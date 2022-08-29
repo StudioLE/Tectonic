@@ -2,7 +2,7 @@
 
 namespace Lineweights.Workflows.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class ScenesTests : ResultModel
 {
     [Test]

@@ -3,7 +3,7 @@ using Lineweights.Workflows.Containers;
 namespace Lineweights.Workflows.Results;
 
 /// <summary>
-/// A strategy to visualise or sample results of an execution.
+/// A strategy to visualise or sample a <see cref="Model"/>.
 /// </summary>
 public interface IResultStrategy
 {

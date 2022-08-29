@@ -2,7 +2,7 @@
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class CreateArcTests : ResultModel
 {
     [TestCase(1, 0, 0, 1, 0, 0)]

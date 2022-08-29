@@ -3,7 +3,7 @@ using Lineweights.Workflows.Results;
 
 namespace Lineweights.Flex.Tests;
 
-[SendToDashboardAfterTest]
+[SendToServerAfterTest]
 internal sealed class Flex1dTests : ResultModel
 {
     private Line Line { get; }
