@@ -4,12 +4,12 @@ using Lineweights.Workflows.Execution;
 
 namespace Lineweights.Workflows.Tests.Execution;
 
-internal sealed class ActivityRunnerTests
+internal sealed class ActivityBuilderTests
 {
     private static readonly Assembly _assembly = GetAssembly();
 
     [Test]
-    public void ActivityRunner_All()
+    public void ActivityBuilder_Build()
     {
         // Arrange
         ActivityBuilder builder = new();
@@ -20,10 +20,10 @@ internal sealed class ActivityRunnerTests
         // Assert
         if (builder.State is not ActivityBuilder.AssemblySetState assemblySetState)
             throw new("Incorrect state.");
-        Assert.That(assemblySetState.Activities.Count, Is.EqualTo(5), "Activity count");
+        Assert.That(assemblySetState.Activities.Count, Is.EqualTo(6), "Activity count");
 
         // Arrange
-        string activityName = assemblySetState.ActivityNames.First();
+        const string activityName = "Flex2dSample.Execute";
 
         // Act
         var result = builder.SetActivity(activityName);
@@ -32,8 +32,8 @@ internal sealed class ActivityRunnerTests
         Assert.That(result.Errors.Count, Is.EqualTo(0), "Error count");
         if (builder.State is not ActivityBuilder.ActivitySetState activitySetState)
             throw new("Incorrect state.");
-        Assert.That(activitySetState.Inputs, Is.Not.Null, "Not null");
-        Assert.That(activitySetState.Inputs.Count, Is.EqualTo(1), "Inputs count");
+        Assert.That(activitySetState.Inputs, Is.Not.Null, "Inputs");
+        Assert.That(activitySetState.Inputs.Count, Is.EqualTo(5), "Inputs count");
 
         // Arrange
         // Act
@@ -42,7 +42,7 @@ internal sealed class ActivityRunnerTests
         // Assert
         if (builder.State is not ActivityBuilder.BuiltState builtState)
             throw new("Incorrect state.");
-        Assert.That(builtState.Command, Is.Not.Null, "Command is not null");
+        Assert.That(builtState.Command, Is.Not.Null, "Command");
         Assert.That(builtState.Command.Name, Is.Not.Empty, "Command name");
         Assert.That(builtState.Command.Inputs, Is.Not.Empty, "Command inputs");
 
@@ -55,8 +55,8 @@ internal sealed class ActivityRunnerTests
         // Assert
         if (builder.State is not ActivityBuilder.BuiltState)
             throw new("Incorrect state.");
-        Assert.That(outputs, Is.Not.Null, "Not null");
-        Assert.That(outputs.Model.Elements.Count, Is.EqualTo(24), "Output model count");
+        Assert.That(outputs, Is.Not.Null, "Outputs");
+        Assert.That(outputs.Model.Elements.Count, Is.EqualTo(526), "Outputs model count");
 
         // Arrange
         // Act

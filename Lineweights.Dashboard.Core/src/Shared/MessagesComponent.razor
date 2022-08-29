@@ -14,7 +14,7 @@
       <div class="message-body">
         @foreach (string line in message.Body.Split(Environment.NewLine))
         {
-          <p>@message.Body</p>
+          <p>@line</p>
         }
       </div>
     }

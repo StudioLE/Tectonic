@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Reflection;
+﻿using System.Reflection;
 using Ardalis.Result;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -69,6 +68,21 @@ public class DynamicInputComponentBase : ComponentBase, IDisposable
         Type? underlyingType = Nullable.GetUnderlyingType(_type);
         if (underlyingType is not null)
             _type = underlyingType;
+
+        if (_type == typeof(double) || _type == typeof(int))
+            Type = InputType.Number;
+        else if (_type == typeof(string))
+            Type = InputType.Text;
+        else if (typeof(Enum).IsAssignableFrom(_type))
+        {
+            Type = InputType.Select;
+            Options = Enum.GetNames(_type);
+        }
+        else if (_type == typeof(bool))
+            Type = InputType.Checkbox;
+        else
+            Type = InputType.Unknown;
+
 
         UpdateAdditionalValidationAttributes();
     }
@@ -146,28 +160,64 @@ public class DynamicInputComponentBase : ComponentBase, IDisposable
             return double.TryParse(value, out double parsed)
                 ? success.Invoke(parsed)
                 : failure.Invoke("a number");
+        if (typeof(Enum).IsAssignableFrom(_type))
+            return Enum.TryParse(_type, value, out object? parsed)
+                ? success.Invoke(parsed)
+                : failure.Invoke("a boolean");
 
         // TODO: Replace with Logger
         throw new("Unsupported type.");
     }
 
+    protected bool ValueAsBoolean {
+        get => GetCurrentValueAsBoolean();
+        set => SetCurrentValueAsBoolean(value);
+    }
+
+    /// <summary>
+    /// Gets or sets the current value of the input, represented as a string.
+    /// </summary>
+    private bool GetCurrentValueAsBoolean()
+    {
+        return Value as bool? ?? throw new("Value was not a boolean.");
+    }
+
+    /// <summary>
+    /// Gets or sets the current value of the input, represented as a string.
+    /// </summary>
+    private void SetCurrentValueAsBoolean(bool value)
+    {
+        _parsingValidationMessages?.Clear();
+        Value = value;
+        // We can skip the validation notification if we were previously valid and still are
+        if (!_previousParsingAttemptFailed)
+            return;
+        _editContext.NotifyValidationStateChanged();
+        _previousParsingAttemptFailed = false;
+    }
+
+    #endregion
+
+    #region Properties
+
+    protected enum InputType
+    {
+        Unknown,
+        Number,
+        Text,
+        Select,
+        Checkbox
+    }
+
+    protected InputType Type { get; private set; }= InputType.Unknown;
+
+    protected IReadOnlyCollection<string> Options { get; set; } = Array.Empty<string>();
+
     #endregion
 
     #region Attributes
 
-    /// <summary>
-    /// A string of CSS classes that combines the existing classes and the status of the input field
-    /// via <see cref="EditContextFieldClassExtensions.FieldCssClass"/>.
-    /// </summary>
-    protected string Class()
-    {
-        string inputClass = _editContext.FieldCssClass(_fieldIdentifier);
-        return AdditionalAttributes != null
-               && AdditionalAttributes.TryGetValue("class", out object? @class)
-               && !string.IsNullOrEmpty(Convert.ToString(@class, CultureInfo.InvariantCulture))
-            ? $"{@class} {inputClass}"
-            : inputClass; // Never null or empty
-    }
+    protected string ValidationStatusClass => _editContext.FieldCssClass(_fieldIdentifier);
 
     private void UpdateAdditionalValidationAttributes()
     {

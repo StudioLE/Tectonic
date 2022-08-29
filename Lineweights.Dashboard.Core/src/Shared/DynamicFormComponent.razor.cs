@@ -16,7 +16,6 @@ public class DynamicFormComponentBase : ComponentBase, IDisposable
     [Parameter]
     public Action OnValidSubmit { get; set; } = default!;
 
-
     /// <summary>
     /// The inputs object.
     /// </summary>

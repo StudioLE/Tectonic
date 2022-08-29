@@ -7,48 +7,34 @@
   object inputs = Inputs.ElementAt(i);
   EditContext editContext = EditContexts.ElementAt(i);
 
-  <EditForm EditContext="@editContext">
+  <EditForm class="columns is-multiline" EditContext="@editContext">
     <DataAnnotationsValidator/>
 
     @foreach (PropertyInfo property in inputs.GetType().GetProperties())
     {
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">@property.Name</label>
+    <div class="column is-3">
+      <fieldset class="field">
+        <label class="label">@property.Name</label>
+        <div class="control is-expanded">
+          <DynamicInputComponent Instance="@inputs" Property="@property"/>
         </div>
-        <fieldset class="field-body">
-          <div class="field">
-          <div class="control is-expanded">
-            <DynamicInputComponent class="input" Instance="@inputs" Property="@property"/>
-          </div>
-            @foreach (string message in GetValidationMessages(editContext, inputs, property.Name))
-            {
-              <p class="help is-danger">
-                @message
-              </p>
-            }
-          </div>
-        </fieldset>
-      </div>
+        @foreach (string message in GetValidationMessages(editContext, inputs, property.Name))
+        {
+          <p class="help is-danger">@message</p>
+        }
+      </fieldset>
+    </div>
     }
-
   </EditForm>
 }
 
-<div class="field is-horizontal mt-3">
-  <div class="field-label">
-    <!-- Left empty for spacing -->
-  </div>
-  <div class="field-body">
-    <div class="field">
-      <p class="control">
-        <button class="button is-primary" onclick="@Submit" disabled="@(!IsValid)">
-          <span>Execute</span>
-          <span class="icon">
-            <i class="mdi mdi-arrow-right"></i>
-          </span>
-        </button>
-      </p>
-    </div>
-  </div>
+<div class="field">
+  <p class="control">
+    <button class="button is-primary" onclick="@Submit" disabled="@(!IsValid)">
+      <span>Execute</span>
+      <span class="icon">
+        <i class="mdi mdi-arrow-right"></i>
+      </span>
+    </button>
+  </p>
 </div>

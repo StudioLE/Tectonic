@@ -48,37 +48,37 @@
     </p>
   </header>
   <div class="card-content">
-    <div class="columns">
-      <div class="column is-offset-2 is-8">
-        <MessagesComponent Messages="Messages"></MessagesComponent>
-        @switch (Builder.State)
+    <MessagesComponent Messages="Messages"></MessagesComponent>
+    @switch (Builder.State)
+    {
+      case ActivityBuilder.ActivitySetState activitySetState:
+      {
+        if (activitySetState.Inputs.Count == 0)
         {
-          case ActivityBuilder.ActivitySetState activitySetState:
-          {
-            if (activitySetState.Inputs.Count == 0)
-            {
-              <div class="field is-horizontal">
-                <div class="field-label">
-                  <!-- Left empty for spacing -->
-                </div>
-                <div class="field-body">
-                  <div class="field">
-                    <div class="control is-narrow">
-                      <article class="message">
-                        <div class="message-body">
-                          This activity has no inputs.
-                        </div>
-                      </article>
+          <div class="field is-horizontal">
+            <div class="field-label">
+              <!-- Left empty for spacing -->
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="control is-narrow">
+                  <article class="message">
+                    <div class="message-body">
+                      This activity has no inputs.
                     </div>
-                  </div>
+                  </article>
                 </div>
               </div>
-            }
-            <DynamicFormComponent Inputs="@activitySetState.Inputs" OnValidSubmit="@BuildAndExecute"></DynamicFormComponent>
-            break;
-          }
-          case ActivityBuilder.AssemblySetState assemblySetState:
-          {
+            </div>
+          </div>
+        }
+        <DynamicFormComponent Inputs="@activitySetState.Inputs" OnValidSubmit="@BuildAndExecute"></DynamicFormComponent>
+        break;
+      }
+      case ActivityBuilder.AssemblySetState assemblySetState:
+      {
+        <div class="columns">
+          <div class="column is-offset-2 is-8">
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">Activity</label>
@@ -106,10 +106,13 @@
                 </div>
               </fieldset>
             </div>
-            break;
-          }
-          default:
-
+          </div>
+        </div>
+        break;
+      }
+      default:
+        <div class="columns">
+          <div class="column is-offset-2 is-8">
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">Loaded Assemblies</label>
@@ -158,9 +161,9 @@
                 </div>
               </fieldset>
             </div>
-            break;
-        }
-      </div>
-    </div>
+          </div>
+        </div>
+        break;
+    }
   </div>
 </div>
