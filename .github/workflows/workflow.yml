@@ -173,8 +173,92 @@ jobs:
           --symbol-source "https://nuget.pkg.github.com/StudioLE/index.json"
           --api-key "${{ secrets.GITHUB_TOKEN }}"
 
-
 ####################################################################################################
+
+  publish-app:
+    name: Publish WebAssembly App
+    if: ${{ github.repository == 'StudioLE/Lineweights' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') }}
+    needs:
+      - analysis
+    runs-on: windows-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+
+      - name: Read Metadata
+        run: |
+          echo "Configuration: ${{ needs.analysis.outputs.configuration }}"
+          echo "Version: ${{ needs.analysis.outputs.version }}"
+
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Load Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore npm Dependencies
+        working-directory: Lineweights.Dashboard.Core/src
+        run: |
+          npm install
+          npm run restore
+          npm run build
+
+      - name: Build and Publish WebAssembly
+        run: >
+          dotnet publish Lineweights.Dashboard.WebAssembly/src/Lineweights.Dashboard.WebAssembly.csproj
+          --configuration "${{ needs.analysis.outputs.configuration }}"
+          -p:Version="${{ needs.analysis.outputs.version }}"
+          --output artifacts
+
+      - name: Upload WebAssembly Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Dashboard-v${{ needs.analysis.outputs.version }}
+          path: artifacts/wwwroot
+        if: ${{ always() }}
+
+  ####################################################################################################
+
+  deploy-app:
+    name: Deploy WebAssembly App
+    if: ${{ github.repository == 'StudioLE/Lineweights' && github.ref == 'refs/heads/main' }}
+    needs:
+      - analysis
+      - build-and-test
+      - publish-app
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+
+      - name: Read Metadata
+        run: |
+          echo "Configuration: ${{ needs.analysis.outputs.configuration }}"
+          echo "Version: ${{ needs.analysis.outputs.version }}"
+
+      - name: Download NuGet Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Dashboard-v${{ needs.analysis.outputs.version }}
+          path: artifacts
+
+      - name: Deploy WebAssembly
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        run: |
+          aws s3 cp --recursive artifacts/wwwroot s3://${{ secrets.S3_BUCKET }}/dashboard/v${{ needs.analysis.outputs.version }}
+          aws s3 rm --recursive s3://${{ secrets.S3_BUCKET }}/dashboard/latest
+          aws s3 cp --recursive s3://${{ secrets.S3_BUCKET }}/dashboard/v${{ needs.analysis.outputs.version }} s3://lineweights/dashboard/latest
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DASHBOARD }} --paths "/*"
+
+  ####################################################################################################
 
   publish-docs:
     name: Publish Docs
