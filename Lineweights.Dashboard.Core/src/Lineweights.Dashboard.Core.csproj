@@ -30,16 +30,4 @@
     <Watch Include="wwwroot\*.js" />
     <Watch Include="wwwroot\*.css" />
   </ItemGroup>
-
-  <!--Target Name="PostRestore" AfterTargets="_GenerateRestoreProjectSpec">
-    <Exec Command="echo Executing npm install" />
-    <Exec Command="npm install" />
-  </Target-->
-
-  <!--Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Condition="'$(Configuraton)' == 'Debug'" Command="echo Executing npm run build-dev" />
-    <Exec Condition="'$(Configuraton)' == 'Debug'" Command="npm run build-dev" />
-    <Exec Condition="'$(Configuraton)' != 'Debug'" Command="echo Executing npm run build-dev" />
-    <Exec Condition="'$(Configuraton)' != 'Debug'" Command="npm run build-dev" />
-  </Target-->
 </Project>

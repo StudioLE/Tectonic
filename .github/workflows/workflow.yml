@@ -77,7 +77,8 @@ jobs:
         working-directory: Lineweights.Dashboard.Core/src
         run: |
           npm install
-          npm run build-dev
+          npm run restore
+          npm run build
 
       - name: Restore NuGet Dependencies
         run: >
