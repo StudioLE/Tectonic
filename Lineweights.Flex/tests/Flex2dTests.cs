@@ -1,11 +1,12 @@
 using Lineweights.Flex.Sequences;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
 
-[SendToServerAfterTest]
-internal sealed class Flex2dTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class Flex2dTests
 {
+    private readonly Model _model = new();
     private Brick Container { get; }
     private SequenceBuilder StretcherSoldier { get; }
     private SequenceBuilder SoldierStretcher { get; }
@@ -29,8 +30,8 @@ internal sealed class Flex2dTests : ResultModel
     [SetUp]
     public void Setup()
     {
-        Model.AddBounds(Container, Container.Material);
-        Model.AddElements(CreateModelArrows.ByTransform(new()));
+        _model.AddBounds(Container, Container.Material);
+        _model.AddElements(CreateModelArrows.ByTransform(new()));
     }
 
     [TestCase(Justification.Center)]
@@ -161,8 +162,8 @@ internal sealed class Flex2dTests : ResultModel
         //Model.AddBounds(assemblyInstances.Select(x => x.BaseDefinition), MaterialByName("Orange"));
         //Model.AddBounds(assembly, MaterialByName("Aqua"));
         //Model.AddBounds(assembly.BaseDefinition, MaterialByName("Orange"));
-        Model.AddElements(components.SelectMany(x => x));
-        Model.AddBounds(components.SelectMany(x => x));
+        _model.AddElements(components.SelectMany(x => x));
+        _model.AddBounds(components.SelectMany(x => x));
 
         // Assert
         Verify.ElementsByBounds(components.SelectMany(x => x).ToArray());

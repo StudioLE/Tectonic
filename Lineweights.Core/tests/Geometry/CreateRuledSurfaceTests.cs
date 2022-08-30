@@ -1,14 +1,16 @@
-﻿using Lineweights.Workflows.Results;
+﻿using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[SendToServerAfterTest]
-internal sealed class CreateRuledSurfaceTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class CreateRuledSurfaceTests
 {
+    private readonly Model _model = new();
+
     [SetUp]
     public void Setup()
     {
-        Model.AddElements(CreateModelArrows.ByTransform(new()));
+        _model.AddElements(CreateModelArrows.ByTransform(new()));
     }
 
     [TestCase(1, 1, 1)]
@@ -23,7 +25,7 @@ internal sealed class CreateRuledSurfaceTests : ResultModel
         IEnumerable<Line> lines = CreateRuledSurface.HyperbolicParaboloidAsLines(10, transform);
 
         // Preview
-        Model.AddElements(lines.Select(_ => new ModelCurve(_)));
+        _model.AddElements(lines.Select(_ => new ModelCurve(_)));
 
         // Assert
         Verify.Geometry(lines);
@@ -40,7 +42,7 @@ internal sealed class CreateRuledSurfaceTests : ResultModel
         IEnumerable<Curve> lines = CreateRuledSurface.ConoidAsLines(10, 90, transform);
 
         // Preview
-        Model.AddElements(lines.Select(_ => new ModelCurve(_)));
+        _model.AddElements(lines.Select(_ => new ModelCurve(_)));
 
         // Assert
         Verify.Geometry(lines);
@@ -70,7 +72,7 @@ internal sealed class CreateRuledSurfaceTests : ResultModel
                 10));
 
         // Preview
-        Model.AddElements(lines.Select(_ => new ModelCurve(_)));
+        _model.AddElements(lines.Select(_ => new ModelCurve(_)));
 
         // Assert
         Verify.Geometry(lines);

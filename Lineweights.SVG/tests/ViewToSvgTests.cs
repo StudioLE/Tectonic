@@ -2,13 +2,14 @@ using System.IO;
 using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.SVG.From.Elements;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.SVG.Tests;
 
-[SendToServerAfterTest]
-internal sealed class ViewToSvgTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class ViewToSvgTests
 {
+    private readonly Model _model = new();
     private readonly ViewToSvg _converter = new();
 
     [TestCase(ViewDirection.Back)]
@@ -128,6 +129,6 @@ internal sealed class ViewToSvgTests : ResultModel
     {
         FileInfo file = TestHelpers.FileByTestContext("svg");
         svgDocument.Save(file.FullName);
-        Model.AddElement(new DocumentInformation { Location = new(file.FullName) });
+        _model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

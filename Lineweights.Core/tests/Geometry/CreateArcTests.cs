@@ -1,10 +1,12 @@
-﻿using Lineweights.Workflows.Results;
+﻿using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[SendToServerAfterTest]
-internal sealed class CreateArcTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class CreateArcTests
 {
+    private readonly Model _model = new();
+
     [TestCase(1, 0, 0, 1, 0, 0)]
     [TestCase(1, 0, 0, 1, 2, 2)]
     [TestCase(-3, 4, 4, 5, 1, -4)]
@@ -21,7 +23,7 @@ internal sealed class CreateArcTests : ResultModel
         Arc arc = CreateArc.ByThreePoints(start, end, pointOnArc);
 
         // Preview
-        Model.AddElements(ab, bc, new ModelCurve(arc, MaterialByName("Orange")));
+        _model.AddElements(ab, bc, new ModelCurve(arc, MaterialByName("Orange")));
 
         // Assert
         Assert.Multiple(() =>
@@ -55,7 +57,7 @@ internal sealed class CreateArcTests : ResultModel
         Arc arc = CreateArc.ByPolyline(polyline);
 
         // Preview
-        Model.AddElements(polyline, new ModelCurve(arc, MaterialByName("Orange")));
+        _model.AddElements(polyline, new ModelCurve(arc, MaterialByName("Orange")));
 
         // Assert
         Assert.Multiple(() =>

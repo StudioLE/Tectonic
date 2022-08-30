@@ -1,10 +1,12 @@
-﻿using Lineweights.Workflows.Results;
+﻿using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Workflows.Tests;
 
-[SendToServerAfterTest]
-internal sealed class ScenesTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class ScenesTests
 {
+    private readonly Model _model = new();
+
     [Test]
     public void Scenes_Brickwork_FromJson()
     {
@@ -13,7 +15,7 @@ internal sealed class ScenesTests : ResultModel
         ElementInstance[] geometry = Scenes.Brickwork();
 
         // Preview
-        Model.AddElements(geometry);
+        _model.AddElements(geometry);
 
         // Assert
         Verify.ElementsByBounds(geometry);
@@ -27,7 +29,7 @@ internal sealed class ScenesTests : ResultModel
         GeometricElement[] geometry = Scenes.GeometricElements();
 
         // Preview
-        Model.AddElements(geometry);
+        _model.AddElements(geometry);
 
         // Assert
         Verify.ElementsByBounds(geometry);

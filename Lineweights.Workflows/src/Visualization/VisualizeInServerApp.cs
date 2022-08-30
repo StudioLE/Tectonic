@@ -6,18 +6,20 @@ using Microsoft.Extensions.DependencyInjection;
 using StudioLE.Core.Patterns;
 using StudioLE.Core.System.IO;
 
-namespace Lineweights.Workflows.Results;
+namespace Lineweights.Workflows.Visualization;
 
 /// <summary>
-/// An <see cref="IResultStrategy"/> to send a <see cref="Model"/> via SignalR to be visualised by a remote
+/// Visualize a <see cref="Model"/> in <c>Lineweights.App.Server</c>.
+/// Use an <see cref="AssetBuilder"/> to convert the <see cref="Model"/> to individual <see cref="Asset"/>.
+/// Save the assets to blob storage and then send the assets via SignalR to be visualised by a remote
 /// app such as <c>Lineweights.App.Server</c>.
 /// </summary>
 /// <remarks>
-/// The <see cref="HubConnection"/> is obtained via a
+/// The <see cref="VisualizeInServerApp"/> is obtained via a
 /// <see href="https://refactoring.guru/design-patterns/singleton">singleton pattern</see> so each
-/// <see cref="SendToServer"/> shares the same hub connection.
+/// <see cref="IVisualizationStrategy"/> shares the same hub connection.
 /// </remarks>
-public sealed class SendToServer : IResultStrategy
+public sealed class VisualizeInServerApp : IVisualizationStrategy
 {
     #region Constants
 
@@ -64,7 +66,7 @@ public sealed class SendToServer : IResultStrategy
 
     }
 
-    /// <inheritdoc cref="SendToServer"/>
+    /// <inheritdoc cref="VisualizeInServerApp"/>
     public async Task<Asset> Execute(Model model, DocumentInformation doc)
     {
         // TODO: Add task cancellation if the Hub is disconnected.

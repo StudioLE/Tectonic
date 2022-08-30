@@ -3,14 +3,15 @@ using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.Flex;
 using Lineweights.PDF.From.Elements;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 using QuestPDF.Fluent;
 
 namespace Lineweights.PDF.Tests;
 
-[SendToServerAfterTest]
-internal sealed class SheetToPdfTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class SheetToPdfTests
 {
+    private readonly Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
 
@@ -198,6 +199,6 @@ internal sealed class SheetToPdfTests : ResultModel
     {
         FileInfo file = TestHelpers.FileByTestContext("pdf");
         pdfDocument.GeneratePdf(file.FullName);
-        Model.AddElement(new DocumentInformation { Location = new(file.FullName) });
+        _model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

@@ -1,5 +1,5 @@
 using Lineweights.Workflows.Assets;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.Visualization;
 using Microsoft.Extensions.Logging;
 
 namespace Lineweights.Workflows.Execution;
@@ -13,14 +13,14 @@ public class WorkflowCommand
 {
     private readonly ILogger _logger;
     private readonly ActivityCommand _activity;
-    private readonly IResultStrategy _resultStrategy;
+    private readonly IVisualizationStrategy _visualizationStrategy;
 
     /// <inheritdoc cref="WorkflowCommand"/>
-    public WorkflowCommand(ILogger logger, ActivityCommand activity, IResultStrategy resultStrategy)
+    public WorkflowCommand(ILogger logger, ActivityCommand activity, IVisualizationStrategy visualizationStrategy)
     {
         _logger = logger;
         _activity = activity;
-        _resultStrategy = resultStrategy;
+        _visualizationStrategy = visualizationStrategy;
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class WorkflowCommand
             Name = _activity.Name,
             Description = $"Executed {_activity.Name}."
         };
-        _resultStrategy.Execute(model, doc);
+        _visualizationStrategy.Execute(model, doc);
     }
 
     /// <summary>

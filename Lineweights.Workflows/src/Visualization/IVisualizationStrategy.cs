@@ -1,12 +1,12 @@
 using Lineweights.Workflows.Assets;
 
-namespace Lineweights.Workflows.Results;
+namespace Lineweights.Workflows.Visualization;
 
 /// <summary>
 /// A strategy to visualise or sample a <see cref="Model"/>.
 /// </summary>
-public interface IResultStrategy
+public interface IVisualizationStrategy
 {
-    /// <inheritdoc cref="IResultStrategy"/>
+    /// <inheritdoc cref="IVisualizationStrategy"/>
     public Task<Asset> Execute(Model model, DocumentInformation doc);
 }

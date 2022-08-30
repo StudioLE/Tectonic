@@ -1,4 +1,4 @@
-﻿using Lineweights.Workflows.Results;
+﻿using Lineweights.Workflows.Visualization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
@@ -31,10 +31,10 @@ public class SignalRComponentBase : ComponentBase
             return;
 
         // Connect SignalR
-        SignalR.ConnectionUrl = NavigationManager.ToAbsoluteUri(SendToServer.HubPath);
+        SignalR.ConnectionUrl = NavigationManager.ToAbsoluteUri(VisualizeInServerApp.HubPath);
         await SignalR.Connect();
 
         // Add to collection on receive
-        SendToServer.OnReceiveFromHub(SignalR.Connection ?? throw new("SignalR connection was null"), State.Assets.Add);
+        VisualizeInServerApp.OnReceiveFromHub(SignalR.Connection ?? throw new("SignalR connection was null"), State.Assets.Add);
     }
 }

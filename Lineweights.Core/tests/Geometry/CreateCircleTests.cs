@@ -1,10 +1,12 @@
-﻿using Lineweights.Workflows.Results;
+﻿using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[SendToServerAfterTest]
-internal sealed class CreateCircleTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class CreateCircleTests
 {
+    private readonly Model _model = new();
+
     [TestCase(1, 0, 0, 1, 0, 0)]
     [TestCase(1, 0, 0, 1, 2, 2)]
     [TestCase(-3, 4, 4, 5, 1, -4)]
@@ -21,7 +23,7 @@ internal sealed class CreateCircleTests : ResultModel
         Circle circle = CreateCircle.ByThreePoints(start, end, pointOnCircle);
 
         // Preview
-        Model.AddElements(ab, bc, new ModelCurve(circle, MaterialByName("Orange")));
+        _model.AddElements(ab, bc, new ModelCurve(circle, MaterialByName("Orange")));
 
         // Assert
         Verify.Geometry(circle);

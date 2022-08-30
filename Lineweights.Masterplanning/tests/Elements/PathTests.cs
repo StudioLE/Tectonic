@@ -1,13 +1,14 @@
 using Lineweights.Curves;
 using Lineweights.Curves.Interpolation;
 using Lineweights.Masterplanning.Elements;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Masterplanning.Tests.Elements;
 
-[SendToServerAfterTest]
-internal sealed class PathTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class PathTests
 {
+    private readonly Model _model = new();
     //private readonly IReadOnlyCollection<Vector3> _points = new[]
     //{
     //    new Vector3(0, 0),
@@ -41,7 +42,7 @@ internal sealed class PathTests : ResultModel
     [SetUp]
     public void Setup()
     {
-        Model.AddElements(
+        _model.AddElements(
             new ModelCurve(
                 new Line(
                     new(0, 0),
@@ -72,8 +73,8 @@ internal sealed class PathTests : ResultModel
         var path = new Path(centerSpline, width, 0.005);
 
         // Preview
-        Model.AddElements(new ModelCurve(centerSpline, MaterialByName("Red")));
-        Model.AddElements(path);
+        _model.AddElements(new ModelCurve(centerSpline, MaterialByName("Red")));
+        _model.AddElements(path);
 
         // Assert
         Verify.ElementsByBounds(new[] { path });

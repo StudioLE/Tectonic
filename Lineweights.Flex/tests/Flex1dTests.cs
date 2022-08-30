@@ -1,11 +1,12 @@
 using Lineweights.Flex.Sequences;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
 
-[SendToServerAfterTest]
-internal sealed class Flex1dTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class Flex1dTests
 {
+    private readonly Model _model = new();
     private Line Line { get; }
     private Vector3 CrossAxis { get; }
     private Arc Arc { get; }
@@ -25,7 +26,7 @@ internal sealed class Flex1dTests : ResultModel
     [SetUp]
     public void Setup()
     {
-        Model.AddElements(CreateModelArrows.ByTransform(new()));
+        _model.AddElements(CreateModelArrows.ByTransform(new()));
     }
 
     [TestCase(Justification.Center)]
@@ -164,9 +165,9 @@ internal sealed class Flex1dTests : ResultModel
         //Model.AddBounds(instances.Select(x => x.BaseDefinition), MaterialByName("Orange"));
         //Model.AddBounds(assembly, MaterialByName("Aqua"));
         //Model.AddBounds(assembly.BaseDefinition, MaterialByName("Orange"));
-        Model.AddElements(components);
-        Model.AddBounds(components);
-        Model.AddElements(CreateModelArrows.ByLine(line, Colors.Black));
+        _model.AddElements(components);
+        _model.AddBounds(components);
+        _model.AddElements(CreateModelArrows.ByLine(line, Colors.Black));
 
         // Assert
         Verify.ElementsByBounds(components);
@@ -197,9 +198,9 @@ internal sealed class Flex1dTests : ResultModel
         //Model.AddBounds(instances.Select(x => x.BaseDefinition), MaterialByName("Orange"));
         //Model.AddBounds(assembly, MaterialByName("Aqua"));
         //Model.AddBounds(assembly.BaseDefinition, MaterialByName("Orange"));
-        Model.AddElements(builder._curve);
-        Model.AddElements(components);
-        Model.AddBounds(components);
+        _model.AddElements(builder._curve);
+        _model.AddElements(components);
+        _model.AddBounds(components);
 
         // Assert
         Verify.ElementsByBounds(components);
@@ -227,9 +228,9 @@ internal sealed class Flex1dTests : ResultModel
         IReadOnlyCollection<ElementInstance> components = builder.ToComponents();
 
         // Preview
-        Model.AddElements(components);
-        Model.AddBounds(components);
-        Model.AddElements(new ModelCurve(Arc, MaterialByName("Black")));
+        _model.AddElements(components);
+        _model.AddBounds(components);
+        _model.AddElements(new ModelCurve(Arc, MaterialByName("Black")));
 
         // Assert
         Verify.ElementsByBounds(components);
@@ -241,9 +242,9 @@ internal sealed class Flex1dTests : ResultModel
         IReadOnlyCollection<ElementInstance> components = builder.ToComponents();
 
         // Preview
-        Model.AddElements(components);
-        Model.AddBounds(components);
-        Model.AddElements(CreateModelArrows.ByLine(Line, Colors.Black));
+        _model.AddElements(components);
+        _model.AddBounds(components);
+        _model.AddElements(CreateModelArrows.ByLine(Line, Colors.Black));
 
         // Assert
         Verify.ElementsByBounds(components);

@@ -4,12 +4,14 @@ using System.Text;
 using Lineweights.Workflows.Assets;
 using StudioLE.Core.System.IO;
 
-namespace Lineweights.Workflows.Results;
+namespace Lineweights.Workflows.Visualization;
 
 /// <summary>
-/// An <see cref="IResultStrategy"/> to visualise a <see cref="Model"/> by saving it to a file and opening it locally.
+/// Visualize a <see cref="Model"/> as local files.
+/// Use an <see cref="AssetBuilder"/> to convert the <see cref="Model"/> to individual <see cref="Asset"/>.
+/// Save the assets to local file storage and then open them in the default programs of the operating system.
 /// </summary>
-public sealed class OpenAsFile : IResultStrategy
+public sealed class VisualizeAsFile : IVisualizationStrategy
 {
     private readonly IStorageStrategy _storageStrategy = new FileStorageStrategy();
 
@@ -23,8 +25,8 @@ public sealed class OpenAsFile : IResultStrategy
     /// </summary>
     public Func<IStorageStrategy, Model, DocumentInformation, AssetBuilder> Builder { get; set; } = AssetBuilder.Default;
 
-    /// <inheritdoc cref="OpenAsFile"/>
-    public OpenAsFile(params string[] fileExtensions)
+    /// <inheritdoc cref="VisualizeAsFile"/>
+    public VisualizeAsFile(params string[] fileExtensions)
     {
         if (!fileExtensions.Any())
             return;
@@ -43,7 +45,7 @@ public sealed class OpenAsFile : IResultStrategy
         };
     }
 
-    /// <inheritdoc cref="OpenAsFile"/>
+    /// <inheritdoc cref="VisualizeAsFile"/>
     public async Task<Asset> Execute(Model model, DocumentInformation doc)
     {
         AssetBuilder builder = Builder(_storageStrategy, model, doc);

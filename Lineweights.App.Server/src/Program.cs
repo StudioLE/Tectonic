@@ -3,7 +3,7 @@ using Lineweights.App.Core.Shared;
 using Lineweights.App.Server.Hubs;
 using Lineweights.Workflows.Assets;
 using Lineweights.Workflows.Execution;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.Visualization;
 using Microsoft.AspNetCore.ResponseCompression;
 
 namespace Lineweights.App.Server;
@@ -53,7 +53,7 @@ public class Program
         //app.UsePathBase();
         app.UseRouting();
         app.MapBlazorHub();
-        app.MapHub<SignalRHub>(SendToServer.HubPath);
+        app.MapHub<SignalRHub>(VisualizeInServerApp.HubPath);
         app.MapFallbackToPage("/_Host");
         app.Run();
     }

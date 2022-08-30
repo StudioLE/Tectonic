@@ -1,18 +1,19 @@
 using Lineweights.Drawings.Rendering;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests;
 
-[SendToServerAfterTest]
-internal sealed class ViewTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class ViewTests
 {
+    private readonly Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
 
     [SetUp]
     public void Setup()
     {
-        Model.AddElements(CreateModelArrows.ByTransform(new()));
+        _model.AddElements(CreateModelArrows.ByTransform(new()));
     }
 
     [TestCase(ViewDirection.Back)]
@@ -34,8 +35,8 @@ internal sealed class ViewTests : ResultModel
         GeometricElement[] geometry = view.Render().ToArray();
 
         // Preview
-        Model.AddElements(geometry);
-        Model.AddElements(view.Scope.Border);
+        _model.AddElements(geometry);
+        _model.AddElements(view.Scope.Border);
 
         // Assert
         Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
@@ -60,8 +61,8 @@ internal sealed class ViewTests : ResultModel
         GeometricElement[] geometry = view.Render().ToArray();
 
         // Preview
-        Model.AddElements(geometry);
-        Model.AddElements(view.Scope.Border);
+        _model.AddElements(geometry);
+        _model.AddElements(view.Scope.Border);
 
         // Assert
         Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
@@ -86,8 +87,8 @@ internal sealed class ViewTests : ResultModel
         GeometricElement[] geometry = view.RenderInPlace().ToArray();
 
         // Preview
-        Model.AddElements(geometry);
-        Model.AddElements(view.Scope.Border);
+        _model.AddElements(geometry);
+        _model.AddElements(view.Scope.Border);
 
         // Assert
         Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
@@ -112,9 +113,9 @@ internal sealed class ViewTests : ResultModel
         GeometricElement[] geometry = view.RenderInPlace().ToArray();
 
         // Preview
-        Model.AddElements(_geometry);
-        Model.AddElements(geometry);
-        Model.AddElements(view.Scope.Border);
+        _model.AddElements(_geometry);
+        _model.AddElements(geometry);
+        _model.AddElements(view.Scope.Border);
 
         // Assert
         Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
@@ -140,8 +141,8 @@ internal sealed class ViewTests : ResultModel
         GeometricElement[] geometry = view.RenderInPlace().ToArray();
 
         // Preview
-        Model.AddElements(geometry);
-        Model.AddElements(view.Scope.Border);
+        _model.AddElements(geometry);
+        _model.AddElements(view.Scope.Border);
 
         // Assert
         Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
@@ -167,9 +168,9 @@ internal sealed class ViewTests : ResultModel
         GeometricElement[] geometry = view.RenderInPlace().ToArray();
 
         // Preview
-        Model.AddElements(_geometry);
-        Model.AddElements(geometry);
-        Model.AddElements(view.Scope.Border);
+        _model.AddElements(_geometry);
+        _model.AddElements(geometry);
+        _model.AddElements(view.Scope.Border);
 
         // Assert
         Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());

@@ -1,13 +1,14 @@
 using Elements.Serialization.JSON;
 using Lineweights.Core.Serialisation;
 using Lineweights.Workflows.Assets;
-using Lineweights.Workflows.Results;
 using Newtonsoft.Json;
 
 namespace Lineweights.Workflows.Tests;
 
-internal sealed class SerialisationTests : ResultModel
+internal sealed class SerialisationTests
 {
+    private readonly Model _model = new();
+
     [Test]
     public async Task Serialisation_Asset()
     {

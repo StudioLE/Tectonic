@@ -1,10 +1,12 @@
-﻿using Lineweights.Workflows.Results;
+﻿using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests.Samples;
 
-[SendToServerAfterTest]
-internal sealed class GeometricElementsScene : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class GeometricElementsScene
 {
+    public Model Model { get; } = new();
+
     [Test]
     [Explicit("Write GeometricElementsScene to JSON")]
     public void GeometricElementsScene_ToJSON()

@@ -1,12 +1,13 @@
 using Ardalis.Result;
 using Lineweights.Curves.Interpolation;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Curves.Tests;
 
-[SendToServerAfterTest]
-internal sealed class SplineTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class SplineTests
 {
+    private readonly Model _model = new();
     internal static readonly IReadOnlyCollection<Vector3> _points = new[]
     {
         new Vector3(1, 3.5),
@@ -25,7 +26,7 @@ internal sealed class SplineTests : ResultModel
     [SetUp]
     public void Setup()
     {
-        Model.AddElements(
+        _model.AddElements(
             new ModelCurve(
                 new Line(
                     new(0, 0),
@@ -47,7 +48,7 @@ internal sealed class SplineTests : ResultModel
         spline.UpdateRepresentation();
 
         // Preview
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
         Verify.Geometry(spline);
@@ -65,7 +66,7 @@ internal sealed class SplineTests : ResultModel
         spline.UpdateRepresentation();
 
         // Preview
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
         Verify.Geometry(spline);
@@ -85,7 +86,7 @@ internal sealed class SplineTests : ResultModel
         spline.UpdateRepresentation();
 
         // Preview
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
         Verify.Geometry(spline);
@@ -105,7 +106,7 @@ internal sealed class SplineTests : ResultModel
         spline.UpdateRepresentation();
 
         // Preview
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
         Verify.Geometry(spline);
@@ -125,7 +126,7 @@ internal sealed class SplineTests : ResultModel
         spline.UpdateRepresentation();
 
         // Preview
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
         Verify.Geometry(spline);
@@ -160,11 +161,11 @@ internal sealed class SplineTests : ResultModel
         hermiteSpline.UpdateRepresentation();
 
         // Preview
-        Model.AddElements(new ModelCurve(linearSpline, MaterialByName("Red")));
-        Model.AddElements(new ModelCurve(cosineSpline, MaterialByName("Green")));
-        Model.AddElements(new ModelCurve(cubicSpline, MaterialByName("Orange")));
-        Model.AddElements(new ModelCurve(catmullRomSpline, MaterialByName("Magenta")));
-        Model.AddElements(new ModelCurve(hermiteSpline, MaterialByName("Blue")));
+        _model.AddElements(new ModelCurve(linearSpline, MaterialByName("Red")));
+        _model.AddElements(new ModelCurve(cosineSpline, MaterialByName("Green")));
+        _model.AddElements(new ModelCurve(cubicSpline, MaterialByName("Orange")));
+        _model.AddElements(new ModelCurve(catmullRomSpline, MaterialByName("Magenta")));
+        _model.AddElements(new ModelCurve(hermiteSpline, MaterialByName("Blue")));
 
         // Assert
         Verify.Geometry(linearSpline, cosineSpline, cubicSpline, catmullRomSpline, hermiteSpline);
@@ -182,8 +183,8 @@ internal sealed class SplineTests : ResultModel
         IReadOnlyCollection<Vector3> cubicVertices = cubicSpline.Vertices.ToList();
 
         // Preview
-        Model.AddElements(CreateModelCurve.WithAlternatingMaterials(linearVertices, "Red", "Blue"));
-        Model.AddElements(CreateModelCurve.WithAlternatingMaterials(cubicVertices, "Orange", "Green"));
+        _model.AddElements(CreateModelCurve.WithAlternatingMaterials(linearVertices, "Red", "Blue"));
+        _model.AddElements(CreateModelCurve.WithAlternatingMaterials(cubicVertices, "Orange", "Green"));
 
         // Assert
         Verify.Geometry(linearVertices, cubicVertices);
@@ -215,10 +216,10 @@ internal sealed class SplineTests : ResultModel
             .ToArray();
 
         // Preview
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
-        Model.AddElements(new ModelCurve(bezier, MaterialByName("Gray")));
-        Model.AddElements(splineTransforms.Select(x => CreateModelArrows.ByTransform(x, 0.1)));
-        Model.AddElements(bezierTransforms.Select(x => CreateModelArrows.ByTransform(x, 0.1)));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
+        _model.AddElements(new ModelCurve(bezier, MaterialByName("Gray")));
+        _model.AddElements(splineTransforms.Select(x => CreateModelArrows.ByTransform(x, 0.1)));
+        _model.AddElements(bezierTransforms.Select(x => CreateModelArrows.ByTransform(x, 0.1)));
 
         // Assert
         Verify.Geometry(splineTransforms, bezierTransforms);
@@ -252,12 +253,12 @@ internal sealed class SplineTests : ResultModel
             .ToArray();
 
         // Preview
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
-        Model.AddElements(new ModelCurve(bezier, MaterialByName("Gray")));
-        Model.AddElements(splineResults.Select(x => CreateModelArrows.ByVectors(x.Point, x.Tangent, 0.1, Colors.Blue)));
-        Model.AddElements(bezierResults.Select(x => CreateModelArrows.ByVectors(x.Point, x.Tangent, 0.1, Colors.Blue)));
-        Model.AddElements(splineResults.Select(x => CreateModelArrows.ByVectors(x.Point, x.Normal, 0.1, Colors.Red)));
-        Model.AddElements(bezierResults.Select(x => CreateModelArrows.ByVectors(x.Point, x.Normal, 0.1, Colors.Red)));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
+        _model.AddElements(new ModelCurve(bezier, MaterialByName("Gray")));
+        _model.AddElements(splineResults.Select(x => CreateModelArrows.ByVectors(x.Point, x.Tangent, 0.1, Colors.Blue)));
+        _model.AddElements(bezierResults.Select(x => CreateModelArrows.ByVectors(x.Point, x.Tangent, 0.1, Colors.Blue)));
+        _model.AddElements(splineResults.Select(x => CreateModelArrows.ByVectors(x.Point, x.Normal, 0.1, Colors.Red)));
+        _model.AddElements(bezierResults.Select(x => CreateModelArrows.ByVectors(x.Point, x.Normal, 0.1, Colors.Red)));
 
         // Assert
         Verify.Geometry(splineResults, bezierResults);
@@ -283,9 +284,9 @@ internal sealed class SplineTests : ResultModel
         Spline farSpline = spline.Offset(distance, false);
 
         // Preview
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
-        Model.AddElements(CreateModelCurve.WithAlternatingMaterials(nearSpline.Vertices.ToList(), "Red", "Blue"));
-        Model.AddElements(CreateModelCurve.WithAlternatingMaterials(farSpline.Vertices.ToList(), "Orange", "Green"));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
+        _model.AddElements(CreateModelCurve.WithAlternatingMaterials(nearSpline.Vertices.ToList(), "Red", "Blue"));
+        _model.AddElements(CreateModelCurve.WithAlternatingMaterials(farSpline.Vertices.ToList(), "Orange", "Green"));
 
         // Assert
         Verify.Geometry(nearSpline, farSpline);
@@ -314,9 +315,9 @@ internal sealed class SplineTests : ResultModel
         farSpline = farSpline.RemoveShortSegments(0.01);
 
         // Preview
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
-        Model.AddElements(CreateModelCurve.WithAlternatingMaterials(nearSpline.Vertices.ToList(), "Red", "Blue"));
-        Model.AddElements(CreateModelCurve.WithAlternatingMaterials(farSpline.Vertices.ToList(), "Orange", "Green"));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
+        _model.AddElements(CreateModelCurve.WithAlternatingMaterials(nearSpline.Vertices.ToList(), "Red", "Blue"));
+        _model.AddElements(CreateModelCurve.WithAlternatingMaterials(farSpline.Vertices.ToList(), "Orange", "Green"));
 
         // Assert
         Verify.Geometry(nearSpline, farSpline);

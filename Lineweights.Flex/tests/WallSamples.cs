@@ -1,10 +1,12 @@
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
 
-[SendToServerAfterTest]
-internal sealed class WallSamples : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class WallSamples
 {
+    public Model Model { get; } = new();
+
     [Test]
     public void Wall_StretcherBond()
     {

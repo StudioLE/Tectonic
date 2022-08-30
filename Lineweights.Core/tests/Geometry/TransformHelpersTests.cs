@@ -1,10 +1,12 @@
-﻿using Lineweights.Workflows.Results;
+﻿using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[SendToServerAfterTest]
-internal sealed class TransformHelpersTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class TransformHelpersTests
 {
+    private readonly Model _model = new();
+
     [Test]
     public void TransformHelpers_RotationBetween()
     {
@@ -18,8 +20,8 @@ internal sealed class TransformHelpersTests : ResultModel
         Transform rotated = source.Concatenated(rotation);
 
         // Preview
-        Model.AddElements(CreateModelArrows.ByTransform(rotated));
-        Model.AddElements(CreateModelArrows.ByTransform(target));
+        _model.AddElements(CreateModelArrows.ByTransform(rotated));
+        _model.AddElements(CreateModelArrows.ByTransform(target));
 
         Transform rounded = rotated.RoundedAxis(5);
 
@@ -45,8 +47,8 @@ internal sealed class TransformHelpersTests : ResultModel
         source.RotateTo(target);
 
         // Preview
-        Model.AddElements(CreateModelArrows.ByTransform(source));
-        Model.AddElements(CreateModelArrows.ByTransform(target));
+        _model.AddElements(CreateModelArrows.ByTransform(source));
+        _model.AddElements(CreateModelArrows.ByTransform(target));
 
         Transform rounded = source.RoundedAxis(5);
 

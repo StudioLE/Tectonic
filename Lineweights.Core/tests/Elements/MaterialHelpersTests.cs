@@ -1,10 +1,12 @@
-﻿using Lineweights.Workflows.Results;
+﻿using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Core.Tests.Elements;
 
-[SendToServerAfterTest]
-internal sealed class MaterialHelpersTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class MaterialHelpersTests
 {
+    private readonly Model _model = new();
+
     [TestCase("blue", "bed58e79-27fb-5c9e-a631-6489bd1bf316")]
     [TestCase("green", "27b63f21-9576-5303-94c1-dbc3c704d273")]
     [TestCase("red", "d9bb1476-daf3-536a-a827-a6090b121ee7")]
@@ -19,8 +21,8 @@ internal sealed class MaterialHelpersTests : ResultModel
         Material material2 = MaterialByName(hexOrName);
 
         // Preview
-        Model.AddElements(box1.ToModelCurves(material1));
-        Model.AddElements(box2.ToModelCurves(material2));
+        _model.AddElements(box1.ToModelCurves(material1));
+        _model.AddElements(box2.ToModelCurves(material2));
 
         // Assert
         Assert.Multiple(() =>

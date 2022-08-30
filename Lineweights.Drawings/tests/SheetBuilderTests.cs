@@ -1,18 +1,19 @@
 using Lineweights.Flex;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests;
 
-[SendToServerAfterTest]
-internal sealed class SheetBuilderTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class SheetBuilderTests
 {
+    private readonly Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
 
     [SetUp]
     public void Setup()
     {
-        Model.AddElements(CreateModelArrows.ByTransform(new()));
+        _model.AddElements(CreateModelArrows.ByTransform(new()));
     }
 
     [TestCase(Justification.Start)]
@@ -56,7 +57,7 @@ internal sealed class SheetBuilderTests : ResultModel
         GeometricElement[] geometry = sheet.Render().ToArray();
 
         // Preview
-        Model.AddElements(geometry);
+        _model.AddElements(geometry);
 
         // Assert
         Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
@@ -112,7 +113,7 @@ internal sealed class SheetBuilderTests : ResultModel
             //.Concat(sheet.Content.Views); // TODO: Sub sub content isn't gathered by Model.ToJson().
         Scenes.ToJson(Scenes.Name.GeometricElementsOnSheet, elements);
 #endif
-        Model.AddElements(geometry);
+        _model.AddElements(geometry);
 
         // Assert
         Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());

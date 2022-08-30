@@ -2,14 +2,16 @@ using System.IO;
 using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.PDF.From.Elements;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 using QuestPDF.Fluent;
 
 namespace Lineweights.PDF.Tests;
 
-[SendToServerAfterTest]
-internal sealed class ViewToPdfTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class ViewToPdfTests
 {
+    private readonly Model _model = new();
+
     [TestCase(ViewDirection.Back)]
     [TestCase(ViewDirection.Bottom)]
     [TestCase(ViewDirection.Front)]
@@ -107,6 +109,6 @@ internal sealed class ViewToPdfTests : ResultModel
     {
         FileInfo file = TestHelpers.FileByTestContext("pdf");
         pdfDocument.GeneratePdf(file.FullName);
-        Model.AddElement(new DocumentInformation { Location = new(file.FullName) });
+        _model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

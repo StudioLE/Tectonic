@@ -1,10 +1,12 @@
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
 
-[SendToServerAfterTest]
-internal sealed class SeatingSamples : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class SeatingSamples
 {
+    public Model Model { get; } = new();
+
     [Test]
     public void Seating_1d_Linear()
     {

@@ -1,11 +1,12 @@
 using Ardalis.Result;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests;
 
-[SendToServerAfterTest]
-internal sealed class SerialisationTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class SerialisationTests
 {
+    private readonly Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
 

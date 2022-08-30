@@ -1,5 +1,5 @@
 ﻿using Lineweights.Workflows.Assets;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.Visualization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Lineweights.App.Server.Hubs;
@@ -12,9 +12,9 @@ public sealed class SignalRHub : Hub
     /// <summary>
     /// Send a message.
     /// </summary>
-    [HubMethodName(SendToServer.ToHub)]
+    [HubMethodName(VisualizeInServerApp.ToHub)]
     public async Task SendToHub(Asset asset)
     {
-        await Clients.All.SendAsync(SendToServer.ToAllClients, asset);
+        await Clients.All.SendAsync(VisualizeInServerApp.ToAllClients, asset);
     }
 }

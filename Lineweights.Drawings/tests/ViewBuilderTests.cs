@@ -1,17 +1,18 @@
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests;
 
-[SendToServerAfterTest]
-internal sealed class ViewBuilderTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class ViewBuilderTests
 {
+    private readonly Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
 
     [SetUp]
     public void Setup()
     {
-        Model.AddElements(CreateModelArrows.ByTransform(new()));
-        Model.AddElements(Scenes.Brickwork());
+        _model.AddElements(CreateModelArrows.ByTransform(new()));
+        _model.AddElements(Scenes.Brickwork());
     }
 
     [TestCase(ViewDirection.Back)]
@@ -44,10 +45,10 @@ internal sealed class ViewBuilderTests : ResultModel
             CreateModelArrows.ByVectors(view.Scope.Origin, view.Scope.UpDirection, view.Height / 2, Colors.Green),
             CreateModelArrows.ByVectors(view.Scope.Origin, view.Scope.FacingDirection, view.Scope.Depth, Colors.Blue)
         };
-        Model.AddElements(view.Scope.Border);
-        Model.AddElements(cornerArrows);
-        Model.AddElements(originArrows);
-        Model.AddElements(view);
+        _model.AddElements(view.Scope.Border);
+        _model.AddElements(cornerArrows);
+        _model.AddElements(originArrows);
+        _model.AddElements(view);
         //Model.AddElements(view.ToBox().ToModelCurves(MaterialByName("Orange")));
 
         // Assert

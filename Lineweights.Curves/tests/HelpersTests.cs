@@ -1,11 +1,13 @@
 using Lineweights.Curves.Interpolation;
-using Lineweights.Workflows.Results;
+using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Curves.Tests;
 
-[SendToServerAfterTest]
-internal sealed class HelpersTests : ResultModel
+[VisualizeInServerAppAfterTest]
+internal sealed class HelpersTests
 {
+    private readonly Model _model = new();
+
     [TestCase(0.1)]
     [TestCase(0.5)]
     [TestCase(1)]
@@ -23,7 +25,7 @@ internal sealed class HelpersTests : ResultModel
         IReadOnlyCollection<Curve> arcs = Helpers.CombineSegmentsToArcs(polyline, angleThreshold);
 
         // Preview
-        Model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
+        _model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
 
         // Assert
         Verify.Geometry(arcs);
@@ -48,9 +50,9 @@ internal sealed class HelpersTests : ResultModel
         IReadOnlyCollection<Curve> arcs = Helpers.CombineSegmentsToArcs(spline, angleThreshold);
 
         // Preview
-        Model.AddElements(new ModelCurve(new Polyline(spline.KeyVertices.ToList()), MaterialByName("Gray")));
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
-        Model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
+        _model.AddElements(new ModelCurve(new Polyline(spline.KeyVertices.ToList()), MaterialByName("Gray")));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
+        _model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
 
         // Assert
         Verify.Geometry(arcs);
@@ -75,9 +77,9 @@ internal sealed class HelpersTests : ResultModel
         IReadOnlyCollection<Curve> arcs = Helpers.CombineSegmentsToArcs(spline, angleThreshold, true);
 
         // Preview
-        Model.AddElements(new ModelCurve(new Polyline(spline.KeyVertices.ToList()), MaterialByName("Gray")));
-        Model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
-        Model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
+        _model.AddElements(new ModelCurve(new Polyline(spline.KeyVertices.ToList()), MaterialByName("Gray")));
+        _model.AddElements(new ModelCurve(spline, MaterialByName("Gray")));
+        _model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
 
         // Assert
         Verify.Geometry(arcs);
