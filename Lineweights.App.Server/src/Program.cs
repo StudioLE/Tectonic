@@ -15,12 +15,12 @@ builder.Services.AddServerSideBlazor();
 
 // Inject Lineweights singleton services
 builder.Services.AddSingleton<GlobalState>();
-builder.Services.AddSingleton<ObjectUrlStorage>();
-builder.Services.AddSingleton<IStorageStrategy, ObjectUrlStorageStrategy>();
-builder.Services.AddSingleton<ModelViewer>();
 
 // Inject Lineweights scoped services
 builder.Services.AddScoped<ActivityBuilder>();
+builder.Services.AddScoped<ObjectUrlStorage>();
+builder.Services.AddScoped<IStorageStrategy, ObjectUrlStorageStrategy>();
+builder.Services.AddScoped<ModelViewer>();
 
 // Use response compression for SignalR
 // https://docs.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor?view=aspnetcore-6.0&tabs=visual-studio&pivots=server
