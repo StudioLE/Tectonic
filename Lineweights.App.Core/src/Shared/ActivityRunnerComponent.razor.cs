@@ -166,12 +166,20 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
             return;
         }
 
+
         DocumentInformation doc = new()
         {
             Name = builtState.Command.Name,
             Description = $"Executed {ActivitySelectValue} from {AssemblyInputValue}."
-        };;
+        };
         AssetBuilder builder = AssetBuilder.Default(StorageStrategy, model, doc);
+
+        if (outputs.Assets is IReadOnlyCollection<Asset> assets)
+        {
+            foreach (Asset child in assets)
+                await StorageStrategy.RecursiveWriteLocalFilesToStorage(child);
+            builder.AddAssets(assets.ToArray());
+        }
         Asset asset = await builder.Build();
         State.Assets.Add(asset);
     }

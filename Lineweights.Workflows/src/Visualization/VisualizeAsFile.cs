@@ -1,8 +1,6 @@
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using Lineweights.Workflows.Assets;
-using StudioLE.Core.System.IO;
 
 namespace Lineweights.Workflows.Visualization;
 
@@ -50,23 +48,10 @@ public sealed class VisualizeAsFile : IVisualizationStrategy
     {
         AssetBuilder builder = Builder(_storageStrategy, model, doc);
         Asset asset = await builder.Build();
-        await RecursiveWriteContent(asset);
+        await _storageStrategy.RecursiveWriteContentToStorage(asset);
         if (IsOpenEnabled)
             RecursiveOpen(asset);
         return asset;
-    }
-
-    private async Task RecursiveWriteContent(Asset asset)
-    {
-        if (asset.Content is not null)
-        {
-            string fileName = asset.Info.Id + (asset.ContentType.GetExtensionByContentType() ?? ".txt");
-            byte[] byteArray = Encoding.ASCII.GetBytes(asset.Content);
-            MemoryStream stream = new(byteArray);
-            _ = await _storageStrategy.WriteAsync(asset, fileName, stream);
-        }
-        foreach (Asset child in asset.Children)
-            await RecursiveWriteContent(child);
     }
 
     private static void RecursiveOpen(Asset asset)

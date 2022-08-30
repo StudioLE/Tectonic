@@ -1,10 +1,7 @@
-using System.IO;
-using System.Text;
 using Lineweights.Workflows.Assets;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 using StudioLE.Core.Patterns;
-using StudioLE.Core.System.IO;
 
 namespace Lineweights.Workflows.Visualization;
 
@@ -75,7 +72,7 @@ public sealed class VisualizeInServerApp : IVisualizationStrategy
         }
         AssetBuilder builder = AssetBuilder.Default(_storageStrategy, model, doc);
         Asset asset = await builder.Build();
-        await RecursiveWriteContent(asset);
+        await _storageStrategy.RecursiveWriteContentToStorage(asset);
         try
         {
             await _connection.SendAsync(HubMethod, asset);
@@ -102,18 +99,5 @@ public sealed class VisualizeInServerApp : IVisualizationStrategy
         {
             return null;
         }
-    }
-
-    private async Task RecursiveWriteContent(Asset asset)
-    {
-        if (asset.Content is not null)
-        {
-            string fileName = asset.Info.Id + (asset.ContentType.GetExtensionByContentType() ?? ".txt");
-            byte[] byteArray = Encoding.ASCII.GetBytes(asset.Content);
-            MemoryStream stream = new(byteArray);
-            _ = await _storageStrategy.WriteAsync(asset, fileName, stream);
-        }
-        foreach (Asset child in asset.Children)
-            await RecursiveWriteContent(child);
     }
 }

@@ -28,6 +28,14 @@ public class AssetBuilder
     }
 
     /// <inheritdoc cref="Asset"/>
+    public AssetBuilder AddAssets(params Asset[] assets)
+    {
+        foreach (Asset asset in assets)
+            _tasks.Add(Task<Asset>.FromResult(asset));
+        return this;
+    }
+
+    /// <inheritdoc cref="Asset"/>
     public AssetBuilder ConvertModelToGlb(Model model, DocumentInformation? doc = null)
     {
         doc ??= new() { Name = "GlTF of Model" };

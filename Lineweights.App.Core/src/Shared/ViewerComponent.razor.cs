@@ -47,11 +47,9 @@ public class ViewerComponentBase : ComponentBase
     public IReadOnlyCollection<IReadOnlyCollection<string>> Table { get; set; } = Array.Empty<IReadOnlyCollection<string>>();
 
     /// <inheritdoc />
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        if (Asset.Info.Location is null)
-            return;
-        Asset.ContentType ??= Asset.Info.Location!.GetFileName().GetContentTypeByExtension();
+        Asset.ContentType ??= Asset.Info.Location?.GetFileName().GetContentTypeByExtension();
         Type = Asset.ContentType switch
         {
             "text/plain" => ViewerType.Text,
@@ -64,32 +62,40 @@ public class ViewerComponentBase : ComponentBase
             _ => ViewerType.Unknown
         };
 
-
         Title = string.IsNullOrEmpty(Asset.Info.Name)
             ? Asset.Info.Id.ToString()
             : Asset.Info.Name;
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnAfterRenderAsync(bool isFirstRender)
+    {
+        if (!isFirstRender)
+            return;
+
+        bool stateHasChanged = false;
 
         switch (Type)
         {
             case ViewerType.Json:
-                Text = await GetFileAsJson();
+                Text = await GetAsJson();
+                stateHasChanged = true;
                 break;
             case ViewerType.Text:
-                Text = await GetFileAsString();
+                Text = await GetAsString();
+                stateHasChanged = true;
                 break;
             case ViewerType.Table:
-                Table = await GetFileAsTable();
+                Table = await GetAsTable();
+                stateHasChanged = true;
+                break;
+            case ViewerType.Three:
+                await LoadGlb();
                 break;
         }
 
-    }
-
-
-    /// <inheritdoc />
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender && Type == ViewerType.Three)
-            await LoadGlb();
+        if(stateHasChanged)
+            StateHasChanged();
     }
 
     /// <summary>
@@ -112,27 +118,44 @@ public class ViewerComponentBase : ComponentBase
         Json
     }
 
-    private async Task<string> GetFileAsString()
+    private async Task<string> GetAsString()
     {
+        if (Asset.Content is not null)
+            return Asset.Content;
         if (Asset.Info.Location is null)
+        {
+            Logger.LogWarning("Failed to get asset as string. Neither Content or Info.Location are set.");
             return string.Empty;
+        }
+        if (Asset.Info.Location.IsFile)
+        {
+            Logger.LogWarning("Failed to get asset as string. The asset location is a local file.");
+            return string.Empty;
+        }
 
-        if(StorageStrategy is ObjectUrlStorageStrategy)
-            return await ObjectUrlStorage.GetAsString(Asset.Info.Location.AbsoluteUri);
-
-        return await new HttpClient().GetStringAsync(Asset.Info.Location.AbsoluteUri);
+        try
+        {
+            if (StorageStrategy is ObjectUrlStorageStrategy)
+                return await ObjectUrlStorage.GetAsString(Asset.Info.Location.AbsoluteUri);
+            return await new HttpClient().GetStringAsync(Asset.Info.Location.AbsoluteUri);
+        }
+        catch (Exception e)
+        {
+            Logger.LogWarning("Failed to get asset as string. " + e.Message);
+            return string.Empty;
+        }
     }
 
-    private async Task<string> GetFileAsJson()
+    private async Task<string> GetAsJson()
     {
-        string json = await GetFileAsString();
+        string json = await GetAsString();
         object? parsed = JsonConvert.DeserializeObject(json);
         return JsonConvert.SerializeObject(parsed, Formatting.Indented);
     }
 
-    private async Task<IReadOnlyCollection<IReadOnlyCollection<string>>> GetFileAsTable()
+    private async Task<IReadOnlyCollection<IReadOnlyCollection<string>>> GetAsTable()
     {
-        string data = await GetFileAsString();
+        string data = await GetAsString();
         using StringReader reader = new(data);
         using CsvReader csv = new(reader, CultureInfo.InvariantCulture);
         List<string[]> table = new();
