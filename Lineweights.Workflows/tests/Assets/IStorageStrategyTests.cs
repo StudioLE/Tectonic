@@ -1,8 +1,8 @@
 using System.IO;
 using Ardalis.Result;
-using Lineweights.Workflows.Containers;
+using Lineweights.Workflows.Assets;
 
-namespace Lineweights.Workflows.Tests.Containers;
+namespace Lineweights.Workflows.Tests.Assets;
 
 internal sealed class StorageStrategyTests
 {

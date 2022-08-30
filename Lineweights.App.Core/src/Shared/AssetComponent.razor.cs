@@ -1,20 +1,20 @@
-﻿using Lineweights.Workflows.Containers;
+﻿using Lineweights.Workflows.Assets;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
 namespace Lineweights.App.Core.Shared;
 
-public class ContainerComponentBase : ComponentBase
+public class AssetComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]
-    protected ILogger<ContainerComponent> Logger { get; set; } = default!;
+    protected ILogger<AssetComponent> Logger { get; set; } = default!;
 
     /// <summary>
     /// The id of the card.
     /// </summary>
     [Parameter]
-    public Container Container { get; set; } = default!;
+    public Asset Asset { get; set; } = default!;
 
     /// <summary>
     /// Should the card be hidden?
@@ -26,7 +26,7 @@ public class ContainerComponentBase : ComponentBase
     /// </summary>
     protected void Hide()
     {
-        Logger.LogDebug($"{nameof(Hide)}() called on result {Container.Info.Id}.");
+        Logger.LogDebug($"{nameof(Hide)}() called on result {Asset.Info.Id}.");
 
         // TODO: Instead of this remove it from the observable collection
         IsHidden = true;
@@ -36,8 +36,8 @@ public class ContainerComponentBase : ComponentBase
 
     public string GetTitle()
     {
-        return string.IsNullOrEmpty(Container.Info.Name)
-            ? Container.Info.Id.ToString()
-            : Container.Info.Name;
+        return string.IsNullOrEmpty(Asset.Info.Name)
+            ? Asset.Info.Id.ToString()
+            : Asset.Info.Name;
     }
 }

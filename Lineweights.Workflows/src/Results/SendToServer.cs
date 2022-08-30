@@ -1,6 +1,6 @@
 using System.IO;
 using System.Text;
-using Lineweights.Workflows.Containers;
+using Lineweights.Workflows.Assets;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 using StudioLE.Core.Patterns;
@@ -65,7 +65,7 @@ public sealed class SendToServer : IResultStrategy
     }
 
     /// <inheritdoc cref="SendToServer"/>
-    public async Task<Container> Execute(Model model, DocumentInformation doc)
+    public async Task<Asset> Execute(Model model, DocumentInformation doc)
     {
         // TODO: Add task cancellation if the Hub is disconnected.
         if (_connection.State == HubConnectionState.Disconnected)
@@ -76,16 +76,16 @@ public sealed class SendToServer : IResultStrategy
                 Errors = new [] { "Failed to send to server. SignalR is disconnected." }
             };
         }
-        ContainerBuilder builder = ContainerBuilder.Default(_storageStrategy, model, doc);
-        Container container = await builder.Build();
-        await RecursiveWriteContent(container);
+        AssetBuilder builder = AssetBuilder.Default(_storageStrategy, model, doc);
+        Asset asset = await builder.Build();
+        await RecursiveWriteContent(asset);
         try
         {
-            await _connection.SendAsync(ToHub, container);
+            await _connection.SendAsync(ToHub, asset);
         }
         catch (Exception e)
         {
-            container.Errors = container
+            asset.Errors = asset
                 .Errors
                 .Concat(new[]
                 {
@@ -94,13 +94,13 @@ public sealed class SendToServer : IResultStrategy
                 })
                 .ToArray();
         }
-        return container;
+        return asset;
     }
 
     /// <summary>
-    /// On receiving a <see cref="Container"/> .
+    /// On receiving a <see cref="Asset"/> .
     /// </summary>
-    public static void OnReceiveFromHub(HubConnection connection, Action<Container> handler)
+    public static void OnReceiveFromHub(HubConnection connection, Action<Asset> handler)
     {
         connection.On(ToAllClients, handler);
     }
@@ -115,16 +115,16 @@ public sealed class SendToServer : IResultStrategy
         }
     }
 
-    private async Task RecursiveWriteContent(Container container)
+    private async Task RecursiveWriteContent(Asset asset)
     {
-        if (container.Content is not null)
+        if (asset.Content is not null)
         {
-            string fileName = container.Info.Id + (container.ContentType.GetExtensionByContentType() ?? ".txt");
-            byte[] byteArray = Encoding.ASCII.GetBytes(container.Content);
+            string fileName = asset.Info.Id + (asset.ContentType.GetExtensionByContentType() ?? ".txt");
+            byte[] byteArray = Encoding.ASCII.GetBytes(asset.Content);
             MemoryStream stream = new(byteArray);
-            _ = await _storageStrategy.WriteAsync(container, fileName, stream);
+            _ = await _storageStrategy.WriteAsync(asset, fileName, stream);
         }
-        foreach (Container child in container.Children)
+        foreach (Asset child in asset.Children)
             await RecursiveWriteContent(child);
     }
 }

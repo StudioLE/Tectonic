@@ -2,7 +2,7 @@
 using System.IO;
 using CsvHelper;
 using Lineweights.App.Core.Scripts;
-using Lineweights.Workflows.Containers;
+using Lineweights.Workflows.Assets;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -34,7 +34,7 @@ public class ViewerComponentBase : ComponentBase
     /// The id of the card.
     /// </summary>
     [Parameter]
-    public Container Container { get; set; } = default!;
+    public Asset Asset { get; set; } = default!;
 
     protected Guid ComponentId { get; set; } = Guid.NewGuid();
 
@@ -49,10 +49,10 @@ public class ViewerComponentBase : ComponentBase
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        if (Container.Info.Location is null)
+        if (Asset.Info.Location is null)
             return;
-        Container.ContentType ??= Container.Info.Location!.GetFileName().GetContentTypeByExtension();
-        Type = Container.ContentType switch
+        Asset.ContentType ??= Asset.Info.Location!.GetFileName().GetContentTypeByExtension();
+        Type = Asset.ContentType switch
         {
             "text/plain" => ViewerType.Text,
             "text/csv" => ViewerType.Table,
@@ -65,9 +65,9 @@ public class ViewerComponentBase : ComponentBase
         };
 
 
-        Title = string.IsNullOrEmpty(Container.Info.Name)
-            ? Container.Info.Id.ToString()
-            : Container.Info.Name;
+        Title = string.IsNullOrEmpty(Asset.Info.Name)
+            ? Asset.Info.Id.ToString()
+            : Asset.Info.Name;
 
         switch (Type)
         {
@@ -97,8 +97,8 @@ public class ViewerComponentBase : ComponentBase
     /// </summary>
     private async Task LoadGlb()
     {
-        Logger.LogDebug($"{nameof(LoadGlb)}() called on result {Container.Info.Id}.");
-        await Three.Create(ComponentId.ToString(), Container.Info.Location!.AbsoluteUri);
+        Logger.LogDebug($"{nameof(LoadGlb)}() called on result {Asset.Info.Id}.");
+        await Three.Create(ComponentId.ToString(), Asset.Info.Location!.AbsoluteUri);
     }
 
     protected enum ViewerType
@@ -114,13 +114,13 @@ public class ViewerComponentBase : ComponentBase
 
     private async Task<string> GetFileAsString()
     {
-        if (Container.Info.Location is null)
+        if (Asset.Info.Location is null)
             return string.Empty;
 
         if(StorageStrategy is ObjectUrlStorageStrategy)
-            return await ObjectUrlStorage.GetAsString(Container.Info.Location.AbsoluteUri);
+            return await ObjectUrlStorage.GetAsString(Asset.Info.Location.AbsoluteUri);
 
-        return await new HttpClient().GetStringAsync(Container.Info.Location.AbsoluteUri);
+        return await new HttpClient().GetStringAsync(Asset.Info.Location.AbsoluteUri);
     }
 
     private async Task<string> GetFileAsJson()

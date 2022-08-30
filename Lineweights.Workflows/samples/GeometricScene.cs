@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Lineweights.Workflows.Containers;
+using Lineweights.Workflows.Assets;
 
 namespace Lineweights.Workflows.Samples;
 
@@ -11,13 +11,13 @@ public static class GeometricScene
         public bool IncludeViewsInModel { get; set; } = false;
 
         [Required]
-        public bool IncludeCsvFileContainer { get; set; } = false;
+        public bool IncludeCsvFileAsAsset { get; set; } = false;
 
         [Required]
-        public bool IncludeIfcFileContainer { get; set; } = false;
+        public bool IncludeIfcFileAsAsset { get; set; } = false;
 
         [Required]
-        public bool IncludeJsonContentContainer { get; set; } = false;
+        public bool IncludeJsonAsContentAsset { get; set; } = false;
 
         [Required]
         public bool ThrowAnException { get; set; } = false;
@@ -27,7 +27,7 @@ public static class GeometricScene
     {
         public Model Model { get; set; } = new();
 
-        public List<Container> Containers { get; }= new();
+        public List<Asset> Assets { get; }= new();
     }
 
     public static Outputs Execute(Inputs inputs)
@@ -39,14 +39,14 @@ public static class GeometricScene
         if (inputs.IncludeViewsInModel)
             outputs.Model.AddElements(SampleHelpers.CreateViews(geometry));
 
-        if (inputs.IncludeCsvFileContainer)
-            outputs.Containers.Add(SampleHelpers.CreateCsvFileContainer(outputs.Model));
+        if (inputs.IncludeCsvFileAsAsset)
+            outputs.Assets.Add(SampleHelpers.CreateCsvFileAsAsset(outputs.Model));
 
-        if (inputs.IncludeIfcFileContainer)
-            outputs.Containers.Add(SampleHelpers.CreateIfcFileContainer(outputs.Model));
+        if (inputs.IncludeIfcFileAsAsset)
+            outputs.Assets.Add(SampleHelpers.CreateIfcFileAsAsset(outputs.Model));
 
-        if (inputs.IncludeJsonContentContainer)
-            outputs.Containers.Add(SampleHelpers.CreateJsonContainer(outputs.Model));
+        if (inputs.IncludeJsonAsContentAsset)
+            outputs.Assets.Add(SampleHelpers.CreateJsonAsContentAsset(outputs.Model));
 
         if (inputs.ThrowAnException)
             throw new("This exception is thrown intentionally to test exception handling.");

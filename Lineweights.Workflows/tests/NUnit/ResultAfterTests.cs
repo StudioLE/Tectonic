@@ -1,5 +1,5 @@
 using System.IO;
-using Lineweights.Workflows.Containers;
+using Lineweights.Workflows.Assets;
 using Lineweights.Workflows.Results;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -41,11 +41,11 @@ internal sealed class ResultAfterTests : ResultModel
         strategy.IsOpenEnabled = false;
 
         // Act
-        Container container = await strategy.Execute(Model, new());
+        Asset asset = await strategy.Execute(Model, new());
 
         // Assert
-        Assert.That(container.Children.Count, Is.EqualTo(1), "Children count");
-        string? path = container.Children.First().Info.Location?.LocalPath;
+        Assert.That(asset.Children.Count, Is.EqualTo(1), "Children count");
+        string? path = asset.Children.First().Info.Location?.LocalPath;
         Assert.That(path, Does.EndWith($"{fileExtension}"), "File extension");
         Assert.That(File.Exists(path), "File exists");
     }
@@ -67,11 +67,11 @@ internal sealed class ResultAfterTests : ResultModel
         }
 
         // Act
-        Container container = await strategy.Execute(Model, new());
+        Asset asset = await strategy.Execute(Model, new());
 
         // Assert
         Assert.That(strategy.State, Is.EqualTo(HubConnectionState.Connected), "Connection state");
-        Assert.That(container.Children.Count, Is.EqualTo(1), "Children count");
+        Assert.That(asset.Children.Count, Is.EqualTo(1), "Children count");
     }
 
     [Test]

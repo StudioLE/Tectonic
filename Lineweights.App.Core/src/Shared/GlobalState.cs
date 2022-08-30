@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using Lineweights.Workflows.Containers;
+using Lineweights.Workflows.Assets;
 
 namespace Lineweights.App.Core.Shared;
 
@@ -9,7 +9,7 @@ namespace Lineweights.App.Core.Shared;
 public class GlobalState
 {
     /// <summary>
-    /// The containers.
+    /// The assets.
     /// </summary>
-    public ObservableCollection<Container> Containers { get; } = new();
+    public ObservableCollection<Asset> Assets { get; } = new();
 }

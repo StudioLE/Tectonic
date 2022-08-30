@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using Lineweights.Workflows.Containers;
+using Lineweights.Workflows.Assets;
 using StudioLE.Core.System.IO;
 
 namespace Lineweights.Workflows.Results;
@@ -21,7 +21,7 @@ public sealed class OpenAsFile : IResultStrategy
     /// <summary>
     /// The builder that determines what
     /// </summary>
-    public Func<IStorageStrategy, Model, DocumentInformation, ContainerBuilder> Builder { get; set; } = ContainerBuilder.Default;
+    public Func<IStorageStrategy, Model, DocumentInformation, AssetBuilder> Builder { get; set; } = AssetBuilder.Default;
 
     /// <inheritdoc cref="OpenAsFile"/>
     public OpenAsFile(params string[] fileExtensions)
@@ -30,7 +30,7 @@ public sealed class OpenAsFile : IResultStrategy
             return;
         Builder = (storageStrategy, model, doc) =>
         {
-            ContainerBuilder builder = new(storageStrategy, doc);
+            AssetBuilder builder = new(storageStrategy, doc);
             if (fileExtensions.Contains(".glb"))
                 builder = builder.ConvertModelToGlb(model);
             if (fileExtensions.Contains(".ifc"))
@@ -44,37 +44,37 @@ public sealed class OpenAsFile : IResultStrategy
     }
 
     /// <inheritdoc cref="OpenAsFile"/>
-    public async Task<Container> Execute(Model model, DocumentInformation doc)
+    public async Task<Asset> Execute(Model model, DocumentInformation doc)
     {
-        ContainerBuilder builder = Builder(_storageStrategy, model, doc);
-        Container container = await builder.Build();
-        await RecursiveWriteContent(container);
+        AssetBuilder builder = Builder(_storageStrategy, model, doc);
+        Asset asset = await builder.Build();
+        await RecursiveWriteContent(asset);
         if (IsOpenEnabled)
-            RecursiveOpen(container);
-        return container;
+            RecursiveOpen(asset);
+        return asset;
     }
 
-    private async Task RecursiveWriteContent(Container container)
+    private async Task RecursiveWriteContent(Asset asset)
     {
-        if (container.Content is not null)
+        if (asset.Content is not null)
         {
-            string fileName = container.Info.Id + (container.ContentType.GetExtensionByContentType() ?? ".txt");
-            byte[] byteArray = Encoding.ASCII.GetBytes(container.Content);
+            string fileName = asset.Info.Id + (asset.ContentType.GetExtensionByContentType() ?? ".txt");
+            byte[] byteArray = Encoding.ASCII.GetBytes(asset.Content);
             MemoryStream stream = new(byteArray);
-            _ = await _storageStrategy.WriteAsync(container, fileName, stream);
+            _ = await _storageStrategy.WriteAsync(asset, fileName, stream);
         }
-        foreach (Container child in container.Children)
+        foreach (Asset child in asset.Children)
             await RecursiveWriteContent(child);
     }
 
-    private static void RecursiveOpen(Container container)
+    private static void RecursiveOpen(Asset asset)
     {
-        if (File.Exists(container.Info.Location?.AbsolutePath))
-            Process.Start(new ProcessStartInfo(container.Info.Location!.AbsolutePath)
+        if (File.Exists(asset.Info.Location?.AbsolutePath))
+            Process.Start(new ProcessStartInfo(asset.Info.Location!.AbsolutePath)
             {
                 UseShellExecute = true
             });
-        foreach (Container child in container.Children)
+        foreach (Asset child in asset.Children)
             RecursiveOpen(child);
     }
 }

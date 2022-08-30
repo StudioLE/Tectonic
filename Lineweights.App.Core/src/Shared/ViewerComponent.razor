@@ -1,10 +1,10 @@
 ﻿@inherits ViewerComponentBase
 
-@if (Container.Errors.Any())
+@if (Asset.Errors.Any())
 {
   <article class="message is-danger">
     <div class="message-body">
-      @foreach (string error in Container.Errors)
+      @foreach (string error in Asset.Errors)
       {
         <p>@error</p>
       }
@@ -19,12 +19,12 @@
     break;
   case ViewerType.Image:
     <figure class="card-image">
-      <img src="@Container.Info.Location" alt="@Container.Info.Name"/>
+      <img src="@Asset.Info.Location" alt="@Asset.Info.Name"/>
     </figure>
     break;
   case ViewerType.Object:
     <figure class="card-image">
-      <object type="@Container.ContentType" data="@Container.Info.Location"></object>
+      <object type="@Asset.ContentType" data="@Asset.Info.Location"></object>
     </figure>
     break;
   case ViewerType.Text:
@@ -71,7 +71,7 @@
     break;
   default:
     <div class="card-content">
-      <a class="button" href="@Container.Info.Location">@Container.Info.Location?.Segments.Last()</a>
+      <a class="button" href="@Asset.Info.Location">@Asset.Info.Location?.Segments.Last()</a>
     </div>
     break;
 }

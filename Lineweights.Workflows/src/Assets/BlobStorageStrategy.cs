@@ -5,7 +5,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using StudioLE.Core.System.IO;
 
-namespace Lineweights.Workflows.Containers;
+namespace Lineweights.Workflows.Assets;
 
 /// <summary>
 /// A strategy to store files in Azure Blob Storage.

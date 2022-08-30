@@ -10,25 +10,25 @@ using Lineweights.SVG.From.Elements;
 using QuestPDF.Fluent;
 using StudioLE.Core.Exceptions;
 
-namespace Lineweights.Workflows.Containers;
+namespace Lineweights.Workflows.Assets;
 
 /// <summary>
-/// A <see href="https://refactoring.guru/design-patterns/builder">builder</see> to create a <see cref="Container"/>.
+/// A <see href="https://refactoring.guru/design-patterns/builder">builder</see> to create a <see cref="Asset"/>.
 /// </summary>
-public class ContainerBuilder
+public class AssetBuilder
 {
     private readonly IStorageStrategy _storageStrategy;
-    private readonly List<Task<Container>> _tasks = new();
+    private readonly List<Task<Asset>> _tasks = new();
     private readonly DocumentInformation _doc;
 
-    public ContainerBuilder(IStorageStrategy storageStrategy, DocumentInformation? doc = null)
+    public AssetBuilder(IStorageStrategy storageStrategy, DocumentInformation? doc = null)
     {
         _storageStrategy = storageStrategy;
         _doc = doc ?? new();
     }
 
-    /// <inheritdoc cref="Container"/>
-    public ContainerBuilder ConvertModelToGlb(Model model, DocumentInformation? doc = null)
+    /// <inheritdoc cref="Asset"/>
+    public AssetBuilder ConvertModelToGlb(Model model, DocumentInformation? doc = null)
     {
         doc ??= new() { Name = "GlTF of Model" };
 
@@ -39,13 +39,13 @@ public class ContainerBuilder
         string tempPath = Path.GetTempFileName();
         model.ToGlTF(tempPath, out List<BaseError> errors);
 
-        Container container = new()
+        Asset asset = new()
         {
             Info = doc,
             ContentType =  "model/gltf-binary"
         };
         if (errors.Any())
-            container.Errors = errors
+            asset.Errors = errors
                 .Select(x => x.Message)
                 .Prepend("Failed to convert Model to GLB.")
                 .ToArray();
@@ -54,12 +54,12 @@ public class ContainerBuilder
             throw new FileNotFoundException("Failed to write GLB. Temp file does not exist.");
         Stream stream =  File.OpenRead(tempPath);
 
-        _tasks.Add(_storageStrategy.WriteAsync(container, fileName, stream));
+        _tasks.Add(_storageStrategy.WriteAsync(asset, fileName, stream));
         return this;
     }
 
-    /// <inheritdoc cref="Container"/>
-    public ContainerBuilder ConvertModelToIfc(Model model, DocumentInformation? doc = null)
+    /// <inheritdoc cref="Asset"/>
+    public AssetBuilder ConvertModelToIfc(Model model, DocumentInformation? doc = null)
     {
         doc ??= new() { Name = "IFC of Model" };
 
@@ -79,13 +79,13 @@ public class ContainerBuilder
         standardOutputWriter.AutoFlush = true;
         Console.SetOut(standardOutputWriter);
 
-        Container container = new()
+        Asset asset = new()
         {
             Info = doc,
             ContentType =  "application/x-step"
         };
         if (!string.IsNullOrWhiteSpace(console))
-            container.Errors = new[]
+            asset.Errors = new[]
             {
                 "Failed to convert Model to IFC.",
                 console
@@ -96,29 +96,29 @@ public class ContainerBuilder
         Stream stream = File.OpenRead(tempPath);
 
         string fileName = doc.Id + ".ifc";
-        _tasks.Add(_storageStrategy.WriteAsync(container, fileName, stream));
+        _tasks.Add(_storageStrategy.WriteAsync(asset, fileName, stream));
         return this;
     }
 
-    /// <inheritdoc cref="Container"/>
-    public ContainerBuilder ConvertModelToJson(Model model, DocumentInformation? doc = null)
+    /// <inheritdoc cref="Asset"/>
+    public AssetBuilder ConvertModelToJson(Model model, DocumentInformation? doc = null)
     {
         doc ??= new() { Name = "JSON of Model" };
 
         string json = model.ToJson();
 
-        Container container = new()
+        Asset asset = new()
         {
             Info = doc,
             ContentType =  "application/json",
             Content = json
         };
-        _tasks.Add(Task.FromResult(container));
+        _tasks.Add(Task.FromResult(asset));
         return this;
     }
 
-    /// <inheritdoc cref="Container"/>
-    public ContainerBuilder ExtractSheetsAndConvertToSvg(Model model)
+    /// <inheritdoc cref="Asset"/>
+    public AssetBuilder ExtractSheetsAndConvertToSvg(Model model)
     {
         foreach (Canvas canvas in model.AllElementsOfType<Sheet>())
             ConvertCanvasToSvg(canvas);
@@ -126,8 +126,8 @@ public class ContainerBuilder
         return this;
     }
 
-    /// <inheritdoc cref="Container"/>
-    public ContainerBuilder ExtractViewsAndConvertToSvg(Model model)
+    /// <inheritdoc cref="Asset"/>
+    public AssetBuilder ExtractViewsAndConvertToSvg(Model model)
     {
         foreach (Canvas canvas in model.AllElementsOfType<View>())
             ConvertCanvasToSvg(canvas);
@@ -135,8 +135,8 @@ public class ContainerBuilder
         return this;
     }
 
-    /// <inheritdoc cref="Container"/>
-    private ContainerBuilder ConvertCanvasToSvg(Canvas canvas)
+    /// <inheritdoc cref="Asset"/>
+    private AssetBuilder ConvertCanvasToSvg(Canvas canvas)
     {
 
         SvgDocument svgDocument = canvas switch
@@ -150,7 +150,7 @@ public class ContainerBuilder
         svgDocument.Save(stream, SaveOptions.None);
         stream.Seek(0, SeekOrigin.Begin);
 
-        Container container = new()
+        Asset asset = new()
         {
             Info = new()
             {
@@ -159,13 +159,13 @@ public class ContainerBuilder
             },
             ContentType =  "image/svg+xml"
         };
-        string fileName = container.Info.Id + ".svg";
-        _tasks.Add(_storageStrategy.WriteAsync(container, fileName, stream));
+        string fileName = asset.Info.Id + ".svg";
+        _tasks.Add(_storageStrategy.WriteAsync(asset, fileName, stream));
         return this;
     }
 
-    /// <inheritdoc cref="Container"/>
-    public ContainerBuilder ExtractSheetsAndConvertToPdf(Model model)
+    /// <inheritdoc cref="Asset"/>
+    public AssetBuilder ExtractSheetsAndConvertToPdf(Model model)
     {
         foreach (Canvas canvas in model.AllElementsOfType<Sheet>())
             ConvertCanvasToPdf(canvas);
@@ -173,8 +173,8 @@ public class ContainerBuilder
         return this;
     }
 
-    /// <inheritdoc cref="Container"/>
-    public ContainerBuilder ExtractViewsAndConvertToPdf(Model model)
+    /// <inheritdoc cref="Asset"/>
+    public AssetBuilder ExtractViewsAndConvertToPdf(Model model)
     {
         foreach (Canvas canvas in model.AllElementsOfType<View>())
             ConvertCanvasToPdf(canvas);
@@ -182,8 +182,8 @@ public class ContainerBuilder
         return this;
     }
 
-    /// <inheritdoc cref="Container"/>
-    private ContainerBuilder ConvertCanvasToPdf(Canvas canvas)
+    /// <inheritdoc cref="Asset"/>
+    private AssetBuilder ConvertCanvasToPdf(Canvas canvas)
     {
         PdfDocument pdfDocument = canvas switch
         {
@@ -195,7 +195,7 @@ public class ContainerBuilder
         pdfDocument.GeneratePdf(stream);
         stream.Seek(0, SeekOrigin.Begin);
 
-        Container container = new()
+        Asset asset = new()
         {
             Info = new()
             {
@@ -204,26 +204,26 @@ public class ContainerBuilder
             },
             ContentType =  "application/pdf"
         };
-        string fileName = container.Info.Id + ".pdf";
-        _tasks.Add(_storageStrategy.WriteAsync(container, fileName, stream));
+        string fileName = asset.Info.Id + ".pdf";
+        _tasks.Add(_storageStrategy.WriteAsync(asset, fileName, stream));
         return this;
     }
 
-    /// <inheritdoc cref="Container"/>
-    public async Task<Container> Build()
+    /// <inheritdoc cref="Asset"/>
+    public async Task<Asset> Build()
     {
-        Container[] containers = await Task.WhenAll(_tasks);
+        Asset[] assets = await Task.WhenAll(_tasks);
         return new()
         {
             Info = _doc,
-            Children = containers
+            Children = assets
         };
     }
 
-    /// <inheritdoc cref="Container"/>
-    public static ContainerBuilder Default(IStorageStrategy storageStrategy, Model model, DocumentInformation? doc = null)
+    /// <inheritdoc cref="Asset"/>
+    public static AssetBuilder Default(IStorageStrategy storageStrategy, Model model, DocumentInformation? doc = null)
     {
-        return new ContainerBuilder(storageStrategy, doc)
+        return new AssetBuilder(storageStrategy, doc)
             .ConvertModelToGlb(model)
             .ExtractViewsAndConvertToSvg(model)
             .ExtractSheetsAndConvertToPdf(model);

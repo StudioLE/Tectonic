@@ -4,7 +4,7 @@ using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using Elements.Serialization.IFC;
 using Lineweights.Drawings;
-using Lineweights.Workflows.Containers;
+using Lineweights.Workflows.Assets;
 using StudioLE.Core.System;
 using StudioLE.Core.System.IO;
 
@@ -58,7 +58,7 @@ internal static class SampleHelpers
             .ToArray();
     }
 
-    internal static Container CreateCsvFileContainer(Model model)
+    internal static Asset CreateCsvFileAsAsset(Model model)
     {
         IReadOnlyCollection<TableRow> table = CreateTableOfElements(model);
 
@@ -78,7 +78,7 @@ internal static class SampleHelpers
         };
     }
 
-    internal static Container CreateIfcFileContainer(Model model)
+    internal static Asset CreateIfcFileAsAsset(Model model)
     {
         FileInfo file = PathHelpers.GetTempFile(".ifc");
         model.ToIFC(file.FullName);
@@ -93,7 +93,7 @@ internal static class SampleHelpers
         };
     }
 
-    internal static Container CreateJsonContainer(Model model)
+    internal static Asset CreateJsonAsContentAsset(Model model)
     {
         string json = model.ToJson();
 

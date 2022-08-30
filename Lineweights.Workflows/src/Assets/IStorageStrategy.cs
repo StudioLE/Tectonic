@@ -1,7 +1,7 @@
 using System.IO;
 using Ardalis.Result;
 
-namespace Lineweights.Workflows.Containers;
+namespace Lineweights.Workflows.Assets;
 
 /// <summary>
 /// A strategy to store files.
@@ -19,14 +19,14 @@ public static class StorageStrategyExtensions
 {
     /// <summary>
     /// Write a file asynchronously via a stream.
-    /// If any errors occur during writing then add them to <see cref="Container.Errors"/>.
+    /// If any errors occur during writing then add them to <see cref="Asset.Errors"/>.
     /// </summary>
-    public static async Task<Container> WriteAsync(this IStorageStrategy storageStrategy, Container container, string fileName, Stream stream)
+    public static async Task<Asset> WriteAsync(this IStorageStrategy storageStrategy, Asset asset, string fileName, Stream stream)
     {
         Result<Uri> uriResult = await storageStrategy.WriteAsync(fileName, stream);
         if (!uriResult.IsSuccess)
-            container.Errors = container.Errors.Concat(uriResult.Errors).ToArray();
-        container.Info.Location = uriResult;
-        return container;
+            asset.Errors = asset.Errors.Concat(uriResult.Errors).ToArray();
+        asset.Info.Location = uriResult;
+        return asset;
     }
 }

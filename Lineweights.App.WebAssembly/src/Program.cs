@@ -3,7 +3,7 @@ using Lineweights.App.Core.Shared;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Lineweights.App.WebAssembly;
-using Lineweights.Workflows.Containers;
+using Lineweights.Workflows.Assets;
 using Lineweights.Workflows.Execution;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

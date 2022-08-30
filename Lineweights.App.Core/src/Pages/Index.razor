@@ -1,11 +1,11 @@
 ﻿@page "/"
 @using Lineweights.App.Core.Shared
-@using Lineweights.Workflows.Containers
+@using Lineweights.Workflows.Assets
 @inherits IndexBase
 
 <PageTitle>
-  Lineweights@(State.Containers.Count > 0
-             ? $" ({State.Containers.Count})"
+  Lineweights@(State.Assets.Count > 0
+             ? $" ({State.Assets.Count})"
              : string.Empty)
 </PageTitle>
 
@@ -35,8 +35,8 @@
 
   <ActivityRunnerComponent></ActivityRunnerComponent>
 
-  @foreach (Container container in State.Containers.Reverse())
+  @foreach (Asset asset in State.Assets.Reverse())
   {
-    <ContainerComponent @key="container.Info.Id" Container="container"></ContainerComponent>
+    <AssetComponent @key="asset.Info.Id" Asset="asset"></AssetComponent>
   }
 </div>

@@ -1,7 +1,7 @@
 using Lineweights.Core.Serialisation;
 using Newtonsoft.Json;
 
-namespace Lineweights.Workflows.Containers;
+namespace Lineweights.Workflows.Assets;
 
 /// <summary>
 /// <para>
@@ -9,7 +9,7 @@ namespace Lineweights.Workflows.Containers;
 /// The convention is defined in ISO 19650.
 /// </para>
 /// <para>
-/// <see cref="ContainerBuilder"/> provides logic to create a container of a <see cref="Model"/>.
+/// <see cref="AssetBuilder"/> provides logic to create an of a <see cref="Model"/>.
 /// </para>
 /// <para>
 /// The content of a container is defined by either its <see cref="Content"/> property or obtained from the
@@ -24,7 +24,7 @@ namespace Lineweights.Workflows.Containers;
 /// <see href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.container?view=net-6.0">IContainer</see>
 /// of <see href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.icomponent?view=net-6.0">IComponent</see>
 /// </remarks>
-public class Container
+public class Asset
 {
     /// <summary>
     /// The document information.
@@ -35,7 +35,7 @@ public class Container
     /// <summary>
     /// The uri of any additional files.
     /// </summary>
-    public IReadOnlyCollection<Container> Children { get; set; } = Array.Empty<Container>();
+    public IReadOnlyCollection<Asset> Children { get; set; } = Array.Empty<Asset>();
 
     /// <summary>
     /// The <see href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">MIME type</see>.

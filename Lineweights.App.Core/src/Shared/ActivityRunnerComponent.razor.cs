@@ -5,7 +5,7 @@ using System.Reflection;
 using Ardalis.Result;
 using Lineweights.Flex.Samples;
 using Lineweights.Workflows;
-using Lineweights.Workflows.Containers;
+using Lineweights.Workflows.Assets;
 using Lineweights.Workflows.Execution;
 using Lineweights.Workflows.Samples;
 using Microsoft.AspNetCore.Components;
@@ -171,9 +171,9 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
             Name = builtState.Command.Name,
             Description = $"Executed {ActivitySelectValue} from {AssemblyInputValue}."
         };;
-        ContainerBuilder builder = ContainerBuilder.Default(StorageStrategy, model, doc);
-        Container container = await builder.Build();
-        State.Containers.Add(container);
+        AssetBuilder builder = AssetBuilder.Default(StorageStrategy, model, doc);
+        Asset asset = await builder.Build();
+        State.Assets.Add(asset);
     }
 
     private void ShowWarning(string message, string? title = null)
@@ -211,6 +211,6 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
-        State.Containers.CollectionChanged -= OnMessagesChanged;
+        State.Assets.CollectionChanged -= OnMessagesChanged;
     }
 }

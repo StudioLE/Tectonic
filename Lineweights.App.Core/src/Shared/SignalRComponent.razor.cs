@@ -35,6 +35,6 @@ public class SignalRComponentBase : ComponentBase
         await SignalR.Connect();
 
         // Add to collection on receive
-        SendToServer.OnReceiveFromHub(SignalR.Connection ?? throw new("SignalR connection was null"), State.Containers.Add);
+        SendToServer.OnReceiveFromHub(SignalR.Connection ?? throw new("SignalR connection was null"), State.Assets.Add);
     }
 }
