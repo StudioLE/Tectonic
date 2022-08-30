@@ -20,21 +20,23 @@ public class IndexBase : ComponentBase, IDisposable
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        State.Assets.CollectionChanged += OnAssetsChanged;
+        State.Assets.CollectionChanged += NotifyStateHasChanged;
+        State.Messages.CollectionChanged += NotifyStateHasChanged;
     }
 
     /// <summary>
     /// Notify that the state has changed.
     /// </summary>
-    private async void OnAssetsChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private async void NotifyStateHasChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        Logger.LogDebug($"{nameof(OnAssetsChanged)}() called.");
+        Logger.LogDebug($"{nameof(NotifyStateHasChanged)}() called.");
         await InvokeAsync(StateHasChanged);
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        State.Assets.CollectionChanged -= OnAssetsChanged;
+        State.Assets.CollectionChanged -= NotifyStateHasChanged;
+        State.Messages.CollectionChanged -= NotifyStateHasChanged;
     }
 }

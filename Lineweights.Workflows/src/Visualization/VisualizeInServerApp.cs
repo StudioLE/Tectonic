@@ -36,12 +36,7 @@ public sealed class VisualizeInServerApp : IVisualizationStrategy
     /// <summary>
     /// The name of the hub method used to send to the hub.
     /// </summary>
-    public const string ToHub = "SendToHub";
-
-    /// <summary>
-    /// The name of the hub method used to send to clients.
-    /// </summary>
-    public const string ToAllClients = "SendToAllClients";
+    public const string HubMethod = "Asset";
 
     #endregion
 
@@ -83,7 +78,7 @@ public sealed class VisualizeInServerApp : IVisualizationStrategy
         await RecursiveWriteContent(asset);
         try
         {
-            await _connection.SendAsync(ToHub, asset);
+            await _connection.SendAsync(HubMethod, asset);
         }
         catch (Exception e)
         {
@@ -97,14 +92,6 @@ public sealed class VisualizeInServerApp : IVisualizationStrategy
                 .ToArray();
         }
         return asset;
-    }
-
-    /// <summary>
-    /// On receiving a <see cref="Asset"/> .
-    /// </summary>
-    public static void OnReceiveFromHub(HubConnection connection, Action<Asset> handler)
-    {
-        connection.On(ToAllClients, handler);
     }
 
     /// <inheritdoc cref="IRetryPolicy"/>

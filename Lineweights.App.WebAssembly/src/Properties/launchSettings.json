@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Web": {
+    "WebAssembly": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -9,7 +9,12 @@ namespace Lineweights.App.Core.Shared;
 public class GlobalState
 {
     /// <summary>
-    /// The assets.
+    /// The <see cref="Asset"/> currently in state.
     /// </summary>
     public ObservableCollection<Asset> Assets { get; } = new();
+
+    /// <summary>
+    /// The <see cref="Message"/> currently in state.
+    /// </summary>
+    public ObservableCollection<Message> Messages { get; } = new();
 }

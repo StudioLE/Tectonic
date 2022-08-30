@@ -9,29 +9,12 @@
              : string.Empty)
 </PageTitle>
 
-<div class="container is-fluid">
-  <div class="columns is-vcentered">
+<div class="container is-fluid my-5">
 
-    <div class="column is-narrow">
-      <button class="button is-white is-large has-background-light">
-        <span class="icon is-medium">
-          <i class="mdi mdi-tablet-dashboard"></i>
-        </span>
-        <span>
-          Lineweights
-        </span>
-      </button>
-    </div>
-
-    <div class="column">
-
-    </div>
-
-    <div class="column is-narrow">
-      <SignalRComponent></SignalRComponent>
-    </div>
-
-  </div>
+  @foreach (Message message in State.Messages)
+  {
+    <MessageComponent Message="message"></MessageComponent>
+  }
 
   <ActivityRunnerComponent></ActivityRunnerComponent>
 
@@ -39,4 +22,5 @@
   {
     <AssetComponent @key="asset.Info.Id" Asset="asset"></AssetComponent>
   }
+
 </div>

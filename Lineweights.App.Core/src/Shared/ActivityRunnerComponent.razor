@@ -48,7 +48,10 @@
     </p>
   </header>
   <div class="card-content">
-    <MessagesComponent Messages="Messages"></MessagesComponent>
+    @foreach (Message message in Messages)
+    {
+      <MessageComponent Message="message"></MessageComponent>
+    }
     @switch (Builder.State)
     {
       case ActivityBuilder.ActivitySetState activitySetState:

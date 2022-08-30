@@ -6,22 +6,25 @@ using Lineweights.App.WebAssembly;
 using Lineweights.Workflows.Assets;
 using Lineweights.Workflows.Execution;
 
+// Create Builder
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+// Add Blazor WebAssembly root components
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Inject
-builder.Services.AddScoped<ActivityBuilder>();
-builder.Services.AddScoped<GlobalState>();
-builder.Services.AddScoped<ModelViewer>();
-// TODO: Consider why these need to be Singleton?
+// Inject Lineweights singleton services
+builder.Services.AddSingleton<GlobalState>();
 builder.Services.AddSingleton<ObjectUrlStorage>();
 builder.Services.AddSingleton<IStorageStrategy, ObjectUrlStorageStrategy>();
-builder.Services.AddScoped<SignalRState>();
+builder.Services.AddSingleton<ModelViewer>();
 
-builder.Services.AddScoped(sp => new HttpClient
+// Inject Lineweights scoped services
+builder.Services.AddScoped<ActivityBuilder>();
+
+// Inject Blazor WebAssembly services
+builder.Services.AddScoped(_ => new HttpClient
 {
-    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+    BaseAddress = new(builder.HostEnvironment.BaseAddress)
 });
-
 await builder.Build().RunAsync();
