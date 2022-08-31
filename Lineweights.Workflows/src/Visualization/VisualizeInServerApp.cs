@@ -6,10 +6,10 @@ using StudioLE.Core.Patterns;
 namespace Lineweights.Workflows.Visualization;
 
 /// <summary>
-/// Visualize a <see cref="Model"/> in <c>Lineweights.App.Server</c>.
+/// Visualize a <see cref="Model"/> in <c>Geometrician.Server</c>.
 /// Use an <see cref="AssetBuilder"/> to convert the <see cref="Model"/> to individual <see cref="Asset"/>.
 /// Save the assets to blob storage and then send the assets via SignalR to be visualised by a remote
-/// app such as <c>Lineweights.App.Server</c>.
+/// app such as <c>Geometrician.Server</c>.
 /// </summary>
 /// <remarks>
 /// The <see cref="VisualizeInServerApp"/> is obtained via a

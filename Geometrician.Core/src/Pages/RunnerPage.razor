@@ -1,0 +1,21 @@
+﻿@page "/run/{AssemblyKey?}/{ActivityKey?}"
+@using Geometrician.Core.Shared
+@using Lineweights.Workflows.Assets
+@inherits RunnerPageBase
+
+<PageTitle>
+  Lineweights@(State.Assets.Count > 0
+             ? $" ({State.Assets.Count})"
+             : string.Empty)
+</PageTitle>
+
+<div class="container is-fluid my-5">
+
+  <RunnerComponent AssemblyKey="@AssemblyKey" ActivityKey="@ActivityKey"/>
+
+  @foreach (Asset asset in State.Assets.Reverse())
+  {
+    <AssetComponent @key="asset.Info.Id" Asset="asset"/>
+  }
+
+</div>

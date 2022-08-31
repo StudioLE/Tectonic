@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
-    <InternalsVisibleTo Include="Lineweights.App.Core" />
+    <InternalsVisibleTo Include="Geometrician.Core" />
     <InternalsVisibleTo Include="Lineweights.Workflows.NUnit" />
   </ItemGroup>
 

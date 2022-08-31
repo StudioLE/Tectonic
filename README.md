@@ -1,6 +1,57 @@
-﻿# Lineweights
+﻿# Geometrician and Lineweights
 
-A collection of modular libraries for automating architecture, engineering, and construction (AEC) workflows.
+## Geometrician
+
+Geometrician is an application to execute and visualise the results of geometric workflows using Hypar's Elements library.
+
+The application is can run client-side directly in the browser using [Blazor WebAssembly](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-server), or as a [Blazor Server](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-server). Soon it will also be available as a [Blazor Hybrid](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-hybrid) app using either .NET MAUI or WPF, and via a command line interface.
+
+*View the WebAssembly App:*
+
+*→ [Production (main branch)](https://geometrician.io/)*
+
+*→ [Staging (develop branch)](https://next.geometrician.io/)*
+
+---
+
+📇 **Geometrician.Core**
+
+![](https://img.shields.io/badge/status-alpha-informational)
+
+The core [Razor components](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/class-libraries?view=aspnetcore-6.0&tabs=visual-studio) for the Blazor application implementations.
+
+*→ [Documentation](https://docs.lineweights.io/latest/App/Geometrician.Core.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.Core/src)*
+
+---
+
+🖧 **Geometrician.Server**
+
+![](https://img.shields.io/badge/status-alpha-informational)
+
+The [Blazor Server](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-server) application.
+
+*→ [Documentation](https://docs.lineweights.io/latest/App/Geometrician.Server.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.Server/src)*
+
+---
+
+🪟 **Geometrician.WebAssembly**
+
+![](https://img.shields.io/badge/status-alpha-informational)
+
+The [Blazor WebAssembly](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-server) application.
+
+*→ [Documentation](https://docs.lineweights.io/latest/Core/Lineweights.WebAssembly.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.WebAssembly/src)*
+/  *[Live (main)](https://geometrician.io/)*
+/  *[Live (develop)](https://next.geometrician.io/)*
+
+---
+
+## Lineweights
+
+Lineweights is a collection of modular libraries for automating architecture, engineering, and construction (AEC) workflows.
 
 *The components are written in C# using Hypar's Elements library. They are designed to be cross-platform for use in standard industry software and cloud platforms such as Hypar, Dynamo, Revit, Grasshopper, and Rhino.*
 
@@ -16,7 +67,7 @@ Libraries containing generic code reused across Lineweights.
 
 🧰 **Lineweights.Core**
 
-![](https://img.shields.io/badge/status-stable-success)
+![](https://img.shields.io/badge/status-alpha-informational)
 
 Generic extension and helper methods for the Elements library.
 
@@ -27,7 +78,7 @@ Generic extension and helper methods for the Elements library.
 
 🔩 **StudioLE.Core**
 
-![](https://img.shields.io/badge/status-stable-success)
+![](https://img.shields.io/badge/status-alpha-informational)
 
 Generic extension and helper methods for the C# language.
 
@@ -95,15 +146,15 @@ Convert geometric elements to 2d SVG visual representatons.
 
 ---
 
-### Geometry
+### Experimental
 
-Libraries that provide additional geometry types.
+Experimental libraries.
 
 ---
 
 📈 **Lineweights.Curves**
 
-![](https://img.shields.io/badge/status-alpha-informational)
+![](https://img.shields.io/badge/status-experimental-critical)
 
 Curve interpolation and spline geometry for the Elements library.
 
@@ -111,12 +162,6 @@ Curve interpolation and spline geometry for the Elements library.
 
 *→ [Documentation](https://docs.lineweights.io/latest/Geometry/Lineweights.Curves.html)*
 /  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.Curves/src)*
-
----
-
-### Masterplanning
-
-Libraries for architectural masterplanning.
 
 ---
 
@@ -139,14 +184,14 @@ Libraries that provide additional mechanisms for visualising and verifying the r
 
 ---
 
-📡 **Lineweights.App**
+📡 **Geometrician**
 
 ![](https://img.shields.io/badge/status-alpha-informational)
 
 A [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) client application to visualise the results of Elements logic.
 
-*→ [Documentation](https://docs.lineweights.io/latest/Workflows/Lineweights.App.html)*
-/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.App/src)*
+*→ [Documentation](https://docs.lineweights.io/latest/Workflows/Geometrician.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician/src)*
 
 ---
 
@@ -174,7 +219,7 @@ Visualise and verify the results of Elements logic in NUnit tests.
 
 ## License
 
-Lineweights is dual-licensed under open and closed source licenses.
+Geometrician and Lineweights are dual-licensed under open and closed source licenses.
 
 Copyright © Laurence Elsdon 2022
 
@@ -190,7 +235,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 ### Proprietary
 
-The GNU Affero General Public License requires that you must disclose your source code when you distribute, publish or provide access to modified or derivative software therefore developers who wish to keep their projects proprietary or closed source must enter a commercial license agreement with Laurence Elsdon.
+The GNU Affero General Public License requires that you must disclose your source code when you distribute, publish or provide access to modified or derivative software therefore developers who wish to keep their projects proprietary or closed source under these circumstances should:
 
 → [Get in touch regarding commercial license agreements](https://studiole.uk/contact/)
 

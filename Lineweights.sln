@@ -21,11 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Masterplanning"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Masterplanning.Tests", "Lineweights.Masterplanning\tests\Lineweights.Masterplanning.Tests.csproj", "{92839D8A-F585-4600-8C51-4F34FF65C271}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Masterplanning", "Masterplanning", "{3DAFB3F2-1E7C-4F25-97A4-795838151002}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Experimental", "Experimental", "{3DAFB3F2-1E7C-4F25-97A4-795838151002}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Distribution", "Distribution", "{CB1AC6BE-973E-4421-8FAC-27173D79BC9A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Geometry", "Geometry", "{507DAA8D-B06D-4B2E-81D5-DB44A990FE85}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Flex", "Lineweights.Flex\src\Lineweights.Flex.csproj", "{3520DB57-30A9-43CE-A678-DA340C3BDD33}"
 EndProject
@@ -60,7 +58,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Workflows", "Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Workflows.Tests", "Lineweights.Workflows\tests\Lineweights.Workflows.Tests.csproj", "{702519F8-76FE-4D41-9F1F-642905ECD3F3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.App.Server", "Lineweights.App.Server\src\Lineweights.App.Server.csproj", "{3F0C9FBA-1F51-4037-B195-26F8B60154E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geometrician.Server", "Geometrician.Server\src\Geometrician.Server.csproj", "{3F0C9FBA-1F51-4037-B195-26F8B60154E6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudioLE.Core.Tests", "StudioLE.Core\tests\StudioLE.Core.Tests.csproj", "{6F06FDCF-A786-458F-AA56-DB75957369EC}"
 EndProject
@@ -88,9 +86,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8066AE8C-6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.Workflows.Samples", "Lineweights.Workflows\samples\Lineweights.Workflows.Samples.csproj", "{0A84A66C-A063-47F7-8161-AEC8022EA911}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.App.WebAssemblyAssembly", "Lineweights.App.WebAssembly\src\Lineweights.App.WebAssembly.csproj", "{1834A1DD-5E94-4C2C-ACE4-BCA40C490782}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.WebAssemblyAssembly", "Geometrician.WebAssembly\src\Geometrician.WebAssembly.csproj", "{1834A1DD-5E94-4C2C-ACE4-BCA40C490782}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.App.Core", "Lineweights.App.Core\src\Lineweights.App.Core.csproj", "{F5D4093C-518F-4D0A-B1CA-1AC672B2D4CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.Core", "Geometrician.Core\src\Geometrician.Core.csproj", "{F5D4093C-518F-4D0A-B1CA-1AC672B2D4CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{1BC91E56-935C-40B0-A013-49CBD3511C2F}"
 EndProject
@@ -206,8 +204,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{18E202EE-C9BF-4715-824D-3EBCDDB847B6} = {1DA041CF-77AA-4489-A353-99206FC09556}
-		{B4AE41A8-DF28-4405-9CAD-6922FE869740} = {507DAA8D-B06D-4B2E-81D5-DB44A990FE85}
-		{58F45B15-0759-451C-BEFF-4031A76B2AA9} = {507DAA8D-B06D-4B2E-81D5-DB44A990FE85}
 		{DD74D331-9F85-489F-988D-BF60D367DD0A} = {DA7B57FA-5CD1-4DEF-9A9A-9690F4036F18}
 		{8D32AE72-8DFE-48C2-935E-0433A6A08EA4} = {DA7B57FA-5CD1-4DEF-9A9A-9690F4036F18}
 		{9F6DC194-4AF1-42B1-B3E3-19BB2821F0A3} = {DA7B57FA-5CD1-4DEF-9A9A-9690F4036F18}
@@ -233,6 +229,8 @@ Global
 		{F5D4093C-518F-4D0A-B1CA-1AC672B2D4CF} = {1BC91E56-935C-40B0-A013-49CBD3511C2F}
 		{3F0C9FBA-1F51-4037-B195-26F8B60154E6} = {1BC91E56-935C-40B0-A013-49CBD3511C2F}
 		{1834A1DD-5E94-4C2C-ACE4-BCA40C490782} = {1BC91E56-935C-40B0-A013-49CBD3511C2F}
+		{B4AE41A8-DF28-4405-9CAD-6922FE869740} = {3DAFB3F2-1E7C-4F25-97A4-795838151002}
+		{58F45B15-0759-451C-BEFF-4031A76B2AA9} = {3DAFB3F2-1E7C-4F25-97A4-795838151002}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB249DC8-BB8F-4BD8-A5D6-2206C1BC3442}

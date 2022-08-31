@@ -1,16 +1,14 @@
 - name: Home
   href: index.md
-- name: Changes
-  href: changelog.md
+- name: App
+  href: App/
 - name: Core
   href: Core/
 - name: Distribution
   href: Distribution/
 - name: Drawings
   href: Drawings/
-- name: Geometry
-  href: Geometry/
-- name: Masterplanning
-  href: Masterplanning/
+- name: Experimental
+  href: Experimental/
 - name: Workflows
   href: Workflows/
