@@ -18,7 +18,7 @@
           @if (Builder.State is ActivityBuilder.ActivitySetState state2)
           {
             <li>
-              <a @onclick="SetAssembly">@state2.ActivityName</a>
+              <a @onclick="SetAssemblyByPath">@state2.ActivityName</a>
             </li>
           }
           @switch (Builder.State)
@@ -133,7 +133,7 @@
                     </div>
                   </div>
                   <div class="control">
-                    <button class="button is-primary" @onclick="() => SetAssembly(AssemblySelectValue)">
+                    <button class="button is-primary" @onclick="() => SetAssemblyByKey(AssemblySelectValue)">
                       <span>Load</span>
                       <span class="icon">
                         <i class="mdi mdi-arrow-right"></i>
@@ -154,7 +154,7 @@
                     <input class="input" type="text" @bind="@AssemblyInputValue" placeholder="C:\Users\...\Elements.Tests.dll">
                   </div>
                   <div class="control">
-                    <button class="button is-primary" @onclick="SetAssembly">
+                    <button class="button is-primary" @onclick="SetAssemblyByPath">
                       <span>Load</span>
                       <span class="icon">
                         <i class="mdi mdi-arrow-right"></i>

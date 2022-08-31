@@ -62,23 +62,24 @@ public class ActivityRunnerComponentBase : ComponentBase, IDisposable
         Builder = new();
     }
 
-    protected void SetAssembly(string key)
+    protected void SetAssemblyByKey(string key)
     {
         ClearMessages();
-        Logger.LogDebug($"{nameof(SetAssembly)} called with key {key}.");
+        Logger.LogDebug($"{nameof(SetAssemblyByKey)} called with key {key}.");
         if(!AssemblySelectOptions.TryGetValue(key, out Assembly? assembly))
         {
             ShowWarning("Failed to load assembly. Key not found.");
             return;
         }
+        AssemblyInputValue = $"{key}.dll";
         SetAssembly(assembly);
     }
 
-    protected void SetAssembly()
+    protected void SetAssemblyByPath()
     {
         ClearMessages();
         string assemblyPath = AssemblyInputValue;
-        Logger.LogDebug($"{nameof(SetAssembly)} called with {assemblyPath}.");
+        Logger.LogDebug($"{nameof(SetAssemblyByKey)} called with {assemblyPath}.");
         if (!Path.IsPathFullyQualified(assemblyPath))
         {
             string assemblyDir = AppDomain.CurrentDomain.BaseDirectory;
