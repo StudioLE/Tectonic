@@ -221,9 +221,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
-          aws s3 rm --recursive s3://${{ secrets.S3_APP_STAGING }}
-          aws s3 cp --recursive artifacts/wwwroot s3://${{ secrets.S3_APP_STAGING }}
-          aws s3 cp --recursive s3://${{ secrets.S3_APP_STAGING }} s3://${{ secrets.S3_APP_BASE }}/v${{ needs.analysis.outputs.version }}
+          aws s3 rm --only-show-errors --recursive s3://${{ secrets.S3_APP_STAGING }}
+          aws s3 cp --only-show-errors --recursive artifacts/wwwroot s3://${{ secrets.S3_APP_STAGING }}
+          aws s3 cp --only-show-errors --recursive s3://${{ secrets.S3_APP_STAGING }} s3://${{ secrets.S3_APP_BASE }}/v${{ needs.analysis.outputs.version }}
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CF_APP_STAGING }} --paths "/*"
 
       - name: Deploy WebAssembly to Production
@@ -233,8 +233,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
-          aws s3 rm --recursive s3://${{ secrets.S3_APP_PRODUCTION }}
-          aws s3 cp --recursive s3://${{ secrets.S3_APP_STAGING }} s3://${{ secrets.S3_APP_PRODUCTION }}
+          aws s3 rm --only-show-errors --recursive s3://${{ secrets.S3_APP_PRODUCTION }}
+          aws s3 cp --only-show-errors --recursive s3://${{ secrets.S3_APP_STAGING }} s3://${{ secrets.S3_APP_PRODUCTION }}
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CF_APP_PRODUCTION }} --paths "/*"
 
   ####################################################################################################
@@ -244,7 +244,6 @@ jobs:
     if: ${{ github.repository == 'StudioLE/Lineweights' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') }}
     needs:
       - analysis
-      - build-and-test
     runs-on: ubuntu-latest
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
@@ -298,8 +297,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
-          aws s3 rm --recursive s3://${{ secrets.S3_DOCS_STAGING }}
-          aws s3 cp --recursive docfx/public s3://${{ secrets.S3_DOCS_STAGING }}
+          aws s3 rm --only-show-errors --recursive s3://${{ secrets.S3_DOCS_STAGING }}
+          aws s3 cp --only-show-errors --recursive docfx/public s3://${{ secrets.S3_DOCS_STAGING }}
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CF_DOCS_STAGING }} --paths "/*"
 
       - name: Deploy Docs to Production
@@ -309,6 +308,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
-          aws s3 rm --recursive s3://${{ secrets.S3_DOCS_PRODUCTION }}
-          aws s3 cp --recursive s3://${{ secrets.S3_DOCS_STAGING }} s3://${{ secrets.S3_DOCS_PRODUCTION }}
+          aws s3 rm --only-show-errors --recursive s3://${{ secrets.S3_DOCS_PRODUCTION }}
+          aws s3 cp --only-show-errors --recursive s3://${{ secrets.S3_DOCS_STAGING }} s3://${{ secrets.S3_DOCS_PRODUCTION }}
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CF_DOCS_PRODUCTION }} --paths "/*"
