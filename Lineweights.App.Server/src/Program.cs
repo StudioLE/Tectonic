@@ -2,7 +2,6 @@ using Lineweights.App.Core.Scripts;
 using Lineweights.App.Core.Shared;
 using Lineweights.App.Server.Hubs;
 using Lineweights.Workflows.Assets;
-using Lineweights.Workflows.Execution;
 using Lineweights.Workflows.Visualization;
 using Microsoft.AspNetCore.ResponseCompression;
 
@@ -14,13 +13,13 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 // Inject Lineweights singleton services
-builder.Services.AddSingleton<GlobalState>();
+builder.Services.AddSingleton<AssetState>();
 
 // Inject Lineweights scoped services
-builder.Services.AddScoped<ActivityBuilder>();
 builder.Services.AddScoped<ObjectUrlStorage>();
-builder.Services.AddScoped<IStorageStrategy, ObjectUrlStorageStrategy>();
+builder.Services.AddScoped<IStorageStrategy, BlobStorageStrategy>();
 builder.Services.AddScoped<ModelViewer>();
+builder.Services.AddScoped<RunnerState>();
 
 // Use response compression for SignalR
 // https://docs.microsoft.com/en-us/aspnet/core/blazor/tutorials/signalr-blazor?view=aspnetcore-6.0&tabs=visual-studio&pivots=server
@@ -47,4 +46,5 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapHub<SignalRHub>(VisualizeInServerApp.HubPath);
 app.MapFallbackToPage("/_Host");
+app.MapFallbackToPage("/run/{AssemblyKey?}/{ActivityKey?}", "/_Host");
 app.Run();

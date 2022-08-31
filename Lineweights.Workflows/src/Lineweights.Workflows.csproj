@@ -13,8 +13,8 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+    <InternalsVisibleTo Include="Lineweights.App.Core" />
     <InternalsVisibleTo Include="Lineweights.Workflows.NUnit" />
-    <InternalsVisibleTo Include="Lineweights.App.Mock" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <Compile Include="..\..\StudioLE.Core\src\Workarounds\InitWorkaround.cs" Link="InitWorkaround.cs" />
+    <Compile Remove="Execution\ActivityBuilder.cs" />
   </ItemGroup>
 
 </Project>

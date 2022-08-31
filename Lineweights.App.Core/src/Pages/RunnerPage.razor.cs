@@ -5,23 +5,37 @@ using Microsoft.Extensions.Logging;
 namespace Lineweights.App.Core.Pages;
 
 /// <summary>
-/// Code-behind the <see cref="Index"/> page.
+/// Code-behind the <see cref="RunnerPage"/> page.
 /// </summary>
-public class IndexBase : ComponentBase, IDisposable
+public class RunnerPageBase : ComponentBase, IDisposable
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]
-    protected ILogger<IndexBase> Logger { get; set; } = default!;
+    protected ILogger<RunnerPage> Logger { get; set; } = default!;
 
-    /// <inheritdoc cref="GlobalState"/>
+    /// <inheritdoc cref="AssetState"/>
     [Inject]
-    protected GlobalState State { get; set; } = default!;
+    protected AssetState State { get; set; } = default!;
+
+    /// <summary>
+    /// The key of the currently selected assembly.
+    /// This is the assembly name without a .dll extension.
+    /// </summary>
+    [Parameter]
+    public string? AssemblyKey { get; set; }
+
+    /// <summary>
+    /// The key of the currently selected activity.
+    /// This is the activity name without an assembly prefix.
+    /// </summary>
+    [Parameter]
+    public string? ActivityKey { get; set; }
 
     /// <inheritdoc />
     protected override void OnInitialized()
     {
+        Logger.LogDebug($"{nameof(OnInitialized)}() called. Assembly: {AssemblyKey ?? "[null]"}; Activity: {ActivityKey ?? "[null]"};");
         State.Assets.CollectionChanged += NotifyStateHasChanged;
-        State.Messages.CollectionChanged += NotifyStateHasChanged;
     }
 
     /// <summary>
@@ -37,6 +51,5 @@ public class IndexBase : ComponentBase, IDisposable
     public void Dispose()
     {
         State.Assets.CollectionChanged -= NotifyStateHasChanged;
-        State.Messages.CollectionChanged -= NotifyStateHasChanged;
     }
 }

@@ -104,7 +104,12 @@ public class ViewerComponentBase : ComponentBase
     private async Task LoadGlb()
     {
         Logger.LogDebug($"{nameof(LoadGlb)}() called on result {Asset.Info.Id}.");
-        await Three.Create(ComponentId.ToString(), Asset.Info.Location!.AbsoluteUri);
+        if (Asset.Info.Location is null)
+        {
+            Logger.LogWarning("Failed to load GLB. Location was null.");
+            return;
+        }
+        await Three.Create(ComponentId.ToString(), Asset.Info.Location.AbsoluteUri);
     }
 
     protected enum ViewerType

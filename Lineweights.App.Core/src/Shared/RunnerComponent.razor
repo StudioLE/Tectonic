@@ -1,0 +1,62 @@
+﻿@inherits RunnerComponentBase
+
+<div class="mb-5 card parent">
+  <header class="card-header">
+    <p class="card-header-title" style="font-weight: normal;">
+      <nav class="breadcrumb has-succeeds-separator" aria-label="breadcrumbs">
+        <ul>
+          @if (State.IsAssemblySet)
+          {
+            <li>
+              <a href="/run">@AssemblyKey</a>
+            </li>
+          }
+          @if (State.IsActivitySet)
+          {
+            <li>
+              <a href="/run/@AssemblyKey">@ActivityKey</a>
+            </li>
+          }
+
+          @if (State.IsActivitySet)
+          {
+            <li class="is-active">
+              <a>Set inputs</a>
+            </li>
+          }
+          else if (State.IsAssemblySet)
+          {
+            <li class="is-active">
+              <a>Select an activity</a>
+            </li>
+          }
+          else
+          {
+            <li class="is-active">
+              <a>Select an assembly</a>
+            </li>
+          }
+        </ul>
+      </nav>
+    </p>
+  </header>
+  <div class="card-content">
+    @foreach (Message message in State.Messages)
+    {
+      <MessageComponent Message="message"></MessageComponent>
+    }
+
+    @if (State.IsActivitySet)
+    {
+      <ActivityInputComponent/>
+    }
+    else if (State.IsAssemblySet)
+    {
+      <ActivitySelectionComponent/>
+    }
+    else
+    {
+      <AssemblySelectionComponent/>
+    }
+  </div>
+</div>

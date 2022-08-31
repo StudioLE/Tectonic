@@ -39,6 +39,8 @@
         <div class="is-flex is-flex-wrap-wrap">
           @foreach (Asset child in Asset.Children)
           {
+            if (Asset.Info.Location is null && child == Asset.Children.First())
+              continue;
             <div class="card minor mx-3 my-3">
               <ViewerComponent Asset="child"></ViewerComponent>
             </div>

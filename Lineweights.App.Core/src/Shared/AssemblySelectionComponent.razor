@@ -1,0 +1,54 @@
+﻿@inherits AssemblySelectionComponentBase
+
+<div class="columns">
+  <div class="column is-offset-2 is-8">
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Loaded Assemblies</label>
+      </div>
+      <fieldset class="field-body">
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <div class="select is-fullwidth">
+              <select @bind="@AssemblySelectValue">
+                @foreach (string key in AssemblySelectOptions)
+                {
+                  <option>@key</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="control">
+            <button class="button is-primary" @onclick="SetAssemblyByKey">
+              <span>Load</span>
+              <span class="icon">
+                <i class="mdi mdi-arrow-right"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">By Path</label>
+      </div>
+      <fieldset class="field-body">
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <input class="input" type="text" @bind="AssemblyInputValue" placeholder="C:\Users\...\Elements.Tests.dll">
+          </div>
+          <div class="control">
+            <button class="button is-primary" @onclick="SetAssemblyByPath">
+              <span>Load</span>
+              <span class="icon">
+                <i class="mdi mdi-arrow-right"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</div>

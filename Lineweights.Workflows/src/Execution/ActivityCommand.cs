@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Lineweights.Workflows.Execution;
 
 /// <summary>
@@ -35,5 +37,15 @@ public class ActivityCommand
     public object Execute()
     {
         return _activity.Invoke(Inputs);
+    }
+
+    /// <summary>
+    /// Create an <see cref="ActivityCommand"/>.
+    /// </summary>
+    public static ActivityCommand CreateByMethod(MethodInfo method, object[] inputs)
+    {
+        string activityKey = ActivityHelpers.GetActivityKey(method);
+        Func<object[], object> function = x => method.Invoke(null, x);
+        return new(activityKey, inputs, function);
     }
 }

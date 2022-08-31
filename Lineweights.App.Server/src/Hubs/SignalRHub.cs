@@ -11,9 +11,9 @@ namespace Lineweights.App.Server.Hubs;
 public sealed class SignalRHub : Hub
 {
     private readonly ILogger<SignalRHub> _logger;
-    private readonly GlobalState _state;
+    private readonly AssetState _state;
 
-    public SignalRHub(ILogger<SignalRHub> logger, GlobalState state)
+    public SignalRHub(ILogger<SignalRHub> logger, AssetState state)
     {
         _logger = logger;
         _state = state;

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Lineweights.App.WebAssembly;
 using Lineweights.Workflows.Assets;
-using Lineweights.Workflows.Execution;
 
 // Create Builder
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -14,13 +13,13 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 // Inject Lineweights singleton services
-builder.Services.AddSingleton<GlobalState>();
+builder.Services.AddSingleton<AssetState>();
 builder.Services.AddSingleton<ObjectUrlStorage>();
 builder.Services.AddSingleton<IStorageStrategy, ObjectUrlStorageStrategy>();
 builder.Services.AddSingleton<ModelViewer>();
 
 // Inject Lineweights scoped services
-builder.Services.AddScoped<ActivityBuilder>();
+builder.Services.AddScoped<RunnerState>();
 
 // Inject Blazor WebAssembly services
 builder.Services.AddScoped(_ => new HttpClient

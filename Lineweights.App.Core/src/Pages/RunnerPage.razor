@@ -1,7 +1,7 @@
-﻿@page "/"
+﻿@page "/run/{AssemblyKey?}/{ActivityKey?}"
 @using Lineweights.App.Core.Shared
 @using Lineweights.Workflows.Assets
-@inherits IndexBase
+@inherits RunnerPageBase
 
 <PageTitle>
   Lineweights@(State.Assets.Count > 0
@@ -11,16 +11,11 @@
 
 <div class="container is-fluid my-5">
 
-  @foreach (Message message in State.Messages)
-  {
-    <MessageComponent Message="message"></MessageComponent>
-  }
-
-  <ActivityRunnerComponent></ActivityRunnerComponent>
+  <RunnerComponent AssemblyKey="@AssemblyKey" ActivityKey="@ActivityKey"/>
 
   @foreach (Asset asset in State.Assets.Reverse())
   {
-    <AssetComponent @key="asset.Info.Id" Asset="asset"></AssetComponent>
+    <AssetComponent @key="asset.Info.Id" Asset="asset"/>
   }
 
 </div>

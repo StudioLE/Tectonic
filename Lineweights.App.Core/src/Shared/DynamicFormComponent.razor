@@ -1,6 +1,14 @@
 ﻿@using System.Reflection
 @inherits DynamicFormComponentBase
 
+@if (Inputs.Count == 0)
+{
+  <article class="message">
+    <div class="message-body">
+      This activity has no inputs.
+    </div>
+  </article>
+}
 
 @for (int i = 0; i < Inputs.Count; i++)
 {
