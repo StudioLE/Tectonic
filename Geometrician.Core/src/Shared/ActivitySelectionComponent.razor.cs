@@ -7,7 +7,7 @@ namespace Geometrician.Core.Shared;
 
 public class ActivitySelectionComponentBase : ComponentBase
 {
-    /// <inheritdoc cref="RunnerState"/>
+    /// <inheritdoc cref="ILogger"/>
     [Inject]
     public ILogger<ActivitySelectionComponent> Logger { get; set; } = null!;
 

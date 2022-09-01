@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 namespace Geometrician.Core.Pages;
 
 /// <summary>
-/// Code-behind the <see cref="Index"/> page.
+/// Code-behind the <see cref="IndexPage"/>.
 /// </summary>
 public class IndexPageBase : ComponentBase
 {

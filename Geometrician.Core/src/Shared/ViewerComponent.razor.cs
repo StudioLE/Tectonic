@@ -26,7 +26,7 @@ public class ViewerComponentBase : ComponentBase
     [Inject]
     protected IStorageStrategy StorageStrategy { get; set; } = default!;
 
-    /// <inheritdoc cref="ObjectUrlStorage"/>
+    /// <inheritdoc cref="Geometrician.Core.Scripts.ObjectUrlStorage"/>
     [Inject]
     protected ObjectUrlStorage ObjectUrlStorage { get; set; } = default!;
 

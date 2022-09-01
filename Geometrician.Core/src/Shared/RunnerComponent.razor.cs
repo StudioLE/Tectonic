@@ -9,7 +9,7 @@ namespace Geometrician.Core.Shared;
 
 public class RunnerComponentBase : ComponentBase, IDisposable
 {
-    /// <inheritdoc cref="RunnerState"/>
+    /// <inheritdoc cref="ILogger"/>
     [Inject]
     public ILogger<RunnerComponent> Logger { get; set; } = null!;
 

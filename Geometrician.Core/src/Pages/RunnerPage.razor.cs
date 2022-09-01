@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace Geometrician.Core.Pages;
 
 /// <summary>
-/// Code-behind the <see cref="RunnerPage"/> page.
+/// Code-behind the <see cref="RunnerPage"/>.
 /// </summary>
 public class RunnerPageBase : ComponentBase, IDisposable
 {

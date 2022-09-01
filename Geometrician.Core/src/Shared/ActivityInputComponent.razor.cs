@@ -13,7 +13,7 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
 {
     private ActivityCommand? _activity;
 
-    /// <inheritdoc cref="RunnerState"/>
+    /// <inheritdoc cref="ILogger"/>
     [Inject]
     public ILogger<ActivitySelectionComponent> Logger { get; set; } = null!;
 
@@ -25,7 +25,7 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
     [Inject]
     public RunnerState State { get; set; } = null!;
 
-    /// <inheritdoc cref="AssetState"/>
+    /// <inheritdoc cref="Geometrician.Core.Shared.AssetState"/>
     [Inject]
     protected AssetState AssetState { get; set; } = default!;
 
