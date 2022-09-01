@@ -110,7 +110,7 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
 
         object outputs = executionResult.Value;
 
-        Result<Model> model = TryGetPropertyValue<Model>(outputs, "Model");
+        Result<Model> model = outputs.TryGetPropertyValue<Model>("Model");
         if (!model.IsSuccess)
         {
             State.ShowWarning(Logger, "Activity output was not a model.");
@@ -124,7 +124,7 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
         };
         AssetBuilder builder = AssetBuilder.Default(StorageStrategy, model.Value, doc);
 
-        Result<IReadOnlyCollection<Asset>> assets = TryGetPropertyValue<IReadOnlyCollection<Asset>>(outputs, "Assets");
+        Result<IReadOnlyCollection<Asset>> assets = outputs.TryGetPropertyValue<IReadOnlyCollection<Asset>>("Assets");
         if (assets.IsSuccess)
         {
             foreach (Asset child in assets.Value)
@@ -134,20 +134,6 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
 
         Asset asset = await builder.Build();
         AssetState.Assets.Add(asset);
-    }
-
-    private static Result<T> TryGetPropertyValue<T>(object @this, string propertyName, BindingFlags? flags = null)
-    {
-        Type type = @this.GetType();
-        PropertyInfo? property = flags is null
-            ? type.GetProperty(propertyName)
-            : type.GetProperty(propertyName, (BindingFlags)flags);
-        if(property is null)
-            return Result<T>.Error("Property does not exist");
-        object? value = property.GetValue(@this);
-        if (value is T tValue)
-            return tValue;
-        return Result<T>.Error($"Property type was {value?.GetType()}.");
     }
 
     /// <inheritdoc />

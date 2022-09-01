@@ -3,6 +3,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Ardalis.Result;
 using Lineweights.Workflows.Execution;
+using Lineweights.Workflows.Verification;
 using NUnit.Engine;
 
 namespace Lineweights.Workflows.NUnit.Execution;
@@ -11,6 +12,10 @@ namespace Lineweights.Workflows.NUnit.Execution;
 public class NUnitActivityFactory : IActivityFactory, IDisposable
 {
     private readonly ITestEngine _engine = TestEngineActivator.CreateInstance();
+
+    internal static bool IsExecuting { get; set; } = false;
+
+    internal static object? TestOutput { get; set; }
 
     /// <inheritdoc />
     public IEnumerable<string> AllActivityKeysInAssembly(Assembly assembly)
@@ -60,7 +65,23 @@ public class NUnitActivityFactory : IActivityFactory, IDisposable
 
     private static Func<object[], object> CreateInvocation(ITestRunner runner, TestFilter filter)
     {
-        return inputs => runner.Run(null, filter);
+        return inputs =>
+        {
+            // Before invocation
+            bool wasVerifyEnabled = Verify.IsEnabled;
+            Verify.IsEnabled = false;
+            IsExecuting = true;
+
+            XmlNode? testResult = runner.Run(null, filter);
+
+            // After invocation
+            IsExecuting = false;
+            Verify.IsEnabled = wasVerifyEnabled;
+
+            object outputs = TestOutput ?? true;
+            TestOutput = null;
+            return outputs;
+        };
     }
 
     /// <inheritdoc />

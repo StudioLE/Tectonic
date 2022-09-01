@@ -45,10 +45,6 @@ internal sealed class NUnitActivityFactoryTests
     [TestCase(ActivityKey)]
     public void ActivityCommand_Execute(string activityKey)
     {
-        // Disable verify for duration of test
-        bool wasVerifyEnabled = Verify.IsEnabled;
-        Verify.IsEnabled = false;
-
         // Arrange
         NUnitActivityFactory factory = new();
 
@@ -57,15 +53,14 @@ internal sealed class NUnitActivityFactoryTests
         ActivityCommand activity = Validate.OrThrow(result);
 
         // Act
-        dynamic outputs = activity.Execute();
+        object outputs = activity.Execute();
 
         // Assert
         // TODO: obtain outputs from test fixture.
         Assert.That(outputs, Is.Not.Null, "Outputs");
-        // Assert.That(outputs.Model.Elements.Count, Is.EqualTo(526), "Outputs model count");
-
-        // Re-enable verify
-        Verify.IsEnabled = wasVerifyEnabled;
+        Result<Model?> model = outputs.TryGetPropertyValue<Model?>("Model");
+        Assert.That(model.IsSuccess, "Outputs has model");
+        Assert.That(model.Value?.Elements.Count, Is.EqualTo(25), "Outputs model count");
     }
 
 

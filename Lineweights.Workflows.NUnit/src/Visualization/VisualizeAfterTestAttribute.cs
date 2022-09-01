@@ -1,4 +1,8 @@
-﻿using Lineweights.Workflows.Assets;
+﻿using System.Reflection;
+using System.Text;
+using Ardalis.Result;
+using Lineweights.Workflows.Assets;
+using Lineweights.Workflows.NUnit.Execution;
 using Lineweights.Workflows.Visualization;
 using NUnit.Framework.Interfaces;
 using StudioLE.Core.System;
@@ -34,15 +38,56 @@ public abstract class VisualizeAfterTestAttribute : Attribute, ITestAction
     /// <inheritdoc/>
     public void AfterTest(ITest test)
     {
-        if (Strategy is null || !IsEnabled)
+        if (!NUnitActivityFactory.IsExecuting && (Strategy is null || !IsEnabled))
             return;
-        Model model = NUnitHelpers.GetModelOrThrow(test);
+        Result<Model> result = TryGetModel(test);
         DocumentInformation doc = new()
         {
-            Name = NUnitHelpers.CreateSummary(test, TestContext.CurrentContext.Result),
+            Name = CreateSummary(test, TestContext.CurrentContext.Result),
             Description = string.Join(Environment.NewLine, test.Tests.Select(x => x.Name))
         };
+
+        if (NUnitActivityFactory.IsExecuting)
+        {
+            NUnitActivityFactory.TestOutput = new
+            {
+                Model = result.Value,
+                Results = TestContext.CurrentContext.Result
+            };
+            return;
+        }
+
+        Model model = Validate.OrThrow(result);
         Task<Asset>? task = Strategy?.Execute(model, doc);
         Asset? asset = task?.Result;
+    }
+
+    private static Result<Model> TryGetModel(ITest test)
+    {
+        if(test.Fixture is null)
+            return Result<Model>.Error("The test fixture was null.");
+        Result<Model> field = test.Fixture.TryGetFieldValue<Model>("_model", BindingFlags.NonPublic | BindingFlags.Instance);
+        if (field.IsSuccess)
+            return field.Value;
+        Result<Model> property = test.Fixture.TryGetPropertyValue<Model>("Model");
+        if (property.IsSuccess)
+            return property.Value;
+        return Result<Model>.Error(field.Errors.Concat(property.Errors).Prepend("Failed to visualize after test.").Join());
+    }
+
+    private static string CreateSummary(ITest test, TestContext.ResultAdapter results)
+    {
+        StringBuilder builder = new();
+        builder.Append($"{test.TestType} {test.FullName} (");
+        if (results.FailCount == 0)
+            builder.Append($"All {results.PassCount} passed");
+        else if (results.PassCount == 0)
+            builder.Append($"All {results.FailCount} failed");
+        else
+            builder.Append($"{results.FailCount} of {results.PassCount + results.FailCount} failed");
+        if (results.SkipCount > 0)
+            builder.Append($", {results.SkipCount} skipped");
+        builder.Append(")");
+        return builder.ToString();
     }
 }

@@ -6,14 +6,12 @@ namespace Lineweights.Workflows.Execution;
 /// <inheritdoc cref="IActivityFactory"/>
 public sealed class StaticMethodActivityFactory : IActivityFactory
 {
-
     /// <inheritdoc />
     public IEnumerable<string> AllActivityKeysInAssembly(Assembly assembly)
     {
         IEnumerable<MethodInfo> methods = AllActivityMethodsInAssembly(assembly);
         return methods.Select(GetActivityKey);
     }
-
 
     /// <inheritdoc />
     public Result<ActivityCommand> TryCreateByKey(Assembly assembly, string activityKey)
