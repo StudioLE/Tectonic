@@ -9,9 +9,9 @@ using StudioLE.Core.System;
 
 namespace Geometrician.Core.Shared;
 
-public class ActivityInputComponentBase : ComponentBase
+public class ActivityInputComponentBase : ComponentBase, IDisposable
 {
-    private MethodInfo? _method;
+    private ActivityCommand? _activity;
 
     /// <inheritdoc cref="RunnerState"/>
     [Inject]
@@ -33,6 +33,10 @@ public class ActivityInputComponentBase : ComponentBase
     [Inject]
     protected IStorageStrategy StorageStrategy { get; set; } = default!;
 
+    /// <inheritdoc cref="IActivityFactory"/>
+    [Inject]
+    protected IActivityFactory Factory { get; set; } = default!;
+
     /// <summary>
     /// The inputs for the activity.
     /// </summary>
@@ -48,19 +52,15 @@ public class ActivityInputComponentBase : ComponentBase
             return;
         }
 
-        IEnumerable<MethodInfo> methods = ActivityHelpers.GetActivityMethods(assembly!);
-
-        _method = methods
-            .FirstOrDefault(x => ActivityHelpers.GetActivityKey(x) == State.SelectedActivityKey);
-
-        if (_method is null)
+        Result<ActivityCommand> result = Factory.TryCreateByKey(assembly!, State.SelectedActivityKey);
+        if (!result.IsSuccess)
         {
             State.ShowError(Logger, "Failed to load activity. Method does not exist.");
             State.SelectedActivityKey = string.Empty;
             return;
         }
-
-        Inputs = ActivityHelpers.CreateParameterInstances(_method);
+        _activity = result.Value;
+        Inputs = _activity.Inputs;
 
     }
 
@@ -69,13 +69,12 @@ public class ActivityInputComponentBase : ComponentBase
         State.Messages.Clear();
         Logger.LogDebug($"{nameof(BuildAndExecute)} called.");
 
-        if (_method is null)
+        if (_activity is null)
         {
             State.ShowError(Logger, "Failed to load activity. Method does not exist.");
             return;
         }
-
-        ActivityCommand command = ActivityCommand.CreateByMethod(_method!, Inputs.ToArray());
+        _activity.Inputs = Inputs.ToArray();
 
 
         // TODO: Move this logic to workflow execution
@@ -87,7 +86,7 @@ public class ActivityInputComponentBase : ComponentBase
         // TODO: Add spinner during execution.
         try
         {
-            executionResult = command.Execute();
+            executionResult = _activity.Execute();
         }
         catch (TargetInvocationException e)
         {
@@ -107,6 +106,8 @@ public class ActivityInputComponentBase : ComponentBase
             return;
         }
 
+        // TODO: Move this logic to an IVisualizationStrategy
+
         object outputs = executionResult.Value;
 
         Result<Model> model = TryGetPropertyValue<Model>(outputs, "Model");
@@ -118,7 +119,7 @@ public class ActivityInputComponentBase : ComponentBase
 
         DocumentInformation doc = new()
         {
-            Name = command.Name,
+            Name = _activity.Name,
             Description = $"Executed {State.SelectedActivityKey} from {State.SelectedAssemblyKey}."
         };
         AssetBuilder builder = AssetBuilder.Default(StorageStrategy, model.Value, doc);
@@ -147,5 +148,11 @@ public class ActivityInputComponentBase : ComponentBase
         if (value is T tValue)
             return tValue;
         return Result<T>.Error($"Property type was {value?.GetType()}.");
+    }
+
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        _activity?.Dispose();
     }
 }

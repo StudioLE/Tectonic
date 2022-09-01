@@ -19,6 +19,10 @@ public class ActivitySelectionComponentBase : ComponentBase
     [Inject]
     public RunnerState State { get; set; } = null!;
 
+    /// <inheritdoc cref="IActivityFactory"/>
+    [Inject]
+    protected IActivityFactory Factory { get; set; } = default!;
+
     /// <summary>
     /// Binding for the options of the assembly select element.
     /// </summary>
@@ -35,8 +39,7 @@ public class ActivitySelectionComponentBase : ComponentBase
         Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {State.SelectedActivityKey} Assembly: {State.SelectedActivityKey}");
         if(!State.TryGetAssemblyByKey(State.SelectedAssemblyKey, out Assembly? assembly))
             return;
-        IEnumerable<MethodInfo> methods = ActivityHelpers.GetActivityMethods(assembly!);
-        ActivitySelectOptions = methods.Select(ActivityHelpers.GetActivityKey).ToArray();
+        ActivitySelectOptions = Factory.AllActivityKeysInAssembly(assembly!).ToArray();
         if (ActivitySelectOptions.Any())
             ActivitySelectValue = ActivitySelectOptions.First();
     }

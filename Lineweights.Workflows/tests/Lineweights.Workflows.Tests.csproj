@@ -11,6 +11,7 @@
   <Import Project="..\..\GlobalUsings.tests.props" />
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Lineweights.Core\tests\Lineweights.Core.Tests.csproj" />
     <ProjectReference Include="..\src\Lineweights.Workflows.csproj" />
   </ItemGroup>
 

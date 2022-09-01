@@ -2,6 +2,7 @@ using Geometrician.Core.Scripts;
 using Geometrician.Core.Shared;
 using Geometrician.Server.Hubs;
 using Lineweights.Workflows.Assets;
+using Lineweights.Workflows.Execution;
 using Lineweights.Workflows.Visualization;
 using Microsoft.AspNetCore.ResponseCompression;
 
@@ -14,6 +15,7 @@ builder.Services.AddServerSideBlazor();
 
 // Inject Lineweights singleton services
 builder.Services.AddSingleton<AssetState>();
+builder.Services.AddSingleton<IActivityFactory, StaticMethodActivityFactory>();
 
 // Inject Lineweights scoped services
 builder.Services.AddScoped<ObjectUrlStorage>();

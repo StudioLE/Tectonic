@@ -1,4 +1,3 @@
-using Ardalis.Result;
 using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Verification;
@@ -13,69 +12,73 @@ public static class Verify
 {
     private static Type? _contextType;
 
+    public static bool IsEnabled { get; set; } = true;
+
     /// <summary>
     /// Verify <paramref name="elements"/> by their <see cref="BBox3"/>.
     /// </summary>
-    public static bool ElementsByBounds(IEnumerable<Element> elements)
+    public static void ElementsByBounds(IEnumerable<Element> elements)
     {
         // TODO: Use .Bounds() or .TransformedBounds()?
         BBox3[] bounds = elements
             .Select(x => new BBox3(x))
             .ToArray();
-        return AsJson(bounds);
+        AsJson(bounds);
     }
 
     /// <summary>
     /// Verify <paramref name="elements"/> by their <see cref="Transform"/>.
     /// </summary>
-    public static bool ElementsByTransform(IEnumerable<GeometricElement> elements)
+    public static void ElementsByTransform(IEnumerable<GeometricElement> elements)
     {
         Transform[] transforms = elements
             .Select(x => x.Transform)
             .ToArray();
-        return AsJson(transforms);
+        AsJson(transforms);
     }
 
 
     /// <summary>
     /// Verify <paramref name="modelCurves"/> by their <see cref="ModelCurve.Curve"/>.
     /// </summary>
-    public static bool ModelCurvesByCurve(IEnumerable<ModelCurve> modelCurves)
+    public static void ModelCurvesByCurve(IEnumerable<ModelCurve> modelCurves)
     {
         Curve[] curves = modelCurves
             .Select(x => x.Curve.Transformed(x.Transform))
             .ToArray();
-        return AsJson(curves);
+        AsJson(curves);
     }
 
     /// <summary>
     /// Verify any <see cref="Elements"/> geometry by its serialised form.
     /// </summary>
-    public static bool Geometry(params object[] geometry)
+    public static void Geometry(params object[] geometry)
     {
-        return AsJson(geometry);
+        AsJson(geometry);
     }
 
     /// <summary>
     /// Verify <paramref name="actual"/> as JSON.
     /// </summary>
-    private static bool AsJson(object actual)
+    private static void AsJson(object actual)
     {
+        if (!IsEnabled)
+            return;
         IVerifyContext context = GetContext();
         JsonVerifier verifier = new(context);
-        Result<bool> result = verifier.Execute(actual);
-        return result.IsSuccess;
+        _ = verifier.Execute(actual);
     }
 
     /// <summary>
     /// Verify a string.
     /// </summary>
-    public static bool String(string @string, string fileExtension)
+    public static void String(string @string, string fileExtension)
     {
+        if (!IsEnabled)
+            return;
         IVerifyContext context = GetContext();
         StringVerifier verifier = new(context, fileExtension);
-        Result<bool> result = verifier.Execute(@string);
-        return result.IsSuccess;
+        _ = verifier.Execute(@string);
     }
 
     private static IVerifyContext GetContext()
