@@ -36,7 +36,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\StudioLE.Core\src\Workarounds\InitWorkaround.cs" Link="InitWorkaround.cs" />
-    <Compile Remove="Execution\ActivityBuilder.cs" />
   </ItemGroup>
 
 </Project>
