@@ -3,7 +3,7 @@ using Ardalis.Result;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Geometrician.Core.Shared;
+namespace Geometrician.Core.Forms;
 
 public class DynamicInputComponentBase : ComponentBase, IDisposable
 {
@@ -14,7 +14,6 @@ public class DynamicInputComponentBase : ComponentBase, IDisposable
     private readonly EventHandler<ValidationStateChangedEventArgs> _validationStateChangedHandler;
     private bool _previousParsingAttemptFailed;
     private ValidationMessageStore? _parsingValidationMessages;
-    private Type? _type;
 
     #endregion
 
@@ -50,6 +49,7 @@ public class DynamicInputComponentBase : ComponentBase, IDisposable
 
     #endregion
 
+
     #region Init
 
     public DynamicInputComponentBase()
@@ -63,159 +63,59 @@ public class DynamicInputComponentBase : ComponentBase, IDisposable
         _editContext = CascadedEditContext ?? throw new InvalidOperationException($"{GetType()} requires a cascading parameter " + $"of type {nameof(_editContext)}. For example, you can use {GetType().FullName} inside " + $"an {nameof(EditForm)}.");
         _fieldIdentifier = new(Instance, Property.Name);
         _editContext.OnValidationStateChanged += _validationStateChangedHandler;
-
-        _type = Property.PropertyType;
-        Type? underlyingType = Nullable.GetUnderlyingType(_type);
-        if (underlyingType is not null)
-            _type = underlyingType;
-
-        if (_type == typeof(double) || _type == typeof(int))
-            Type = InputType.Number;
-        else if (_type == typeof(string))
-            Type = InputType.Text;
-        else if (typeof(Enum).IsAssignableFrom(_type))
-        {
-            Type = InputType.Select;
-            Options = Enum.GetNames(_type);
-        }
-        else if (_type == typeof(bool))
-            Type = InputType.Checkbox;
-        else
-            Type = InputType.Unknown;
-
-
+        PropertyType = Nullable.GetUnderlyingType(Property.PropertyType) ?? Property.PropertyType;
         UpdateAdditionalValidationAttributes();
     }
 
     #endregion
 
-    #region Value Properties
+    #region Property Value
 
-    private object? Value {
-        get => Property.GetValue(Instance);
-        set  {
-            bool hasChanged = !EqualityComparer<object>.Default.Equals(value, Value);
-            if (hasChanged)
-            {
-                if (Property is null)
-                    throw new("Property was null..");
-                Property.SetValue(Instance, value);
-                _editContext.NotifyFieldChanged(_fieldIdentifier);
-            }
+    /// <summary>
+    /// The type (or underlying type for nullable elements) of the property value.
+    /// </summary>
+    protected Type? PropertyType { get; private set; }
+
+    protected object? PropertyValue => Property.GetValue(Instance);
+
+    private void SetValue(object? value)
+    {
+        bool hasChanged = !EqualityComparer<object>.Default.Equals(value, PropertyValue);
+        if (hasChanged)
+        {
+            if (Property is null)
+                throw new("Property was null..");
+            Property.SetValue(Instance, value);
+            _editContext.NotifyFieldChanged(_fieldIdentifier);
         }
     }
 
-    protected string? ValueAsString {
-        get => GetCurrentValueAsString();
-        set => SetCurrentValueAsString(value);
-    }
-
-    /// <summary>
-    /// Gets or sets the current value of the input, represented as a string.
-    /// </summary>
-    private string? GetCurrentValueAsString()
-    {
-        return Value?.ToString();
-    }
-
-    /// <summary>
-    /// Gets or sets the current value of the input, represented as a string.
-    /// </summary>
-    private void SetCurrentValueAsString(string? value)
+    protected void ValidateAndSetValue(Result<object?> result)
     {
         _parsingValidationMessages?.Clear();
 
-        Result<object?> parsed = TryParseValueFromString(value);
-        if (parsed.IsSuccess)
-            Value = parsed.Value;
+        if (result.IsSuccess)
+            SetValue(result.Value);
         else
         {
             _parsingValidationMessages ??= new(_editContext);
-            _parsingValidationMessages.Add(_fieldIdentifier, string.Join(' ', parsed.Errors));
+            _parsingValidationMessages.Add(_fieldIdentifier, string.Join(' ', result.Errors));
 
             // Since we're not writing to CurrentValue, we'll need to notify about modification from here
             _editContext.NotifyFieldChanged(_fieldIdentifier);
         }
 
         // We can skip the validation notification if we were previously valid and still are
-        if (parsed.IsSuccess && !_previousParsingAttemptFailed)
+        if (result.IsSuccess && !_previousParsingAttemptFailed)
             return;
 
         _editContext.NotifyValidationStateChanged();
-        _previousParsingAttemptFailed = !parsed.IsSuccess;
-    }
-
-    private Result<object?> TryParseValueFromString(string? value)
-    {
-        Func<object?, Result<object?>> success = Result<object?>.Success;
-        Func<string, Result<object?>> failure = str => Result<object?>.Error($"The {DisplayName ?? _fieldIdentifier.FieldName} field must be {str}.");
-
-        if (_type == typeof(string))
-            return success.Invoke(value);
-        if (_type == typeof(int))
-            return int.TryParse(value, out int parsed)
-                ? success.Invoke(parsed)
-                : failure.Invoke("an integer");
-        if (_type == typeof(double))
-            return double.TryParse(value, out double parsed)
-                ? success.Invoke(parsed)
-                : failure.Invoke("a number");
-        if (typeof(Enum).IsAssignableFrom(_type))
-            return Enum.TryParse(_type, value, out object? parsed)
-                ? success.Invoke(parsed)
-                : failure.Invoke("a boolean");
-
-        // TODO: Replace with Logger
-        throw new("Unsupported type.");
-    }
-
-    protected bool ValueAsBoolean {
-        get => GetCurrentValueAsBoolean();
-        set => SetCurrentValueAsBoolean(value);
-    }
-
-    /// <summary>
-    /// Gets or sets the current value of the input, represented as a string.
-    /// </summary>
-    private bool GetCurrentValueAsBoolean()
-    {
-        return Value as bool? ?? throw new("Value was not a boolean.");
-    }
-
-    /// <summary>
-    /// Gets or sets the current value of the input, represented as a string.
-    /// </summary>
-    private void SetCurrentValueAsBoolean(bool value)
-    {
-        _parsingValidationMessages?.Clear();
-        Value = value;
-        // We can skip the validation notification if we were previously valid and still are
-        if (!_previousParsingAttemptFailed)
-            return;
-        _editContext.NotifyValidationStateChanged();
-        _previousParsingAttemptFailed = false;
+        _previousParsingAttemptFailed = !result.IsSuccess;
     }
 
     #endregion
 
-    #region Properties
-
-    protected enum InputType
-    {
-        Unknown,
-        Number,
-        Text,
-        Select,
-        Checkbox
-    }
-
-    protected InputType Type { get; private set; }= InputType.Unknown;
-
-    protected IReadOnlyCollection<string> Options { get; set; } = Array.Empty<string>();
-
-    #endregion
-
-    #region Attributes
+    #region Validation Attributes
 
     protected string ValidationStatusClass => _editContext.FieldCssClass(_fieldIdentifier);
 
@@ -265,10 +165,6 @@ public class DynamicInputComponentBase : ComponentBase, IDisposable
         };
         return source is not Dictionary<string, object>;
     }
-
-    #endregion
-
-    #region Misc
 
     private void OnValidateStateChanged(object? sender, ValidationStateChangedEventArgs eventArgs)
     {

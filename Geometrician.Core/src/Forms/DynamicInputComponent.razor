@@ -1,0 +1,50 @@
+﻿@inherits DynamicInputComponentBase
+
+@if (PropertyType == typeof(int))
+{
+  <IntegerInputComponent
+    PropertyType="PropertyType"
+    PropertyValue="PropertyValue"
+    ParentCallback="ValidateAndSetValue"
+    ValidationStatusClass="@ValidationStatusClass"/>
+}
+else if (PropertyType == typeof(double))
+{
+  <DoubleInputComponent
+    PropertyType="PropertyType"
+    PropertyValue="PropertyValue"
+    ParentCallback="ValidateAndSetValue"
+    ValidationStatusClass="@ValidationStatusClass"/>
+}
+else if (PropertyType == typeof(string))
+{
+  <StringInputComponent
+    PropertyType="PropertyType"
+    PropertyValue="PropertyValue"
+    ParentCallback="ValidateAndSetValue"
+    ValidationStatusClass="@ValidationStatusClass"/>
+}
+else if (typeof(Enum).IsAssignableFrom(PropertyType))
+{
+  <EnumSelectComponent
+    PropertyType="PropertyType"
+    PropertyValue="PropertyValue"
+    ParentCallback="ValidateAndSetValue"
+    ValidationStatusClass="@ValidationStatusClass"/>
+}
+else if (PropertyType == typeof(bool))
+{
+  <BooleanCheckboxComponent
+    PropertyType="PropertyType"
+    PropertyValue="PropertyValue"
+    ParentCallback="ValidateAndSetValue"
+    ValidationStatusClass="@ValidationStatusClass"/>
+}
+else
+{
+  <ObjectInputComponent
+    PropertyType="PropertyType"
+    PropertyValue="PropertyValue"
+    ParentCallback="ValidateAndSetValue"
+    ValidationStatusClass="@ValidationStatusClass"/>
+}

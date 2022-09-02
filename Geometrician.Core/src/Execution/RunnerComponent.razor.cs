@@ -5,7 +5,7 @@ using Lineweights.Workflows.Samples;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
-namespace Geometrician.Core.Shared;
+namespace Geometrician.Core.Execution;
 
 public class RunnerComponentBase : ComponentBase, IDisposable
 {

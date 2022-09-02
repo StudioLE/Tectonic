@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Ardalis.Result;
+using Geometrician.Core.Shared;
 using Lineweights.Workflows;
 using Lineweights.Workflows.Assets;
 using Lineweights.Workflows.Execution;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using StudioLE.Core.System;
 
-namespace Geometrician.Core.Shared;
+namespace Geometrician.Core.Execution;
 
 public class ActivityInputComponentBase : ComponentBase, IDisposable
 {

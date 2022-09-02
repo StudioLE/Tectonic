@@ -1,0 +1,10 @@
+﻿@inherits EnumSelectComponentBase
+
+<div class="select is-fullwidth @ValidationStatusClass">
+  <select @bind="@Value">
+    @foreach (string option in Options)
+    {
+      <option>@option</option>
+    }
+  </select>
+</div>

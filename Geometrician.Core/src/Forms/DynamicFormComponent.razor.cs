@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Logging;
 
-namespace Geometrician.Core.Shared;
+namespace Geometrician.Core.Forms;
 
 public class DynamicFormComponentBase : ComponentBase, IDisposable
 {

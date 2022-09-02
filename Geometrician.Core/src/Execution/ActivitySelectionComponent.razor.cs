@@ -3,7 +3,7 @@ using Lineweights.Workflows.Execution;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
-namespace Geometrician.Core.Shared;
+namespace Geometrician.Core.Execution;
 
 public class ActivitySelectionComponentBase : ComponentBase
 {

@@ -1,8 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
+using Geometrician.Core.Shared;
 using Microsoft.Extensions.Logging;
 
-namespace Geometrician.Core.Shared;
+namespace Geometrician.Core.Execution;
 
 public class RunnerState
 {
