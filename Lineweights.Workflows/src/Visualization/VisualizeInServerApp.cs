@@ -1,7 +1,5 @@
 using Lineweights.Workflows.Assets;
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Extensions.DependencyInjection;
-using StudioLE.Core.Patterns;
 
 namespace Lineweights.Workflows.Visualization;
 
@@ -39,23 +37,13 @@ public sealed class VisualizeInServerApp : IVisualizationStrategy
 
     private readonly IStorageStrategy _storageStrategy = new BlobStorageStrategy();
 
-    private readonly HubConnection _connection = GetHubConnectionInstance();
+    private readonly HubConnection _connection;
 
     internal HubConnectionState State => _connection.State;
 
-    internal static HubConnection GetHubConnectionInstance()
+    internal VisualizeInServerApp()
     {
-        return Singleton<HubConnection>.GetInstance(() =>
-        {
-            HubConnection connection = new HubConnectionBuilder()
-                .WithAutomaticReconnect(new NoRetries())
-                .WithUrl(HubUrl)
-                .AddNewtonsoftJsonProtocol()
-                .Build();
-            connection.StartAsync();
-            return connection;
-        });
-
+        _connection = HubConnectionSingleton.GetInstance();
     }
 
     /// <inheritdoc cref="VisualizeInServerApp"/>
@@ -89,15 +77,5 @@ public sealed class VisualizeInServerApp : IVisualizationStrategy
                 .ToArray();
         }
         return asset;
-    }
-
-    /// <inheritdoc cref="IRetryPolicy"/>
-    private class NoRetries : IRetryPolicy
-    {
-        /// <inheritdoc />
-        public TimeSpan? NextRetryDelay(RetryContext retryContext)
-        {
-            return null;
-        }
     }
 }
