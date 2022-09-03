@@ -5,7 +5,7 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Masterplanning.Tests.Elements;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class PathTests
 {
     private readonly Model _model = new();

@@ -1,4 +1,4 @@
-namespace Lineweights.Workflows;
+namespace Lineweights.Core.Documents;
 
 /// <summary>
 /// The metadata of the document.

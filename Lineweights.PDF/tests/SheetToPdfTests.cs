@@ -1,4 +1,5 @@
 using System.IO;
+using Lineweights.Core.Documents;
 using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.Flex;
@@ -8,7 +9,7 @@ using QuestPDF.Fluent;
 
 namespace Lineweights.PDF.Tests;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class SheetToPdfTests
 {
     private readonly Model _model = new();

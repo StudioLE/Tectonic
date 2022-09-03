@@ -5,7 +5,7 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Masterplanning.Tests;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class MasterplanBuilderTests
 {
     private readonly Model _model = new();

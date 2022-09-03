@@ -1,5 +1,5 @@
 ﻿using Geometrician.Core.Shared;
-using Lineweights.Workflows.Assets;
+using Lineweights.Core.Documents;
 using Lineweights.Workflows.Visualization;
 using Microsoft.AspNetCore.SignalR;
 
@@ -22,7 +22,7 @@ public sealed class SignalRHub : Hub
     /// <summary>
     /// This is method is called when the SignalRHub receives a message.
     /// </summary>
-    [HubMethodName(VisualizeInServerApp.HubMethod)]
+    [HubMethodName(GeometricianService.HubMethod)]
     public Task OnAssetReceived(Asset asset)
     {
         _logger.LogDebug($"{nameof(OnAssetReceived)} called.");

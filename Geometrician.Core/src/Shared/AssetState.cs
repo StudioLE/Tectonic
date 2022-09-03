@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using Lineweights.Workflows.Assets;
+using Lineweights.Core.Documents;
 
 namespace Geometrician.Core.Shared;
 

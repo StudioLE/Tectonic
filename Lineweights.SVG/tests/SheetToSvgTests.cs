@@ -1,4 +1,5 @@
 using System.IO;
+using Lineweights.Core.Documents;
 using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.Flex;
@@ -7,7 +8,7 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.SVG.Tests;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class SheetToSvgTests
 {
     private readonly Model _model = new();

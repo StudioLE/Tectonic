@@ -3,8 +3,8 @@ using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using Elements.Serialization.IFC;
+using Lineweights.Core.Documents;
 using Lineweights.Drawings;
-using Lineweights.Workflows.Assets;
 using StudioLE.Core.System;
 using StudioLE.Core.System.IO;
 

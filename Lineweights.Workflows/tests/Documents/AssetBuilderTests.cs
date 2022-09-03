@@ -1,11 +1,16 @@
-using Lineweights.Workflows.Assets;
+using Lineweights.Core.Documents;
+using Lineweights.IFC;
+using Lineweights.PDF;
+using Lineweights.SVG;
+using Lineweights.Workflows.Documents;
+using Lineweights.Workflows.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Lineweights.Workflows.Tests.Assets;
+namespace Lineweights.Workflows.Tests.Documents;
 
 internal sealed class AssetBuilderTests
 {
     private readonly GeometricElement[] _geometry = Scenes.GeometricElements();
-    private readonly IStorageStrategy _storageStrategy = new FileStorageStrategy();
 
     [Test]
     public async Task AssetBuilder_ConvertModelToGlb()
@@ -15,9 +20,9 @@ internal sealed class AssetBuilderTests
         model.AddElements(_geometry);
 
         // Act
-        AssetBuilder builder = new AssetBuilder(_storageStrategy)
-            .ConvertModelToGlb(model);
-        Asset asset = await builder.Build();
+        IAssetBuilder builder = new AssetBuilder()
+            .ConvertModelToGlb();
+        Asset asset = await builder.Build(model);
 
         // Assert
         Assert.That(asset, Is.Not.Null, "Asset");
@@ -34,9 +39,9 @@ internal sealed class AssetBuilderTests
         model.AddElements(_geometry);
 
         // Act
-        AssetBuilder builder = new AssetBuilder(_storageStrategy)
-            .ConvertModelToIfc(model);
-        Asset asset = await builder.Build();
+        IAssetBuilder builder = new AssetBuilder()
+            .ConvertModelToIfc();
+        Asset asset = await builder.Build(model);
 
         // Assert
         Assert.That(asset, Is.Not.Null, "Asset");
@@ -53,9 +58,9 @@ internal sealed class AssetBuilderTests
         model.AddElements(_geometry);
 
         // Act
-        AssetBuilder builder = new AssetBuilder(_storageStrategy)
-            .ConvertModelToJson(model);
-        Asset asset = await builder.Build();
+        IAssetBuilder builder = new AssetBuilder()
+            .ConvertModelToJson();
+        Asset asset = await builder.Build(model);
 
         // Assert
         Assert.That(asset, Is.Not.Null, "Asset");
@@ -74,9 +79,9 @@ internal sealed class AssetBuilderTests
         model.AddElements(SampleHelpers.CreateViews(_geometry));
 
         // Act
-        AssetBuilder builder = new AssetBuilder(_storageStrategy)
-            .ExtractViewsAndConvertToSvg(model);
-        Asset asset = await builder.Build();
+        IAssetBuilder builder = new AssetBuilder()
+            .ExtractViewsAndConvertToSvg();
+        Asset asset = await builder.Build(model);
 
         // Assert
         Assert.That(asset, Is.Not.Null, "Asset");
@@ -94,9 +99,9 @@ internal sealed class AssetBuilderTests
         model.AddElements(SampleHelpers.CreateViews(_geometry));
 
         // Act
-        AssetBuilder builder = new AssetBuilder(_storageStrategy)
-            .ExtractViewsAndConvertToPdf(model);
-        Asset asset = await builder.Build();
+        IAssetBuilder builder = new AssetBuilder()
+            .ExtractViewsAndConvertToPdf();
+        Asset asset = await builder.Build(model);
 
         // Assert
         Assert.That(asset, Is.Not.Null, "Asset");
@@ -106,19 +111,20 @@ internal sealed class AssetBuilderTests
     }
 
     [Test]
-    public async Task AssetBuilder_Default()
+    public async Task AssetBuilder_by_DI()
     {
         // Arrange
         Model model = new();
         model.AddElements(SampleHelpers.CreateViews(_geometry));
 
         // Act
-        AssetBuilder builder = AssetBuilder.Default(_storageStrategy, model);
-        Asset asset = await builder.Build();
+        IServiceProvider services = Services.GetInstance();
+        IAssetBuilder builder =  services.GetRequiredService<IAssetBuilder>();
+        Asset asset = await builder.Build(model);
 
         // Assert
         Assert.That(asset, Is.Not.Null, "Asset");
-        Assert.That(asset.Children.Count, Is.EqualTo(4), "Children count");
+        Assert.That(asset.Children.Count, Is.EqualTo(1), "Children count");
         Uri? uri = asset.Children.FirstOrDefault()?.Info.Location;
         Assert.That(uri, Is.Not.Null, "Location");
     }
@@ -131,16 +137,16 @@ internal sealed class AssetBuilderTests
         model.AddElements(SampleHelpers.CreateViews(_geometry));
 
         // Act
-        Asset asset = await new AssetBuilder(_storageStrategy)
-            .ConvertModelToGlb(model)
-            .ConvertModelToIfc(model)
-            .ExtractSheetsAndConvertToPdf(model)
-            .ExtractSheetsAndConvertToSvg(model)
-            .ExtractViewsAndConvertToPdf(model)
-            .ExtractViewsAndConvertToSvg(model)
-            // .ExtractDocumentInformation(model)
-            .ConvertModelToJson(model)
-            .Build();
+        IAssetBuilder builder = new AssetBuilder()
+            .ConvertModelToGlb()
+            .ConvertModelToIfc()
+            .ExtractSheetsAndConvertToPdf()
+            .ExtractSheetsAndConvertToSvg()
+            .ExtractViewsAndConvertToPdf()
+            .ExtractViewsAndConvertToSvg()
+            // .ExtractDocumentInformation()
+            .ConvertModelToJson();
+        Asset asset = await builder.Build(model);
 
         // Assert
         Assert.That(asset, Is.Not.Null, "Asset");

@@ -40,4 +40,16 @@ internal static class ReflectionHelpers
             return tValue;
         return Result<T>.Error($"Property type was {value?.GetType()}.");
     }
+
+    /// <summary>
+    /// Create an instance.
+    /// </summary>
+    /// <exception cref="ArgumentException"></exception>
+    internal static T CreateInstanceAs<T>(Type type, params object[] args)
+    {
+        if (!typeof(T).IsAssignableFrom(type))
+            throw new ArgumentException($"{nameof(T)} was not assignable from {type}.");
+        object? instance = Activator.CreateInstance(type, args);
+        return (T)instance;
+    }
 }

@@ -4,7 +4,7 @@ using Geometrician.Core.Shared;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Geometrician.WebAssembly;
-using Lineweights.Workflows.Assets;
+using Lineweights.Core.Documents;
 using Lineweights.Workflows.Execution;
 
 // Create Builder

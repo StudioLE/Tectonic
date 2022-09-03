@@ -3,7 +3,7 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Curves.Tests;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class HelpersTests
 {
     private readonly Model _model = new();

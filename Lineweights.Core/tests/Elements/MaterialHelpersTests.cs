@@ -2,7 +2,7 @@
 
 namespace Lineweights.Core.Tests.Elements;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class MaterialHelpersTests
 {
     private readonly Model _model = new();

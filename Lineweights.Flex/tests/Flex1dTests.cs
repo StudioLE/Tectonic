@@ -3,7 +3,7 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class Flex1dTests
 {
     private readonly Model _model = new();

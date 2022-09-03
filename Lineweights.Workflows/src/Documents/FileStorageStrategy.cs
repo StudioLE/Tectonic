@@ -1,7 +1,8 @@
 using System.IO;
 using Ardalis.Result;
+using Lineweights.Core.Documents;
 
-namespace Lineweights.Workflows.Assets;
+namespace Lineweights.Workflows.Documents;
 
 /// <summary>
 /// A strategy to store files in the local file system.

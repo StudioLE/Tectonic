@@ -2,7 +2,7 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class ViewBuilderTests
 {
     private readonly Model _model = new();

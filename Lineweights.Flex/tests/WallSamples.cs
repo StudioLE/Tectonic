@@ -2,7 +2,7 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class WallSamples
 {
     public Model Model { get; } = new();

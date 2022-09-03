@@ -1,7 +1,7 @@
 using Lineweights.Core.Serialisation;
 using Newtonsoft.Json;
 
-namespace Lineweights.Workflows.Assets;
+namespace Lineweights.Core.Documents;
 
 /// <summary>
 /// <para>
@@ -9,7 +9,7 @@ namespace Lineweights.Workflows.Assets;
 /// The convention is defined in ISO 19650.
 /// </para>
 /// <para>
-/// <see cref="AssetBuilder"/> provides logic to create an of a <see cref="Model"/>.
+/// <see cref="IAssetBuilder"/> provides logic to create an of a <see cref="Model"/>.
 /// </para>
 /// <para>
 /// The content of a container is defined by either its <see cref="Content"/> property or obtained from the

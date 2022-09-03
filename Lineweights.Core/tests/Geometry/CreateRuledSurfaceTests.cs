@@ -2,7 +2,7 @@
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class CreateRuledSurfaceTests
 {
     private readonly Model _model = new();

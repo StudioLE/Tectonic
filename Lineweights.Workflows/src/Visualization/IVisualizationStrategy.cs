@@ -1,4 +1,4 @@
-using Lineweights.Workflows.Assets;
+using Lineweights.Core.Documents;
 
 namespace Lineweights.Workflows.Visualization;
 

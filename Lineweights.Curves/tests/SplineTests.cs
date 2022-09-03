@@ -4,7 +4,7 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Curves.Tests;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class SplineTests
 {
     private readonly Model _model = new();

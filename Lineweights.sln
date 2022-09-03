@@ -94,6 +94,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{1BC91E56-935
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician", "Geometrician\src\Geometrician.csproj", "{1CD54E2B-DB39-48A4-8C3D-B1C8E3C4892A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.IFC", "Lineweights.IFC\src\Lineweights.IFC.csproj", "{0A178E64-77E7-4A7A-8E04-E855B7FFB2C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -204,6 +206,10 @@ Global
 		{1CD54E2B-DB39-48A4-8C3D-B1C8E3C4892A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CD54E2B-DB39-48A4-8C3D-B1C8E3C4892A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CD54E2B-DB39-48A4-8C3D-B1C8E3C4892A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A178E64-77E7-4A7A-8E04-E855B7FFB2C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A178E64-77E7-4A7A-8E04-E855B7FFB2C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A178E64-77E7-4A7A-8E04-E855B7FFB2C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A178E64-77E7-4A7A-8E04-E855B7FFB2C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -238,6 +244,7 @@ Global
 		{B4AE41A8-DF28-4405-9CAD-6922FE869740} = {3DAFB3F2-1E7C-4F25-97A4-795838151002}
 		{58F45B15-0759-451C-BEFF-4031A76B2AA9} = {3DAFB3F2-1E7C-4F25-97A4-795838151002}
 		{1CD54E2B-DB39-48A4-8C3D-B1C8E3C4892A} = {1BC91E56-935C-40B0-A013-49CBD3511C2F}
+		{0A178E64-77E7-4A7A-8E04-E855B7FFB2C3} = {3DAFB3F2-1E7C-4F25-97A4-795838151002}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB249DC8-BB8F-4BD8-A5D6-2206C1BC3442}

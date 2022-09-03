@@ -1,13 +1,21 @@
 using Elements.Serialization.JSON;
+using Lineweights.Core.Documents;
 using Lineweights.Core.Serialisation;
-using Lineweights.Workflows.Assets;
+using Lineweights.Workflows.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
 namespace Lineweights.Workflows.Tests;
 
 internal sealed class SerialisationTests
 {
-    private readonly Model _model = new();
+    private readonly IAssetBuilder _builder;
+
+    public SerialisationTests()
+    {
+        IServiceProvider services = Services.GetInstance();
+        _builder = services.GetRequiredService<IAssetBuilder>();
+    }
 
     [Test]
     public async Task Serialisation_Asset()
@@ -15,9 +23,7 @@ internal sealed class SerialisationTests
         // Arrange
         Model model = new();
         model.AddElements(Scenes.GeometricElements());
-        AssetBuilder builder = AssetBuilder.Default(new FileStorageStrategy(), model);
-
-        Asset asset = await builder.Build();
+        Asset asset = await _builder.Build(model);
 
         // Act
         string json = JsonConvert.SerializeObject(asset);

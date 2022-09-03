@@ -1,8 +1,11 @@
 ﻿using System.Reflection;
 using Ardalis.Result;
 using Geometrician.Core.Shared;
+using Lineweights.Core.Documents;
+using Lineweights.PDF;
+using Lineweights.SVG;
 using Lineweights.Workflows;
-using Lineweights.Workflows.Assets;
+using Lineweights.Workflows.Documents;
 using Lineweights.Workflows.Execution;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
@@ -77,7 +80,6 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
         }
         _activity.Inputs = Inputs.ToArray();
 
-
         // TODO: Move this logic to workflow execution
 
         Result<object> executionResult;
@@ -123,8 +125,12 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
             Name = _activity.Name,
             Description = $"Executed {State.SelectedActivityKey} from {State.SelectedAssemblyKey}."
         };
-        AssetBuilder builder = AssetBuilder.Default(StorageStrategy, model.Value, doc);
-
+        IAssetBuilder builder = new AssetBuilder()
+            .StorageStrategy(StorageStrategy)
+            .DocumentInformation(doc)
+            .ConvertModelToGlb()
+            .ExtractViewsAndConvertToSvg()
+            .ExtractSheetsAndConvertToPdf();
         Result<IReadOnlyCollection<Asset>> assets = outputs.TryGetPropertyValue<IReadOnlyCollection<Asset>>("Assets");
         if (assets.IsSuccess)
         {
@@ -133,7 +139,7 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
             builder.AddAssets(assets.Value.ToArray());
         }
 
-        Asset asset = await builder.Build();
+        Asset asset = await builder.Build(model.Value);
         AssetState.Assets.Add(asset);
     }
 

@@ -1,4 +1,4 @@
-using Lineweights.Workflows.Assets;
+using Lineweights.Core.Documents;
 using Lineweights.Workflows.Visualization;
 using Microsoft.Extensions.Logging;
 

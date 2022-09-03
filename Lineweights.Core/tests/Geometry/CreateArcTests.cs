@@ -2,7 +2,7 @@
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class CreateArcTests
 {
     private readonly Model _model = new();

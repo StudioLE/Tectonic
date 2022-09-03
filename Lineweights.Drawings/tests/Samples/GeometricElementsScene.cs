@@ -2,7 +2,7 @@
 
 namespace Lineweights.Drawings.Tests.Samples;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class GeometricElementsScene
 {
     public Model Model { get; } = new();

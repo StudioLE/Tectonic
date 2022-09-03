@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
 using System.Text;
 using Ardalis.Result;
-using Lineweights.Workflows.Assets;
+using Lineweights.Core.Documents;
+using Lineweights.Workflows.Hosting;
 using Lineweights.Workflows.NUnit.Execution;
 using Lineweights.Workflows.Visualization;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework.Interfaces;
 using StudioLE.Core.System;
 
@@ -17,8 +19,11 @@ namespace Lineweights.Workflows.NUnit.Visualization;
 /// </summary>
 //[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Assembly)]
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public abstract class VisualizeAfterTestAttribute : Attribute, ITestAction
+public class VisualizeAfterTestAttribute : Attribute, ITestAction
 {
+    /// <inheritdoc cref="IVisualizationStrategy" />
+    public readonly IVisualizationStrategy Strategy;
+
     /// <summary>
     /// Should the strategy be executed.
     /// </summary>
@@ -27,8 +32,28 @@ public abstract class VisualizeAfterTestAttribute : Attribute, ITestAction
     /// <inheritdoc/>
     public ActionTargets Targets => ActionTargets.Default;
 
-    /// <inheritdoc cref="IVisualizationStrategy"/>
-    public abstract IVisualizationStrategy? Strategy { get; }
+    /// <inheritdoc cref="VisualizeAfterTestAttribute" />
+    public VisualizeAfterTestAttribute(IVisualizationStrategy strategy)
+    {
+        Strategy = strategy;
+    }
+
+    /// <inheritdoc cref="VisualizeAfterTestAttribute" />
+    public VisualizeAfterTestAttribute(Type type)
+    {
+        IServiceProvider services = Services.GetInstance();
+        object service = services.GetRequiredService(type);
+        if (service is not IVisualizationStrategy strategy)
+            throw new($"The service is not an {nameof(IVisualizationStrategy)}");
+        Strategy = strategy;
+    }
+
+    /// <inheritdoc cref="VisualizeAfterTestAttribute" />
+    public VisualizeAfterTestAttribute()
+    {
+        IServiceProvider services = Services.GetInstance();
+        Strategy = services.GetRequiredService<IVisualizationStrategy>();
+    }
 
     /// <inheritdoc/>
     public void BeforeTest(ITest test)
@@ -38,7 +63,7 @@ public abstract class VisualizeAfterTestAttribute : Attribute, ITestAction
     /// <inheritdoc/>
     public void AfterTest(ITest test)
     {
-        if (!NUnitActivityFactory.IsExecuting && (Strategy is null || !IsEnabled))
+        if (!NUnitActivityFactory.IsExecuting && !IsEnabled)
             return;
         Result<Model> result = TryGetModel(test);
         DocumentInformation doc = new()
@@ -58,8 +83,8 @@ public abstract class VisualizeAfterTestAttribute : Attribute, ITestAction
         }
 
         Model model = Validate.OrThrow(result);
-        Task<Asset>? task = Strategy?.Execute(model, doc);
-        Asset? asset = task?.Result;
+        Task<Asset> task = Strategy.Execute(model, doc);
+        Asset asset = task.Result;
     }
 
     private static Result<Model> TryGetModel(ITest test)

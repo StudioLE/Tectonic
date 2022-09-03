@@ -1,6 +1,6 @@
 using System.IO;
 using Ardalis.Result;
-using Lineweights.Workflows.Assets;
+using Lineweights.Core.Documents;
 using StudioLE.Core.System.IO;
 
 namespace Geometrician.Core.Scripts;

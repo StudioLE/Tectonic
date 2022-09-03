@@ -2,7 +2,7 @@
 
 namespace Lineweights.Workflows.Tests;
 
-[VisualizeInServerAppAfterTest]
+[VisualizeAfterTest]
 internal sealed class ScenesTests
 {
     private readonly Model _model = new();

@@ -3,9 +3,10 @@ using Ardalis.Result;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Lineweights.Core.Documents;
 using StudioLE.Core.System.IO;
 
-namespace Lineweights.Workflows.Assets;
+namespace Lineweights.Workflows.Documents;
 
 /// <summary>
 /// A strategy to store files in Azure Blob Storage.

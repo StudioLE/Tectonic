@@ -3,7 +3,7 @@ using System.Text;
 using Ardalis.Result;
 using StudioLE.Core.System.IO;
 
-namespace Lineweights.Workflows.Assets;
+namespace Lineweights.Core.Documents;
 
 /// <summary>
 /// A strategy to store files.
