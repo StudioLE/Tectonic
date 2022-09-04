@@ -9,8 +9,8 @@ public sealed class StringVerifier : VerifierBase<string>
     /// <inheritdoc />
     public StringVerifier(IVerifyContext context, string fileExtension) : base(context, fileExtension)
     {
-
     }
+
     /// <inheritdoc />
     protected override void WriteActual(string actual)
     {

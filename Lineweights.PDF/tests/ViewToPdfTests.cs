@@ -14,11 +14,6 @@ internal sealed class ViewToPdfTests
     private readonly Model _model = new();
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void ViewToPdf_Wireframe_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
@@ -32,16 +27,11 @@ internal sealed class ViewToPdfTests
         ViewToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(view);
 
-        // Preview
-        Preview(pdfDocument);
+        // Assert
+        VerifyPdf(pdfDocument);
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void ViewToPdf_Wireframe_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
@@ -55,15 +45,10 @@ internal sealed class ViewToPdfTests
         ViewToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(view);
 
-        // Preview
-        Preview(pdfDocument);
+        // Assert
+        VerifyPdf(pdfDocument);
     }
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void ViewToPdf_Fill_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
@@ -78,16 +63,11 @@ internal sealed class ViewToPdfTests
         ViewToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(view);
 
-        // Preview
-        Preview(pdfDocument);
+        // Assert
+        VerifyPdf(pdfDocument);
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void ViewToPdf_Fill_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
@@ -103,13 +83,21 @@ internal sealed class ViewToPdfTests
         PdfDocument pdfDocument = converter.Convert(view);
 
         // Preview
-        Preview(pdfDocument);
+        VerifyPdf(pdfDocument);
     }
 
-    private void Preview(PdfDocument pdfDocument)
+    private void VerifyPdf(PdfDocument pdfDocument)
     {
+        pdfDocument.Metadata.CreationDate = DateTime.UnixEpoch;
+        pdfDocument.Metadata.ModifiedDate = DateTime.UnixEpoch;
         FileInfo file = TestHelpers.FileByTestContext("pdf");
         pdfDocument.GeneratePdf(file.FullName);
+        Verify.File(file);
+        Preview(file);
+    }
+
+    private void Preview(FileInfo file)
+    {
         _model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

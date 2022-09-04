@@ -12,7 +12,7 @@ namespace Lineweights.Workflows.Verification;
 public abstract class VerifierBase<T>
 {
     private readonly IVerifyContext _context;
-    protected readonly FileInfo _receivedFile;
+    protected FileInfo _receivedFile;
     protected readonly FileInfo _verifiedFile;
 
     /// <inheritdoc cref="VerifierBase{T}"/>
@@ -44,7 +44,7 @@ public abstract class VerifierBase<T>
     /// <summary>
     /// Compare the equality of <see cref="_verifiedFile"/> with <see cref="_receivedFile"/>.
     /// </summary>
-    private Result<bool> CompareEquality()
+    protected virtual Result<bool> CompareEquality()
     {
         if(!_receivedFile.Exists)
             return Result<bool>.Error("The received file does not exist.");

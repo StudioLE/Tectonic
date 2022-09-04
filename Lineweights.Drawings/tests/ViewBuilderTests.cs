@@ -16,11 +16,6 @@ internal sealed class ViewBuilderTests
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void ViewBuilder_ViewDirection(ViewDirection viewDirection)
     {
         // Arrange

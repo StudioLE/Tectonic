@@ -14,11 +14,6 @@ internal sealed class ViewToSvgTests
     private readonly ViewToSvg _converter = new();
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void ViewToSvg_Wireframe_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
@@ -30,23 +25,12 @@ internal sealed class ViewToSvgTests
 
         // Act
         SvgElement svgElement = _converter.Convert(view);
-        SvgDocument svgDocument = new();
-        svgDocument.Add(svgElement);
-        string svgString = svgDocument.ToString();
 
-        // Preview
-        Preview(svgDocument);
-
-        // Assert
-        Verify.String(svgString, ".svg");
+        // Asset
+        VerifySvg(svgElement);
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void ViewToSvg_Wireframe_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
@@ -58,22 +42,11 @@ internal sealed class ViewToSvgTests
 
         // Act
         SvgElement svgElement = _converter.Convert(view);
-        SvgDocument svgDocument = new();
-        svgDocument.Add(svgElement);
-        string svgString = svgDocument.ToString();
 
-        // Preview
-        Preview(svgDocument);
-
-        // Assert
-        Verify.String(svgString, ".svg");
+        // Asset
+        VerifySvg(svgElement);
     }
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void ViewToSvg_Flat_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
@@ -86,23 +59,12 @@ internal sealed class ViewToSvgTests
 
         // Act
         SvgElement svgElement = _converter.Convert(view);
-        SvgDocument svgDocument = new();
-        svgDocument.Add(svgElement);
-        string svgString = svgDocument.ToString();
 
-        // Preview
-        Preview(svgDocument);
-
-        // Assert
-        Verify.String(svgString, ".svg");
+        // Asset
+        VerifySvg(svgElement);
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void ViewToSvg_Flat_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
@@ -115,21 +77,23 @@ internal sealed class ViewToSvgTests
 
         // Act
         SvgElement svgElement = _converter.Convert(view);
-        SvgDocument svgDocument = new();
-        svgDocument.Add(svgElement);
-        string svgString = svgDocument.ToString();
 
-        // Preview
-        Preview(svgDocument);
-
-        // Assert
-        Verify.String(svgString, ".svg");
+        // Asset
+        VerifySvg(svgElement);
     }
 
-    private void Preview(SvgDocument svgDocument)
+    private void VerifySvg(SvgElement svgElement)
     {
+        SvgDocument svgDocument = new();
+        svgDocument.Add(svgElement);
         FileInfo file = TestHelpers.FileByTestContext("svg");
         svgDocument.Save(file.FullName);
+        Verify.File(file);
+        Preview(file);
+    }
+
+    private void Preview(FileInfo file)
+    {
         _model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

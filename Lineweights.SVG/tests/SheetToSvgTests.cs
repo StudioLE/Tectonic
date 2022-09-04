@@ -54,13 +54,9 @@ internal sealed class SheetToSvgTests
 
         // Act
         SvgDocument svgDocument = _converter.Convert(sheet);
-        string svgString = svgDocument.ToString();
 
-        // Preview
-        Preview(svgDocument);
-
-        // Assert
-        Verify.String(svgString, ".svg");
+        // Asset
+        VerifySvg(svgDocument);
     }
 
     [Test]
@@ -101,13 +97,9 @@ internal sealed class SheetToSvgTests
 
         // Act
         SvgDocument svgDocument = _converter.Convert(sheet);
-        string svgString = svgDocument.ToString();
 
-        // Preview
-        Preview(svgDocument);
-
-        // Assert
-        Verify.String(svgString, ".svg");
+        // Asset
+        VerifySvg(svgDocument);
     }
     [Test]
     public void SheetToSvg_Flat_Brickwork()
@@ -148,13 +140,9 @@ internal sealed class SheetToSvgTests
 
         // Act
         SvgDocument svgDocument = _converter.Convert(sheet);
-        string svgString = svgDocument.ToString();
 
-        // Preview
-        Preview(svgDocument);
-
-        // Assert
-        Verify.String(svgString, ".svg");
+        // Asset
+        VerifySvg(svgDocument);
     }
 
     [Test]
@@ -196,19 +184,21 @@ internal sealed class SheetToSvgTests
 
         // Act
         SvgDocument svgDocument = _converter.Convert(sheet);
-        string svgString = svgDocument.ToString();
 
-        // Preview
-        Preview(svgDocument);
-
-        // Assert
-        Verify.String(svgString, ".svg");
+        // Asset
+        VerifySvg(svgDocument);
     }
 
-    private void Preview(SvgDocument svgDocument)
+    private void VerifySvg(SvgDocument svgDocument)
     {
         FileInfo file = TestHelpers.FileByTestContext("svg");
         svgDocument.Save(file.FullName);
+        Verify.File(file);
+        Preview(file);
+    }
+
+    private void Preview(FileInfo file)
+    {
         _model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

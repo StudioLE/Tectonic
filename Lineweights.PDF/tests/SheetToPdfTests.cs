@@ -56,8 +56,8 @@ internal sealed class SheetToPdfTests
         SheetToPdf converter = new();
         PdfSheet pdfDocument = converter.Convert(sheet);
 
-        // Preview
-        Preview(pdfDocument);
+        // Assert
+        VerifyPdf(pdfDocument);
     }
 
     [Test]
@@ -99,11 +99,9 @@ internal sealed class SheetToPdfTests
         // Act
         SheetToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(sheet);
-        FileInfo file = TestHelpers.FileByTestContext("pdf");
-        pdfDocument.GeneratePdf(file.FullName);
 
-        // Preview
-        Preview(pdfDocument);
+        // Assert
+        VerifyPdf(pdfDocument);
     }
 
     [Test]
@@ -147,8 +145,8 @@ internal sealed class SheetToPdfTests
         SheetToPdf converter = new();
         PdfSheet pdfDocument = converter.Convert(sheet);
 
-        // Preview
-        Preview(pdfDocument);
+        // Assert
+        VerifyPdf(pdfDocument);
     }
 
     [Test]
@@ -192,14 +190,22 @@ internal sealed class SheetToPdfTests
         SheetToPdf converter = new();
         PdfDocument pdfDocument = converter.Convert(sheet);
 
-        // Preview
-        Preview(pdfDocument);
+        // Assert
+        VerifyPdf(pdfDocument);
     }
 
-    private void Preview(PdfDocument pdfDocument)
+    private void VerifyPdf(PdfDocument pdfDocument)
     {
+        pdfDocument.Metadata.CreationDate = DateTime.UnixEpoch;
+        pdfDocument.Metadata.ModifiedDate = DateTime.UnixEpoch;
         FileInfo file = TestHelpers.FileByTestContext("pdf");
         pdfDocument.GeneratePdf(file.FullName);
+        Verify.File(file);
+        Preview(file);
+    }
+
+    private void Preview(FileInfo file)
+    {
         _model.AddElement(new DocumentInformation { Location = new(file.FullName) });
     }
 }

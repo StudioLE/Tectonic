@@ -1,3 +1,4 @@
+using System.IO;
 using System.Text;
 using Lineweights.Workflows.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -72,8 +73,6 @@ public static class Verify
         _ = verifier.Execute(actual);
     }
 
-    // TODO: Add Verify.AsFile
-
     /// <summary>
     /// Verify a string.
     /// </summary>
@@ -84,6 +83,18 @@ public static class Verify
         IVerifyContext context = GetContext();
         StringVerifier verifier = new(context, fileExtension);
         _ = verifier.Execute(@string);
+    }
+
+    /// <summary>
+    /// Verify a file.
+    /// </summary>
+    public static void File(FileInfo file)
+    {
+        if (!IsEnabled)
+            return;
+        IVerifyContext context = GetContext();
+        FileVerifier verifier = new(context, file.Extension);
+        _ = verifier.Execute(file);
     }
 
     internal static IVerifyContext GetContext()

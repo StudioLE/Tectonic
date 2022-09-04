@@ -17,11 +17,6 @@ internal sealed class ViewTests
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void View_Render_Wireframe_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
@@ -43,11 +38,6 @@ internal sealed class ViewTests
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void View_Render_Wireframe_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
@@ -69,11 +59,6 @@ internal sealed class ViewTests
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void View_RenderInPlace_Wireframe_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
@@ -95,11 +80,6 @@ internal sealed class ViewTests
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void View_RenderInPlace_Wireframe_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
@@ -122,11 +102,6 @@ internal sealed class ViewTests
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void View_RenderInPlace_Flat_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
@@ -149,11 +124,6 @@ internal sealed class ViewTests
     }
 
     [TestCase(ViewDirection.Back)]
-    [TestCase(ViewDirection.Bottom)]
-    [TestCase(ViewDirection.Front)]
-    [TestCase(ViewDirection.Left)]
-    [TestCase(ViewDirection.Top)]
-    [TestCase(ViewDirection.Right)]
     public void View_RenderInPlace_Flat_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange

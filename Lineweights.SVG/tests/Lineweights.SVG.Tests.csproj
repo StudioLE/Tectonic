@@ -15,8 +15,4 @@
     <ProjectReference Include="..\src\Lineweights.SVG.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Verify\" />
-  </ItemGroup>
-
 </Project>

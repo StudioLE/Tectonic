@@ -12,18 +12,21 @@ public abstract class PdfDocument : IDocument
 {
     private readonly Canvas _canvas;
 
+    /// <summary>
+    /// The metadata of the document.
+    /// </summary>
+    public DocumentMetadata Metadata { get; set; } = DocumentMetadata.Default;
+
     /// <inheritdoc cref="PdfDocument"/>
     protected PdfDocument(Canvas canvas)
     {
         _canvas = canvas;
     }
 
-    /// <summary>
-    /// The document doc.
-    /// </summary>
-    public virtual DocumentMetadata GetMetadata()
+    /// <inheritdoc/>
+    public DocumentMetadata GetMetadata()
     {
-        return DocumentMetadata.Default;
+        return Metadata;
     }
 
     /// <summary>
