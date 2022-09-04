@@ -50,16 +50,16 @@ public abstract class VerifierBase<T>
             return Result<bool>.Error("The received file does not exist.");
         if(!_verifiedFile.Exists)
             return Result<bool>.Error("The verified file does not exist.");
-
-        // TODO: Compare via streams
-        // https://stackoverflow.com/a/1359947/247218
         IEnumerable<string> actualLines  = File.ReadLines(_receivedFile.FullName, Verify.Encoding);
         IEnumerable<string> verifiedLines = File.ReadLines(_verifiedFile.FullName, Verify.Encoding);
-        IEnumerable<bool> equalLines = actualLines.Zip(verifiedLines, (actual, verified) => actual.Equals(verified));
-        IEnumerable<int> inEqualLineNumbers = equalLines.Select((areEqual, lineIndex) => areEqual ? 0 : lineIndex + 1);
-        int firstInEqualLine = inEqualLineNumbers.FirstOrDefault(lineNumber => lineNumber > 0);
-        if (firstInEqualLine == 0)
-            return true;
-        return Result<bool>.Error($"The files differ on line {firstInEqualLine}.");
+        IEnumerable<(string Actual, string Verified)> lines = actualLines.Zip(verifiedLines, (actual, verified) => (actual, verified));
+        int lineNumber = 1;
+        foreach ((string Actual, string Verified) line in lines)
+        {
+            if (!line.Verified.Equals(line.Actual))
+                return Result<bool>.Error($"Difference found on line {lineNumber}.", $"Actual  : {line.Actual}", $"Verified: {line.Verified}");
+            lineNumber++;
+        }
+        return true;
     }
 }

@@ -24,8 +24,10 @@ internal class DoubleConverter : JsonConverter
         if (obj is not double value)
             throw new("Failed to convert double.");
         double rounded = Math.Round(value, _decimalPoints);
-
-        writer.WriteRawValue(rounded.ToString("G"));
+        string json = rounded.ApproximatelyEquals(0)
+            ? 0.ToString()
+            : rounded.ToString("G");
+        writer.WriteRawValue(json);
     }
 
     /// <inheritdoc/>
