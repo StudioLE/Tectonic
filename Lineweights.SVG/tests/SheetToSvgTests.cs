@@ -17,7 +17,7 @@ internal sealed class SheetToSvgTests
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
 
     [Test]
-    public void SheetToSvg_Wireframe_Brickwork()
+    public async Task SheetToSvg_Wireframe_Brickwork()
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -56,11 +56,11 @@ internal sealed class SheetToSvgTests
         SvgDocument svgDocument = _converter.Convert(sheet);
 
         // Asset
-        VerifySvg(svgDocument);
+        await VerifySvg(svgDocument);
     }
 
     [Test]
-    public void SheetToSvg_Wireframe_GeometricElements()
+    public async Task SheetToSvg_Wireframe_GeometricElements()
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -99,10 +99,10 @@ internal sealed class SheetToSvgTests
         SvgDocument svgDocument = _converter.Convert(sheet);
 
         // Asset
-        VerifySvg(svgDocument);
+        await VerifySvg(svgDocument);
     }
     [Test]
-    public void SheetToSvg_Flat_Brickwork()
+    public async Task SheetToSvg_Flat_Brickwork()
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -142,11 +142,11 @@ internal sealed class SheetToSvgTests
         SvgDocument svgDocument = _converter.Convert(sheet);
 
         // Asset
-        VerifySvg(svgDocument);
+        await VerifySvg(svgDocument);
     }
 
     [Test]
-    public void SheetToSvg_Flat_GeometricElements()
+    public async Task SheetToSvg_Flat_GeometricElements()
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -186,14 +186,14 @@ internal sealed class SheetToSvgTests
         SvgDocument svgDocument = _converter.Convert(sheet);
 
         // Asset
-        VerifySvg(svgDocument);
+        await VerifySvg(svgDocument);
     }
 
-    private void VerifySvg(SvgDocument svgDocument)
+    private async Task VerifySvg(SvgDocument svgDocument)
     {
         FileInfo file = TestHelpers.FileByTestContext("svg");
         svgDocument.Save(file.FullName);
-        Verify.File(file);
+        await Verify.File(file);
         Preview(file);
     }
 

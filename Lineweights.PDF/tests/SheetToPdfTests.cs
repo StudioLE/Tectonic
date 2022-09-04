@@ -17,7 +17,7 @@ internal sealed class SheetToPdfTests
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
 
     [Test]
-    public void SheetToPdf_Wireframe_Brickwork()
+    public async Task SheetToPdf_Wireframe_Brickwork()
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -57,11 +57,11 @@ internal sealed class SheetToPdfTests
         PdfSheet pdfDocument = converter.Convert(sheet);
 
         // Assert
-        VerifyPdf(pdfDocument);
+        await VerifyPdf(pdfDocument);
     }
 
     [Test]
-    public void SheetToPdf_Wireframe_GeometricElements()
+    public async Task SheetToPdf_Wireframe_GeometricElements()
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -101,11 +101,11 @@ internal sealed class SheetToPdfTests
         PdfDocument pdfDocument = converter.Convert(sheet);
 
         // Assert
-        VerifyPdf(pdfDocument);
+        await VerifyPdf(pdfDocument);
     }
 
     [Test]
-    public void SheetToPdf_Flat_Brickwork()
+    public async Task SheetToPdf_Flat_Brickwork()
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -146,11 +146,11 @@ internal sealed class SheetToPdfTests
         PdfSheet pdfDocument = converter.Convert(sheet);
 
         // Assert
-        VerifyPdf(pdfDocument);
+        await VerifyPdf(pdfDocument);
     }
 
     [Test]
-    public void SheetToPdf_Flat_GeometricElements()
+    public async Task SheetToPdf_Flat_GeometricElements()
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -191,16 +191,16 @@ internal sealed class SheetToPdfTests
         PdfDocument pdfDocument = converter.Convert(sheet);
 
         // Assert
-        VerifyPdf(pdfDocument);
+        await VerifyPdf(pdfDocument);
     }
 
-    private void VerifyPdf(PdfDocument pdfDocument)
+    private async Task VerifyPdf(PdfDocument pdfDocument)
     {
         pdfDocument.Metadata.CreationDate = DateTime.UnixEpoch;
         pdfDocument.Metadata.ModifiedDate = DateTime.UnixEpoch;
         FileInfo file = TestHelpers.FileByTestContext("pdf");
         pdfDocument.GeneratePdf(file.FullName);
-        Verify.File(file);
+        await Verify.File(file);
         Preview(file);
     }
 

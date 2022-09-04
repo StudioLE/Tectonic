@@ -41,7 +41,7 @@ internal sealed class MasterplanBuilderTests
     }
 
     [Test]
-    public void MasterplanBuilder_Build()
+    public async Task MasterplanBuilder_Build()
     {
         // Arrange
         var centerSpline = new Spline(_points)
@@ -68,6 +68,6 @@ internal sealed class MasterplanBuilderTests
         _model.AddElements(results);
 
         // Assert
-        Verify.ElementsByBounds(results);
+        await Verify.ElementsByBounds(results);
     }
 }

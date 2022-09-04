@@ -10,7 +10,7 @@ internal sealed class CreateCircleTests
     [TestCase(1, 0, 0, 1, 0, 0)]
     [TestCase(1, 0, 0, 1, 2, 2)]
     [TestCase(-3, 4, 4, 5, 1, -4)]
-    public void Create_Circle(double x1, double y1, double x2, double y2, double x3, double y3)
+    public async Task Create_Circle(double x1, double y1, double x2, double y2, double x3, double y3)
     {
         // Arrange
         var start = new Vector3(x1, y1);
@@ -26,6 +26,6 @@ internal sealed class CreateCircleTests
         _model.AddElements(ab, bc, new ModelCurve(circle, MaterialByName("Orange")));
 
         // Assert
-        Verify.Geometry(circle);
+        await Verify.Geometry(circle);
     }
 }

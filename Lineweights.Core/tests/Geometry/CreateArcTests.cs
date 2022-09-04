@@ -10,7 +10,7 @@ internal sealed class CreateArcTests
     [TestCase(1, 0, 0, 1, 0, 0)]
     [TestCase(1, 0, 0, 1, 2, 2)]
     [TestCase(-3, 4, 4, 5, 1, -4)]
-    public void Create_Arc_By3Points(double x1, double y1, double x2, double y2, double x3, double y3)
+    public async Task Create_Arc_By3Points(double x1, double y1, double x2, double y2, double x3, double y3)
     {
         // Arrange
         var start = new Vector3(x1, y1);
@@ -33,11 +33,11 @@ internal sealed class CreateArcTests
             Assert.That(end.IsPointOn(arc, threshold: threshold), Is.True);
             Assert.That(pointOnArc.IsPointOn(arc, threshold: threshold), Is.True);
         });
-        Verify.Geometry(arc);
+        await Verify.Geometry(arc);
     }
 
     [TestCase(3, 2, 2, 4, 3, 6, 7, 8)]
-    public void Create_Arc_ByPolyline(
+    public async Task Create_Arc_ByPolyline(
         double x0, double y0,
         double x1, double y1,
         double x2, double y2,
@@ -68,6 +68,6 @@ internal sealed class CreateArcTests
             //Assert.That(vertices[2].IsPointOn(arc, threshold), Is.True);
             Assert.That(vertices[3].IsPointOn(arc, threshold: threshold), Is.True);
         });
-        Verify.Geometry(arc);
+        await Verify.Geometry(arc);
     }
 }

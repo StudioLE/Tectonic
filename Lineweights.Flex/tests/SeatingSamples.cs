@@ -8,7 +8,7 @@ internal sealed class SeatingSamples
     public Model Model { get; } = new();
 
     [Test]
-    public void Seating_1d_Linear()
+    public async Task Seating_1d_Linear()
     {
         // Arrange
         Samples.Seating1dLinear.Inputs inputs = new();
@@ -18,14 +18,14 @@ internal sealed class SeatingSamples
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
-        Verify.ElementsByBounds(components);
+        await Verify.ElementsByBounds(components);
 
         // Preview
         Model.AddElements(outputs.Model.Elements.Values);
     }
 
     [Test]
-    public void Seating_1d_Radial()
+    public async Task  Seating_1d_Radial()
     {
         // Arrange
         Samples.Seating1dRadial.Inputs inputs = new();
@@ -35,14 +35,14 @@ internal sealed class SeatingSamples
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
-        Verify.ElementsByBounds(components);
+        await Verify.ElementsByBounds(components);
 
         // Preview
         Model.AddElements(outputs.Model.Elements.Values);
     }
 
     [Test]
-    public void Seating_2d_Alternating()
+    public async Task  Seating_2d_Alternating()
     {
         // Arrange
         Samples.Seating2dAlternating.Inputs inputs = new();
@@ -52,7 +52,7 @@ internal sealed class SeatingSamples
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
-        Verify.ElementsByBounds(components);
+        await Verify.ElementsByBounds(components);
 
         // Preview
         Model.AddElements(outputs.Model.Elements.Values);

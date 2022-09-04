@@ -17,7 +17,7 @@ internal sealed class ViewTests
     }
 
     [TestCase(ViewDirection.Back)]
-    public void View_Render_Wireframe_Brickwork(ViewDirection viewDirection)
+    public async Task View_Render_Wireframe_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -34,11 +34,11 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(ViewDirection.Back)]
-    public void View_Render_Wireframe_GeometricElements(ViewDirection viewDirection)
+    public async Task View_Render_Wireframe_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -55,11 +55,11 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(ViewDirection.Back)]
-    public void View_RenderInPlace_Wireframe_Brickwork(ViewDirection viewDirection)
+    public async Task View_RenderInPlace_Wireframe_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -76,11 +76,11 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(ViewDirection.Back)]
-    public void View_RenderInPlace_Wireframe_GeometricElements(ViewDirection viewDirection)
+    public async Task View_RenderInPlace_Wireframe_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -98,11 +98,11 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(ViewDirection.Back)]
-    public void View_RenderInPlace_Flat_Brickwork(ViewDirection viewDirection)
+    public async Task View_RenderInPlace_Flat_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -120,11 +120,11 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(ViewDirection.Back)]
-    public void View_RenderInPlace_Flat_GeometricElements(ViewDirection viewDirection)
+    public async Task View_RenderInPlace_Flat_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -143,6 +143,6 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 }

@@ -7,7 +7,7 @@ namespace Lineweights.Workflows.Tests.Verification;
 internal sealed class JsonVerifierTests
 {
     [Test]
-    public void JsonVerifier_IsValid()
+    public async Task JsonVerifier_IsValid()
     {
         // Arrange
         MockVerifyContext context = new("JsonVerifier_Pass");
@@ -18,7 +18,7 @@ internal sealed class JsonVerifierTests
         BBox3[]? actual = JsonConvert.DeserializeObject<BBox3[]>(actualJson, JsonVerifier.Converters);
         if (actual is null)
             throw new("Failed to de-serialize.");
-        Result<bool> result = verifier.Execute(actual);
+        Result<bool> result = await verifier.Execute(actual);
         foreach (string error in result.Errors)
             Console.WriteLine(error);
 
@@ -28,7 +28,7 @@ internal sealed class JsonVerifierTests
     }
 
     [Test]
-    public void JsonVerifier_IsInvalid()
+    public async Task JsonVerifier_IsInvalid()
     {
         // Arrange
         MockVerifyContext context = new("JsonVerifier_Fail");
@@ -39,7 +39,7 @@ internal sealed class JsonVerifierTests
         BBox3[]? actual = JsonConvert.DeserializeObject<BBox3[]>(actualJson, JsonVerifier.Converters);
         if (actual is null)
             throw new("Failed to de-serialize.");
-        Result<bool> result = verifier.Execute(actual);
+        Result<bool> result = await verifier.Execute(actual);
         foreach (string error in result.Errors)
             Console.WriteLine(error);
 

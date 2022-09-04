@@ -12,8 +12,9 @@ public sealed class StringVerifier : VerifierBase<string>
     }
 
     /// <inheritdoc />
-    protected override void WriteActual(string actual)
+    protected override async Task WriteActual(string actual)
     {
-        File.WriteAllText(_receivedFile.FullName, actual, Verify.Encoding);
+        using StreamWriter writer = new(_receivedFile.FullName, false, Verify.Encoding);
+        await writer.WriteAsync(actual);
     }
 }

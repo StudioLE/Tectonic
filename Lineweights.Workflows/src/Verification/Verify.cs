@@ -21,80 +21,80 @@ public static class Verify
     /// <summary>
     /// Verify <paramref name="elements"/> by their <see cref="BBox3"/>.
     /// </summary>
-    public static void ElementsByBounds(IEnumerable<Element> elements)
+    public static async Task ElementsByBounds(IEnumerable<Element> elements)
     {
         // TODO: Use .Bounds() or .TransformedBounds()?
         BBox3[] bounds = elements
             .Select(x => new BBox3(x))
             .ToArray();
-        AsJson(bounds);
+        await AsJson(bounds);
     }
 
     /// <summary>
     /// Verify <paramref name="elements"/> by their <see cref="Transform"/>.
     /// </summary>
-    public static void ElementsByTransform(IEnumerable<GeometricElement> elements)
+    public static async Task ElementsByTransform(IEnumerable<GeometricElement> elements)
     {
         Transform[] transforms = elements
             .Select(x => x.Transform)
             .ToArray();
-        AsJson(transforms);
+        await AsJson(transforms);
     }
 
 
     /// <summary>
     /// Verify <paramref name="modelCurves"/> by their <see cref="ModelCurve.Curve"/>.
     /// </summary>
-    public static void ModelCurvesByCurve(IEnumerable<ModelCurve> modelCurves)
+    public static async Task ModelCurvesByCurve(IEnumerable<ModelCurve> modelCurves)
     {
         Curve[] curves = modelCurves
             .Select(x => x.Curve.Transformed(x.Transform))
             .ToArray();
-        AsJson(curves);
+        await AsJson(curves);
     }
 
     /// <summary>
     /// Verify any <see cref="Elements"/> geometry by its serialised form.
     /// </summary>
-    public static void Geometry(params object[] geometry)
+    public static async Task Geometry(params object[] geometry)
     {
-        AsJson(geometry);
+        await AsJson(geometry);
     }
 
     /// <summary>
     /// Verify <paramref name="actual"/> as JSON.
     /// </summary>
-    private static void AsJson(object actual)
+    private static async Task AsJson(object actual)
     {
         if (!IsEnabled)
             return;
         IVerifyContext context = GetContext();
         JsonVerifier verifier = new(context);
-        _ = verifier.Execute(actual);
+        await verifier.Execute(actual);
     }
 
     /// <summary>
     /// Verify a string.
     /// </summary>
-    public static void String(string @string, string fileExtension)
+    public static async Task String(string @string, string fileExtension)
     {
         if (!IsEnabled)
             return;
         IVerifyContext context = GetContext();
         StringVerifier verifier = new(context, fileExtension);
-        _ = verifier.Execute(@string);
+        await verifier.Execute(@string);
     }
 
     /// <summary>
     /// Verify a file.
     /// </summary>
-    public static void File(FileInfo file)
+    public static async Task File(FileInfo file)
     {
         if (!IsEnabled)
             return;
         IVerifyContext context = GetContext();
         FileVerifier verifier = new(context, file.Extension);
-        _ = verifier.Execute(file);
+        await verifier.Execute(file);
     }
 
     internal static IVerifyContext GetContext()

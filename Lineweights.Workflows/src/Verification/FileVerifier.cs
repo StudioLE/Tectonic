@@ -14,15 +14,16 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
     }
 
     /// <inheritdoc />
-    protected override void WriteActual(FileInfo actual)
+    protected override Task WriteActual(FileInfo actual)
     {
         _receivedFile = actual;
+        return Task.CompletedTask;
     }
 
-    protected override Result<bool> CompareEquality()
+    protected override async Task<Result<bool>> CompareEquality()
     {
         if (IsTextFile(_receivedFile))
-            return base.CompareEquality();
+            return await base.CompareEquality();
         if(!_receivedFile.Exists)
             return Result<bool>.Error("The received file does not exist.");
         if(!_verifiedFile.Exists)

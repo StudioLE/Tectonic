@@ -9,7 +9,7 @@ internal sealed class FileVerifierTests
     [TestCase(".txt")]
     [TestCase(".pdf")]
     [TestCase(".bin")]
-    public void FileVerifier_IsValid(string fileExtension)
+    public async Task FileVerifier_IsValid(string fileExtension)
     {
         // Arrange
         MockVerifyContext context = new("FileVerifier_Pass");
@@ -17,7 +17,7 @@ internal sealed class FileVerifierTests
         FileVerifier verifier = new(context, fileExtension);
 
         // Act
-        Result<bool> result = verifier.Execute(file);
+        Result<bool> result = await verifier.Execute(file);
         foreach (string error in result.Errors)
             Console.WriteLine(error);
 
@@ -29,7 +29,7 @@ internal sealed class FileVerifierTests
     [TestCase(".txt")]
     [TestCase(".pdf")]
     [TestCase(".bin")]
-    public void FileVerifier_IsInvalid(string fileExtension)
+    public async Task FileVerifier_IsInvalid(string fileExtension)
     {
         // Arrange
         MockVerifyContext context = new("FileVerifier_Fail");
@@ -37,7 +37,7 @@ internal sealed class FileVerifierTests
         FileVerifier verifier = new(context, fileExtension);
 
         // Act
-        Result<bool> result = verifier.Execute(file);
+        Result<bool> result = await verifier.Execute(file);
         foreach (string error in result.Errors)
             Console.WriteLine(error);
 

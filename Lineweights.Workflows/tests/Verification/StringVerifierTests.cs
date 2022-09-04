@@ -6,7 +6,7 @@ namespace Lineweights.Workflows.Tests.Verification;
 internal sealed class StringVerifierTests
 {
     [Test]
-    public void StringVerifier_IsValid()
+    public async Task StringVerifier_IsValid()
     {
         // Arrange
         MockVerifyContext context = new("StringVerifier_Pass");
@@ -14,7 +14,7 @@ internal sealed class StringVerifierTests
         string actual = context.ReadSourceFile(".txt");
 
         // Act
-        Result<bool> result = verifier.Execute(actual);
+        Result<bool> result = await verifier.Execute(actual);
         foreach (string error in result.Errors)
             Console.WriteLine(error);
 
@@ -24,7 +24,7 @@ internal sealed class StringVerifierTests
     }
 
     [Test]
-    public void StringVerifier_IsInvalid()
+    public async Task StringVerifier_IsInvalid()
     {
         // Arrange
         MockVerifyContext context = new("StringVerifier_Fail");
@@ -32,7 +32,7 @@ internal sealed class StringVerifierTests
         string actual = context.ReadSourceFile(".txt");
 
         // Act
-        Result<bool> result = verifier.Execute(actual);
+        Result<bool> result = await verifier.Execute(actual);
         foreach (string error in result.Errors)
             Console.WriteLine(error);
 

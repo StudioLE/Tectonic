@@ -16,7 +16,7 @@ internal sealed class ViewBuilderTests
     }
 
     [TestCase(ViewDirection.Back)]
-    public void ViewBuilder_ViewDirection(ViewDirection viewDirection)
+    public async Task  ViewBuilder_ViewDirection(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -47,6 +47,6 @@ internal sealed class ViewBuilderTests
         //Model.AddElements(view.ToBox().ToModelCurves(MaterialByName("Orange")));
 
         // Assert
-        Verify.Geometry(view.Scope.ToBox());
+        await Verify.Geometry(view.Scope.ToBox());
     }
 }

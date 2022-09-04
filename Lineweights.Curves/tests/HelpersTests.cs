@@ -11,7 +11,7 @@ internal sealed class HelpersTests
     [TestCase(0.1)]
     [TestCase(0.5)]
     [TestCase(1)]
-    public void Helpers_CombineSegmentsToArcs_Polyline(double angleThreshold)
+    public async Task Helpers_CombineSegmentsToArcs_Polyline(double angleThreshold)
     {
         // Arrange
         var polyline = new Polyline(
@@ -28,13 +28,13 @@ internal sealed class HelpersTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
 
         // Assert
-        Verify.Geometry(arcs);
+        await Verify.Geometry(arcs);
     }
 
     [TestCase(0.1)]
     [TestCase(0.5)]
     [TestCase(1)]
-    public void Helpers_CombineSegmentsToArcs_Spline(double angleThreshold)
+    public async Task Helpers_CombineSegmentsToArcs_Spline(double angleThreshold)
     {
         // Arrange
         var spline = new Spline(SplineTests._points)
@@ -55,13 +55,13 @@ internal sealed class HelpersTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
 
         // Assert
-        Verify.Geometry(arcs);
+        await Verify.Geometry(arcs);
     }
 
     [TestCase(0.1)]
     [TestCase(0.5)]
     [TestCase(1)]
-    public void Helpers_CombineSegmentsToArcs_Spline_PreserveKeyVertices(double angleThreshold)
+    public async Task Helpers_CombineSegmentsToArcs_Spline_PreserveKeyVertices(double angleThreshold)
     {
         // Arrange
         var spline = new Spline(SplineTests._points)
@@ -82,6 +82,6 @@ internal sealed class HelpersTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
 
         // Assert
-        Verify.Geometry(arcs);
+        await Verify.Geometry(arcs);
     }
 }

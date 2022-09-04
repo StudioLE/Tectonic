@@ -56,7 +56,7 @@ internal sealed class PathTests
     }
 
     [Test]
-    public void Path_Construct()
+    public async Task Path_Construct()
     {
         // Arrange
         const double width = 0.1;
@@ -77,6 +77,6 @@ internal sealed class PathTests
         _model.AddElements(path);
 
         // Assert
-        Verify.ElementsByBounds(new[] { path });
+        await Verify.ElementsByBounds(new[] { path });
     }
 }

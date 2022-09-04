@@ -35,7 +35,7 @@ internal sealed class Flex1dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-    public void Flex1d_Line_Justification_StretcherHeader(Justification justification)
+    public async Task Flex1d_Line_Justification_StretcherHeader(Justification justification)
     {
         // Arrange
         Flex1d builder = new Flex1d()
@@ -46,7 +46,7 @@ internal sealed class Flex1dTests
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
             .Pattern(StretcherHeader);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Justification.Center)]
@@ -55,7 +55,7 @@ internal sealed class Flex1dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-    public void Flex1d_Line_Justification_StretcherSoldier(Justification justification)
+    public async Task Flex1d_Line_Justification_StretcherSoldier(Justification justification)
     {
         // Arrange
         Flex1d builder = new Flex1d()
@@ -66,13 +66,13 @@ internal sealed class Flex1dTests
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
             .Pattern(StretcherSoldier);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Alignment.Center)]
     [TestCase(Alignment.End)]
     [TestCase(Alignment.Start)]
-    public void Flex1d_Line_CrossAlignment_StretcherHeader(Alignment alignment)
+    public async Task Flex1d_Line_CrossAlignment_StretcherHeader(Alignment alignment)
     {
         // Arrange
         Flex1d builder = new Flex1d()
@@ -83,13 +83,13 @@ internal sealed class Flex1dTests
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
             .Pattern(StretcherHeader);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Alignment.Center)]
     [TestCase(Alignment.End)]
     [TestCase(Alignment.Start)]
-    public void Flex1d_Line_NormalSettingOut_StretcherHeader(Alignment settingOut)
+    public async Task Flex1d_Line_NormalSettingOut_StretcherHeader(Alignment settingOut)
     {
         // Arrange
         Flex1d builder = new Flex1d()
@@ -100,13 +100,13 @@ internal sealed class Flex1dTests
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(settingOut)
             .Pattern(StretcherHeader);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Alignment.Center)]
     [TestCase(Alignment.End)]
     [TestCase(Alignment.Start)]
-    public void Flex1d_Line_CrossSettingOut_StretcherHeader(Alignment settingOut)
+    public async Task Flex1d_Line_CrossSettingOut_StretcherHeader(Alignment settingOut)
     {
         // Arrange
         Flex1d builder = new Flex1d()
@@ -117,13 +117,13 @@ internal sealed class Flex1dTests
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
             .Pattern(StretcherHeader);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Alignment.Center)]
     [TestCase(Alignment.End)]
     [TestCase(Alignment.Start)]
-    public void Flex1d_Line_NormalAlignment(Alignment alignment)
+    public async Task Flex1d_Line_NormalAlignment(Alignment alignment)
     {
         // Arrange
         Flex1d builder = new Flex1d()
@@ -134,13 +134,13 @@ internal sealed class Flex1dTests
             .NormalAlignment(alignment)
             .NormalSettingOut(Alignment.Start)
             .Pattern(StretcherSoldier);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Justification.Center, Alignment.Center)]
     [TestCase(Justification.Start, Alignment.Start)]
     [TestCase(Justification.End, Alignment.End)]
-    public void Flex1d_Vertical(Justification justification, Alignment alignment)
+    public async Task  Flex1d_Vertical(Justification justification, Alignment alignment)
     {
         // Arrange
         Vector3 start = new(-1, -1, -1);
@@ -170,13 +170,13 @@ internal sealed class Flex1dTests
         _model.AddElements(CreateModelArrows.ByLine(line, Colors.Black));
 
         // Assert
-        Verify.ElementsByBounds(components);
+        await Verify.ElementsByBounds(components);
     }
 
     [TestCase(Alignment.Center)]
     [TestCase(Alignment.Start)]
     [TestCase(Alignment.End)]
-    public void Flex1d_InvertedCrossAxis_CrossAlignment_StretcherHeader(Alignment alignment)
+    public async Task  Flex1d_InvertedCrossAxis_CrossAlignment_StretcherHeader(Alignment alignment)
     {
         // Arrange
         Flex1d builder = new Flex1d()
@@ -203,7 +203,7 @@ internal sealed class Flex1dTests
         _model.AddBounds(components);
 
         // Assert
-        Verify.ElementsByBounds(components);
+        await Verify.ElementsByBounds(components);
     }
 
     [TestCase(Justification.Center)]
@@ -212,7 +212,7 @@ internal sealed class Flex1dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-    public void Flex1d_Arc_Justification(Justification justification)
+    public async Task  Flex1d_Arc_Justification(Justification justification)
     {
         // Arrange
         Flex1d builder = new Flex1d()
@@ -233,10 +233,10 @@ internal sealed class Flex1dTests
         _model.AddElements(new ModelCurve(Arc, MaterialByName("Black")));
 
         // Assert
-        Verify.ElementsByBounds(components);
+        await Verify.ElementsByBounds(components);
     }
 
-    private void ExecuteTest(Flex1d builder)
+    private async Task  ExecuteTest(Flex1d builder)
     {
         // Act
         IReadOnlyCollection<ElementInstance> components = builder.ToComponents();
@@ -247,6 +247,6 @@ internal sealed class Flex1dTests
         _model.AddElements(CreateModelArrows.ByLine(Line, Colors.Black));
 
         // Assert
-        Verify.ElementsByBounds(components);
+        await Verify.ElementsByBounds(components);
     }
 }

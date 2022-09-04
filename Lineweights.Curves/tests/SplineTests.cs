@@ -40,7 +40,7 @@ internal sealed class SplineTests
     }
 
     [Test]
-    public void Spline_Construct_Linear()
+    public async Task Spline_Construct_Linear()
     {
         // Arrange
         // Act
@@ -51,11 +51,11 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
-        Verify.Geometry(spline);
+        await Verify.Geometry(spline);
     }
 
     [Test]
-    public void Spline_Construct_Cosine()
+    public async Task Spline_Construct_Cosine()
     {
         // Arrange
         // Act
@@ -69,11 +69,11 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
-        Verify.Geometry(spline);
+        await Verify.Geometry(spline);
     }
 
     [Test]
-    public void Spline_Construct_Cubic()
+    public async Task Spline_Construct_Cubic()
     {
         // Arrange
         // Act
@@ -89,11 +89,11 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
-        Verify.Geometry(spline);
+        await Verify.Geometry(spline);
     }
 
     [Test]
-    public void Spline_Construct_CatmullRom()
+    public async Task Spline_Construct_CatmullRom()
     {
         // Arrange
         // Act
@@ -109,11 +109,11 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
-        Verify.Geometry(spline);
+        await Verify.Geometry(spline);
     }
 
     [Test]
-    public void Spline_Construct_Hermite()
+    public async Task Spline_Construct_Hermite()
     {
         // Arrange
         // Act
@@ -129,11 +129,11 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
-        Verify.Geometry(spline);
+        await Verify.Geometry(spline);
     }
 
     [Test]
-    public void Spline_Construct_All()
+    public async Task Spline_Construct_All()
     {
         // Arrange
         // Act
@@ -168,11 +168,11 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(hermiteSpline, MaterialByName("Blue")));
 
         // Assert
-        Verify.Geometry(linearSpline, cosineSpline, cubicSpline, catmullRomSpline, hermiteSpline);
+        await Verify.Geometry(linearSpline, cosineSpline, cubicSpline, catmullRomSpline, hermiteSpline);
     }
 
     [Test]
-    public void Spline_RenderVertices()
+    public async Task Spline_RenderVertices()
     {
         // Arrange
         var linearSpline = new Spline(_points);
@@ -187,12 +187,12 @@ internal sealed class SplineTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(cubicVertices, "Orange", "Green"));
 
         // Assert
-        Verify.Geometry(linearVertices, cubicVertices);
+        await Verify.Geometry(linearVertices, cubicVertices);
     }
 
     [TestCase(FrameType.Frenet)]
     [TestCase(FrameType.RoadLike)]
-    public void Spline_TransformAt(FrameType frameType)
+    public async Task Spline_TransformAt(FrameType frameType)
     {
         // Arrange
         var spline = new Spline(_points)
@@ -222,12 +222,12 @@ internal sealed class SplineTests
         _model.AddElements(bezierTransforms.Select(x => CreateModelArrows.ByTransform(x, 0.1)));
 
         // Assert
-        Verify.Geometry(splineTransforms, bezierTransforms);
+        await Verify.Geometry(splineTransforms, bezierTransforms);
     }
 
     [TestCase(FrameType.Frenet)]
     [TestCase(FrameType.RoadLike)]
-    public void Spline_NormalAt_TangentAt(FrameType frameType)
+    public async Task Spline_NormalAt_TangentAt(FrameType frameType)
     {
         // Arrange
         var spline = new Spline(_points)
@@ -261,12 +261,12 @@ internal sealed class SplineTests
         _model.AddElements(bezierResults.Select(x => CreateModelArrows.ByVectors(x.Point, x.Normal, 0.1, Colors.Red)));
 
         // Assert
-        Verify.Geometry(splineResults, bezierResults);
+        await Verify.Geometry(splineResults, bezierResults);
     }
 
     [TestCase(FrameType.Frenet)]
     [TestCase(FrameType.RoadLike)]
-    public void Spline_Offset(FrameType frameType)
+    public async Task Spline_Offset(FrameType frameType)
     {
         // Arrange
         const double distance = 0.1;
@@ -289,12 +289,12 @@ internal sealed class SplineTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(farSpline.Vertices.ToList(), "Orange", "Green"));
 
         // Assert
-        Verify.Geometry(nearSpline, farSpline);
+        await Verify.Geometry(nearSpline, farSpline);
     }
 
     [TestCase(FrameType.RoadLike)]
     [Explicit("Failing")]
-    public void Spline_Offset_WithInvertedSegments(FrameType frameType)
+    public async Task Spline_Offset_WithInvertedSegments(FrameType frameType)
     {
         // Arrange
         const double distance = 0.2;
@@ -320,7 +320,7 @@ internal sealed class SplineTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(farSpline.Vertices.ToList(), "Orange", "Green"));
 
         // Assert
-        Verify.Geometry(nearSpline, farSpline);
+        await Verify.Geometry(nearSpline, farSpline);
     }
 
     [Test]

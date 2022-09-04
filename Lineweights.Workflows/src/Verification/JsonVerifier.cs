@@ -25,10 +25,16 @@ public sealed class JsonVerifier : VerifierBase<object>
     }
 
     /// <inheritdoc />
-    protected override void WriteActual(object actual)
+    protected override Task WriteActual(object actual)
     {
-        // TODO: directly write the JSON Stream
-        string receivedJson = JsonConvert.SerializeObject(actual, Formatting.Indented, Converters);
-        File.WriteAllText(_receivedFile.FullName, receivedJson, Verify.Encoding);
+        JsonSerializerSettings settings = new()
+        {
+            Formatting = Formatting.Indented,
+            Converters = Converters
+        };
+        using StreamWriter writer = new(_receivedFile.FullName, false, Verify.Encoding);
+        JsonSerializer serializer = JsonSerializer.Create(settings);
+        serializer.Serialize(writer, actual);
+        return Task.CompletedTask;
     }
 }

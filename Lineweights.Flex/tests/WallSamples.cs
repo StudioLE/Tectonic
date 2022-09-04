@@ -8,7 +8,7 @@ internal sealed class WallSamples
     public Model Model { get; } = new();
 
     [Test]
-    public void Wall_StretcherBond()
+    public async Task Wall_StretcherBond()
     {
         // Arrange
         Samples.WallStretcherBond.Inputs inputs = new();
@@ -18,14 +18,14 @@ internal sealed class WallSamples
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
-        Verify.ElementsByBounds(components);
+        await Verify.ElementsByBounds(components);
 
         // Preview
         Model.AddElements(outputs.Model.Elements.Values);
     }
 
     [Test]
-    public void Wall_FlemishBond()
+    public async Task Wall_FlemishBond()
     {
         // Arrange
         Samples.WallFlemishBond.Inputs inputs = new();
@@ -35,7 +35,7 @@ internal sealed class WallSamples
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
-        Verify.ElementsByBounds(components);
+        await Verify.ElementsByBounds(components);
 
         // Preview
         Model.AddElements(outputs.Model.Elements.Values);

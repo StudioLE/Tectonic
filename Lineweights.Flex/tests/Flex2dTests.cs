@@ -40,7 +40,7 @@ internal sealed class Flex2dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-    public void Flex2d_MainJustification(Justification justification)
+    public async Task  Flex2d_MainJustification(Justification justification)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -50,13 +50,13 @@ internal sealed class Flex2dTests
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
             .MainPatterns(StretcherSoldier, SoldierStretcher);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Alignment.Center)]
     [TestCase(Alignment.End)]
     [TestCase(Alignment.Start)]
-    public void Flex2d_CrossAlignment(Alignment crossAlignment)
+    public async Task  Flex2d_CrossAlignment(Alignment crossAlignment)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -66,7 +66,7 @@ internal sealed class Flex2dTests
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
             .MainPatterns(StretcherHeader, StretcherHeader);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Justification.Center)]
@@ -75,7 +75,7 @@ internal sealed class Flex2dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-    public void Flex2d_CrossJustification(Justification crossJustification)
+    public async Task  Flex2d_CrossJustification(Justification crossJustification)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -86,13 +86,13 @@ internal sealed class Flex2dTests
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
             .MainPatterns(StretcherSoldier, SoldierStretcher);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Alignment.Center)]
     [TestCase(Alignment.End)]
     [TestCase(Alignment.Start)]
-    public void Flex2d_NormalSettingOut(Alignment alignment)
+    public async Task  Flex2d_NormalSettingOut(Alignment alignment)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -103,7 +103,7 @@ internal sealed class Flex2dTests
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(alignment)
             .MainPatterns(StretcherSoldier, SoldierStretcher);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Justification.Center)]
@@ -112,7 +112,7 @@ internal sealed class Flex2dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-    public void Flex2d_Vertical_CrossJustification(Justification crossJustification)
+    public async Task  Flex2d_Vertical_CrossJustification(Justification crossJustification)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -124,7 +124,7 @@ internal sealed class Flex2dTests
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
             .MainPatterns(StretcherSoldier, SoldierStretcher);
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
     [TestCase(Justification.Center)]
@@ -134,7 +134,7 @@ internal sealed class Flex2dTests
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
 
-    public void Flex2d_InvertedCrossAxis(Justification justification)
+    public async Task  Flex2d_InvertedCrossAxis(Justification justification)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -147,10 +147,10 @@ internal sealed class Flex2dTests
             .NormalSettingOut(Alignment.Start)
             .MainPatterns(StretcherHeader)
             .CrossPattern(RepeatingSequence.MaxCount(3));
-        ExecuteTest(builder);
+        await ExecuteTest(builder);
     }
 
-    private void ExecuteTest(Flex2d builder)
+    private async Task  ExecuteTest(Flex2d builder)
     {
         // Act
         //var assemblyInstances = builder.ToAssemblyInstances().ToArray();
@@ -166,6 +166,6 @@ internal sealed class Flex2dTests
         _model.AddBounds(components.SelectMany(x => x));
 
         // Assert
-        Verify.ElementsByBounds(components.SelectMany(x => x).ToArray());
+        await Verify.ElementsByBounds(components.SelectMany(x => x).ToArray());
     }
 }

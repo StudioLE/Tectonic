@@ -28,10 +28,10 @@ public abstract class VerifierBase<T>
     /// <summary>
     /// Verify <paramref name="actual"/>.
     /// </summary>
-    public Result<bool> Execute(T actual)
+    public async Task<Result<bool>> Execute(T actual)
     {
-        WriteActual(actual);
-        Result<bool> result = CompareEquality();
+        await WriteActual(actual);
+        Result<bool> result = await CompareEquality();
         _context.OnResult(result, _receivedFile, _verifiedFile);
         return result;
     }
@@ -39,27 +39,38 @@ public abstract class VerifierBase<T>
     /// <summary>
     /// Write <paramref name="actual"/> to <see cref="_receivedFile"/>.
     /// </summary>
-    protected abstract void WriteActual(T actual);
+    protected abstract Task WriteActual(T actual);
 
     /// <summary>
     /// Compare the equality of <see cref="_verifiedFile"/> with <see cref="_receivedFile"/>.
     /// </summary>
-    protected virtual Result<bool> CompareEquality()
+    protected virtual async Task<Result<bool>> CompareEquality()
     {
         if(!_receivedFile.Exists)
             return Result<bool>.Error("The received file does not exist.");
         if(!_verifiedFile.Exists)
             return Result<bool>.Error("The verified file does not exist.");
-        IEnumerable<string> actualLines  = File.ReadLines(_receivedFile.FullName, Verify.Encoding);
-        IEnumerable<string> verifiedLines = File.ReadLines(_verifiedFile.FullName, Verify.Encoding);
-        IEnumerable<(string Actual, string Verified)> lines = actualLines.Zip(verifiedLines, (actual, verified) => (actual, verified));
+        using StreamReader actualReader = new(_receivedFile.FullName, Verify.Encoding);
+        using StreamReader verifiedReader = new(_verifiedFile.FullName, Verify.Encoding);
         int lineNumber = 1;
-        foreach ((string Actual, string Verified) line in lines)
+        int actualPeek = actualReader.Peek();
+        int verifiedPeek = verifiedReader.Peek();
+        string? actual;
+        string? verified;
+        while (actualPeek >= 0 && verifiedPeek >= 0)
         {
-            if (!line.Verified.Equals(line.Actual))
-                return Result<bool>.Error($"Difference found on line {lineNumber}.", $"Actual  : {line.Actual}", $"Verified: {line.Verified}");
+            actual = await actualReader.ReadLineAsync();
+            verified = await verifiedReader.ReadLineAsync();
+            if (!actual.Equals(verified))
+                return Result<bool>.Error($"Difference found on line {lineNumber}.", $"Actual  : {actual}", $"Verified: {verified}");
+            actualPeek = actualReader.Peek();
+            verifiedPeek = verifiedReader.Peek();
             lineNumber++;
         }
+        if(actualPeek >= 0)
+            return Result<bool>.Error("Line counts don't match. Actual still has lines.");
+        if(verifiedPeek >= 0)
+            return Result<bool>.Error("Line counts don't match. Actual still has lines.");
         return true;
     }
 }

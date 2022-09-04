@@ -14,7 +14,7 @@ internal sealed class ViewToSvgTests
     private readonly ViewToSvg _converter = new();
 
     [TestCase(ViewDirection.Back)]
-    public void ViewToSvg_Wireframe_Brickwork(ViewDirection viewDirection)
+    public async Task ViewToSvg_Wireframe_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -27,11 +27,11 @@ internal sealed class ViewToSvgTests
         SvgElement svgElement = _converter.Convert(view);
 
         // Asset
-        VerifySvg(svgElement);
+        await VerifySvg(svgElement);
     }
 
     [TestCase(ViewDirection.Back)]
-    public void ViewToSvg_Wireframe_GeometricElements(ViewDirection viewDirection)
+    public async Task ViewToSvg_Wireframe_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -44,10 +44,10 @@ internal sealed class ViewToSvgTests
         SvgElement svgElement = _converter.Convert(view);
 
         // Asset
-        VerifySvg(svgElement);
+        await VerifySvg(svgElement);
     }
     [TestCase(ViewDirection.Back)]
-    public void ViewToSvg_Flat_Brickwork(ViewDirection viewDirection)
+    public async Task ViewToSvg_Flat_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -61,11 +61,11 @@ internal sealed class ViewToSvgTests
         SvgElement svgElement = _converter.Convert(view);
 
         // Asset
-        VerifySvg(svgElement);
+        await VerifySvg(svgElement);
     }
 
     [TestCase(ViewDirection.Back)]
-    public void ViewToSvg_Flat_GeometricElements(ViewDirection viewDirection)
+    public async Task ViewToSvg_Flat_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -79,16 +79,16 @@ internal sealed class ViewToSvgTests
         SvgElement svgElement = _converter.Convert(view);
 
         // Asset
-        VerifySvg(svgElement);
+       await VerifySvg(svgElement);
     }
 
-    private void VerifySvg(SvgElement svgElement)
+    private async Task VerifySvg(SvgElement svgElement)
     {
         SvgDocument svgDocument = new();
         svgDocument.Add(svgElement);
         FileInfo file = TestHelpers.FileByTestContext("svg");
         svgDocument.Save(file.FullName);
-        Verify.File(file);
+        await Verify.File(file);
         Preview(file);
     }
 

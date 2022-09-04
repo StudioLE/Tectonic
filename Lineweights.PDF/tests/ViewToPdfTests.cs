@@ -14,7 +14,7 @@ internal sealed class ViewToPdfTests
     private readonly Model _model = new();
 
     [TestCase(ViewDirection.Back)]
-    public void ViewToPdf_Wireframe_Brickwork(ViewDirection viewDirection)
+    public async Task ViewToPdf_Wireframe_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -28,11 +28,11 @@ internal sealed class ViewToPdfTests
         PdfDocument pdfDocument = converter.Convert(view);
 
         // Assert
-        VerifyPdf(pdfDocument);
+        await VerifyPdf(pdfDocument);
     }
 
     [TestCase(ViewDirection.Back)]
-    public void ViewToPdf_Wireframe_GeometricElements(ViewDirection viewDirection)
+    public async Task ViewToPdf_Wireframe_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -46,10 +46,10 @@ internal sealed class ViewToPdfTests
         PdfDocument pdfDocument = converter.Convert(view);
 
         // Assert
-        VerifyPdf(pdfDocument);
+        await VerifyPdf(pdfDocument);
     }
     [TestCase(ViewDirection.Back)]
-    public void ViewToPdf_Fill_Brickwork(ViewDirection viewDirection)
+    public async Task ViewToPdf_Fill_Brickwork(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -64,11 +64,11 @@ internal sealed class ViewToPdfTests
         PdfDocument pdfDocument = converter.Convert(view);
 
         // Assert
-        VerifyPdf(pdfDocument);
+        await VerifyPdf(pdfDocument);
     }
 
     [TestCase(ViewDirection.Back)]
-    public void ViewToPdf_Fill_GeometricElements(ViewDirection viewDirection)
+    public async Task ViewToPdf_Fill_GeometricElements(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -83,16 +83,16 @@ internal sealed class ViewToPdfTests
         PdfDocument pdfDocument = converter.Convert(view);
 
         // Preview
-        VerifyPdf(pdfDocument);
+        await VerifyPdf(pdfDocument);
     }
 
-    private void VerifyPdf(PdfDocument pdfDocument)
+    private async Task VerifyPdf(PdfDocument pdfDocument)
     {
         pdfDocument.Metadata.CreationDate = DateTime.UnixEpoch;
         pdfDocument.Metadata.ModifiedDate = DateTime.UnixEpoch;
         FileInfo file = TestHelpers.FileByTestContext("pdf");
         pdfDocument.GeneratePdf(file.FullName);
-        Verify.File(file);
+        await Verify.File(file);
         Preview(file);
     }
 

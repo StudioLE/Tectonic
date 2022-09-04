@@ -15,7 +15,7 @@ internal sealed class CreateRuledSurfaceTests
 
     [TestCase(1, 1, 1)]
     [TestCase(1, 1, .5)]
-    public void CreateRuledSurface_HyperbolicParaboloidAsLines(double x, double y, double z)
+    public async Task CreateRuledSurface_HyperbolicParaboloidAsLines(double x, double y, double z)
     {
         // Arrange
         Transform transform = new();
@@ -28,11 +28,11 @@ internal sealed class CreateRuledSurfaceTests
         _model.AddElements(lines.Select(_ => new ModelCurve(_)));
 
         // Assert
-        Verify.Geometry(lines);
+        await Verify.Geometry(lines);
     }
 
     [TestCase(1, 1, 1)]
-    public void CreateRuledSurface_ConoidAsLines(double x, double y, double z)
+    public async Task  CreateRuledSurface_ConoidAsLines(double x, double y, double z)
     {
         // Arrange
         Transform transform = new();
@@ -45,11 +45,11 @@ internal sealed class CreateRuledSurfaceTests
         _model.AddElements(lines.Select(_ => new ModelCurve(_)));
 
         // Assert
-        Verify.Geometry(lines);
+        await Verify.Geometry(lines);
     }
 
     [Test]
-    public void CreateRuledSurface_AsLinesByCurves_QuarterHyperbolicParaboloid()
+    public async Task  CreateRuledSurface_AsLinesByCurves_QuarterHyperbolicParaboloid()
     {
         // Arrange
         Transform transform = new();
@@ -75,6 +75,6 @@ internal sealed class CreateRuledSurfaceTests
         _model.AddElements(lines.Select(_ => new ModelCurve(_)));
 
         // Assert
-        Verify.Geometry(lines);
+        await Verify.Geometry(lines);
     }
 }

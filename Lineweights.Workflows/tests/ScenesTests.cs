@@ -8,7 +8,7 @@ internal sealed class ScenesTests
     private readonly Model _model = new();
 
     [Test]
-    public void Scenes_Brickwork_FromJson()
+    public async Task Scenes_Brickwork_FromJson()
     {
         // Arrange
         // Act
@@ -18,11 +18,11 @@ internal sealed class ScenesTests
         _model.AddElements(geometry);
 
         // Assert
-        Verify.ElementsByBounds(geometry);
+        await Verify.ElementsByBounds(geometry);
     }
 
     [Test]
-    public void Scenes_GeometricElements_FromJson()
+    public async Task Scenes_GeometricElements_FromJson()
     {
         // Arrange
         // Act
@@ -32,6 +32,6 @@ internal sealed class ScenesTests
         _model.AddElements(geometry);
 
         // Assert
-        Verify.ElementsByBounds(geometry);
+        await Verify.ElementsByBounds(geometry);
     }
 }

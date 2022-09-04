@@ -18,7 +18,7 @@ internal sealed class SheetBuilderTests
 
     [TestCase(Justification.Start)]
     [TestCase(Justification.SpaceEvenly)]
-    public void SheetBuilder_Justification_Brickwork(Justification mainJustification, Justification? crossJustification = null)
+    public async Task SheetBuilder_Justification_Brickwork(Justification mainJustification, Justification? crossJustification = null)
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -60,12 +60,12 @@ internal sealed class SheetBuilderTests
         _model.AddElements(geometry);
 
         // Assert
-        Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(Justification.Start)]
     [TestCase(Justification.SpaceEvenly)]
-    public void SheetBuilder_Justification_GeometricElements(Justification mainJustification, Justification? crossJustification = null)
+    public async Task SheetBuilder_Justification_GeometricElements(Justification mainJustification, Justification? crossJustification = null)
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -116,6 +116,6 @@ internal sealed class SheetBuilderTests
         _model.AddElements(geometry);
 
         // Assert
-        Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 }
