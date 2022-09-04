@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "discriminator": "Lineweights.Curves.Spline",
     "KeyVertices": [
@@ -360,8 +360,8 @@
     ],
     "StartTangent": {
       "X": -2,
-      "Y": -0,
-      "Z": -0
+      "Y": 0,
+      "Z": 0
     },
     "EndTangent": {
       "X": 2,
@@ -1095,8 +1095,8 @@
     ],
     "StartTangent": {
       "X": -2,
-      "Y": -0,
-      "Z": -0
+      "Y": 0,
+      "Z": 0
     },
     "EndTangent": {
       "X": 2,
