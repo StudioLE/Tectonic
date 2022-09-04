@@ -4,7 +4,6 @@ using JsonDiffPatchDotNet;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Verification;
 
@@ -23,54 +22,33 @@ public sealed class JsonVerifier : VerifierBase<object>
     {
     }
 
-    /// <summary>
-    /// Verify <paramref name="actual"/> as JSON.
-    /// </summary>
-    protected override Result<bool> Verify(object actual)
+    /// <inheritdoc />
+    protected override void WriteActual(object actual)
     {
-        FileInfo receivedFile = ReceivedFile();
-        FileInfo verifiedFile = VerifiedFile();
-
         JsonConverter[] converters =
         {
             new StringEnumConverter(),
             new DoubleConverter(DecimalPlaces)
         };
+        // TODO: directly write the JSON Stream
         string receivedJson = JsonConvert.SerializeObject(actual, Formatting.Indented, converters);
-        File.WriteAllText(receivedFile.FullName, receivedJson);
-        if (!verifiedFile.Exists)
-            File.WriteAllText(verifiedFile.FullName, "{}");
-        string verifiedJson = File.ReadAllText(verifiedFile.FullName);
-
-        if (string.IsNullOrWhiteSpace(receivedJson))
-            return Result<bool>.Error("Received JSON is empty.");
-        if (string.IsNullOrWhiteSpace(verifiedJson))
-            return Result<bool>.Error("Verified JSON is empty.");
-
-        if (CompareStringsWithNormalizedLineEndings(receivedJson, verifiedJson))
-            return true;
-
-        JToken? diff = Diff(verifiedJson, receivedJson);
-
-        if (diff is null)
-            return true;
-
-        if (AssemblyHelpers.IsDebugBuild())
-            LaunchDiffEngine(receivedFile, verifiedFile);
-
-        string diffString = diff.ToString();
-        return Result<bool>.Error(diffString);
+        File.WriteAllText(_receivedFile.FullName, receivedJson);
     }
 
-    private static JToken? Diff(string verifiedJson, string receivedJson)
+    /// <inheritdoc />
+    protected override Result<bool> Diff()
     {
+        // TODO: Move this to IDiffer
+        string actual = File.ReadAllText(_receivedFile.FullName);
+        string verified = File.ReadAllText(_verifiedFile.FullName);
+
         JsonDiffPatch jdp = new();
-        JToken receivedJToken;
+        JToken actualJToken;
         JToken verifiedJToken;
 
         try
         {
-            receivedJToken = JToken.Parse(receivedJson);
+            actualJToken = JToken.Parse(actual);
         }
         catch (Exception e)
         {
@@ -79,13 +57,17 @@ public sealed class JsonVerifier : VerifierBase<object>
 
         try
         {
-            verifiedJToken = JToken.Parse(verifiedJson);
+            verifiedJToken = JToken.Parse(verified);
         }
         catch (Exception e)
         {
             throw new("Failed to parse verified JSON with JToken.", e);
         }
-        return jdp.Diff(verifiedJToken, receivedJToken);
 
+        JToken? diffJToken = jdp.Diff(verifiedJToken, actualJToken);
+        if (diffJToken is null)
+            return true;
+        string diff = diffJToken.ToString();
+        return Result<bool>.Error(diff);
     }
 }

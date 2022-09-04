@@ -1,7 +1,6 @@
 using System.IO;
 using Ardalis.Result;
 using DiffMatchPatch;
-using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Verification;
 
@@ -15,26 +14,20 @@ public sealed class StringVerifier : VerifierBase<string>
     /// <inheritdoc />
     public StringVerifier(IVerifyContext context, string fileExtension) : base(context, fileExtension)
     {
+
+    }
+    /// <inheritdoc />
+    protected override void WriteActual(string actual)
+    {
+        File.WriteAllText(_receivedFile.FullName, actual);
     }
 
-    /// <summary>
-    /// Verify <paramref name="actual"/> as a string.
-    /// </summary>
-    protected override Result<bool> Verify(string actual)
+    /// <inheritdoc />
+    protected override Result<bool> Diff()
     {
-        FileInfo receivedFile = ReceivedFile();
-        FileInfo verifiedFile = VerifiedFile();
-
-        File.WriteAllText(receivedFile.FullName, actual);
-        if (!verifiedFile.Exists)
-            File.WriteAllText(verifiedFile.FullName, "");
-        string verified = File.ReadAllText(verifiedFile.FullName);
-
-        if (CompareStringsWithNormalizedLineEndings(actual, verified))
-            return true;
-
-        if (AssemblyHelpers.IsDebugBuild())
-            LaunchDiffEngine(receivedFile, verifiedFile);
+        // TODO: Move this to IDiffer
+        string actual = File.ReadAllText(_receivedFile.FullName);
+        string verified = File.ReadAllText(_verifiedFile.FullName);
 
         if (actual.Length > DiffCharacterThreshold || verified.Length > DiffCharacterThreshold)
             return Result<bool>.Error("[String is too large to diff]", $"Actual: {actual.Length}", $"Verified: {verified.Length}");

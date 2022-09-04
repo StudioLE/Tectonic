@@ -69,6 +69,8 @@ public static class Verify
         _ = verifier.Execute(actual);
     }
 
+    // TODO: Add Verify.AsFile
+
     /// <summary>
     /// Verify a string.
     /// </summary>
@@ -95,6 +97,7 @@ public static class Verify
             if (_contextType is null)
                 throw new("Failed to Verify. Could not determine the context.");
         }
+        // TODO: Create the context via DI instead
         return (IVerifyContext)Activator.CreateInstance(_contextType);
 
     }
