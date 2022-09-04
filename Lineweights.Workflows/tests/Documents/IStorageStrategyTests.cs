@@ -27,7 +27,7 @@ internal sealed class StorageStrategyTests
         Assert.That(uri, Is.Not.Null, "Uri is not null");
         Assert.That(uri.IsFile, "Uri is file");
         Assert.That(File.Exists(uri.AbsolutePath), "File exists");
-        if(result.Errors.Any())
+        if (result.Errors.Any())
             foreach (string error in result.Errors)
                 Console.WriteLine(error);
     }
@@ -53,7 +53,7 @@ internal sealed class StorageStrategyTests
         // Assert
         Assert.That(uri, Is.Not.Null, "Uri is not null");
         Assert.That(!uri.IsFile, "Uri is not file");
-        if(result.Errors.Any())
+        if (result.Errors.Any())
             foreach (string error in result.Errors)
                 Console.WriteLine(error);
     }

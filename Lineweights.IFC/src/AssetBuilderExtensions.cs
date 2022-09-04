@@ -31,8 +31,10 @@ public static class AssetBuilderExtensions
             }
 
             // Reset the console output
-            StreamWriter standardOutputWriter = new(Console.OpenStandardOutput());
-            standardOutputWriter.AutoFlush = true;
+            StreamWriter standardOutputWriter = new(Console.OpenStandardOutput())
+            {
+                AutoFlush = true
+            };
             Console.SetOut(standardOutputWriter);
 
             Asset asset = new()

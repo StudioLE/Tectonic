@@ -28,7 +28,7 @@ public static class WallFlemishBond
     public static Outputs Execute(Inputs inputs)
     {
         Line line = new(Vector3.Origin, Vector3.XAxis, inputs.WallLength);
-        StandardWall wall =  new(line, inputs.WallDepth, inputs.WallHeight);
+        StandardWall wall = new(line, inputs.WallDepth, inputs.WallHeight);
 
         // Configure the pattern
         var patternA = RepeatingSequence.WithoutOverflow(Brick.Stretcher.CreateInstance(), Brick.Half.CreateInstance())

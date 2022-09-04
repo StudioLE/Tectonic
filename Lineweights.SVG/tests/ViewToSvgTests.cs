@@ -79,7 +79,7 @@ internal sealed class ViewToSvgTests
         SvgElement svgElement = _converter.Convert(view);
 
         // Asset
-       await VerifySvg(svgElement);
+        await VerifySvg(svgElement);
     }
 
     private async Task VerifySvg(SvgElement svgElement)

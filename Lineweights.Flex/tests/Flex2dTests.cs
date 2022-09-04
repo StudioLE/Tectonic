@@ -40,7 +40,7 @@ internal sealed class Flex2dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-    public async Task  Flex2d_MainJustification(Justification justification)
+    public async Task Flex2d_MainJustification(Justification justification)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -56,7 +56,7 @@ internal sealed class Flex2dTests
     [TestCase(Alignment.Center)]
     [TestCase(Alignment.End)]
     [TestCase(Alignment.Start)]
-    public async Task  Flex2d_CrossAlignment(Alignment crossAlignment)
+    public async Task Flex2d_CrossAlignment(Alignment crossAlignment)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -75,7 +75,7 @@ internal sealed class Flex2dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-    public async Task  Flex2d_CrossJustification(Justification crossJustification)
+    public async Task Flex2d_CrossJustification(Justification crossJustification)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -92,7 +92,7 @@ internal sealed class Flex2dTests
     [TestCase(Alignment.Center)]
     [TestCase(Alignment.End)]
     [TestCase(Alignment.Start)]
-    public async Task  Flex2d_NormalSettingOut(Alignment alignment)
+    public async Task Flex2d_NormalSettingOut(Alignment alignment)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -112,7 +112,7 @@ internal sealed class Flex2dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-    public async Task  Flex2d_Vertical_CrossJustification(Justification crossJustification)
+    public async Task Flex2d_Vertical_CrossJustification(Justification crossJustification)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -134,7 +134,7 @@ internal sealed class Flex2dTests
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
 
-    public async Task  Flex2d_InvertedCrossAxis(Justification justification)
+    public async Task Flex2d_InvertedCrossAxis(Justification justification)
     {
         // Arrange
         Flex2d builder = new Flex2d()
@@ -150,7 +150,7 @@ internal sealed class Flex2dTests
         await ExecuteTest(builder);
     }
 
-    private async Task  ExecuteTest(Flex2d builder)
+    private async Task ExecuteTest(Flex2d builder)
     {
         // Act
         //var assemblyInstances = builder.ToAssemblyInstances().ToArray();

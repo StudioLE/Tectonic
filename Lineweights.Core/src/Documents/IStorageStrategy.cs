@@ -60,7 +60,7 @@ public static class StorageStrategyExtensions
         if (asset.Info.Location is Uri uri && uri.IsFile)
         {
             string fileName = asset.GetFileNameById();
-            Stream stream =  File.OpenRead(uri.AbsolutePath);
+            Stream stream = File.OpenRead(uri.AbsolutePath);
             _ = await @this.WriteAsync(asset, fileName, stream);
         }
         foreach (Asset child in asset.Children)

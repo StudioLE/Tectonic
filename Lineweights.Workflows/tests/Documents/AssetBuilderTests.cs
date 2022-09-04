@@ -119,7 +119,7 @@ internal sealed class AssetBuilderTests
 
         // Act
         IServiceProvider services = Services.GetInstance();
-        IAssetBuilder builder =  services.GetRequiredService<IAssetBuilder>();
+        IAssetBuilder builder = services.GetRequiredService<IAssetBuilder>();
         Asset asset = await builder.Build(model);
 
         // Assert

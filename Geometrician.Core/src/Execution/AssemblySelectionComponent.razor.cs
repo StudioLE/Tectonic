@@ -38,14 +38,14 @@ public class AssemblySelectionComponentBase : ComponentBase
     protected override void OnInitialized()
     {
         AssemblySelectOptions = State.LoadedAssemblies.Keys.ToArray();
-        if(AssemblySelectOptions.Any())
+        if (AssemblySelectOptions.Any())
             AssemblySelectValue = AssemblySelectOptions.First();
     }
 
     protected void SetAssemblyByKey()
     {
         Logger.LogDebug($"{nameof(SetAssemblyByKey)} called. Activity: {State.SelectedActivityKey} Assembly: {State.SelectedActivityKey}");
-        if(!State.TryGetAssemblyByKey(AssemblySelectValue, out Assembly? assembly))
+        if (!State.TryGetAssemblyByKey(AssemblySelectValue, out Assembly? assembly))
             return;
         AssemblyInputValue = $"{AssemblySelectValue}.dll";
         SetAssembly(assembly!);

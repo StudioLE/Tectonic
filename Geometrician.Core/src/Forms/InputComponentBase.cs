@@ -33,7 +33,8 @@ public class InputComponentBase<T> : ComponentBase
     /// <summary>
     /// Binding for the input element value.
     /// </summary>
-    protected T Value {
+    protected T Value
+    {
         get => GetValue();
         set => SetValue(value);
     }

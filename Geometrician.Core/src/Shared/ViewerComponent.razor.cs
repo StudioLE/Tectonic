@@ -94,7 +94,7 @@ public class ViewerComponentBase : ComponentBase
                 break;
         }
 
-        if(stateHasChanged)
+        if (stateHasChanged)
             StateHasChanged();
     }
 

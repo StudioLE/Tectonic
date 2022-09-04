@@ -16,7 +16,7 @@ internal sealed class ViewBuilderTests
     }
 
     [TestCase(ViewDirection.Back)]
-    public async Task  ViewBuilder_ViewDirection(ViewDirection viewDirection)
+    public async Task ViewBuilder_ViewDirection(ViewDirection viewDirection)
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()

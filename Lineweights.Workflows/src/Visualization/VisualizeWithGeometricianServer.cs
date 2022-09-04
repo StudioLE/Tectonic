@@ -34,7 +34,7 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
             Console.WriteLine("Failed to send to server. SignalR is disconnected.");
             return new()
             {
-                Errors = new [] { "Failed to send to server. SignalR is disconnected." }
+                Errors = new[] { "Failed to send to server. SignalR is disconnected." }
             };
         }
         Asset asset = await _assetBuilder.Build(model);

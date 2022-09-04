@@ -46,9 +46,9 @@ public abstract class VerifierBase<T>
     /// </summary>
     protected virtual async Task<Result<bool>> CompareEquality()
     {
-        if(!_receivedFile.Exists)
+        if (!_receivedFile.Exists)
             return Result<bool>.Error("The received file does not exist.");
-        if(!_verifiedFile.Exists)
+        if (!_verifiedFile.Exists)
             return Result<bool>.Error("The verified file does not exist.");
         using StreamReader actualReader = new(_receivedFile.FullName, Verify.Encoding);
         using StreamReader verifiedReader = new(_verifiedFile.FullName, Verify.Encoding);
@@ -67,9 +67,9 @@ public abstract class VerifierBase<T>
             verifiedPeek = verifiedReader.Peek();
             lineNumber++;
         }
-        if(actualPeek >= 0)
+        if (actualPeek >= 0)
             return Result<bool>.Error("Line counts don't match. Actual still has lines.");
-        if(verifiedPeek >= 0)
+        if (verifiedPeek >= 0)
             return Result<bool>.Error("Line counts don't match. Actual still has lines.");
         return true;
     }

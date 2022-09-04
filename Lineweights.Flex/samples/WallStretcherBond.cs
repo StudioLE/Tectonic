@@ -28,7 +28,7 @@ public static class WallStretcherBond
     public static Outputs Execute(Inputs inputs)
     {
         Line line = new(Vector3.Origin, Vector3.XAxis, inputs.WallLength);
-        StandardWall wall =  new(line, inputs.WallDepth, inputs.WallHeight);
+        StandardWall wall = new(line, inputs.WallDepth, inputs.WallHeight);
 
         // Configure the pattern
         var patternA = RepeatingSequence.WithOverflow(Brick.Stretcher.CreateInstance());
@@ -59,9 +59,9 @@ public static class WallStretcherBond
         outputs.Model.AddBounds(componentsFlattened);
 
         // Write sample file
-        #if false
+#if false
         Scenes.ToJson(Scenes.Name.Brickwork, componentsFlattened);
-        #endif
+#endif
 
         return outputs;
     }

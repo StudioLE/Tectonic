@@ -18,7 +18,7 @@ internal sealed class ServicesTests
         IServiceProvider services = Services.GetInstance();
 
         // Act
-        object? service =  services.GetService(type);
+        object? service = services.GetService(type);
 
         // Assert
         Assert.That(service, Is.Not.Null, "Service");

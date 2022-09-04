@@ -17,7 +17,7 @@ internal static class ReflectionHelpers
         FieldInfo? property = flags is null
             ? type.GetField(name)
             : type.GetField(name, (BindingFlags)flags);
-        if(property is null)
+        if (property is null)
             return Result<T>.Error($"Field {name} does not exist");
         object? value = property.GetValue(@this);
         if (value is T tValue)
@@ -33,7 +33,7 @@ internal static class ReflectionHelpers
         PropertyInfo? property = flags is null
             ? type.GetProperty(name)
             : type.GetProperty(name, (BindingFlags)flags);
-        if(property is null)
+        if (property is null)
             return Result<T>.Error($"Property {name} does not exist");
         object? value = property.GetValue(@this);
         if (value is T tValue)

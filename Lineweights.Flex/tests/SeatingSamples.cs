@@ -25,7 +25,7 @@ internal sealed class SeatingSamples
     }
 
     [Test]
-    public async Task  Seating_1d_Radial()
+    public async Task Seating_1d_Radial()
     {
         // Arrange
         Samples.Seating1dRadial.Inputs inputs = new();
@@ -42,7 +42,7 @@ internal sealed class SeatingSamples
     }
 
     [Test]
-    public async Task  Seating_2d_Alternating()
+    public async Task Seating_2d_Alternating()
     {
         // Arrange
         Samples.Seating2dAlternating.Inputs inputs = new();

@@ -17,7 +17,7 @@ public sealed class StaticMethodActivityFactory : IActivityFactory
     public Result<ActivityCommand> TryCreateByKey(Assembly assembly, string activityKey)
     {
         MethodInfo? method = GetActivityMethodByKey(assembly, activityKey);
-        if(method is null)
+        if (method is null)
             return Result<ActivityCommand>.Error("No activity in the assembly matched the key.");
         object[] inputs = CreateParameterInstances(method);
         Func<object[], object> invocation = CreateInvocation(method);
@@ -51,7 +51,7 @@ public sealed class StaticMethodActivityFactory : IActivityFactory
     /// </summary>
     internal static object[] CreateParameterInstances(MethodInfo method)
     {
-        return  method
+        return method
             .GetParameters()
             .Select(x => Activator.CreateInstance(x.ParameterType))
             .ToArray();

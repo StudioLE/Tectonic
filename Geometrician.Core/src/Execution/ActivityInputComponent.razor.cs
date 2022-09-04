@@ -50,7 +50,7 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
     protected override void OnInitialized()
     {
         Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {State.SelectedActivityKey} Assembly: {State.SelectedActivityKey}");
-        if(!State.TryGetAssemblyByKey(State.SelectedAssemblyKey, out Assembly? assembly))
+        if (!State.TryGetAssemblyByKey(State.SelectedAssemblyKey, out Assembly? assembly))
         {
             State.SelectedAssemblyKey = string.Empty;
             return;

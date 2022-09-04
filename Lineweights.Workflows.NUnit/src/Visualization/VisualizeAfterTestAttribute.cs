@@ -89,7 +89,7 @@ public class VisualizeAfterTestAttribute : Attribute, ITestAction
 
     private static Result<Model> TryGetModel(ITest test)
     {
-        if(test.Fixture is null)
+        if (test.Fixture is null)
             return Result<Model>.Error("The test fixture was null.");
         Result<Model> field = test.Fixture.TryGetFieldValue<Model>("_model", BindingFlags.NonPublic | BindingFlags.Instance);
         if (field.IsSuccess)

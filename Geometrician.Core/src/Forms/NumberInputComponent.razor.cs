@@ -26,12 +26,11 @@ public class NumberInputComponentBase : InputComponentBase<string>
             result = int.TryParse(valueAsString, out int value)
                 ? value
                 : Result<object?>.Error("was not an integer.");
-        else if (PropertyType == typeof(double))
-            result = double.TryParse(valueAsString, out double value)
+        else result = PropertyType == typeof(double)
+            ? double.TryParse(valueAsString, out double value)
                 ? value
-                : Result<object?>.Error("was not a number.");
-        else
-            result = Result<object?>.Error("The property type was not supported.");
+                : Result<object?>.Error("was not a number.")
+            : Result<object?>.Error("The property type was not supported.");
         ParentCallback?.Invoke(result);
     }
 }

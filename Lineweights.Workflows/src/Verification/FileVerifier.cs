@@ -24,15 +24,15 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
     {
         if (IsTextFile(_receivedFile))
             return await base.CompareEquality();
-        if(!_receivedFile.Exists)
+        if (!_receivedFile.Exists)
             return Result<bool>.Error("The received file does not exist.");
-        if(!_verifiedFile.Exists)
+        if (!_verifiedFile.Exists)
             return Result<bool>.Error("The verified file does not exist.");
-        if(_receivedFile.Length != _verifiedFile.Length)
+        if (_receivedFile.Length != _verifiedFile.Length)
             return Result<bool>.Error("File size is different.", $"Actual  : {_receivedFile.Length}", $"Verified: {_verifiedFile.Length}");
         string actual = GetFileHash(_receivedFile);
         string verified = GetFileHash(_verifiedFile);
-        if(!actual.Equals(verified))
+        if (!actual.Equals(verified))
             return Result<bool>.Error("File hashes are different.", $"Actual  : {actual}", $"Verified: {verified}");
         return true;
     }

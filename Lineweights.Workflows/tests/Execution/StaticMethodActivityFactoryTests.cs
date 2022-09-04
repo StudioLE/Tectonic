@@ -11,11 +11,11 @@ internal sealed class StaticMethodActivityFactoryTests
 
     public StaticMethodActivityFactoryTests()
     {
-        #if DEBUG
+#if DEBUG
         const string configuration = "Debug";
-        #else
+#else
         const string configuration = "Release";
-        #endif
+#endif
         string cwd = Directory.GetCurrentDirectory();
         const string pathFromRootToSamples = $"Lineweights.Flex/samples/bin/{configuration}/netstandard2.0/Lineweights.Flex.Samples.dll";
         const string pathToRoot = "../../../../../";

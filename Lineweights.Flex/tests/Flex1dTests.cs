@@ -140,7 +140,7 @@ internal sealed class Flex1dTests
     [TestCase(Justification.Center, Alignment.Center)]
     [TestCase(Justification.Start, Alignment.Start)]
     [TestCase(Justification.End, Alignment.End)]
-    public async Task  Flex1d_Vertical(Justification justification, Alignment alignment)
+    public async Task Flex1d_Vertical(Justification justification, Alignment alignment)
     {
         // Arrange
         Vector3 start = new(-1, -1, -1);
@@ -176,7 +176,7 @@ internal sealed class Flex1dTests
     [TestCase(Alignment.Center)]
     [TestCase(Alignment.Start)]
     [TestCase(Alignment.End)]
-    public async Task  Flex1d_InvertedCrossAxis_CrossAlignment_StretcherHeader(Alignment alignment)
+    public async Task Flex1d_InvertedCrossAxis_CrossAlignment_StretcherHeader(Alignment alignment)
     {
         // Arrange
         Flex1d builder = new Flex1d()
@@ -212,7 +212,7 @@ internal sealed class Flex1dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-    public async Task  Flex1d_Arc_Justification(Justification justification)
+    public async Task Flex1d_Arc_Justification(Justification justification)
     {
         // Arrange
         Flex1d builder = new Flex1d()
@@ -236,7 +236,7 @@ internal sealed class Flex1dTests
         await Verify.ElementsByBounds(components);
     }
 
-    private async Task  ExecuteTest(Flex1d builder)
+    private async Task ExecuteTest(Flex1d builder)
     {
         // Act
         IReadOnlyCollection<ElementInstance> components = builder.ToComponents();

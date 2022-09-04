@@ -27,7 +27,7 @@ public static class GeometricScene
     {
         public Model Model { get; set; } = new();
 
-        public List<Asset> Assets { get; }= new();
+        public List<Asset> Assets { get; } = new();
     }
 
     public static Outputs Execute(Inputs inputs)

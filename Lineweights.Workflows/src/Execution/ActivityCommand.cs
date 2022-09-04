@@ -24,7 +24,7 @@ public class ActivityCommand : IDisposable
     /// <summary>
     /// The activity called by the execution method.
     /// </summary>
-    public Func<object[], object>?  Invocation { get; set; }
+    public Func<object[], object>? Invocation { get; set; }
 
     public Action? OnDispose { get; set; }
 

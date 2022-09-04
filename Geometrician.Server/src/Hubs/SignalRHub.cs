@@ -41,7 +41,7 @@ public sealed class SignalRHub : Hub
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         string message = $"{nameof(OnDisconnectedAsync)} called.";
-        if(exception is null)
+        if (exception is null)
             _logger.LogDebug(message);
         else
             _logger.LogError(exception, message);

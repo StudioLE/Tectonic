@@ -32,7 +32,7 @@ internal sealed class CreateRuledSurfaceTests
     }
 
     [TestCase(1, 1, 1)]
-    public async Task  CreateRuledSurface_ConoidAsLines(double x, double y, double z)
+    public async Task CreateRuledSurface_ConoidAsLines(double x, double y, double z)
     {
         // Arrange
         Transform transform = new();
@@ -49,7 +49,7 @@ internal sealed class CreateRuledSurfaceTests
     }
 
     [Test]
-    public async Task  CreateRuledSurface_AsLinesByCurves_QuarterHyperbolicParaboloid()
+    public async Task CreateRuledSurface_AsLinesByCurves_QuarterHyperbolicParaboloid()
     {
         // Arrange
         Transform transform = new();

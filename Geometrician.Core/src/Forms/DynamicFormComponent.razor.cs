@@ -22,7 +22,7 @@ public class DynamicFormComponentBase : ComponentBase, IDisposable
     [Parameter]
     public IReadOnlyCollection<object> Inputs { get; set; } = default!;
 
-    protected IReadOnlyCollection<EditContext> EditContexts { get; private set; }= Array.Empty<EditContext>();
+    protected IReadOnlyCollection<EditContext> EditContexts { get; private set; } = Array.Empty<EditContext>();
 
     protected bool IsValid { get; private set; }
 
@@ -89,7 +89,7 @@ public class DynamicFormComponentBase : ComponentBase, IDisposable
     {
         if (!EditContexts.Any())
             return;
-        foreach(EditContext context in EditContexts)
+        foreach (EditContext context in EditContexts)
         {
             context.OnFieldChanged -= OnFieldChanged;
             context.OnValidationStateChanged -= OnValidationStateChanged;

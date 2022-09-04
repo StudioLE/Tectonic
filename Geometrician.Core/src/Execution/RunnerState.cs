@@ -53,7 +53,7 @@ public class RunnerState
     public bool TryGetAssemblyByKey(string key, out Assembly? assembly)
     {
         _logger.LogDebug($"{nameof(TryGetAssemblyByKey)} called with key {key}.");
-        if(!LoadedAssemblies.TryGetValue(key, out assembly))
+        if (!LoadedAssemblies.TryGetValue(key, out assembly))
         {
             ShowError(_logger, "Failed to load assembly. Key not found.");
             return false;
