@@ -14,10 +14,7 @@ public static class Services
     private static IServiceProvider? _instance;
     private static IHost? _host;
 
-    /// <summary>
-    /// The <see cref="IHostBuilder"/> used to create the <see cref="IServiceProvider"/> instance.
-    /// </summary>
-    public static IHostBuilder Builder { get; set; } = DefaultBuilder();
+    public static Action<HostBuilderContext, IServiceCollection>? ConfigureServices { get; set; }
 
     /// <summary>
     /// Get a singleton instance.
@@ -34,9 +31,16 @@ public static class Services
     }
 
     /// <summary>
-    /// The default for <see cref="Builder"/>.
+    /// Dispose of the host and set _instance to null.
     /// </summary>
-    private static IHostBuilder DefaultBuilder()
+    internal static void Reset()
+    {
+        _host?.Dispose();
+        lock (_lock)
+            _instance = null;
+    }
+
+    private static IHostBuilder CreateBuilder()
     {
         return Host
             .CreateDefaultBuilder()
@@ -62,15 +66,17 @@ public static class Services
                 // IVisualizationStrategy
                 services.AddSingleton<VisualizeWithGeometricianServer>();
                 services.AddTransient<VisualizeAsFile>();
+
+                ConfigureServices?.Invoke(_, services);
             });
     }
 
     /// <summary>
-    /// The method used to construct an instance if it does not exist.
+    /// Create a new instance of the <see cref="IServiceProvider"/>.
     /// </summary>
     private static IServiceProvider CreateInstance()
     {
-        _host = Builder.Build();
+        _host = CreateBuilder().Build();
         return _host.Services;
     }
 

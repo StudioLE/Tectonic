@@ -9,15 +9,17 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Ardalis.Result;
+using DiffEngine;
 using Lineweights.Workflows.Verification;
 using NUnit.Framework.Internal;
+using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.NUnit.Verification;
 
 /// <summary>
 /// The NUnit specific <see cref="IVerifyContext"/>.
 /// </summary>
-internal class VerifyContext : IVerifyContext
+internal class NUnitVerifyContext : IVerifyContext
 {
     private readonly TestContext _context;
     private readonly Test _test;
@@ -28,8 +30,8 @@ internal class VerifyContext : IVerifyContext
     /// <inheritdoc/>
     public DirectoryInfo Directory { get; }
 
-    /// <inheritdoc cref="VerifyContext"/>
-    public VerifyContext()
+    /// <inheritdoc cref="NUnitVerifyContext"/>
+    public NUnitVerifyContext()
     {
         _context = TestContext.CurrentContext;
         _test = GetTest();
@@ -38,10 +40,13 @@ internal class VerifyContext : IVerifyContext
     }
 
     /// <inheritdoc/>
-    public void OnResult(Result<bool> result)
+    public void OnResult(Result<bool> result, FileInfo receivedFile, FileInfo verifiedFile)
     {
-        if (!result.IsSuccess)
-            Assert.Fail(
+        if (result.IsSuccess)
+            return;
+        if (AssemblyHelpers.IsDebugBuild())
+            DiffRunner.LaunchAsync(receivedFile.FullName, verifiedFile.FullName);
+        Assert.Fail(
                 "Actual results did not match the verified results:"
                 + Environment.NewLine
                 + string.Join(Environment.NewLine, result.Errors));

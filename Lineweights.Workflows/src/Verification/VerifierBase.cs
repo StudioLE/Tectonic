@@ -1,7 +1,5 @@
 using System.IO;
 using Ardalis.Result;
-using DiffEngine;
-using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Verification;
 
@@ -24,7 +22,7 @@ public abstract class VerifierBase<T>
         if (!context.Directory.Exists)
             throw new DirectoryNotFoundException($"Failed to Verify. The verify directory does not exist: {context.Directory.FullName}");
         _receivedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.received{fileExtension}"));
-        _verifiedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.received{fileExtension}"));
+        _verifiedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.verified{fileExtension}"));
     }
 
     /// <summary>
@@ -33,15 +31,8 @@ public abstract class VerifierBase<T>
     public Result<bool> Execute(T actual)
     {
         WriteActual(actual);
-        if (AssemblyHelpers.IsDebugBuild())
-            LaunchDiffEngine(_receivedFile, _verifiedFile);
         Result<bool> result = CompareEquality();
-        if (!result.IsSuccess)
-        {
-            var diffResult = Diff();
-            result = Result<bool>.Error(result.Errors.Concat(diffResult.Errors).ToArray());
-        }
-        _context.OnResult(result);
+        _context.OnResult(result, _receivedFile, _verifiedFile);
         return result;
     }
 
@@ -62,21 +53,13 @@ public abstract class VerifierBase<T>
 
         // TODO: Compare via streams
         // https://stackoverflow.com/a/1359947/247218
-        string actual = File.ReadAllText(_receivedFile.FullName);
-        string verified = File.ReadAllText(_verifiedFile.FullName);
-
-        // TODO: File.ReadLines removes the necessity to replace line endings!
-        return actual
-            .ReplaceWindowsLineEndings()
-            .Equals(verified.ReplaceWindowsLineEndings());
-    }
-
-    protected abstract Result<bool> Diff();
-
-    // TODO: DiffEngineTray SendMove
-    // https://github.com/VerifyTests/DiffEngine/blob/3f2e942e73369a1d6c40d96b931d19651944b35f/src/DiffEngine/Tray/PiperClient.cs#L26-L33
-    private static async void LaunchDiffEngine(FileInfo receivedFile, FileInfo verifiedFile)
-    {
-        await DiffRunner.LaunchAsync(receivedFile.FullName, verifiedFile.FullName);
+        IEnumerable<string> actualLines  = File.ReadLines(_receivedFile.FullName, Verify.Encoding);
+        IEnumerable<string> verifiedLines = File.ReadLines(_verifiedFile.FullName, Verify.Encoding);
+        IEnumerable<bool> equalLines = actualLines.Zip(verifiedLines, (actual, verified) => actual.Equals(verified));
+        IEnumerable<int> inEqualLineNumbers = equalLines.Select((areEqual, lineIndex) => areEqual ? 0 : lineIndex + 1);
+        int firstInEqualLine = inEqualLineNumbers.FirstOrDefault(lineNumber => lineNumber > 0);
+        if (firstInEqualLine == 0)
+            return true;
+        return Result<bool>.Error($"The files differ on line {firstInEqualLine}.");
     }
 }

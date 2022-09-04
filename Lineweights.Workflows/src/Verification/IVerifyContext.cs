@@ -21,5 +21,5 @@ public interface IVerifyContext
     /// <summary>
     /// Process the result after verification.
     /// </summary>
-    public void OnResult(Result<bool> result);
+    public void OnResult(Result<bool> result, FileInfo receivedFile, FileInfo verifiedFile);
 }

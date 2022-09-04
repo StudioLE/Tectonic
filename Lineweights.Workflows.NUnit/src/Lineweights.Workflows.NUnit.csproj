@@ -12,10 +12,15 @@
   <Import Project="..\..\GlobalUsings.src.props" />
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Lineweights.Workflows.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DiffEngine" Version="9.0.6" />
     <PackageReference Include="Hypar.Elements.Serialization.IFC" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.4" />
     <PackageReference Include="NUnit" Version="3.13.3" />

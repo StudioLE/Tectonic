@@ -1,3 +1,6 @@
+using System.Text;
+using Lineweights.Workflows.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Verification;
@@ -10,7 +13,7 @@ namespace Lineweights.Workflows.Verification;
 /// </remarks>
 public static class Verify
 {
-    private static Type? _contextType;
+    public static readonly Encoding Encoding = Encoding.UTF8;
 
     public static bool IsEnabled { get; set; } = true;
 
@@ -83,22 +86,32 @@ public static class Verify
         _ = verifier.Execute(@string);
     }
 
-    private static IVerifyContext GetContext()
+    internal static IVerifyContext GetContext()
     {
-        if (_contextType is null)
-        {
-            AssemblyHelpers.LoadAllAssemblies("Lineweights.Workflows.");
-            _contextType = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .FirstOrDefault(x => typeof(IVerifyContext).IsAssignableFrom(x)
-                                     && x.IsClass
-                                     && !x.IsAbstract);
-            if (_contextType is null)
-                throw new("Failed to Verify. Could not determine the context.");
-        }
-        // TODO: Create the context via DI instead
-        return (IVerifyContext)Activator.CreateInstance(_contextType);
+        IServiceProvider services = Services.GetInstance();
+        IVerifyContext? context = services.GetService<IVerifyContext>();
+        if (context is not null)
+            return context;
+        RegisterContexts();
+        Services.Reset();
+        services = Services.GetInstance();
+        return services.GetRequiredService<IVerifyContext>();
+    }
 
+    private static void RegisterContexts()
+    {
+        AssemblyHelpers.LoadAllAssemblies("Lineweights.Workflows.");
+        IEnumerable<Type> contextTypes = AppDomain.CurrentDomain
+            .GetAssemblies()
+            .SelectMany(x => x.GetTypes())
+            .Where(x => typeof(IVerifyContext).IsAssignableFrom(x)
+                                 && x.IsClass
+                                 && !x.IsAbstract);
+
+        Services.ConfigureServices = (_, services) =>
+        {
+            foreach (Type type in contextTypes)
+                services.AddTransient(typeof(IVerifyContext), type);
+        };
     }
 }
