@@ -27,10 +27,7 @@ public sealed class Flex1d : FlexBase
     /// </summary>
     private SequenceBuilder? _pattern;
 
-    /// <summary>
-    /// The elements created by executing <see cref="Build()"/>.
-    /// </summary>
-    internal IReadOnlyList<Proxy> _results = Array.Empty<Proxy>();
+    internal IReadOnlyCollection<Proxy> _proxies = Array.Empty<Proxy>();
 
     #endregion
 
@@ -128,10 +125,54 @@ public sealed class Flex1d : FlexBase
 
     #region Execution methods
 
-    /// <summary>
-    /// Execute the builder and assign <see cref="_results"/>.
-    /// </summary>
-    public Flex1d Build()
+    /// <inheritdoc cref="Flex1d"/>
+    public IReadOnlyCollection<ElementInstance> Build()
+    {
+        _proxies = DistributeProxies();
+        IReadOnlyCollection<ElementInstance> components = _proxies
+            .Select(CreateInstance)
+            .ToArray();
+        return components;
+    }
+
+    private ElementInstance CreateInstance(Proxy proxy, int i)
+    {
+        switch (_curve)
+        {
+            case Line line:
+                {
+                    string name = $"{proxy.BaseDefinition.Name}-{i}";
+                    Vector3 origin = line.PointAt(0) + proxy.Translation;
+                    Transform transform = new(origin);
+                    return proxy
+                        .BaseDefinition
+                        .CreateInstance(transform, name);
+                }
+            case Arc arc:
+                {
+                    string name = $"{proxy.BaseDefinition.Name}-{i}";
+                    double mainComponent = _mainAxis.Dimension(proxy.Translation);
+                    double crossComponent = _crossAxis.Dimension(proxy.Translation);
+                    double normalComponent = _normalAxis.Dimension(proxy.Translation);
+                    Transform t = arc.UnboundTransformAtLength(mainComponent);
+                    Vector3 mainAxis = t.ZAxis.Negate();
+                    Vector3 crossAxis = t.XAxis.Negate();
+                    Vector3 normalAxis = t.YAxis;
+                    Vector3 origin = t.Origin
+                                     + crossAxis * crossComponent
+                                     + normalAxis * normalComponent;
+
+                    Transform transform = new(origin, mainAxis, crossAxis, normalAxis);
+                    return proxy
+                        .BaseDefinition
+                        .CreateInstance(transform, name);
+                }
+            default:
+                throw new TypeSwitchException<Curve>($"Failed to get components of {nameof(Flex1d)}. Only curve and line are accepted.", _curve);
+        }
+    }
+
+    private IReadOnlyCollection<Proxy> DistributeProxies()
     {
         if (_pattern is null)
             throw new($"Failed to build {nameof(Flex1d)}. Pattern is not set.");
@@ -143,30 +184,7 @@ public sealed class Flex1d : FlexBase
         components = ApplyAlignment(components, _normalAlignment, _normalAxis);
         components = ApplySettingOut(components, _crossSettingOut, _crossAxis);
         components = ApplySettingOut(components, _normalSettingOut, _normalAxis);
-        _results = components;
-        return this;
-    }
-
-    /// <summary>
-    /// Execute the builder and create instances of the results placed along <see cref="_curve"/>.
-    /// </summary>
-    public IReadOnlyCollection<ElementInstance> ToComponents()
-    {
-        Build();
-
-        return _results
-            .Select((component, i) => _curve switch
-            {
-                Line line => CreateInstance.OnLine(component, line, $"{component.BaseDefinition.Name}-{i}"),
-                Arc arc => CreateInstance.OnArc(component,
-                    arc,
-                    $"{component.BaseDefinition.Name}-{i}",
-                    _mainAxis,
-                    _crossAxis,
-                    _normalAxis),
-                _ => throw new TypeSwitchException<Curve>($"Failed to get components of {nameof(Flex1d)}. Only curve and line are accepted.", _curve)
-            })
-            .ToArray();
+        return components;
     }
 
     #endregion

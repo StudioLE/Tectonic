@@ -36,7 +36,7 @@ public static class Seating1dLinear
             .Pattern(pattern);
 
         // Run the builder
-        IReadOnlyCollection<ElementInstance> components = builder.ToComponents();
+        IReadOnlyCollection<ElementInstance> components = builder.Build();
 
         // Prepare the outputs
         Outputs outputs = new();

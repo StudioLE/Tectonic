@@ -172,7 +172,7 @@ public sealed class Flex2d : FlexBase
             //.SetNormalAlignment(NormalAlignment)
             .Pattern(_crossSequence);
 
-        Assemblies = crossBuilder.ToComponents();
+        Assemblies = crossBuilder.Build();
         return Assemblies
             .Select(x => x.ToComponents())
             .ToArray();
@@ -182,7 +182,7 @@ public sealed class Flex2d : FlexBase
     private ElementInstance CreateAssembly(Flex1d builder, SequenceBuilder pattern)
     {
         builder.Pattern(pattern);
-        IReadOnlyCollection<ElementInstance> instances = builder.ToComponents();
+        IReadOnlyCollection<ElementInstance> instances = builder.Build();
         Line line = Validate.IsTypeOrThrow<Line>(builder._curve, $"Failed to convert {nameof(Flex2d)} to assembly.");
         if (!line.PointAt(0.5).IsAlmostEqualTo(Vector3.Origin))
             throw new($"Failed to convert {nameof(Flex2d)} to assembly. Expected line to be at origin.");
@@ -219,9 +219,9 @@ public sealed class Flex2d : FlexBase
         // TODO: This isn't a reliable way to calculate the spacing.
         Spacing spacing = new()
         {
-            X = builder._results.Max(x => x.MinSpacing.X),
-            Y = builder._results.Max(x => x.MinSpacing.Y),
-            Z = builder._results.Max(x => x.MinSpacing.Z)
+            X = builder._proxies.Max(x => x.MinSpacing.X),
+            Y = builder._proxies.Max(x => x.MinSpacing.Y),
+            Z = builder._proxies.Max(x => x.MinSpacing.Z)
         };
         assembly.SetProperty(spacing);
 

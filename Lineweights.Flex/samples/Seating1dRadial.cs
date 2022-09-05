@@ -49,7 +49,7 @@ public static class Seating1dRadial
             .Pattern(pattern);
 
         // Run the builder
-        IReadOnlyCollection<ElementInstance> components = builder.ToComponents();
+        IReadOnlyCollection<ElementInstance> components = builder.Build();
 
         // Rotate the seats
         Transform rotation = new(Vector3.Origin, inputs.Rotation);

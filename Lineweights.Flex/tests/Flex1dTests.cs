@@ -158,7 +158,7 @@ internal sealed class Flex1dTests
         // Act
         //IReadOnlyCollection<ElementInstance> instances = builder.ToInstances().ToArray();
         //ElementInstance assembly = builder.ToAssembly();
-        IReadOnlyCollection<ElementInstance> components = builder.ToComponents();
+        IReadOnlyCollection<ElementInstance> components = builder.Build();
 
         // Preview
         //Model.AddBounds(instances, MaterialByName("Aqua"));
@@ -191,7 +191,7 @@ internal sealed class Flex1dTests
         // Act
         //IReadOnlyCollection<ElementInstance> instances = builder.ToInstances().ToArray();
         //ElementInstance assembly = builder.ToAssembly();
-        IReadOnlyCollection<ElementInstance> components = builder.ToComponents();
+        IReadOnlyCollection<ElementInstance> components = builder.Build();
 
         // Preview
         //Model.AddBounds(instances, MaterialByName("Aqua"));
@@ -225,7 +225,7 @@ internal sealed class Flex1dTests
             .Pattern(StretcherHeader);
 
         // Act
-        IReadOnlyCollection<ElementInstance> components = builder.ToComponents();
+        IReadOnlyCollection<ElementInstance> components = builder.Build();
 
         // Preview
         _model.AddElements(components);
@@ -239,7 +239,7 @@ internal sealed class Flex1dTests
     private async Task ExecuteTest(Flex1d builder)
     {
         // Act
-        IReadOnlyCollection<ElementInstance> components = builder.ToComponents();
+        IReadOnlyCollection<ElementInstance> components = builder.Build();
 
         // Preview
         _model.AddElements(components);
