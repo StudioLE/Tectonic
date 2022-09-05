@@ -1,11 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 
 namespace Geometrician.Core.Shared;
 
-public class TimeComponentBase : ComponentBase
+public class TimeComponentBase : ComponentBase, IDisposable
 {
+    private readonly TimeSpan _initialDelay = TimeSpan.FromSeconds(4);
+    private readonly TimeSpan _interval = TimeSpan.FromSeconds(5);
+    private Timer? _timer;
+
+    [Inject]
+    public ILogger<TimeComponent> Logger { get; set; } = default!;
+
     /// <summary>
-    /// The TimeSpan.
+    /// The <see cref="System.DateTime"/> to display.
     /// </summary>
     [Parameter]
     public DateTime DateTime { get; set; }
@@ -13,7 +21,8 @@ public class TimeComponentBase : ComponentBase
     /// <inheritdoc />
     protected override void OnAfterRender(bool firstRender)
     {
-        RefreshAtIntervals();
+        if (firstRender)
+            RefreshAtIntervals();
     }
 
     /// <summary>
@@ -21,7 +30,19 @@ public class TimeComponentBase : ComponentBase
     /// </summary>
     private void RefreshAtIntervals()
     {
-        TimeSpan interval = TimeSpan.FromSeconds(5);
-        Timer timer = new(_ => InvokeAsync(StateHasChanged), null, interval, interval);
+        Logger.LogDebug($"{nameof(RefreshAtIntervals)} called. DateTime: {DateTime}");
+        _timer = new(OnInterval, null, _initialDelay, _interval);
+    }
+
+    private void OnInterval(object? _)
+    {
+        Logger.LogDebug($"{nameof(OnInterval)} called. DateTime: {DateTime}");
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Logger.LogDebug($"{nameof(Dispose)} called. DateTime: {DateTime}");
+        _timer?.Dispose();
     }
 }
