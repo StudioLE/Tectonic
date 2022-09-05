@@ -3,8 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Description>A [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) client application to visualise the results of Elements logic.</Description>
-    <!-- TODO: We should use invariant culture but this isn't supported by Humanizer yet https://github.com/Humanizr/Humanizer/pull/1213 -->
-<!--    <InvariantGlobalization>true</InvariantGlobalization>-->
+    <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
   <!-- Use consistent properties across all src projects -->

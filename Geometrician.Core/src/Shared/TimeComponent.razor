@@ -1,4 +1,4 @@
-﻿@using Humanizer
+﻿@using StudioLE.Core.Measurements
 @inherits TimeComponentBase
 
-<time datetime="@DateTime">@DateTime.Humanize()</time>
+<time datetime="@DateTime">@DateTime.ToNaturalLanguage()</time>
