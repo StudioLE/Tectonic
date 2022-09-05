@@ -9,7 +9,7 @@ public sealed class Flex2d : FlexBase
 {
     #region Fields
 
-    private Flex1d _builder = new();
+    private bool _isBuilt = false;
 
     /// <summary>
     /// The container relative to which elements are positioned.
@@ -37,6 +37,12 @@ public sealed class Flex2d : FlexBase
     /// <see cref="SequenceBuilder._items"/> is set to the assembly created by <see cref="_mainPatterns"/>.
     /// </remarks>
     private SequenceBuilder _crossSequence = NonRepeatingSequence.WithoutOverflow();
+
+    #endregion
+
+    #region Properties
+
+    internal IReadOnlyCollection<ElementInstance> Assemblies { get; private set; } = Array.Empty<ElementInstance>();
 
     #endregion
 
@@ -117,34 +123,48 @@ public sealed class Flex2d : FlexBase
     #region Execution methods
 
     /// <summary>
-    /// Execute the builder.
+    /// Execute the builder logic.
     /// </summary>
-    private Flex2d Build()
+    public IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> Build()
     {
+        if (_isBuilt)
+            throw new("Failed to build. Build can only be called once.");
         if (_container is null)
             throw new($"Failed to build {nameof(Flex2d)}. Container is not set.");
+        IReadOnlyCollection<ElementInstance> assemblies = DistributeInMainAxis();
+        _crossSequence.Items(assemblies.ToArray());
+        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = DistributeInCrossAxis();
 
-        // Distribute in the main axis
-        _builder = new Flex1d()
-            .Bounds(_mainAxis, _crossAxis, _normalAxis, _mainAxis.Dimension(_container.Bounds))
+        // TODO: You'll now need to transform to the setting out point.
+
+        _isBuilt = true;
+        return components;
+    }
+
+    private IReadOnlyCollection<ElementInstance> DistributeInMainAxis()
+    {
+        Flex1d mainBuilder = new Flex1d()
+            .Bounds(_mainAxis, _crossAxis, _normalAxis, _mainAxis.Dimension(_container!.Bounds))
             .MainJustification(_mainJustification)
             .CrossSettingOut(Alignment.Center)
             .NormalSettingOut(Alignment.Center)
             .CrossAlignment(_crossAlignment)
             .NormalAlignment(_normalAlignment);
 
-        IReadOnlyCollection<ElementInstance> assemblies1d = _mainPatterns
+        IReadOnlyCollection<ElementInstance> assemblies = _mainPatterns
             .SelectMany(pattern => pattern is WrappingSequence wrapping
-                ? wrapping.Split(_builder)
+                ? wrapping.Split(mainBuilder)
                 : new[] { pattern })
-            .Select(pattern1d => ToAssembly(_builder.Pattern(pattern1d), true))
+            .Select(pattern1d => CreateAssembly(mainBuilder, pattern1d))
             .ToArray();
 
-        _crossSequence.Items(assemblies1d.ToArray());
+        return assemblies;
+    }
 
-        // Distribute in the cross axis
-        _builder = new Flex1d()
-            .Bounds(_crossAxis, _mainAxis, _normalAxis, _crossAxis.Dimension(_container.Bounds))
+    private IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> DistributeInCrossAxis()
+    {
+        Flex1d crossBuilder = new Flex1d()
+            .Bounds(_crossAxis, _mainAxis, _normalAxis, _crossAxis.Dimension(_container!.Bounds))
             .MainJustification(_crossJustification)
             .CrossSettingOut(Alignment.Center)
             .NormalSettingOut(Alignment.Center)
@@ -152,44 +172,17 @@ public sealed class Flex2d : FlexBase
             //.SetNormalAlignment(NormalAlignment)
             .Pattern(_crossSequence);
 
-        // TODO: You'll now need to transform to the setting out point.
+        Assemblies = crossBuilder.ToComponents();
+        return Assemblies
+            .Select(x => x.ToComponents())
+            .ToArray();
 
-        return this;
     }
 
-    /// <summary>
-    /// Execute the builder and create an instance of the results placed along the curve from the setting out point.
-    /// </summary>
-    internal IEnumerable<ElementInstance> ToAssemblyInstances()
+    private ElementInstance CreateAssembly(Flex1d builder, SequenceBuilder pattern)
     {
-        Build();
-        return _builder.ToComponents();
-    }
-
-    /// <summary>
-    /// Execute the builder and create an assembly of each of the element instances.
-    /// </summary>
-    /// <remarks>
-    /// An <see cref="Assembly"/> definition is created at <see cref="Vector3.Origin"/> and then instantiated
-    /// moved to the correct relative location.
-    /// </remarks>
-    internal ElementInstance ToAssembly()
-    {
-        Build();
-        return ToAssembly(_builder, false);
-    }
-
-    /// <summary>
-    /// Execute the builder and create an assembly of each of the element instances.
-    /// </summary>
-    /// <remarks>
-    /// An <see cref="Assembly"/> definition is created at <see cref="Vector3.Origin"/> and then instantiated
-    /// moved to the correct relative location.
-    /// </remarks>
-    private ElementInstance ToAssembly(Flex1d builder, bool isMainArrangement)
-    {
+        builder.Pattern(pattern);
         IReadOnlyCollection<ElementInstance> instances = builder.ToComponents();
-
         Line line = Validate.IsTypeOrThrow<Line>(builder._curve, $"Failed to convert {nameof(Flex2d)} to assembly.");
         if (!line.PointAt(0.5).IsAlmostEqualTo(Vector3.Origin))
             throw new($"Failed to convert {nameof(Flex2d)} to assembly. Expected line to be at origin.");
@@ -202,63 +195,26 @@ public sealed class Flex2d : FlexBase
         // Be aware that the instances may project outside of the assembly bounds
         // This occurs with RepeatingPattern.WithOverflow
         double containerNormalSize = builder._normalAxis.Dimension(_container!.Bounds);
-        double containerCrossSize = builder._crossAxis.Dimension(_container!.Bounds);
         double assemblyNormalSize = builder._normalAxis.Dimension(instanceBounds);
         double assemblyCrossSize = builder._crossAxis.Dimension(instanceBounds);
-        Vector3 normalMin = builder._normalAxis * containerNormalSize * 0.5 * -1;
-        Vector3 normalMax = builder._normalAxis * containerNormalSize * 0.5;
-        Vector3 mainMin = builder._mainAxis * builder.TargetLength * 0.5 * -1;
-        Vector3 mainMax = builder._mainAxis * builder.TargetLength * 0.5;
-        Vector3[] assemblyVertices;
-        if (isMainArrangement)
-        {
-            Vector3 crossMin = builder._crossAxis * assemblyCrossSize * 0.5 * -1;
-            Vector3 crossMax = builder._crossAxis * assemblyCrossSize * 0.5;
-            assemblyVertices = new[]
-            {
-                mainMin,
-                mainMax,
-                crossMin,
-                crossMax,
-                normalMin,
-                normalMax,
-            };
-        }
-        else
-        {
-            Vector3 crossMin = builder._crossAxis * containerCrossSize * 0.5 * -1;
-            Vector3 crossMax = builder._crossAxis * containerCrossSize * 0.5;
-            assemblyVertices = new[]
-            {
-                mainMin,
-                mainMax,
-                crossMin,
-                crossMax,
-                normalMin,
-                normalMax
-            };
-        }
-        BBox3 assemblyBounds = new(assemblyVertices);
+        BBox3 assemblyBounds = GetAssemblyBounds(builder, containerNormalSize, assemblyCrossSize);
 
         Assembly assembly = new(instances, assemblyBounds);
         Vector3 containerOrigin = _container!.Bounds.PointAt(0.5, 0.5, 0.5);
 
-        if (isMainArrangement)
+        Vector3 settingOut = _normalSettingOut switch
         {
-            Vector3 settingOut = _normalSettingOut switch
-            {
-                Alignment.Start => containerOrigin
-                                   - _normalAxis * containerNormalSize * 0.5
-                                   + _normalAxis * assemblyNormalSize * 0.5,
-                Alignment.End => containerOrigin
-                                 + _normalAxis * containerNormalSize * 0.5
-                                 - _normalAxis * assemblyNormalSize * 0.5,
-                Alignment.Center => containerOrigin,
-                _ => throw new EnumSwitchException<Alignment>("Failed to get normal setting out.", _normalSettingOut)
-            };
-            foreach (ElementInstance instance in instances)
-                instance.Transform.Move(settingOut);
-        }
+            Alignment.Start => containerOrigin
+                               - _normalAxis * containerNormalSize * 0.5
+                               + _normalAxis * assemblyNormalSize * 0.5,
+            Alignment.End => containerOrigin
+                             + _normalAxis * containerNormalSize * 0.5
+                             - _normalAxis * assemblyNormalSize * 0.5,
+            Alignment.Center => containerOrigin,
+            _ => throw new EnumSwitchException<Alignment>("Failed to get normal setting out.", _normalSettingOut)
+        };
+        foreach (ElementInstance instance in instances)
+            instance.Transform.Move(settingOut);
 
         // TODO: This isn't a reliable way to calculate the spacing.
         Spacing spacing = new()
@@ -273,17 +229,26 @@ public sealed class Flex2d : FlexBase
         return assembly.CreateInstance("Assembly");
     }
 
-    /// <summary>
-    /// Execute <see cref="Build()"/> and create components of the results.
-    /// </summary>
-    public IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> ToComponents()
-    {
-        ElementInstance assembly = ToAssembly();
-        return assembly.ToComponents()
-            .Select(x => x.ToComponents())
-            .ToArray();
-    }
-
     #endregion
+
+    private static BBox3 GetAssemblyBounds(Flex1d builder, double containerNormalSize, double crossSize)
+    {
+        Vector3 mainMin = builder._mainAxis * builder.TargetLength * 0.5 * -1;
+        Vector3 mainMax = builder._mainAxis * builder.TargetLength * 0.5;
+        Vector3 normalMin = builder._normalAxis * containerNormalSize * 0.5 * -1;
+        Vector3 normalMax = builder._normalAxis * containerNormalSize * 0.5;
+        Vector3 crossMin = builder._crossAxis * crossSize * 0.5 * -1;
+        Vector3 crossMax = builder._crossAxis * crossSize * 0.5;
+        var vertices = new[]
+        {
+            mainMin,
+            mainMax,
+            crossMin,
+            crossMax,
+            normalMin,
+            normalMax
+        };
+        return new(vertices);
+    }
 }
 

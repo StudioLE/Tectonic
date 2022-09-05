@@ -51,7 +51,7 @@ public static class Seating2dAlternating
         // TODO: Chairs are being crated upside down...
 
         // Run the builder
-        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.ToComponents();
+        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();
 
         // Prepare the outputs
         Outputs outputs = new();

@@ -51,7 +51,7 @@ public static class WallFlemishBond
             .CrossPattern(RepeatingSequence.WithOverflow());
 
         // Run the builder
-        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.ToComponents();
+        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();
 
         // Prepare outputs
         ElementInstance[] componentsFlattened = components.SelectMany(x => x).ToArray();

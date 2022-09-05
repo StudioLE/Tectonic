@@ -153,15 +153,14 @@ internal sealed class Flex2dTests
     private async Task ExecuteTest(Flex2d builder)
     {
         // Act
-        //var assemblyInstances = builder.ToAssemblyInstances().ToArray();
-        //ElementInstance assembly = builder.ToAssembly();
-        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.ToComponents();
+        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();
 
         // Preview
-        //Model.AddBounds(assemblyInstances, MaterialByName("Aqua"));
-        //Model.AddBounds(assemblyInstances.Select(x => x.BaseDefinition), MaterialByName("Orange"));
-        //Model.AddBounds(assembly, MaterialByName("Aqua"));
-        //Model.AddBounds(assembly.BaseDefinition, MaterialByName("Orange"));
+        foreach (ElementInstance instance in builder.Assemblies)
+        {
+            _model.AddBounds(instance, MaterialByName("Aqua"));
+            _model.AddBounds(instance.BaseDefinition, MaterialByName("Orange"));
+        }
         _model.AddElements(components.SelectMany(x => x));
         _model.AddBounds(components.SelectMany(x => x));
 

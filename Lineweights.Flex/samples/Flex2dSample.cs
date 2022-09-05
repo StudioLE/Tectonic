@@ -58,10 +58,7 @@ public static class Flex2dSample
     public class DisplayInputs
     {
         [Required]
-        public bool ShowAssemblyInstances { get; set; } = false;
-
-        [Required]
-        public bool ShowAssembly { get; set; } = false;
+        public bool ShowAssemblies { get; set; } = false;
 
         [Required]
         public bool ShowComponents { get; set; } = true;
@@ -99,26 +96,17 @@ public static class Flex2dSample
 
         Outputs outputs = new();
 
-        if (displayInputs.ShowAssemblyInstances)
-        {
-            ElementInstance[] assemblyInstances = builder.ToAssemblyInstances().ToArray();
-            foreach (ElementInstance instance in assemblyInstances)
+        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();
+
+        if (displayInputs.ShowAssemblies)
+            foreach (ElementInstance instance in builder.Assemblies)
             {
                 outputs.Model.AddBounds(instance, MaterialByName("Aqua"));
                 outputs.Model.AddBounds(instance.BaseDefinition, MaterialByName("Orange"));
             }
-        }
-
-        if (displayInputs.ShowAssembly)
-        {
-            ElementInstance assembly = builder.ToAssembly();
-            outputs.Model.AddBounds(assembly, MaterialByName("Aqua"));
-            outputs.Model.AddBounds(assembly.BaseDefinition, MaterialByName("Orange"));
-        }
 
         if (displayInputs.ShowComponents)
         {
-            IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.ToComponents();
             outputs.Model.AddElements(components.SelectMany(x => x));
             outputs.Model.AddBounds(components.SelectMany(x => x));
         }

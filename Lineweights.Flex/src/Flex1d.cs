@@ -155,40 +155,16 @@ public sealed class Flex1d : FlexBase
         Build();
 
         return _results
-            .Select((component, i) =>
+            .Select((component, i) => _curve switch
             {
-                Transform transform;
-                switch (_curve)
-                {
-                    case Line line:
-                        {
-                            Vector3 origin = line.PointAt(0) + component.Translation;
-                            transform = new(origin);
-                            break;
-                        }
-                    case Arc:
-                        {
-                            double mainComponent = _mainAxis.Dimension(component.Translation);
-                            double crossComponent = _crossAxis.Dimension(component.Translation);
-                            double normalComponent = _normalAxis.Dimension(component.Translation);
-                            Transform t = _curve.UnboundTransformAtLength(mainComponent);
-                            Vector3 mainAxis = t.ZAxis.Negate();
-                            Vector3 crossAxis = t.XAxis.Negate();
-                            Vector3 normalAxis = t.YAxis;
-                            Vector3 origin = t.Origin
-                                             + crossAxis * crossComponent
-                                             + normalAxis * normalComponent;
-
-                            transform = new(origin, mainAxis, crossAxis, normalAxis);
-                            break;
-                        }
-                    default:
-                        throw new ArgumentException($"Failed to get components of {nameof(Flex1d)}. Only curve and line are accepted.");
-                }
-
-                return component
-                    .BaseDefinition
-                    .CreateInstance(transform, $"{component.BaseDefinition.Name}-{i}");
+                Line line => CreateInstance.OnLine(component, line, $"{component.BaseDefinition.Name}-{i}"),
+                Arc arc => CreateInstance.OnArc(component,
+                    arc,
+                    $"{component.BaseDefinition.Name}-{i}",
+                    _mainAxis,
+                    _crossAxis,
+                    _normalAxis),
+                _ => throw new TypeSwitchException<Curve>($"Failed to get components of {nameof(Flex1d)}. Only curve and line are accepted.", _curve)
             })
             .ToArray();
     }

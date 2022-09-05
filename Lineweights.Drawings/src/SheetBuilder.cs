@@ -101,7 +101,7 @@ public sealed class SheetBuilder : ISheetBuilder
             .Container(content)
             .MainPatterns(sequence);
 
-        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = _viewArrangement.ToComponents();
+        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = _viewArrangement.Build();
 
         // TODO: Rather than ToComponents can we just Build, inspect the proxy and then manually apply the Proxy translation?
 
