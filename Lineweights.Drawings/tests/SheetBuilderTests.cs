@@ -42,7 +42,7 @@ internal sealed class SheetBuilderTests
                 .Build())
             .ToArray();
 
-        SheetBuilder sheetBuilder = new SheetBuilder()
+        ISheetBuilder sheetBuilder = new SheetBuilder()
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
@@ -53,7 +53,7 @@ internal sealed class SheetBuilderTests
             });
 
         // Act
-        Sheet sheet = sheetBuilder.Build();
+        Sheet sheet = (Sheet)sheetBuilder.Build();
         GeometricElement[] geometry = sheet.Render().ToArray();
 
         // Preview
@@ -89,7 +89,7 @@ internal sealed class SheetBuilderTests
                 .Build())
             .ToArray();
 
-        SheetBuilder sheetBuilder = new SheetBuilder()
+        ISheetBuilder sheetBuilder = new SheetBuilder()
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
@@ -100,7 +100,7 @@ internal sealed class SheetBuilderTests
             });
 
         // Act
-        Sheet sheet = sheetBuilder.Build();
+        Sheet sheet = (Sheet)sheetBuilder.Build();
         GeometricElement[] geometry = sheet.Render().ToArray();
 
         // Preview

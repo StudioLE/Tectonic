@@ -1,4 +1,3 @@
-using Elements;
 using Lineweights.Flex;
 using Lineweights.Workflows.Samples;
 
@@ -38,7 +37,7 @@ public abstract class BenchmarksBase
                 .ViewDirection(direction)
                 .Build())
             .ToArray();
-        SheetBuilder builder = new SheetBuilder()
+        ISheetBuilder builder = new SheetBuilder()
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
@@ -47,6 +46,6 @@ public abstract class BenchmarksBase
                 viewArrangement.MainJustification(Justification.SpaceEvenly);
                 viewArrangement.CrossJustification(Justification.SpaceEvenly);
             });
-        _sheet = builder.Build();
+        _sheet = (Sheet)builder.Build();
     }
 }

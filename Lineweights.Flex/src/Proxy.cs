@@ -1,5 +1,5 @@
 ﻿using Ardalis.Result;
-using Lineweights.Flex.Coordination;
+using Lineweights.Core.Distribution;
 
 namespace Lineweights.Flex;
 

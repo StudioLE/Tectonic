@@ -93,12 +93,12 @@ internal sealed class SerialisationTests
                 .Build())
             .ToArray();
 
-        SheetBuilder sheetBuilder = new SheetBuilder()
+        ISheetBuilder sheetBuilder = new SheetBuilder()
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views);
 
-        Sheet sheet = sheetBuilder.Build();
+        Sheet sheet = (Sheet)sheetBuilder.Build();
         Model model = new();
         model.AddElements(sheet.Content);
 
@@ -144,12 +144,12 @@ internal sealed class SerialisationTests
                 .Build())
             .ToArray();
 
-        SheetBuilder sheetBuilder = new SheetBuilder()
+        ISheetBuilder sheetBuilder = new SheetBuilder()
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views);
 
-        Sheet sheet = sheetBuilder.Build();
+        Sheet sheet = (Sheet)sheetBuilder.Build();
         Model model = new();
         model.AddElements(sheet);
 

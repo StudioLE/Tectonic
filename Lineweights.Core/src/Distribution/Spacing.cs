@@ -1,4 +1,4 @@
-﻿namespace Lineweights.Flex.Coordination;
+﻿namespace Lineweights.Core.Distribution;
 
 /// <summary>
 /// Spacing around an <see cref="Element"/>.
@@ -8,17 +8,22 @@ public struct Spacing
     /// <summary>
     /// The size of spacing in the x axis.
     /// </summary>
-    public double X { get; init; }
+    public double X { get; set; } = 0;
 
     /// <summary>
     /// The size of spacing in the y axis.
     /// </summary>
-    public double Y { get; init; }
+    public double Y { get; set; } = 0;
 
     /// <summary>
     /// The size of spacing in the z axis.
     /// </summary>
-    public double Z { get; init; }
+    public double Z { get; set; } = 0;
+
+    /// <inheritdoc cref="Spacing"/>
+    public Spacing()
+    {
+    }
 
     /// <inheritdoc cref="Spacing"/>
     public Spacing(double spacing)

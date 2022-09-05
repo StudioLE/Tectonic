@@ -1,5 +1,5 @@
-﻿using Lineweights.Drawings.Rendering;
-using Lineweights.Flex.Coordination;
+﻿using Lineweights.Core.Distribution;
+using Lineweights.Drawings.Rendering;
 using StudioLE.Core.Exceptions;
 
 namespace Lineweights.Drawings;

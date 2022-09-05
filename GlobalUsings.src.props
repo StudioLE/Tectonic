@@ -6,6 +6,7 @@
     <Using Include="Elements.Geometry" />
     <Using Include="Elements.Geometry.Solids" />
     <Using Include="GeometryEx" />
+    <Using Include="Lineweights.Core.Abstractions" />
     <Using Include="Lineweights.Core.Constraints" />
     <Using Include="Lineweights.Core.Elements" />
     <Using Include="Lineweights.Core.Geometry" />

@@ -1,4 +1,4 @@
-﻿namespace Lineweights.Flex.Coordination;
+﻿namespace Lineweights.Core.Distribution;
 
 /// <summary>
 /// Methods to help with coordinating dimensions such as those used in brickwork.

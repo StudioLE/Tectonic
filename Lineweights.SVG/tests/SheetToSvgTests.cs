@@ -41,7 +41,7 @@ internal sealed class SheetToSvgTests
                 .Build())
             .ToArray();
 
-        SheetBuilder builder = new SheetBuilder()
+        ISheetBuilder builder = new SheetBuilder()
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
@@ -50,7 +50,7 @@ internal sealed class SheetToSvgTests
                 viewArrangement.MainJustification(Justification.SpaceEvenly);
                 viewArrangement.CrossJustification(Justification.SpaceEvenly);
             });
-        Sheet sheet = builder.Build();
+        Sheet sheet = (Sheet)builder.Build();
 
         // Act
         SvgDocument svgDocument = _converter.Convert(sheet);
@@ -84,7 +84,7 @@ internal sealed class SheetToSvgTests
                 .Build())
             .ToArray();
 
-        SheetBuilder builder = new SheetBuilder()
+        ISheetBuilder builder = new SheetBuilder()
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
@@ -93,7 +93,7 @@ internal sealed class SheetToSvgTests
                 viewArrangement.MainJustification(Justification.SpaceEvenly);
                 viewArrangement.CrossJustification(Justification.SpaceEvenly);
             });
-        Sheet sheet = builder.Build();
+        Sheet sheet = (Sheet)builder.Build();
 
         // Act
         SvgDocument svgDocument = _converter.Convert(sheet);
@@ -127,7 +127,7 @@ internal sealed class SheetToSvgTests
                 .Build())
             .ToArray();
 
-        SheetBuilder builder = new SheetBuilder()
+        ISheetBuilder builder = new SheetBuilder()
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
@@ -136,7 +136,7 @@ internal sealed class SheetToSvgTests
                 viewArrangement.MainJustification(Justification.SpaceEvenly);
                 viewArrangement.CrossJustification(Justification.SpaceEvenly);
             });
-        Sheet sheet = builder.Build();
+        Sheet sheet = (Sheet)builder.Build();
 
         // Act
         SvgDocument svgDocument = _converter.Convert(sheet);
@@ -171,7 +171,7 @@ internal sealed class SheetToSvgTests
                 .Build())
             .ToArray();
 
-        SheetBuilder builder = new SheetBuilder()
+        ISheetBuilder builder = new SheetBuilder()
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
@@ -180,7 +180,7 @@ internal sealed class SheetToSvgTests
                 viewArrangement.MainJustification(Justification.SpaceEvenly);
                 viewArrangement.CrossJustification(Justification.SpaceEvenly);
             });
-        Sheet sheet = builder.Build();
+        Sheet sheet = (Sheet)builder.Build();
 
         // Act
         SvgDocument svgDocument = _converter.Convert(sheet);

@@ -1,4 +1,4 @@
-﻿using Lineweights.Flex.Coordination;
+﻿using Lineweights.Core.Distribution;
 using StudioLE.Core.System;
 
 namespace Lineweights.Flex;

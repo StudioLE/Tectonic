@@ -1,4 +1,4 @@
-﻿using Lineweights.Flex.Coordination;
+﻿using Lineweights.Core.Distribution;
 using Lineweights.Flex.Sequences;
 using StudioLE.Core.Exceptions;
 

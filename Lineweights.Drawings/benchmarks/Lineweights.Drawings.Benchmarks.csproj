@@ -8,6 +8,13 @@
   <!-- Use consistent properties across all tests projects -->
   <Import Project="..\..\GlobalProperties.src.props" />
 
+
+  <ItemGroup>
+    <Using Remove="System.IO" />
+    <Using Include="Elements" />
+    <Using Include="Lineweights.Core.Abstractions" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
   </ItemGroup>

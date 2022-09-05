@@ -1,4 +1,4 @@
-﻿using Lineweights.Flex.Coordination;
+﻿using Lineweights.Core.Distribution;
 
 namespace Lineweights.Drawings;
 
