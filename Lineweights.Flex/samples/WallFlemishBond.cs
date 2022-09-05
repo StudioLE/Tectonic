@@ -30,13 +30,18 @@ public static class WallFlemishBond
         Line line = new(Vector3.Origin, Vector3.XAxis, inputs.WallLength);
         StandardWall wall = new(line, inputs.WallDepth, inputs.WallHeight);
 
-        // Configure the pattern
-        var patternA = RepeatingSequence.WithoutOverflow(Brick.Stretcher.CreateInstance(), Brick.Half.CreateInstance())
-            .AddConstraint(new IsOdd())
-            .ConstraintMode(ConstraintMode.Or);
-        var patternB = RepeatingSequence.WithoutOverflow(Brick.Half.CreateInstance(), Brick.Stretcher.CreateInstance())
-            .AddConstraint(new IsOdd())
-            .ConstraintMode(ConstraintMode.Or);
+        // Configure the sequence
+        ISequenceBuilder sequenceA = new SequenceBuilder()
+            .Repetition(true)
+            .OddCondition()
+            .Body(Brick.Stretcher, Brick.Half);
+        ISequenceBuilder sequenceB = new SequenceBuilder()
+            .Repetition(true)
+            .OddCondition()
+            .Body(Brick.Half, Brick.Stretcher);
+        ISequenceBuilder crossSequence = new SequenceBuilder()
+            .Repetition(true)
+            .Overflow(true);
 
         // Configure the builder
         Flex2d builder = new Flex2d()
@@ -47,8 +52,8 @@ public static class WallFlemishBond
             .CrossAlignment(Alignment.Center)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainPatterns(patternA, patternB)
-            .CrossPattern(RepeatingSequence.WithOverflow());
+            .MainSequence(sequenceA, sequenceB)
+            .CrossSequence(crossSequence);
 
         // Run the builder
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();

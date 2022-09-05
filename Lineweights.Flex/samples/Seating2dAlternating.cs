@@ -31,11 +31,17 @@ public static class Seating2dAlternating
         ElementInstance seat = new Seat("Seat").CreateInstance();
         Space auditorium = new(Polygon.Rectangle(inputs.AuditoriumWidth, inputs.AuditoriumLength), inputs.AuditoriumHeight);
 
-        // Configure the pattern
-        var patternA = RepeatingSequence.WithoutOverflow(seat);
-        var patternB = RepeatingSequence
-            .WithoutOverflow(seat)
-            .AdjustTakeCount(-1);
+        // Configure the sequence
+        ISequenceBuilder oddSequence = new SequenceBuilder()
+            .Repetition(true)
+            .OddCondition()
+            .Body(seat);
+        ISequenceBuilder evenSequence = new SequenceBuilder()
+            .Repetition(true)
+            .EvenCondition()
+            .Body(seat);
+        ISequenceBuilder crossSequence = new SequenceBuilder()
+            .Repetition(true);
 
         // Configure the builder
         Flex2d builder = new Flex2d()
@@ -45,10 +51,8 @@ public static class Seating2dAlternating
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainPatterns(patternA, patternB)
-            .CrossPattern(RepeatingSequence.WithoutOverflow());
-
-        // TODO: Chairs are being crated upside down...
+            .MainSequence(oddSequence, evenSequence)
+            .CrossSequence(crossSequence);
 
         // Run the builder
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();

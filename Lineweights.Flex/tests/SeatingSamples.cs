@@ -16,12 +16,12 @@ internal sealed class SeatingSamples
         // Act
         Samples.Seating1dLinear.Outputs outputs = Samples.Seating1dLinear.Execute(inputs);
 
+        // Preview
+        Model.AddElements(outputs.Model.Elements.Values);
+
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
         await Verify.ElementsByBounds(components);
-
-        // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
     }
 
     [Test]
@@ -33,12 +33,12 @@ internal sealed class SeatingSamples
         // Act
         Samples.Seating1dRadial.Outputs outputs = Samples.Seating1dRadial.Execute(inputs);
 
+        // Preview
+        Model.AddElements(outputs.Model.Elements.Values);
+
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
         await Verify.ElementsByBounds(components);
-
-        // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
     }
 
     [Test]
@@ -50,11 +50,11 @@ internal sealed class SeatingSamples
         // Act
         Samples.Seating2dAlternating.Outputs outputs = Samples.Seating2dAlternating.Execute(inputs);
 
+        // Preview
+        Model.AddElements(outputs.Model.Elements.Values);
+
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
         await Verify.ElementsByBounds(components);
-
-        // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
     }
 }

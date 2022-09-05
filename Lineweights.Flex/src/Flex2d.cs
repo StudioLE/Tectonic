@@ -28,15 +28,15 @@ public sealed class Flex2d : FlexBase
     /// <summary>
     /// The strategies for repeating elements along the main axis.
     /// </summary>
-    private IReadOnlyCollection<SequenceBuilder> _mainPatterns = Array.Empty<SequenceBuilder>();
+    private IReadOnlyCollection<ISequenceBuilder> _mainSequences = Array.Empty<ISequenceBuilder>();
 
     /// <summary>
     /// The strategy for repeating elements along the cross axis.
     /// </summary>
     /// <remarks>
-    /// <see cref="SequenceBuilder._items"/> is set to the assembly created by <see cref="_mainPatterns"/>.
+    /// <see cref="SequenceBuilder.Body"/> is set to the assembly created by <see cref="_mainSequences"/>.
     /// </remarks>
-    private SequenceBuilder _crossSequence = NonRepeatingSequence.WithoutOverflow();
+    private ISequenceBuilder _crossSequence = new SequenceBuilder();
 
     #endregion
 
@@ -104,15 +104,15 @@ public sealed class Flex2d : FlexBase
         return this;
     }
 
-    /// <inheritdoc cref="_mainPatterns"/>
-    public Flex2d MainPatterns(params SequenceBuilder[] patterns)
+    /// <inheritdoc cref="_mainSequences"/>
+    public Flex2d MainSequence(params ISequenceBuilder[] sequences)
     {
-        _mainPatterns = patterns;
+        _mainSequences = sequences;
         return this;
     }
 
     /// <inheritdoc cref="_crossSequence"/>
-    public Flex2d CrossPattern(SequenceBuilder sequence)
+    public Flex2d CrossSequence(ISequenceBuilder sequence)
     {
         _crossSequence = sequence;
         return this;
@@ -131,8 +131,11 @@ public sealed class Flex2d : FlexBase
             throw new("Failed to build. Build can only be called once.");
         if (_container is null)
             throw new($"Failed to build {nameof(Flex2d)}. Container is not set.");
+
         IReadOnlyCollection<ElementInstance> assemblies = DistributeInMainAxis();
-        _crossSequence.Items(assemblies.ToArray());
+
+        _crossSequence.Body(assemblies.ToArray());
+
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = DistributeInCrossAxis();
 
         // TODO: You'll now need to transform to the setting out point.
@@ -151,11 +154,21 @@ public sealed class Flex2d : FlexBase
             .CrossAlignment(_crossAlignment)
             .NormalAlignment(_normalAlignment);
 
-        IReadOnlyCollection<ElementInstance> assemblies = _mainPatterns
-            .SelectMany(pattern => pattern is WrappingSequence wrapping
-                ? wrapping.Split(mainBuilder)
-                : new[] { pattern })
-            .Select(pattern1d => CreateAssembly(mainBuilder, pattern1d))
+        ISequenceBuilder[] split = _mainSequences
+            .SelectMany(sequence => sequence
+                .Context(mainBuilder)
+                .MaxLengthConstraint()
+                .SplitWrapping())
+            .ToArray();
+
+        IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> sequences = split
+            .Select(sequence => mainBuilder
+                .Sequence(sequence)
+                .Build())
+            .ToArray();
+
+        IReadOnlyCollection<ElementInstance> assemblies = sequences
+            .Select(elements => CreateAssembly(mainBuilder, elements))
             .ToArray();
 
         return assemblies;
@@ -170,7 +183,7 @@ public sealed class Flex2d : FlexBase
             .NormalSettingOut(Alignment.Center)
             //.SetCrossAlignment(CrossAlignment)
             //.SetNormalAlignment(NormalAlignment)
-            .Pattern(_crossSequence);
+            .Sequence(_crossSequence);
 
         Assemblies = crossBuilder.Build();
         return Assemblies
@@ -179,10 +192,21 @@ public sealed class Flex2d : FlexBase
 
     }
 
-    private ElementInstance CreateAssembly(Flex1d builder, SequenceBuilder pattern)
+    private ElementInstance CreateAssembly(Flex1d builder, IReadOnlyCollection<Element> elements)
     {
-        builder.Pattern(pattern);
-        IReadOnlyCollection<ElementInstance> instances = builder.Build();
+        ElementInstance[] instances = elements
+            .Select(element => element switch
+            {
+                // TODO: We should limit Sequence to only returning GeometricElement. Then we create instances somewhere appropriate (not here)
+                GeometricElement geometric => geometric.CreateInstance(),
+                ElementInstance instance => instance.BaseDefinition.CreateInstance(instance.Transform, string.Empty),
+                _ => throw new TypeSwitchException<Element>("Failed to create instance.", element)
+            })
+            .ToArray();
+
+        if (!instances.Any())
+            throw new("Failed to create assembly. There were no instances.");
+
         Line line = Validate.IsTypeOrThrow<Line>(builder._curve, $"Failed to convert {nameof(Flex2d)} to assembly.");
         if (!line.PointAt(0.5).IsAlmostEqualTo(Vector3.Origin))
             throw new($"Failed to convert {nameof(Flex2d)} to assembly. Expected line to be at origin.");

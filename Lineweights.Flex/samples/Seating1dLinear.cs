@@ -24,7 +24,9 @@ public static class Seating1dLinear
         ElementInstance seat = new Seat("Seat").CreateInstance();
 
         // Configure the pattern
-        var pattern = RepeatingSequence.WithoutOverflow(seat);
+        ISequenceBuilder sequence = new SequenceBuilder()
+            .Repetition(true)
+            .Body(seat);
 
         // Configure the builder
         Flex1d builder = new Flex1d()
@@ -33,7 +35,7 @@ public static class Seating1dLinear
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .Pattern(pattern);
+            .Sequence(sequence);
 
         // Run the builder
         IReadOnlyCollection<ElementInstance> components = builder.Build();

@@ -8,9 +8,9 @@ internal sealed class Flex2dTests
 {
     private readonly Model _model = new();
     private Brick Container { get; }
-    private SequenceBuilder StretcherSoldier { get; }
-    private SequenceBuilder SoldierStretcher { get; }
-    private SequenceBuilder StretcherHeader { get; }
+    private ISequenceBuilder StretcherSoldier { get; }
+    private ISequenceBuilder SoldierStretcher { get; }
+    private ISequenceBuilder StretcherHeader { get; }
 
     public Flex2dTests()
     {
@@ -22,9 +22,18 @@ internal sealed class Flex2dTests
         {
             Material = MaterialByName("Gray")
         };
-        StretcherSoldier = RepeatingSequence.MaxCount(20, Brick.Stretcher.CreateInstance(), Brick.Soldier.CreateInstance());
-        SoldierStretcher = RepeatingSequence.MaxCount(20, Brick.Soldier.CreateInstance(), Brick.Stretcher.CreateInstance());
-        StretcherHeader = RepeatingSequence.MaxCount(20, Brick.Stretcher.CreateInstance(), Brick.Header.CreateInstance());
+        StretcherSoldier = new SequenceBuilder()
+            .Repetition(true)
+            .MaxCountConstraint(20)
+            .Body(Brick.Stretcher, Brick.Soldier);
+        SoldierStretcher = new SequenceBuilder()
+            .Repetition(true)
+            .MaxCountConstraint(20)
+            .Body(Brick.Soldier, Brick.Stretcher);
+        StretcherHeader = new SequenceBuilder()
+            .Repetition(true)
+            .MaxCountConstraint(20)
+            .Body(Brick.Stretcher, Brick.Header);
     }
 
     [SetUp]
@@ -49,7 +58,7 @@ internal sealed class Flex2dTests
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainPatterns(StretcherSoldier, SoldierStretcher);
+            .MainSequence(StretcherSoldier, SoldierStretcher);
         await ExecuteTest(builder);
     }
 
@@ -65,7 +74,7 @@ internal sealed class Flex2dTests
             .CrossAlignment(crossAlignment)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainPatterns(StretcherHeader, StretcherHeader);
+            .MainSequence(StretcherHeader, StretcherHeader);
         await ExecuteTest(builder);
     }
 
@@ -85,7 +94,7 @@ internal sealed class Flex2dTests
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainPatterns(StretcherSoldier, SoldierStretcher);
+            .MainSequence(StretcherSoldier, SoldierStretcher);
         await ExecuteTest(builder);
     }
 
@@ -102,7 +111,7 @@ internal sealed class Flex2dTests
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(alignment)
-            .MainPatterns(StretcherSoldier, SoldierStretcher);
+            .MainSequence(StretcherSoldier, SoldierStretcher);
         await ExecuteTest(builder);
     }
 
@@ -123,7 +132,7 @@ internal sealed class Flex2dTests
             .CrossAlignment(Alignment.Center)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainPatterns(StretcherSoldier, SoldierStretcher);
+            .MainSequence(StretcherSoldier, SoldierStretcher);
         await ExecuteTest(builder);
     }
 
@@ -137,6 +146,9 @@ internal sealed class Flex2dTests
     public async Task Flex2d_InvertedCrossAxis(Justification justification)
     {
         // Arrange
+        ISequenceBuilder crossSequence = new SequenceBuilder()
+            .Repetition(true)
+            .MaxCountConstraint(3);
         Flex2d builder = new Flex2d()
             .Container(Container)
             .Orientation(Vector3.XAxis, Vector3.YAxis.Negate(), Vector3.ZAxis)
@@ -145,8 +157,8 @@ internal sealed class Flex2dTests
             .CrossAlignment(Alignment.Center)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainPatterns(StretcherHeader)
-            .CrossPattern(RepeatingSequence.MaxCount(3));
+            .MainSequence(StretcherHeader)
+            .CrossSequence(crossSequence);
         await ExecuteTest(builder);
     }
 

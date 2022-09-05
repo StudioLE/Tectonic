@@ -1,5 +1,6 @@
 ﻿using Ardalis.Result;
 using Lineweights.Core.Distribution;
+using StudioLE.Core.Exceptions;
 
 namespace Lineweights.Flex;
 
@@ -94,6 +95,15 @@ internal sealed class Proxy
             MinSpacing = spacing;
     }
 
+    public static Proxy Create(Element element)
+    {
+        return element switch
+        {
+            GeometricElement geometric => new(geometric),
+            ElementInstance instance => new(instance),
+            _ => throw new TypeSwitchException<Element>("Failed to create proxy", element)
+        };
+    }
 
     /// <summary>
     /// Get the bounds of a <see cref="GeometricElement"/>.

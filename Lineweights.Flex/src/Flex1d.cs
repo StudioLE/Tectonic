@@ -25,7 +25,7 @@ public sealed class Flex1d : FlexBase
     /// <summary>
     /// The strategy for repeating elements along the main axis.
     /// </summary>
-    private SequenceBuilder? _pattern;
+    private ISequenceBuilder? _sequence;
 
     internal IReadOnlyCollection<Proxy> _proxies = Array.Empty<Proxy>();
 
@@ -114,10 +114,10 @@ public sealed class Flex1d : FlexBase
         return this;
     }
 
-    /// <inheritdoc cref="_pattern"/>
-    public Flex1d Pattern(SequenceBuilder sequence)
+    /// <inheritdoc cref="_sequence"/>
+    public Flex1d Sequence(ISequenceBuilder sequence)
     {
-        _pattern = sequence;
+        _sequence = sequence;
         return this;
     }
 
@@ -174,11 +174,15 @@ public sealed class Flex1d : FlexBase
 
     private IReadOnlyCollection<Proxy> DistributeProxies()
     {
-        if (_pattern is null)
+        if (_sequence is null)
             throw new($"Failed to build {nameof(Flex1d)}. Pattern is not set.");
         if (!_isBoundsSet)
             throw new($"Failed to build {nameof(Flex1d)}. Bounds are not set.");
-        Proxy[] components = _pattern.Build(this).ToArray();
+        IReadOnlyCollection<Element> sequence = _sequence
+            .Context(this)
+            .MaxLengthConstraint()
+            .Build();
+        Proxy[] components = sequence.Select(Proxy.Create).ToArray();
         components = ApplyJustification(components, _mainJustification);
         components = ApplyAlignment(components, _crossAlignment, _crossAxis);
         components = ApplyAlignment(components, _normalAlignment, _normalAxis);
@@ -229,6 +233,8 @@ public sealed class Flex1d : FlexBase
 
     private static Proxy[] ApplyAlignment(Proxy[] components, Alignment alignment, Vector3 axis)
     {
+        if (!components.Any())
+            return components;
         double maxDimension = components.Max(component => CO.Minus(axis.Dimension(component.Bounds)));
         return components.Select(item =>
             {
@@ -240,6 +246,8 @@ public sealed class Flex1d : FlexBase
 
     private static Proxy[] ApplySettingOut(Proxy[] components, Alignment settingOut, Vector3 axis)
     {
+        if (!components.Any())
+            return components;
         double max = components.Max(component => CO.Minus(axis.Dimension(component.Bounds)));
         return components.Select(component =>
             {
@@ -251,8 +259,10 @@ public sealed class Flex1d : FlexBase
 
     internal double MainDimensionWithMinSpacing(IReadOnlyCollection<Proxy> components)
     {
-        return components.Sum(component => CO.Nominal(_mainAxis.Dimension(component.Bounds), _mainAxis.Dimension(component.MinSpacing)))
-               - _mainAxis.Dimension(components.Last().MinSpacing);
+        return components.Count > 0
+            ? components.Sum(component => CO.Nominal(_mainAxis.Dimension(component.Bounds), _mainAxis.Dimension(component.MinSpacing)))
+              - _mainAxis.Dimension(components.Last().MinSpacing)
+            : 0;
     }
 
     private double MainDimensionWithoutMinSpacing(IReadOnlyCollection<Proxy> components)

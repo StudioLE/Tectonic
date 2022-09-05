@@ -41,13 +41,13 @@ public static class MathHelpers
     }
 
     /// <inheritdoc cref="Math.Ceiling(double)"/>
-    public static int Ceiling(this double @this)
+    public static int CeilingToInt(this double @this)
     {
         return (int)Math.Ceiling(@this);
     }
 
     /// <inheritdoc cref="Math.Floor(double)"/>
-    public static int Floor(this double @this)
+    public static int FloorToInt(this double @this)
     {
         return (int)Math.Floor(@this);
     }

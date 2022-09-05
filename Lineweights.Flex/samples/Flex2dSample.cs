@@ -82,8 +82,8 @@ public static class Flex2dSample
             Material = MaterialByName("Gray")
         };
 
-        SequenceBuilder firstSequence = GetSequenceByInputs(firstSequenceInputs);
-        SequenceBuilder secondSequence = GetSequenceByInputs(secondSequenceInputs);
+        ISequenceBuilder firstSequence = GetSequenceByInputs(firstSequenceInputs);
+        ISequenceBuilder secondSequence = GetSequenceByInputs(secondSequenceInputs);
 
         Flex2d builder = new Flex2d()
             .Container(container)
@@ -92,7 +92,7 @@ public static class Flex2dSample
             .CrossAlignment(flexInputs.CrossAlignment)
             .NormalAlignment(flexInputs.NormalAlignment)
             .NormalSettingOut(flexInputs.NormalSettingOut)
-            .MainPatterns(firstSequence, secondSequence);
+            .MainSequence(firstSequence, secondSequence);
 
         Outputs outputs = new();
 
@@ -114,16 +114,16 @@ public static class Flex2dSample
         return outputs;
     }
 
-    private static SequenceBuilder GetSequenceByInputs(SequenceInputs inputs)
+    private static ISequenceBuilder GetSequenceByInputs(SequenceInputs inputs)
     {
-        ElementInstance stretcher = Brick.Stretcher.CreateInstance();
-        ElementInstance soldier = Brick.Soldier.CreateInstance();
-        ElementInstance header = Brick.Header.CreateInstance();
+        ISequenceBuilder sequence = new SequenceBuilder()
+            .Repetition(true)
+            .MaxCountConstraint(inputs.MaxCount);
         return inputs.Type switch
         {
-            SequenceInputs.SequenceType.StretcherSoldier => RepeatingSequence.MaxCount(inputs.MaxCount, stretcher, soldier),
-            SequenceInputs.SequenceType.SoldierStretcher => RepeatingSequence.MaxCount(inputs.MaxCount, soldier, stretcher),
-            SequenceInputs.SequenceType.StretcherHeader => RepeatingSequence.MaxCount(inputs.MaxCount, stretcher, header),
+            SequenceInputs.SequenceType.StretcherSoldier => sequence.Body(Brick.Stretcher, Brick.Soldier),
+            SequenceInputs.SequenceType.SoldierStretcher => sequence.Body(Brick.Soldier, Brick.Stretcher),
+            SequenceInputs.SequenceType.StretcherHeader => sequence.Body(Brick.Stretcher, Brick.Header),
             _ => throw new EnumSwitchException<SequenceInputs.SequenceType>($"Failed to {nameof(GetSequenceByInputs)}", inputs.Type)
         };
     }

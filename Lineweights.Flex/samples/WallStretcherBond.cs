@@ -30,11 +30,19 @@ public static class WallStretcherBond
         Line line = new(Vector3.Origin, Vector3.XAxis, inputs.WallLength);
         StandardWall wall = new(line, inputs.WallDepth, inputs.WallHeight);
 
-        // Configure the pattern
-        var patternA = RepeatingSequence.WithOverflow(Brick.Stretcher.CreateInstance());
-        var patternB = RepeatingSequence.WithOverflow(Brick.Stretcher.CreateInstance())
-            .PrependedItems(Brick.Half.CreateInstance())
-            .AppendedItems(Brick.Half.CreateInstance());
+        ISequenceBuilder sequenceA = new SequenceBuilder()
+            .Repetition(true)
+            .Overflow(true)
+            .Body(Brick.Stretcher);
+        ISequenceBuilder sequenceB = new SequenceBuilder()
+            .Repetition(true)
+            .Overflow(true)
+            .Body(Brick.Stretcher)
+            .Append(Brick.Half)
+            .Prepend(Brick.Half);
+        ISequenceBuilder crossSequence = new SequenceBuilder()
+            .Repetition(true)
+            .Overflow(true);
 
         // Configure the builder
         Flex2d builder = new Flex2d()
@@ -45,8 +53,8 @@ public static class WallStretcherBond
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainPatterns(patternA, patternB)
-            .CrossPattern(RepeatingSequence.WithOverflow());
+            .MainSequence(sequenceA, sequenceB)
+            .CrossSequence(crossSequence);
 
         // Run the builder
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();
@@ -60,6 +68,7 @@ public static class WallStretcherBond
 
         // Write sample file
 #if false
+// TODO: remove this
         Scenes.ToJson(Scenes.Name.Brickwork, componentsFlattened);
 #endif
 

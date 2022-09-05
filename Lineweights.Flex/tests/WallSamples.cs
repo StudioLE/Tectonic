@@ -16,12 +16,12 @@ internal sealed class WallSamples
         // Act
         Samples.WallStretcherBond.Outputs outputs = Samples.WallStretcherBond.Execute(inputs);
 
+        // Preview
+        Model.AddElements(outputs.Model.Elements.Values);
+
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
         await Verify.ElementsByBounds(components);
-
-        // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
     }
 
     [Test]
@@ -33,11 +33,11 @@ internal sealed class WallSamples
         // Act
         Samples.WallFlemishBond.Outputs outputs = Samples.WallFlemishBond.Execute(inputs);
 
+        // Preview
+        Model.AddElements(outputs.Model.Elements.Values);
+
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
         await Verify.ElementsByBounds(components);
-
-        // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
     }
 }

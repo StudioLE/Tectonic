@@ -10,8 +10,8 @@ internal sealed class Flex1dTests
     private Line Line { get; }
     private Vector3 CrossAxis { get; }
     private Arc Arc { get; }
-    private SequenceBuilder StretcherSoldier { get; }
-    private SequenceBuilder StretcherHeader { get; }
+    private ISequenceBuilder StretcherSoldier { get; }
+    private ISequenceBuilder StretcherHeader { get; }
 
     public Flex1dTests()
     {
@@ -19,8 +19,14 @@ internal sealed class Flex1dTests
         Line = new(Vector3.Origin, Vector3.XAxis, length);
         CrossAxis = Vector3.YAxis;
         Arc = new(3, 0, 90);
-        StretcherSoldier = RepeatingSequence.MaxCount(20, Brick.Stretcher.CreateInstance(), Brick.Soldier.CreateInstance());
-        StretcherHeader = RepeatingSequence.MaxCount(20, Brick.Stretcher.CreateInstance(), Brick.Header.CreateInstance());
+        StretcherSoldier = new SequenceBuilder()
+            .Repetition(true)
+            .MaxCountConstraint(20)
+            .Body(Brick.Stretcher, Brick.Soldier);
+        StretcherHeader = new SequenceBuilder()
+            .Repetition(true)
+            .MaxCountConstraint(20)
+            .Body(Brick.Stretcher, Brick.Header);
     }
 
     [SetUp]
@@ -45,7 +51,7 @@ internal sealed class Flex1dTests
             .CrossSettingOut(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .Pattern(StretcherHeader);
+            .Sequence(StretcherHeader);
         await ExecuteTest(builder);
     }
 
@@ -65,7 +71,7 @@ internal sealed class Flex1dTests
             .CrossSettingOut(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .Pattern(StretcherSoldier);
+            .Sequence(StretcherSoldier);
         await ExecuteTest(builder);
     }
 
@@ -82,7 +88,7 @@ internal sealed class Flex1dTests
             .CrossSettingOut(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .Pattern(StretcherHeader);
+            .Sequence(StretcherHeader);
         await ExecuteTest(builder);
     }
 
@@ -99,7 +105,7 @@ internal sealed class Flex1dTests
             .CrossSettingOut(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(settingOut)
-            .Pattern(StretcherHeader);
+            .Sequence(StretcherHeader);
         await ExecuteTest(builder);
     }
 
@@ -116,7 +122,7 @@ internal sealed class Flex1dTests
             .CrossSettingOut(settingOut)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .Pattern(StretcherHeader);
+            .Sequence(StretcherHeader);
         await ExecuteTest(builder);
     }
 
@@ -133,7 +139,7 @@ internal sealed class Flex1dTests
             .CrossSettingOut(Alignment.Start)
             .NormalAlignment(alignment)
             .NormalSettingOut(Alignment.Start)
-            .Pattern(StretcherSoldier);
+            .Sequence(StretcherSoldier);
         await ExecuteTest(builder);
     }
 
@@ -153,7 +159,7 @@ internal sealed class Flex1dTests
             .CrossSettingOut(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .Pattern(StretcherSoldier);
+            .Sequence(StretcherSoldier);
 
         // Act
         //IReadOnlyCollection<ElementInstance> instances = builder.ToInstances().ToArray();
@@ -186,7 +192,7 @@ internal sealed class Flex1dTests
             .NormalAlignment(Alignment.Center)
             .CrossSettingOut(Alignment.Center)
             .NormalSettingOut(Alignment.Center)
-            .Pattern(StretcherHeader);
+            .Sequence(StretcherHeader);
 
         // Act
         //IReadOnlyCollection<ElementInstance> instances = builder.ToInstances().ToArray();
@@ -222,7 +228,7 @@ internal sealed class Flex1dTests
             .CrossSettingOut(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .Pattern(StretcherHeader);
+            .Sequence(StretcherHeader);
 
         // Act
         IReadOnlyCollection<ElementInstance> components = builder.Build();
