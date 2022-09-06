@@ -30,13 +30,11 @@ public class TimeComponentBase : ComponentBase, IDisposable
     /// </summary>
     private void RefreshAtIntervals()
     {
-        Logger.LogDebug($"{nameof(RefreshAtIntervals)} called. DateTime: {DateTime}");
         _timer = new(OnInterval, null, _initialDelay, _interval);
     }
 
     private void OnInterval(object? _)
     {
-        Logger.LogDebug($"{nameof(OnInterval)} called. DateTime: {DateTime}");
         InvokeAsync(StateHasChanged);
     }
 

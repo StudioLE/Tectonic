@@ -10,6 +10,10 @@ public class AssetComponentBase : ComponentBase
     [Inject]
     protected ILogger<AssetComponent> Logger { get; set; } = default!;
 
+    /// <inheritdoc cref="AssetState"/>
+    [Inject]
+    protected AssetState State { get; set; } = default!;
+
     /// <summary>
     /// The id of the card.
     /// </summary>
@@ -17,19 +21,13 @@ public class AssetComponentBase : ComponentBase
     public Asset Asset { get; set; } = default!;
 
     /// <summary>
-    /// Should the card be hidden?
+    /// Remove the asset from the collection.
     /// </summary>
-    protected bool IsHidden { get; set; } = false;
-
-    /// <summary>
-    /// Hide this tile.
-    /// </summary>
-    protected void Hide()
+    protected void Remove()
     {
-        Logger.LogDebug($"{nameof(Hide)}() called on result {Asset.Info.Id}.");
+        Logger.LogDebug($"{nameof(Remove)}() called on result {Asset.Info.Id}.");
 
-        // TODO: Instead of this remove it from the observable collection
-        IsHidden = true;
+        State.Assets.Remove(Asset);
 
         //InvokeAsync(StateHasChanged);
     }
