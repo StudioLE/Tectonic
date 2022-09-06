@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj" />
-    <ProjectReference Include="..\..\Lineweights.Flex\src\Lineweights.Flex.csproj" />
   </ItemGroup>
 
 </Project>

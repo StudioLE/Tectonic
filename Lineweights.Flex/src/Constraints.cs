@@ -1,12 +1,10 @@
-﻿namespace Lineweights.Flex.Sequences;
+﻿namespace Lineweights.Flex;
 
 public static class Constraints
 {
-    public delegate bool Constraint(IReadOnlyCollection<Element> sequence, object context);
-
     public static ISequenceBuilder MaxLengthConstraint(this ISequenceBuilder @this)
     {
-        Constraint constraint = (sequence, context) =>
+        ISequenceBuilder.Constraint constraint = (sequence, context) =>
         {
             if (context is not Flex1d flex)
                 throw new($"Failed to create constraint. Expected context to be a {nameof(Flex1d)}");
@@ -20,7 +18,7 @@ public static class Constraints
 
     public static ISequenceBuilder MaxCountConstraint(this ISequenceBuilder @this, int maxCount)
     {
-        Constraint constraint = (sequence, context) => sequence.Count <= maxCount;
+        ISequenceBuilder.Constraint constraint = (sequence, context) => sequence.Count <= maxCount;
         @this.AddConstraint(constraint);
         return @this;
     }

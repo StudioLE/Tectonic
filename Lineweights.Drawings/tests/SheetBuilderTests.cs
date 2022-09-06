@@ -9,10 +9,14 @@ internal sealed class SheetBuilderTests
     private readonly Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
+    private ISequenceBuilder _sequenceBuilder = default!;
+    private IDistribution2dBuilder _defaultViewArrangement = default!;
 
     [SetUp]
     public void Setup()
     {
+        _sequenceBuilder = new SequenceBuilder();
+        _defaultViewArrangement = new DefaultViewArrangement();
         _model.AddElements(CreateModelArrows.ByTransform(new()));
     }
 
@@ -42,14 +46,16 @@ internal sealed class SheetBuilderTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder sheetBuilder = new SheetBuilder()
+        ISheetBuilder sheetBuilder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
             .ViewArrangement(viewArrangement =>
             {
-                viewArrangement.MainJustification(mainJustification);
-                viewArrangement.CrossJustification(crossJustification ?? mainJustification);
+                if (viewArrangement is not Flex2d flex)
+                    throw new NotSupportedException();
+                flex.MainJustification(mainJustification);
+                flex.CrossJustification(crossJustification ?? mainJustification);
             });
 
         // Act
@@ -89,14 +95,16 @@ internal sealed class SheetBuilderTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder sheetBuilder = new SheetBuilder()
+        ISheetBuilder sheetBuilder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
             .ViewArrangement(viewArrangement =>
             {
-                viewArrangement.MainJustification(mainJustification);
-                viewArrangement.CrossJustification(crossJustification ?? mainJustification);
+                if (viewArrangement is not Flex2d flex)
+                    throw new NotSupportedException();
+                flex.MainJustification(mainJustification);
+                flex.CrossJustification(crossJustification ?? mainJustification);
             });
 
         // Act

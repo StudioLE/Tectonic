@@ -1,4 +1,3 @@
-using Lineweights.Flex.Sequences;
 using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;

@@ -1,5 +1,4 @@
 ﻿using Lineweights.Core.Distribution;
-using Lineweights.Flex.Sequences;
 
 namespace Lineweights.Flex;
 

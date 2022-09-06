@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Lineweights.Flex.Sequences;
 using StudioLE.Core.Exceptions;
 
 namespace Lineweights.Flex.Samples;
@@ -86,13 +85,13 @@ public static class Flex2dSample
         ISequenceBuilder secondSequence = GetSequenceByInputs(secondSequenceInputs);
 
         Flex2d builder = new Flex2d()
-            .Container(container)
             .MainJustification(flexInputs.MainJustification)
             .CrossJustification(flexInputs.CrossJustification)
             .CrossAlignment(flexInputs.CrossAlignment)
             .NormalAlignment(flexInputs.NormalAlignment)
-            .NormalSettingOut(flexInputs.NormalSettingOut)
-            .MainSequence(firstSequence, secondSequence);
+            .NormalSettingOut(flexInputs.NormalSettingOut);
+        builder.MainSequence(firstSequence, secondSequence);
+        builder.Container(container);
 
         Outputs outputs = new();
 

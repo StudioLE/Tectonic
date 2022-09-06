@@ -1,11 +1,10 @@
 ﻿using Lineweights.Core.Distribution;
-using Lineweights.Flex.Sequences;
 using StudioLE.Core.Exceptions;
 
 namespace Lineweights.Flex;
 
 /// <inheritdoc cref="FlexBase"/>
-public sealed class Flex2d : FlexBase
+public class Flex2d : FlexBase, IDistribution2dBuilder
 {
     #region Fields
 
@@ -49,7 +48,7 @@ public sealed class Flex2d : FlexBase
     #region Builder methods
 
     /// <inheritdoc cref="_container"/>
-    public Flex2d Container(GeometricElement container)
+    public IDistribution2dBuilder Container(GeometricElement container)
     {
         _container = new(container);
         return this;
@@ -105,7 +104,7 @@ public sealed class Flex2d : FlexBase
     }
 
     /// <inheritdoc cref="_mainSequences"/>
-    public Flex2d MainSequence(params ISequenceBuilder[] sequences)
+    public IDistribution2dBuilder MainSequence(params ISequenceBuilder[] sequences)
     {
         _mainSequences = sequences;
         return this;

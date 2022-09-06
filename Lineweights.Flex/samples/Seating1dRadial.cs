@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using Lineweights.Flex.Samples.Elements;
-using Lineweights.Flex.Sequences;
 
 namespace Lineweights.Flex.Samples;
 

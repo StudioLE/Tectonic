@@ -1,4 +1,3 @@
-using Lineweights.Flex.Sequences;
 using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
@@ -53,12 +52,12 @@ internal sealed class Flex2dTests
     {
         // Arrange
         Flex2d builder = new Flex2d()
-            .Container(Container)
             .MainJustification(justification)
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
-            .NormalSettingOut(Alignment.Start)
-            .MainSequence(StretcherSoldier, SoldierStretcher);
+            .NormalSettingOut(Alignment.Start);
+        builder.MainSequence(StretcherSoldier, SoldierStretcher);
+        builder.Container(Container);
         await ExecuteTest(builder);
     }
 
@@ -69,12 +68,12 @@ internal sealed class Flex2dTests
     {
         // Arrange
         Flex2d builder = new Flex2d()
-            .Container(Container)
             .MainJustification(Justification.Start)
             .CrossAlignment(crossAlignment)
             .NormalAlignment(Alignment.Start)
-            .NormalSettingOut(Alignment.Start)
-            .MainSequence(StretcherHeader, StretcherHeader);
+            .NormalSettingOut(Alignment.Start);
+        builder.MainSequence(StretcherHeader, StretcherHeader);
+        builder.Container(Container);
         await ExecuteTest(builder);
     }
 
@@ -88,13 +87,13 @@ internal sealed class Flex2dTests
     {
         // Arrange
         Flex2d builder = new Flex2d()
-            .Container(Container)
             .MainJustification(Justification.Start)
             .CrossJustification(crossJustification)
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
-            .NormalSettingOut(Alignment.Start)
-            .MainSequence(StretcherSoldier, SoldierStretcher);
+            .NormalSettingOut(Alignment.Start);
+        builder.MainSequence(StretcherSoldier, SoldierStretcher);
+        builder.Container(Container);
         await ExecuteTest(builder);
     }
 
@@ -105,13 +104,13 @@ internal sealed class Flex2dTests
     {
         // Arrange
         Flex2d builder = new Flex2d()
-            .Container(Container)
             .MainJustification(Justification.Start)
             .CrossJustification(Justification.Start)
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
-            .NormalSettingOut(alignment)
-            .MainSequence(StretcherSoldier, SoldierStretcher);
+            .NormalSettingOut(alignment);
+        builder.MainSequence(StretcherSoldier, SoldierStretcher);
+        builder.Container(Container);
         await ExecuteTest(builder);
     }
 
@@ -125,14 +124,14 @@ internal sealed class Flex2dTests
     {
         // Arrange
         Flex2d builder = new Flex2d()
-            .Container(Container)
             .Orientation(Vector3.XAxis, Vector3.ZAxis, Vector3.YAxis)
             .MainJustification(Justification.Start)
             .CrossJustification(crossJustification)
             .CrossAlignment(Alignment.Center)
             .NormalAlignment(Alignment.Start)
-            .NormalSettingOut(Alignment.Start)
-            .MainSequence(StretcherSoldier, SoldierStretcher);
+            .NormalSettingOut(Alignment.Start);
+        builder.MainSequence(StretcherSoldier, SoldierStretcher);
+        builder.Container(Container);
         await ExecuteTest(builder);
     }
 
@@ -150,15 +149,15 @@ internal sealed class Flex2dTests
             .Repetition(true)
             .MaxCountConstraint(3);
         Flex2d builder = new Flex2d()
-            .Container(Container)
             .Orientation(Vector3.XAxis, Vector3.YAxis.Negate(), Vector3.ZAxis)
             .MainJustification(Justification.Start)
             .CrossJustification(justification)
             .CrossAlignment(Alignment.Center)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainSequence(StretcherHeader)
             .CrossSequence(crossSequence);
+        builder.MainSequence(StretcherHeader);
+        builder.Container(Container);
         await ExecuteTest(builder);
     }
 

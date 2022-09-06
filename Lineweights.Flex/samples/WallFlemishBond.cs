@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Lineweights.Flex.Sequences;
 
 namespace Lineweights.Flex.Samples;
 
@@ -45,15 +44,16 @@ public static class WallFlemishBond
 
         // Configure the builder
         Flex2d builder = new Flex2d()
-            .Container(wall)
             .Orientation(Vector3.XAxis, Vector3.ZAxis, Vector3.YAxis)
             .MainJustification(Justification.Center)
             .CrossJustification(Justification.Start)
             .CrossAlignment(Alignment.Center)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainSequence(sequenceA, sequenceB)
             .CrossSequence(crossSequence);
+
+        builder.MainSequence(sequenceA, sequenceB);
+        builder.Container(wall);
 
         // Run the builder
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();

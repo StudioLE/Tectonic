@@ -1,6 +1,4 @@
 ﻿using Lineweights.Core.Distribution;
-using Lineweights.Flex;
-using Lineweights.Flex.Sequences;
 
 namespace Lineweights.Drawings;
 
@@ -22,10 +20,16 @@ public sealed class SheetBuilder : ISheetBuilder
     internal IReadOnlyCollection<View>? _views;
     internal Spacing? _contentPadding;
     internal Spacing? _contentMargin;
-    internal Flex2d _viewArrangement = new Flex2d()
-        .Orientation(Vector3.XAxis, Vector3.YAxis.Negate(), Vector3.ZAxis)
-        .MainJustification(Justification.SpaceEvenly)
-        .CrossJustification(Justification.SpaceEvenly);
+
+    private readonly ISequenceBuilder _sequenceBuilder;
+    internal IDistribution2dBuilder _viewArrangement;
+    // internal Flex2d _viewArrangement =
+
+    public SheetBuilder(ISequenceBuilder sequenceBuilder, IDistribution2dBuilder viewArrangement)
+    {
+        _sequenceBuilder = sequenceBuilder;
+        _viewArrangement = viewArrangement;
+    }
 
     /// <summary>
     /// Build the <see cref="Sheet"/>.
@@ -96,7 +100,7 @@ public sealed class SheetBuilder : ISheetBuilder
         ElementInstance[] instances = _views
             .Select(x => x.CreateInstance())
             .ToArray();
-        ISequenceBuilder sequence = new SequenceBuilder()
+        ISequenceBuilder sequence = _sequenceBuilder
             .Wrapping(true)
             .Body(instances);
 

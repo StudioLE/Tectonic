@@ -37,15 +37,13 @@ public abstract class BenchmarksBase
                 .ViewDirection(direction)
                 .Build())
             .ToArray();
-        ISheetBuilder builder = new SheetBuilder()
+
+        ISequenceBuilder sequenceBuilder = new SequenceBuilder();
+        IDistribution2dBuilder defaultViewArrangement = new DefaultViewArrangement();
+        ISheetBuilder builder = new SheetBuilder(sequenceBuilder, defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
-            .Views(views)
-            .ViewArrangement(viewArrangement =>
-            {
-                viewArrangement.MainJustification(Justification.SpaceEvenly);
-                viewArrangement.CrossJustification(Justification.SpaceEvenly);
-            });
+            .Views(views);
         _sheet = (Sheet)builder.Build();
     }
 }

@@ -15,6 +15,15 @@ internal sealed class SheetToPdfTests
     private readonly Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
+    private ISequenceBuilder _sequenceBuilder = default!;
+    private IDistribution2dBuilder _defaultViewArrangement = default!;
+
+    [SetUp]
+    public void Setup()
+    {
+        _sequenceBuilder = new SequenceBuilder();
+        _defaultViewArrangement = new DefaultViewArrangement();
+    }
 
     [Test]
     public async Task SheetToPdf_Wireframe_Brickwork()
@@ -41,15 +50,10 @@ internal sealed class SheetToPdfTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder builder = new SheetBuilder()
+        ISheetBuilder builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
-            .Views(views)
-            .ViewArrangement(viewArrangement =>
-            {
-                viewArrangement.MainJustification(Justification.SpaceEvenly);
-                viewArrangement.CrossJustification(Justification.SpaceEvenly);
-            });
+            .Views(views);
         Sheet sheet = (Sheet)builder.Build();
 
         // Act
@@ -85,15 +89,10 @@ internal sealed class SheetToPdfTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder builder = new SheetBuilder()
+        ISheetBuilder builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
-            .Views(views)
-            .ViewArrangement(viewArrangement =>
-            {
-                viewArrangement.MainJustification(Justification.SpaceEvenly);
-                viewArrangement.CrossJustification(Justification.SpaceEvenly);
-            });
+            .Views(views);
         Sheet sheet = (Sheet)builder.Build();
 
         // Act
@@ -130,15 +129,10 @@ internal sealed class SheetToPdfTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder builder = new SheetBuilder()
+        ISheetBuilder builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
-            .Views(views)
-            .ViewArrangement(viewArrangement =>
-            {
-                viewArrangement.MainJustification(Justification.SpaceEvenly);
-                viewArrangement.CrossJustification(Justification.SpaceEvenly);
-            });
+            .Views(views);
         Sheet sheet = (Sheet)builder.Build();
 
         // Act
@@ -175,15 +169,10 @@ internal sealed class SheetToPdfTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder builder = new SheetBuilder()
+        ISheetBuilder builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
-            .Views(views)
-            .ViewArrangement(viewArrangement =>
-            {
-                viewArrangement.MainJustification(Justification.SpaceEvenly);
-                viewArrangement.CrossJustification(Justification.SpaceEvenly);
-            });
+            .Views(views);
         Sheet sheet = (Sheet)builder.Build();
 
         // Act

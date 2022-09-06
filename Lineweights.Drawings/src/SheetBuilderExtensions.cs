@@ -1,6 +1,4 @@
-﻿using Lineweights.Flex;
-
-namespace Lineweights.Drawings;
+﻿namespace Lineweights.Drawings;
 
 /// <summary>
 /// Build methods for <see cref="SheetBuilder"/>
@@ -86,6 +84,7 @@ public static class SheetBuilderExtensions
     /// </summary>
     public static ISheetBuilder ContentPadding(this ISheetBuilder @this, double width, double height)
     {
+        // TODO: Implement as an interface...
         ((SheetBuilder)@this)._contentPadding = new(width, height, 0);
         return @this;
     }
@@ -101,7 +100,7 @@ public static class SheetBuilderExtensions
 
     /// <summary>
     /// Set the views to be placed on the sheet.
-    /// The position of the view is then set by the <see cref="ViewArrangement(ISheetBuilder, Flex2d)"/>.
+    /// The position of the view is then set by the <see cref="ViewArrangement(ISheetBuilder, IDistribution2dBuilder)"/>.
     /// </summary>
     public static ISheetBuilder Views(this ISheetBuilder @this, IReadOnlyCollection<View> views)
     {
@@ -110,22 +109,22 @@ public static class SheetBuilderExtensions
     }
 
     /// <summary>
-    /// Set the arrangement of the views as a <see cref="Flex2d"/>.
+    /// Set the arrangement of the views as a <see cref="IDistribution2dBuilder"/>.
     /// This method overrides the existing or default ViewArrangement.
-    /// The <see cref="Flex2d"/> is built with the <see cref="Views(ISheetBuilder, IReadOnlyCollection{View})"/> as its elements.
+    /// The <see cref="IDistribution2dBuilder"/> is built with the <see cref="Views(ISheetBuilder, IReadOnlyCollection{View})"/> as its elements.
     /// </summary>
-    public static ISheetBuilder ViewArrangement(this ISheetBuilder @this, Flex2d viewArrangement)
+    public static ISheetBuilder ViewArrangement(this ISheetBuilder @this, IDistribution2dBuilder viewArrangement)
     {
         ((SheetBuilder)@this)._viewArrangement = viewArrangement;
         return @this;
     }
 
     /// <summary>
-    /// Set the arrangement of the views as a <see cref="Flex2d"/>.
+    /// Set the arrangement of the views as a <see cref="IDistribution2dBuilder"/>.
     /// This method extends the existing or default ViewArrangement.
-    /// The <see cref="Flex2d"/> is built with the <see cref="Views(ISheetBuilder, IReadOnlyCollection{View})"/> as its elements.
+    /// The <see cref="IDistribution2dBuilder"/> is built with the <see cref="Views(ISheetBuilder, IReadOnlyCollection{View})"/> as its elements.
     /// </summary>
-    public static ISheetBuilder ViewArrangement(this ISheetBuilder @this, Action<Flex2d> viewArrangement)
+    public static ISheetBuilder ViewArrangement(this ISheetBuilder @this, Action<IDistribution2dBuilder> viewArrangement)
     {
         viewArrangement.Invoke(((SheetBuilder)@this)._viewArrangement);
         return @this;

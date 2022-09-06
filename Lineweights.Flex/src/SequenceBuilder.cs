@@ -1,6 +1,6 @@
 ﻿using StudioLE.Core.System;
 
-namespace Lineweights.Flex.Sequences;
+namespace Lineweights.Flex;
 
 /// <summary>
 /// Create a sequence of <see cref="Element"/> according to a set of conditions and constraints.
@@ -14,8 +14,8 @@ public class SequenceBuilder : ISequenceBuilder
     private IReadOnlyCollection<Element> _body = Array.Empty<Element>();
     private IReadOnlyCollection<Element> _prepended = Array.Empty<Element>();
     private IReadOnlyCollection<Element> _appended = Array.Empty<Element>();
-    private List<Constraints.Constraint> _constraints = new();
-    private List<Conditions.Condition> _conditions = new();
+    private List<ISequenceBuilder.Constraint> _constraints = new();
+    private List<ISequenceBuilder.Condition> _conditions = new();
     private bool _overflow;
     private object? _context;
     private bool _repetition = false;
@@ -45,14 +45,14 @@ public class SequenceBuilder : ISequenceBuilder
     }
 
     /// <inheritdoc/>
-    public ISequenceBuilder AddConstraint(params Constraints.Constraint[] constraints)
+    public ISequenceBuilder AddConstraint(params ISequenceBuilder.Constraint[] constraints)
     {
         _constraints.AddRange(constraints);
         return this;
     }
 
     /// <inheritdoc/>
-    public ISequenceBuilder AddCondition(params Conditions.Condition[] conditions)
+    public ISequenceBuilder AddCondition(params ISequenceBuilder.Condition[] conditions)
     {
         _conditions.AddRange(conditions);
         return this;
@@ -102,9 +102,6 @@ public class SequenceBuilder : ISequenceBuilder
         return BuildWithoutWrapping();
     }
 
-    /// <summary>
-    /// Build the sequence.
-    /// </summary>
     private IReadOnlyCollection<Element> BuildWithoutWrapping()
     {
         if (_context is null)
@@ -150,9 +147,6 @@ public class SequenceBuilder : ISequenceBuilder
         return output;
     }
 
-    /// <summary>
-    /// Split the sequence into multiple sequences.
-    /// </summary>
     private IReadOnlyCollection<IReadOnlyCollection<Element>> BuildWithWrapping()
     {
         if (_appended.Any() || _prepended.Any())

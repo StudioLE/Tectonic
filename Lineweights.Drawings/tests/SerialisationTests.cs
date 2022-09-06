@@ -1,4 +1,5 @@
 using Ardalis.Result;
+using Lineweights.Flex;
 using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests;
@@ -9,6 +10,15 @@ internal sealed class SerialisationTests
     private readonly Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
+    private ISequenceBuilder _sequenceBuilder = default!;
+    private IDistribution2dBuilder _defaultViewArrangement = default!;
+
+    [SetUp]
+    public void Setup()
+    {
+        _sequenceBuilder = new SequenceBuilder();
+        _defaultViewArrangement = new DefaultViewArrangement();
+    }
 
     [Test]
     public void Serialisation_View()
@@ -93,7 +103,7 @@ internal sealed class SerialisationTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder sheetBuilder = new SheetBuilder()
+        ISheetBuilder sheetBuilder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views);
@@ -144,7 +154,7 @@ internal sealed class SerialisationTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder sheetBuilder = new SheetBuilder()
+        ISheetBuilder sheetBuilder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views);

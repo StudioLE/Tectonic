@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Lineweights.Flex.Samples.Elements;
-using Lineweights.Flex.Sequences;
 
 namespace Lineweights.Flex.Samples;
 
@@ -45,14 +44,14 @@ public static class Seating2dAlternating
 
         // Configure the builder
         Flex2d builder = new Flex2d()
-            .Container(auditorium)
             .MainJustification(Justification.Center)
             .CrossJustification(Justification.SpaceBetween)
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .MainSequence(oddSequence, evenSequence)
             .CrossSequence(crossSequence);
+        builder.MainSequence(oddSequence, evenSequence);
+        builder.Container(auditorium);
 
         // Run the builder
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();
