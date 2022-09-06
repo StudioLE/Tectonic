@@ -14,14 +14,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Lineweights.Workflows\src\Lineweights.Workflows.csproj" />
-    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj" />
     <ProjectReference Include="..\..\Lineweights.Flex\samples\Lineweights.Flex.Samples.csproj" />
     <ProjectReference Include="..\..\Lineweights.Workflows\samples\Lineweights.Workflows.Samples.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Towel" Version="1.0.40" />
   </ItemGroup>
 
