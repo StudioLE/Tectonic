@@ -51,7 +51,7 @@ public class RunnerComponentBase : ComponentBase, IDisposable
         if (!Assemblies.Any())
             Assemblies = new[]
             {
-                typeof(GeometricScene).Assembly,
+                typeof(AssetTypes).Assembly,
                 typeof(WallFlemishBond).Assembly
             };
         foreach (Assembly assembly in Assemblies)

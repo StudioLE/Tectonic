@@ -1,5 +1,7 @@
 using System.IO;
+using System.Reflection;
 using Ardalis.Result;
+using Microsoft.Extensions.FileProviders;
 
 namespace Lineweights.Workflows.Samples;
 
@@ -8,13 +10,6 @@ namespace Lineweights.Workflows.Samples;
 /// </summary>
 public static class Scenes
 {
-    private static readonly string _pathFromRootToSamples = "Lineweights.Workflows/samples";
-
-    private static readonly string[] _possiblePathsToRoot =
-    {
-        "../../../../../", "../../"
-    };
-
     /// <summary>
     /// Scene names.
     /// </summary>
@@ -37,49 +32,49 @@ public static class Scenes
     }
 
     /// <inheritdoc cref="Name.Brickwork"/>
-    public static ElementInstance[] Brickwork()
+    internal static ElementInstance[] Brickwork()
     {
-        return FromJson<ElementInstance>(Name.Brickwork);
+        return FromJson(Name.Brickwork)
+            .AllElementsOfType<ElementInstance>()
+            .ToArray();
     }
 
     /// <inheritdoc cref="Name.GeometricElements"/>
-    public static GeometricElement[] GeometricElements()
+    internal static GeometricElement[] GeometricElements()
     {
-        return FromJson<GeometricElement>(Name.GeometricElements);
-    }
-
-    /// <summary>
-    /// Load a sample model from JSON.
-    /// </summary>
-    private static T[] FromJson<T>(Name name) where T : Element
-    {
-        FileInfo file = File(name);
-        Result<Model> result = ModelHelpers.TryGetFromJsonFile(file);
-        return Validate.OrThrow(result, $"Failed to load scene {name} from JSON")
-            .AllElementsOfType<T>()
+        return FromJson(Name.GeometricElements)
+            .AllElementsOfType<GeometricElement>()
             .ToArray();
     }
 
     /// <summary>
     /// Load a sample model from JSON.
     /// </summary>
-    public static FileInfo ToJson(Name name, IEnumerable<Element> elements)
+    internal static Model FromJson(Name name)
     {
-        FileInfo file = File(name);
+        Assembly assembly = typeof(Scenes).Assembly;
+        EmbeddedFileProvider provider = new(assembly);
+        IFileInfo file = provider.GetFileInfo("Resources/" + name + ".json");
+        if (!file.Exists)
+            throw new("The file does not exist.");
+        using Stream stream = file.CreateReadStream();
+        using StreamReader reader = new(stream);
+        string json = reader.ReadToEnd();
+        Result<Model> result = ModelHelpers.TryGetFromJson(json);
+        return Validate.OrThrow(result, $"Failed to load scene {name} from JSON");
+    }
+
+    /// <summary>
+    /// Load a sample model from JSON.
+    /// </summary>
+    internal static FileInfo ToJson(Name name, IEnumerable<Element> elements)
+    {
+        throw new NotImplementedException();
+        FileInfo file = new(name + ".json");
         Model model = new();
         model.AddElements(elements);
         string json = model.ToJson(true);
         System.IO.File.WriteAllText(file.FullName, json);
         return file;
-    }
-
-    private static FileInfo File(Name name)
-    {
-        string cwd = Directory.GetCurrentDirectory();
-        // TODO: Load from relative to executing assembly.
-        FileInfo? file = _possiblePathsToRoot
-            .Select(pathToRoot => new FileInfo(Path.Combine(cwd, pathToRoot, _pathFromRootToSamples, $"{name}.json")))
-            .FirstOrDefault(x => x.Exists);
-        return file ?? throw new FileNotFoundException("Could not find the sample file: " + name);
     }
 }

@@ -13,7 +13,7 @@ namespace Lineweights.Workflows.Samples;
 internal static class SampleHelpers
 {
 
-    internal static IReadOnlyCollection<View> CreateViews(IReadOnlyCollection<GeometricElement> geometry)
+    internal static IReadOnlyCollection<View> CreateViews(Model model)
     {
         ViewDirection[] viewDirections = {
             ViewDirection.Top,
@@ -26,7 +26,7 @@ internal static class SampleHelpers
                 ViewBuilder builder = new ViewBuilder()
                     .ScopePadding(.25, .25, .25)
                     .ViewDirection(viewDirection)
-                    .ElementsInView(geometry);
+                    .ElementsInView(model.Elements.Values.ToArray());
                 return builder.Build();
             })
             .ToArray();

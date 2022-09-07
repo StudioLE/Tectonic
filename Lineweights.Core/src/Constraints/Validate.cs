@@ -1,4 +1,5 @@
 ﻿using Ardalis.Result;
+using StudioLE.Core.System;
 
 namespace Lineweights.Core.Constraints;
 
@@ -30,7 +31,7 @@ public static class Validate
             ? string.Empty
             : contextMessage + Environment.NewLine;
         if (result.Errors.Any())
-            message += string.Join(Environment.NewLine, result.Errors) + Environment.NewLine;
+            message += result.Errors.Join() + Environment.NewLine;
         throw new(message);
     }
 

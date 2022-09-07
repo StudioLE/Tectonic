@@ -2,6 +2,8 @@
 
 namespace Lineweights.Drawings.Tests.Samples;
 
+// TODO Convert to a workflow.
+
 [VisualizeAfterTest]
 internal sealed class GeometricElementsScene
 {

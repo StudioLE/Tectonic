@@ -76,7 +76,7 @@ internal sealed class AssetBuilderTests
         // Arrange
         Model model = new();
         model.AddElements(_geometry);
-        model.AddElements(SampleHelpers.CreateViews(_geometry));
+        model.AddElements(SampleHelpers.CreateViews(model));
 
         // Act
         IAssetBuilder builder = new AssetBuilder()
@@ -96,7 +96,7 @@ internal sealed class AssetBuilderTests
         // Arrange
         Model model = new();
         model.AddElements(_geometry);
-        model.AddElements(SampleHelpers.CreateViews(_geometry));
+        model.AddElements(SampleHelpers.CreateViews(model));
 
         // Act
         IAssetBuilder builder = new AssetBuilder()
@@ -115,7 +115,8 @@ internal sealed class AssetBuilderTests
     {
         // Arrange
         Model model = new();
-        model.AddElements(SampleHelpers.CreateViews(_geometry));
+        model.AddElements(_geometry);
+        model.AddElements(SampleHelpers.CreateViews(model));
 
         // Act
         IServiceProvider services = Services.GetInstance();
@@ -134,7 +135,8 @@ internal sealed class AssetBuilderTests
     {
         // Arrange
         Model model = new();
-        model.AddElements(SampleHelpers.CreateViews(_geometry));
+        model.AddElements(_geometry);
+        model.AddElements(SampleHelpers.CreateViews(model));
 
         // Act
         IAssetBuilder builder = new AssetBuilder()

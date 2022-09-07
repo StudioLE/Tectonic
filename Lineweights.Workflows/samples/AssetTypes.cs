@@ -3,10 +3,13 @@ using Lineweights.Core.Documents;
 
 namespace Lineweights.Workflows.Samples;
 
-public static class GeometricScene
+public static class AssetTypes
 {
     public sealed class Inputs
     {
+        [Required]
+        public Scenes.Name Scene { get; set; } = Scenes.Name.GeometricElements;
+
         [Required]
         public bool IncludeViewsInModel { get; set; } = false;
 
@@ -32,12 +35,13 @@ public static class GeometricScene
 
     public static Outputs Execute(Inputs inputs)
     {
-        GeometricElement[] geometry = Scenes.GeometricElements();
-        Outputs outputs = new();
-        outputs.Model.AddElements(geometry);
+        Outputs outputs = new()
+        {
+            Model = Scenes.FromJson(inputs.Scene)
+        };
 
         if (inputs.IncludeViewsInModel)
-            outputs.Model.AddElements(SampleHelpers.CreateViews(geometry));
+            outputs.Model.AddElements(SampleHelpers.CreateViews(outputs.Model));
 
         if (inputs.IncludeCsvFileAsAsset)
             outputs.Assets.Add(SampleHelpers.CreateCsvFileAsAsset(outputs.Model));
