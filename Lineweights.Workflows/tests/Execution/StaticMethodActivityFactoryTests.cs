@@ -1,27 +1,15 @@
-using System.IO;
 using System.Reflection;
 using Ardalis.Result;
 using Lineweights.Workflows.Execution;
+using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Tests.Execution;
 
 internal sealed class StaticMethodActivityFactoryTests
 {
-    private readonly Assembly _assembly;
-
-    public StaticMethodActivityFactoryTests()
-    {
-#if DEBUG
-        const string configuration = "Debug";
-#else
-        const string configuration = "Release";
-#endif
-        string cwd = Directory.GetCurrentDirectory();
-        const string pathFromRootToSamples = $"Lineweights.Flex/samples/bin/{configuration}/netstandard2.0/Lineweights.Flex.Samples.dll";
-        const string pathToRoot = "../../../../../";
-        string path = Path.Combine(cwd, pathToRoot, pathFromRootToSamples);
-        _assembly = Assembly.LoadFile(path);
-    }
+    private const string AssemblyPath = "Lineweights.Flex.Samples.dll";
+    private const string ActivityKey = "Flex2dSample.Execute";
+    private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
 
     [Test]
     public void StaticMethodActivityFactory_AllActivityMethodsInAssembly()
@@ -34,7 +22,7 @@ internal sealed class StaticMethodActivityFactoryTests
         Assert.That(activities.Count, Is.EqualTo(6), "Activity count");
     }
 
-    [TestCase("Flex2dSample.Execute")]
+    [TestCase(ActivityKey)]
     public void StaticMethodActivityFactory_GetActivityMethodByName(string activityKey)
     {
         // Arrange
@@ -45,7 +33,7 @@ internal sealed class StaticMethodActivityFactoryTests
         Assert.That(activity, Is.Not.Null);
     }
 
-    [TestCase("Flex2dSample.Execute")]
+    [TestCase(ActivityKey)]
     public void StaticMethodActivityFactory_CreateParameterInstances(string activityKey)
     {
         // Arrange
@@ -61,7 +49,7 @@ internal sealed class StaticMethodActivityFactoryTests
         Assert.That(parameters.Count, Is.EqualTo(5), "Parameters count");
     }
 
-    [TestCase("Flex2dSample.Execute")]
+    [TestCase(ActivityKey)]
     public void StaticMethodActivityFactory_TryCreateByKey(string activityKey)
     {
         // Arrange
@@ -78,7 +66,7 @@ internal sealed class StaticMethodActivityFactoryTests
         Assert.That(activity.Inputs.Length, Is.EqualTo(5), "Inputs count");
     }
 
-    [TestCase("Flex2dSample.Execute")]
+    [TestCase(ActivityKey)]
     public void ActivityCommand_Execute(string activityKey)
     {
         // Arrange

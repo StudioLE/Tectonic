@@ -1,8 +1,8 @@
-using System.IO;
 using System.Reflection;
 using Ardalis.Result;
 using Lineweights.Workflows.Execution;
 using Lineweights.Workflows.NUnit.Execution;
+using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Tests.Execution;
 
@@ -10,7 +10,7 @@ internal sealed class NUnitActivityFactoryTests
 {
     private const string AssemblyPath = "Lineweights.Core.Tests.dll";
     private const string ActivityKey = "Lineweights.Core.Tests.Geometry.CreateRuledSurfaceTests.CreateRuledSurface_AsLinesByCurves_QuarterHyperbolicParaboloid";
-    private readonly Assembly _assembly = Assembly.LoadFile(Path.GetFullPath(AssemblyPath));
+    private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
 
     [Test]
     public void NUnitActivityFactory_AllActivityKeysInAssembly()

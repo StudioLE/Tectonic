@@ -76,6 +76,7 @@ public static class Scenes
     private static FileInfo File(Name name)
     {
         string cwd = Directory.GetCurrentDirectory();
+        // TODO: Load from relative to executing assembly.
         FileInfo? file = _possiblePathsToRoot
             .Select(pathToRoot => new FileInfo(Path.Combine(cwd, pathToRoot, _pathFromRootToSamples, $"{name}.json")))
             .FirstOrDefault(x => x.Exists);

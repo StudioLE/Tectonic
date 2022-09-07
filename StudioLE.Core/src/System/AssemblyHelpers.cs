@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 
 namespace StudioLE.Core.System;
@@ -46,5 +47,17 @@ public static class AssemblyHelpers
             AppDomain.CurrentDomain.Load(assembly);
 
         _areAllAssembliesLoaded = true;
+    }
+
+    /// <summary>
+    /// Ensure all referenced assemblies are loaded.
+    /// </summary>
+    public static Assembly LoadFileByRelativePath(string relativePath)
+    {
+        FileInfo file = new(relativePath);
+        if (!file.Exists)
+            throw new($"Failed to load assembly. The file does not exist: {file.FullName}");
+        Assembly assembly = Assembly.LoadFile(file.FullName);
+        return assembly;
     }
 }
