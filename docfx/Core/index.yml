@@ -1,0 +1,12 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core
+  commentId: N:Core
+  id: Core
+  langs:
+  - csharp
+  - vb
+  name: Core
+  nameWithType: Core
+  fullName: Core
+  type: Namespace

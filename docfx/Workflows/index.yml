@@ -1,0 +1,12 @@
+### YamlMime:ManagedReference
+items:
+- uid: Workflows
+  commentId: N:Workflows
+  id: Workflows
+  langs:
+  - csharp
+  - vb
+  name: Workflows
+  nameWithType: Workflows
+  fullName: Workflows
+  type: Namespace

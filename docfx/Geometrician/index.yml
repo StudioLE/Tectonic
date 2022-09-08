@@ -1,0 +1,12 @@
+### YamlMime:ManagedReference
+items:
+- uid: Geometrician
+  commentId: N:Geometrician
+  id: Geometrician
+  langs:
+  - csharp
+  - vb
+  name: Geometrician
+  nameWithType: Geometrician
+  fullName: Geometrician
+  type: Namespace

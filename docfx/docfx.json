@@ -30,7 +30,7 @@
           ]
         }
       ],
-      "dest": "App",
+      "dest": "Geometrician",
       "disableDefaultFilter": false,
       "force": true
     },
@@ -189,7 +189,13 @@
       }
     ],
     "resource": [],
-    "overwrite": [],
+    "overwrite": [
+      {
+        "files": [
+          "overwrite/*.md"
+        ]
+      }
+    ],
     "dest": "public",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
@@ -208,6 +214,19 @@
     ],
     "xrefService": [
       "https://xref.docs.microsoft.com/query?uid={uid}"
-    ]
+    ],
+    "globalMetadata": {
+      "_appTitle": "Geometrician and Lineweights",
+      "_appName": "Geometrician and Lineweights",
+      "_appFaviconPath": "",
+      "_appLogoPath": "",
+      "_appFooter": "Geometrician and Lineweights",
+      "_copyrightFooter": "© Laurence Elsdon. All rights reserved.",
+      "_enableSearch": false,
+      "_disableSideFilter": true,
+      "_enableNewTab": true,
+      "_disableContribution": false,
+      "_disableBreadcrumb": false
+    }
   }
 }

@@ -1,0 +1,12 @@
+### YamlMime:ManagedReference
+items:
+- uid: Drawings
+  commentId: N:Drawings
+  id: Drawings
+  langs:
+  - csharp
+  - vb
+  name: Drawings
+  nameWithType: Drawings
+  fullName: Drawings
+  type: Namespace

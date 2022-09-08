@@ -1,1 +1,8 @@
-*/
+obj
+public
+.manifest
+*.yml
+!/toc.yml
+!index.yml
+!templates
+!templates/**/*
