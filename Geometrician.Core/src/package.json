@@ -7,6 +7,7 @@
     "build": "npm run build-css && npm run build-js-dev",
     "copy-icons": "shx mkdir -p wwwroot/fonts && shx cp node_modules/@mdi/font/fonts/* wwwroot/fonts/",
     "build-css": "node-sass Styles/app.scss wwwroot/dist/bundle.css",
+    "watch-css": "node-sass Styles/app.scss wwwroot/dist/bundle.css --watch",
     "build-js": "webpack --mode production",
     "build-js-dev": "webpack --mode development"
   },

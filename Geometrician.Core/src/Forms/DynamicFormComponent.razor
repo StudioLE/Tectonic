@@ -15,28 +15,35 @@
   object inputs = Inputs.ElementAt(i);
   EditContext editContext = EditContexts.ElementAt(i);
 
-  <EditForm class="columns is-multiline" EditContext="@editContext">
-    <DataAnnotationsValidator/>
+  <div class="form-container">
+    <label class="label" style="font-weight: normal;">
+      @inputs.GetType().Name
+    </label>
+    <EditForm class="columns is-multiline" EditContext="@editContext">
+      <DataAnnotationsValidator/>
 
-    @foreach (PropertyInfo property in inputs.GetType().GetProperties())
-    {
-    <div class="column is-3">
-      <fieldset class="field">
-        <label class="label">@property.Name</label>
-        <div class="control is-expanded">
-          <DynamicInputComponent Instance="@inputs" Property="@property"/>
+      @foreach (PropertyInfo property in inputs.GetType().GetProperties())
+      {
+        <div class="column is-3">
+          <fieldset class="field">
+            <label class="label">
+              @property.Name
+            </label>
+            <div class="control is-expanded">
+              <DynamicInputComponent Instance="@inputs" Property="@property"/>
+            </div>
+            @foreach (string message in GetValidationMessages(editContext, inputs, property.Name))
+            {
+              <p class="help is-danger">@message</p>
+            }
+          </fieldset>
         </div>
-        @foreach (string message in GetValidationMessages(editContext, inputs, property.Name))
-        {
-          <p class="help is-danger">@message</p>
-        }
-      </fieldset>
-    </div>
-    }
-  </EditForm>
+      }
+    </EditForm>
+  </div>
 }
 
-<div class="field">
+<div class="field mt-4">
   <p class="control">
     <button class="button is-primary" onclick="@Submit" disabled="@(!IsValid)">
       <span>Execute</span>
