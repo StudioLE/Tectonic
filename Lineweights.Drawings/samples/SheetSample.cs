@@ -121,7 +121,7 @@ public static class SheetSample
         {
             Info = new()
             {
-                Name = "SVG of Sheet",
+                Name = "PDF of Sheet",
                 Location = new(file.FullName)
             },
             ContentType = "application/pdf"
