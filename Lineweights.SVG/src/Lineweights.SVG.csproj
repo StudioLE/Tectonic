@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="Lineweights.Drawings.Benchmarks" />
+    <InternalsVisibleTo Include="Lineweights.Drawings.Samples" />
     <InternalsVisibleTo Include="Lineweights.SVG.Tests" />
     <InternalsVisibleTo Include="Lineweights.Workflows" />
   </ItemGroup>

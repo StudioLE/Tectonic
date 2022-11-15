@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="Lineweights.Drawings.Benchmarks" />
+    <InternalsVisibleTo Include="Lineweights.Drawings.Samples" />
     <InternalsVisibleTo Include="Lineweights.Drawings.Tests" />
     <InternalsVisibleTo Include="Lineweights.PDF.Tests" />
     <InternalsVisibleTo Include="Lineweights.SVG.Tests" />

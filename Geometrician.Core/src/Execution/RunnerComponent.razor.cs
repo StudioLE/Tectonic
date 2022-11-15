@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Reflection;
+using Lineweights.Drawings.Samples;
 using Lineweights.Flex.Samples;
 using Lineweights.Workflows.Samples;
 using Microsoft.AspNetCore.Components;
@@ -51,6 +52,7 @@ public class RunnerComponentBase : ComponentBase, IDisposable
         if (!Assemblies.Any())
             Assemblies = new[]
             {
+                typeof(SheetSample).Assembly,
                 typeof(AssetTypes).Assembly,
                 typeof(WallFlemishBond).Assembly
             };
