@@ -13,12 +13,13 @@
   <Import Project="..\..\GlobalUsings.src.props" />
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.8"/>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.8" PrivateAssets="all"/>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.8" PrivateAssets="all" />
+    <PackageReference Include="SkiaSharp.Views.Blazor" Version="2.88.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj" />
   </ItemGroup>
 
 </Project>
