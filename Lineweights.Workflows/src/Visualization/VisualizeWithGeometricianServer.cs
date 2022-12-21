@@ -1,6 +1,9 @@
+using System.Text;
+using Elements.Serialization.JSON;
 using Lineweights.Core.Documents;
+using Lineweights.Core.Serialisation;
 using Lineweights.Workflows.Documents;
-using Microsoft.AspNetCore.SignalR.Client;
+using Newtonsoft.Json;
 
 namespace Lineweights.Workflows.Visualization;
 
@@ -12,36 +15,36 @@ namespace Lineweights.Workflows.Visualization;
 /// </summary>
 public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
 {
-    private readonly HubConnection _connection;
     private readonly BlobStorageStrategy _blobStorage = new();
     private readonly IAssetBuilder _assetBuilder;
-
-    internal HubConnectionState State => _connection.State;
+    private readonly HttpClient _httpClient;
 
     public VisualizeWithGeometricianServer(GeometricianService geometrician, IAssetBuilder assetBuilder)
     {
-        _connection = geometrician.Connection;
         _assetBuilder = assetBuilder;
         _assetBuilder.StorageStrategy(_blobStorage);
+        _httpClient = geometrician.HttpClient;
     }
 
     /// <inheritdoc cref="VisualizeWithGeometricianServer"/>
     public async Task<Asset> Execute(Model model, DocumentInformation doc)
     {
-        // TODO: Add task cancellation if the Hub is disconnected.
-        if (_connection.State == HubConnectionState.Disconnected)
-        {
-            Console.WriteLine("Failed to send to server. SignalR is disconnected.");
-            return new()
-            {
-                Errors = new[] { "Failed to send to server. SignalR is disconnected." }
-            };
-        }
         Asset asset = await _assetBuilder.Build(model);
+        // TODO: With POST methods we no longer need to write content to storage.
         await _blobStorage.RecursiveWriteContentToStorage(asset);
         try
         {
-            await _connection.SendAsync(GeometricianService.HubMethod, asset);
+            JsonSerializerSettings settings = new()
+            {
+                ContractResolver = new IgnoreConverterResolver(typeof(JsonInheritanceConverter))
+            };
+            string json = JsonConvert.SerializeObject(asset, settings);
+            StringContent content = new(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _httpClient.PostAsync(GeometricianService.AssetUrl, content);
+        }
+        catch (TaskCanceledException)
+        {
+            // Do nothing.
         }
         catch (Exception e)
         {

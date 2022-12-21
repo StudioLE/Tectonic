@@ -3,7 +3,6 @@ using Lineweights.Core.Documents;
 using Lineweights.Workflows.Hosting;
 using Lineweights.Workflows.NUnit.Visualization;
 using Lineweights.Workflows.Visualization;
-using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lineweights.Workflows.Tests.Visualization;
@@ -49,8 +48,8 @@ internal sealed class VisualizationTests
     }
 
     [Test]
-    [Explicit("Requires SignalR")]
-    [Category("Requires SignalR")]
+    [Explicit("Requires Azurite")]
+    [Category("Requires Azurite")]
     public async Task VisualizeWithGeometricianServer_by_DI()
     {
         // Arrange
@@ -60,13 +59,12 @@ internal sealed class VisualizationTests
         Asset asset = await strategy.Execute(_model, new());
 
         // Assert
-        Assert.That(strategy.State, Is.EqualTo(HubConnectionState.Connected), "Connection state");
         Assert.That(asset.Children.Count, Is.EqualTo(1), "Children count");
     }
 
     [Test]
-    [Explicit("Requires SignalR")]
-    [Category("Requires SignalR")]
+    [Explicit("Requires Azurite")]
+    [Category("Requires Azurite")]
     [VisualizeAfterTest(typeof(VisualizeWithGeometricianServer), IsEnabled = true)]
     public void VisualizeInServerAppAfterTest_UsingAttribute()
     {
