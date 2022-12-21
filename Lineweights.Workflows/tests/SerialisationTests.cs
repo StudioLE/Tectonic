@@ -11,6 +11,14 @@ internal sealed class SerialisationTests
 {
     private readonly IAssetBuilder _builder;
 
+
+    private static readonly DocumentInformation _doc = new()
+    {
+        Name = "Example",
+        Description = "Hello, world.",
+        Location = new("https://localhost/my/file.txt")
+    };
+
     public SerialisationTests()
     {
         IServiceProvider services = Services.GetInstance();
@@ -23,6 +31,7 @@ internal sealed class SerialisationTests
         // Arrange
         Model model = new();
         model.AddElements(Scenes.GeometricElements());
+        _builder.DocumentInformation(_doc);
         Asset asset = await _builder.Build(model);
 
         // Act
@@ -45,27 +54,21 @@ internal sealed class SerialisationTests
     public void Serialisation_DocumentInformation()
     {
         // Arrange
-        DocumentInformation doc = new()
-        {
-            Name = "Example",
-            Description = "Hello, world.",
-            Location = new("https://localhost/my/file.txt")
-        };
         JsonSerializerSettings settings = new()
         {
             ContractResolver = new IgnoreConverterResolver(typeof(JsonInheritanceConverter))
         };
 
         // Act
-        string json = JsonConvert.SerializeObject(doc, settings);
+        string json = JsonConvert.SerializeObject(_doc, settings);
         DocumentInformation? deserialised = JsonConvert.DeserializeObject<DocumentInformation>(json, settings);
 
         // Assert
         Assert.Multiple(() =>
         {
             Assert.That(deserialised, Is.Not.Null, "Not null");
-            Assert.That(deserialised?.Id, Is.EqualTo(doc.Id), "Id");
-            Assert.That(deserialised?.Location, Is.EqualTo(doc.Location), "Location");
+            Assert.That(deserialised?.Id, Is.EqualTo(_doc.Id), "Id");
+            Assert.That(deserialised?.Location, Is.EqualTo(_doc.Location), "Location");
         });
     }
 }

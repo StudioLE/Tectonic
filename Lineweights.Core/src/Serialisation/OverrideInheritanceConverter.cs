@@ -1,23 +1,30 @@
 ﻿using Elements.Serialization.JSON;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Lineweights.Core.Serialisation;
 
 /// <summary>
-/// Serialise an interface or abstract to a concrete type.
+/// Disable the behaviour of <see cref="JsonInheritanceConverter"/>.
 /// </summary>
 public class OverrideInheritanceConverter : JsonConverter<Element>
 {
-    private readonly JsonSerializerSettings _settings = new()
+    private readonly JsonSerializer _serializer;
+
+    public OverrideInheritanceConverter()
     {
-        ContractResolver = new IgnoreConverterResolver(typeof(JsonInheritanceConverter))
-    };
+        JsonSerializerSettings settings = new()
+        {
+            ContractResolver = new IgnoreConverterResolver(typeof(JsonInheritanceConverter))
+        };
+        _serializer = JsonSerializer.Create(settings);
+    }
 
     /// <inheritdoc />
-    public override void WriteJson(JsonWriter writer, Element value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, Element value, JsonSerializer _)
     {
-        string json = JsonConvert.SerializeObject(value, _settings);
-        writer.WriteValue(json);
+        JToken jToken = JToken.FromObject(value, _serializer);
+        jToken.WriteTo(writer);
     }
 
     /// <inheritdoc />
@@ -26,13 +33,12 @@ public class OverrideInheritanceConverter : JsonConverter<Element>
         Type objectType,
         Element? existingValue,
         bool hasExistingValue,
-        JsonSerializer serializer)
+        JsonSerializer _)
     {
-        if (reader.Value is not string json)
-            throw new($"Failed to de-serialise {objectType}. Reader value was not a string.");
-        object? obj = JsonConvert.DeserializeObject(json, objectType, _settings);
+        object? obj = _serializer.Deserialize(reader, objectType);
         if (obj is not Element element)
             throw new($"Failed to de-serialise {objectType}. De-serialised was not an Element.");
         return element;
+
     }
 }
