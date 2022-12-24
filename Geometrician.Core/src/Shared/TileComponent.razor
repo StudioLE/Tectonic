@@ -1,0 +1,17 @@
+﻿@inherits TileComponentBase
+
+<MudPaper Style="@Style" Class="@Class">
+  @if (!string.IsNullOrEmpty(Title))
+  {
+    <MudText Typo="Typo.h5" Align="Align.Right" Style="color: var(--mud-palette-drawer-text);">
+      @Title
+    </MudText>
+  }
+  @if (!string.IsNullOrEmpty(SubTitle))
+  {
+    <MudText Typo="Typo.subtitle1" Align="Align.Right" Style="color: var(--mud-palette-drawer-text); display: block;">
+      @SubTitle
+    </MudText>
+  }
+  @ChildContent
+</MudPaper>

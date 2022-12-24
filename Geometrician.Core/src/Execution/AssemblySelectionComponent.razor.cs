@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
+using Geometrician.Core.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
@@ -18,6 +19,14 @@ public class AssemblySelectionComponentBase : ComponentBase
     /// <inheritdoc cref="RunnerState"/>
     [Inject]
     public RunnerState State { get; set; } = null!;
+
+    /// <inheritdoc cref="DisplayState"/>
+    [Inject]
+    public DisplayState Display { get; set; } = null!;
+
+    protected string[] Errors { get; set; } = Array.Empty<string>();
+
+    protected bool IsValid { get; set; }
 
     /// <summary>
     /// Binding for the assembly text input element value.

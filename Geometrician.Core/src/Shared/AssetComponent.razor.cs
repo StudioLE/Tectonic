@@ -14,6 +14,10 @@ public class AssetComponentBase : ComponentBase
     [Inject]
     protected AssetState State { get; set; } = default!;
 
+    /// <inheritdoc cref="Display"/>
+    [Inject]
+    protected DisplayState Display { get; set; } = default!;
+
     /// <summary>
     /// The id of the card.
     /// </summary>

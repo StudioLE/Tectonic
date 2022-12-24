@@ -1,14 +1,19 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
+﻿using Geometrician.Core.Shared;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using MudBlazor;
 
 namespace Geometrician.Core.Forms;
 
-public class DynamicFormComponentBase : ComponentBase, IDisposable
+public class DynamicFormComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]
     protected ILogger<DynamicFormComponent> Logger { get; set; } = default!;
+
+    /// <inheritdoc cref="DisplayState"/>
+    [Inject]
+    protected DisplayState Display { get; set; } = default!;
 
     /// <summary>
     /// The submit action.
@@ -22,51 +27,26 @@ public class DynamicFormComponentBase : ComponentBase, IDisposable
     [Parameter]
     public IReadOnlyCollection<object> Inputs { get; set; } = default!;
 
-    protected IReadOnlyCollection<EditContext> EditContexts { get; private set; } = Array.Empty<EditContext>();
+    protected IReadOnlyCollection<ObjectState> States { get; private set; } = Array.Empty<ObjectState>();
 
-    protected bool IsValid { get; private set; }
+    protected MudForm Form { get; set; } = default!;
+
+    protected string[] Errors { get; set; } = Array.Empty<string>();
+
+    protected bool IsValid { get; set; }
 
     protected override void OnInitialized()
     {
-        EditContexts = Inputs
-            .Select(x => new EditContext(x))
+        States = Inputs
+            .Select(x => new ObjectState(x))
             .ToArray();
-
-        foreach (EditContext context in EditContexts)
-        {
-            context.OnFieldChanged += OnFieldChanged;
-            context.OnValidationStateChanged += OnValidationStateChanged;
-        }
-
-        UpdateIsValid();
     }
 
-    private void OnFieldChanged(object? sender, FieldChangedEventArgs e)
+    protected async Task SubmitAsync()
     {
-        if (!EditContexts.Any())
-            return;
-        UpdateIsValid();
-    }
+        Logger.LogDebug($"{nameof(SubmitAsync)} called");
 
-    private void OnValidationStateChanged(object? sender, ValidationStateChangedEventArgs e)
-    {
-        StateHasChanged();
-    }
-
-    private void UpdateIsValid()
-    {
-        bool isValid = EditContexts.All(x => x.Validate());
-        if (isValid == IsValid)
-            return;
-        IsValid = isValid;
-        StateHasChanged();
-    }
-
-    protected void Submit()
-    {
-        Logger.LogDebug($"{nameof(Submit)} called");
-
-        UpdateIsValid();
+        await Form.Validate();
 
         if (IsValid)
         {
@@ -77,22 +57,5 @@ public class DynamicFormComponentBase : ComponentBase, IDisposable
             Logger.LogDebug("Validation failed.");
 
         // Process the valid form
-    }
-
-    protected static IEnumerable<string> GetValidationMessages(EditContext editContext, object inputs, string propertyName)
-    {
-        IEnumerable<string> messages = editContext.GetValidationMessages(new FieldIdentifier(inputs, propertyName));
-        return messages;
-    }
-
-    public void Dispose()
-    {
-        if (!EditContexts.Any())
-            return;
-        foreach (EditContext context in EditContexts)
-        {
-            context.OnFieldChanged -= OnFieldChanged;
-            context.OnValidationStateChanged -= OnValidationStateChanged;
-        }
     }
 }

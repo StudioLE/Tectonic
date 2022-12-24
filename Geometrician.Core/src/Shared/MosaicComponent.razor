@@ -1,0 +1,17 @@
+﻿@inherits MosaicComponentBase
+
+<div class="@Class" style="
+width: 100%;
+height: @(Display.MosaicHeight)px;
+display: flex;
+align-content: start;
+justify-content: start;
+flex-wrap: wrap;
+flex-direction: column;
+overflow-x: scroll;
+background: var(--mud-palette-background-grey);
+@Style
+">
+  @ChildContent
+</div>
+

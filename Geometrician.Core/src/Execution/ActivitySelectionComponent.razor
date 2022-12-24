@@ -1,33 +1,26 @@
 ﻿@inherits ActivitySelectionComponentBase
 
-<div class="columns">
-  <div class="column is-offset-2 is-8">
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Activity</label>
-      </div>
-      <fieldset class="field-body">
-        <div class="field has-addons">
-          <div class="control is-expanded">
-            <div class="select is-fullwidth">
-              <select @bind="@ActivitySelectValue">
-                @foreach (string activity in ActivitySelectOptions)
-                {
-                  <option>@activity</option>
-                }
-              </select>
-            </div>
-          </div>
-          <div class="control">
-            <button class="button is-primary" @onclick="@SetActivity">
-              <span>Load</span>
-              <span class="icon">
-                <i class="mdi mdi-arrow-right"></i>
-              </span>
-            </button>
-          </div>
-        </div>
-      </fieldset>
-    </div>
-  </div>
-</div>
+<MudForm Style="width: inherit;">
+  <MosaicComponent Padding="false" Margin="false">
+    <TileComponent XScale="1.5" YScale="1">
+      <MudSelect
+        Label="Activity"
+        HelperText="Activity"
+        @bind-Value="ActivitySelectValue">
+        @foreach (string activity in ActivitySelectOptions)
+        {
+          <MudSelectItem Value="@activity">@activity</MudSelectItem>
+        }
+      </MudSelect>
+    </TileComponent>
+
+  <TileComponent XScale="0.25" YScale="0.5" Padding="false">
+    <MudIconButton
+      Variant="Variant.Filled"
+      Color="Color.Primary"
+      Icon="@Icons.Material.Filled.Send"
+      OnClick="SetActivity"
+      style="width: 100%; height: 100%;"/>
+  </TileComponent>
+  </MosaicComponent>
+</MudForm>

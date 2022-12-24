@@ -11,16 +11,16 @@ public static class AssetTypes
         public Scenes.Name Scene { get; set; } = Scenes.Name.GeometricElements;
 
         [Required]
-        public bool IncludeViewsInModel { get; set; } = false;
+        public bool IncludeViewsInModel { get; set; } = true;
 
         [Required]
-        public bool IncludeCsvFileAsAsset { get; set; } = false;
+        public bool IncludeCsvFileAsAsset { get; set; } = true;
 
         [Required]
-        public bool IncludeIfcFileAsAsset { get; set; } = false;
+        public bool IncludeIfcFileAsAsset { get; set; } = true;
 
         [Required]
-        public bool IncludeJsonAsContentAsset { get; set; } = false;
+        public bool IncludeJsonAsContentAsset { get; set; } = true;
 
         [Required]
         public bool ThrowAnException { get; set; } = false;

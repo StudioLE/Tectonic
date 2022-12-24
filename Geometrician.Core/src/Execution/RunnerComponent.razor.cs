@@ -5,6 +5,7 @@ using Lineweights.Flex.Samples;
 using Lineweights.Workflows.Samples;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using MudBlazor;
 
 namespace Geometrician.Core.Execution;
 
@@ -38,10 +39,28 @@ public class RunnerComponentBase : ComponentBase, IDisposable
     [Parameter]
     public string? ActivityKey { get; set; }
 
+    /// <summary>
+    /// </summary>
+    protected List<BreadcrumbItem> Crumbs { get; } = new();
+
     /// <inheritdoc />
     protected override void OnInitialized()
     {
         State.Messages.CollectionChanged += OnMessagesChanged;
+
+        Crumbs.Clear();
+
+        if (State.IsAssemblySet)
+            Crumbs.Add(new(AssemblyKey, "/run"));
+        if (State.IsActivitySet)
+            Crumbs.Add(new(ActivityKey, $"/run/{AssemblyKey}"));
+
+        if (State.IsActivitySet)
+            Crumbs.Add(new("Set inputs", string.Empty, true));
+        else if (State.IsAssemblySet)
+            Crumbs.Add(new("Select an activity", string.Empty, true));
+        else
+            Crumbs.Add(new("Select an assembly", string.Empty, true));
     }
 
     /// <inheritdoc />

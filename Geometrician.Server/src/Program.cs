@@ -4,6 +4,7 @@ using Geometrician.Core.Shared;
 using Lineweights.Core.Documents;
 using Lineweights.Workflows.Documents;
 using Lineweights.Workflows.Execution;
+using MudBlazor.Services;
 
 // Create Builder
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -12,11 +13,15 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+// Add MudBlazor
+builder.Services.AddMudServices();
+
 // Inject Geometrician services
 builder.Services.AddSingleton<AssetState>();
 builder.Services.AddTransient<ModelViewer>();
 builder.Services.AddScoped<RunnerState>();
 builder.Services.AddTransient<ObjectUrlStorage>();
+builder.Services.AddTransient<DisplayState>();
 
 // Inject Lineweights services
 builder.Services.AddTransient<IActivityFactory, StaticMethodActivityFactory>();

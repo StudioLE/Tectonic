@@ -3,53 +3,35 @@
 
 @if (Inputs.Count == 0)
 {
-  <article class="message">
-    <div class="message-body">
-      This activity has no inputs.
-    </div>
-  </article>
+  <TileComponent XScale="0.75" YScale="1">
+    This activity has no inputs.
+  </TileComponent>
 }
+<MudForm
+  @ref="Form"
+  @bind-IsValid="IsValid"
+  @bind-Errors="Errors"
+  Style="width: fit-content;"
+  Class="@($"d-flex gap-{Display.GapMultiplier}")">
+  @foreach (ObjectState objectState in States)
+  {
+    <TileComponent XScale="0.25" YScale="1" Title="@objectState.Title" SubTitle="@objectState.Title"/>
 
-@for (int i = 0; i < Inputs.Count; i++)
-{
-  object inputs = Inputs.ElementAt(i);
-  EditContext editContext = EditContexts.ElementAt(i);
-
-  <div class="form-container">
-    <label class="label" style="font-weight: normal;">
-      @inputs.GetType().Name
-    </label>
-    <EditForm class="columns is-multiline" EditContext="@editContext">
-      <DataAnnotationsValidator/>
-
-      @foreach (PropertyInfo property in inputs.GetType().GetProperties())
+    <TileComponent XScale="0.75" YScale="1" style="overflow: scroll;">
+      @foreach (PropertyState propertyState in objectState.Properties)
       {
-        <div class="column is-3">
-          <fieldset class="field">
-            <label class="label">
-              @property.Name
-            </label>
-            <div class="control is-expanded">
-              <DynamicInputComponent Instance="@inputs" Property="@property"/>
-            </div>
-            @foreach (string message in GetValidationMessages(editContext, inputs, property.Name))
-            {
-              <p class="help is-danger">@message</p>
-            }
-          </fieldset>
-        </div>
+        <DynamicInputComponent State="@propertyState"/>
       }
-    </EditForm>
-  </div>
-}
+    </TileComponent>
+  }
 
-<div class="field mt-4">
-  <p class="control">
-    <button class="button is-primary" onclick="@Submit" disabled="@(!IsValid)">
-      <span>Execute</span>
-      <span class="icon">
-        <i class="mdi mdi-arrow-right"></i>
-      </span>
-    </button>
-  </p>
-</div>
+  <TileComponent XScale="0.25" YScale="0.5" Padding="false">
+    <MudIconButton
+      Variant="Variant.Filled"
+      Color="Color.Primary"
+      Disabled="@(!IsValid)"
+      Icon="@Icons.Material.Filled.Send"
+      OnClick="SubmitAsync"
+      style="width: 100%; height: 100%;"/>
+  </TileComponent>
+</MudForm>

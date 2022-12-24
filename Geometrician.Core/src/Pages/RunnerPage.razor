@@ -4,17 +4,27 @@
 
 <PageTitle>
   Geometrician@(State.Assets.Count > 0
-             ? $" ({State.Assets.Count})"
-             : string.Empty)
+                ? $" ({State.Assets.Count})"
+                : string.Empty)
 </PageTitle>
 
-<div class="container is-fluid p-5">
+<MudThemeProvider Theme="Display.Theme" @bind-IsDarkMode="Display.IsDarkMode"/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
-  <RunnerComponent AssemblyKey="@AssemblyKey" ActivityKey="@ActivityKey"/>
+<MudLayout>
+  <MudMainContent>
 
-  @foreach (Asset asset in State.Assets.Reverse())
-  {
-    <AssetComponent @key="asset.Info.Id" Asset="asset"/>
-  }
+    @* <div class="container is-fluid p-5"> *@
 
-</div>
+    <RunnerComponent AssemblyKey="@AssemblyKey" ActivityKey="@ActivityKey"/>
+
+    @foreach (Asset asset in State.Assets.Reverse())
+    {
+      <AssetComponent @key="asset.Info.Id" Asset="asset"/>
+    }
+
+  @* </div> *@
+
+  </MudMainContent>
+</MudLayout>

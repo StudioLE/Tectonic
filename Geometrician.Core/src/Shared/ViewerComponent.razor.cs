@@ -30,6 +30,10 @@ public class ViewerComponentBase : ComponentBase
     [Inject]
     protected ObjectUrlStorage ObjectUrlStorage { get; set; } = default!;
 
+    /// <inheritdoc cref="Display"/>
+    [Inject]
+    protected DisplayState Display { get; set; } = default!;
+
     /// <summary>
     /// The id of the card.
     /// </summary>

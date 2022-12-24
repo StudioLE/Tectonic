@@ -6,6 +6,7 @@ using Lineweights.Core.Documents;
 using Lineweights.Workflows.Execution;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 
 // Create Builder
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -14,12 +15,16 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
+// Add MudBlazor
+builder.Services.AddMudServices();
+
 // Inject Lineweights singleton services
 builder.Services.AddSingleton<AssetState>();
 builder.Services.AddSingleton<ObjectUrlStorage>();
 builder.Services.AddSingleton<IStorageStrategy, ObjectUrlStorageStrategy>();
 builder.Services.AddSingleton<ModelViewer>();
 builder.Services.AddSingleton<IActivityFactory, StaticMethodActivityFactory>();
+builder.Services.AddTransient<DisplayState>();
 
 // Inject Lineweights scoped services
 builder.Services.AddScoped<RunnerState>();

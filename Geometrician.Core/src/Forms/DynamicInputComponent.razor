@@ -2,49 +2,54 @@
 
 @if (PropertyType == typeof(int))
 {
-  <IntegerInputComponent
-    PropertyType="PropertyType"
-    PropertyValue="PropertyValue"
-    ParentCallback="ValidateAndSetValue"
-    ValidationStatusClass="@ValidationStatusClass"/>
+  <MudNumericField
+    Label="@Label"
+    HelperText="@HelperText"
+    HideSpinButtons="true"
+    @bind-Value="ValueAsInteger"
+    Validation="@(new Func<int, IEnumerable<string>>(ValidateAs))"/>
 }
 else if (PropertyType == typeof(double))
 {
-  <DoubleInputComponent
-    PropertyType="PropertyType"
-    PropertyValue="PropertyValue"
-    ParentCallback="ValidateAndSetValue"
-    ValidationStatusClass="@ValidationStatusClass"/>
+  <MudNumericField
+    Label="@Label"
+    HelperText="@HelperText"
+    HideSpinButtons="true"
+    @bind-Value="ValueAsDouble"
+    Validation="@(new Func<double, IEnumerable<string>>(ValidateAs))"/>
 }
 else if (PropertyType == typeof(string))
 {
-  <StringInputComponent
-    PropertyType="PropertyType"
-    PropertyValue="PropertyValue"
-    ParentCallback="ValidateAndSetValue"
-    ValidationStatusClass="@ValidationStatusClass"/>
+  <MudTextField
+    Label="@Label"
+    HelperText="@HelperText"
+    @bind-Value="ValueAsString"
+    Validation="@(new Func<string, IEnumerable<string>>(ValidateAs))"/>
 }
 else if (typeof(Enum).IsAssignableFrom(PropertyType))
 {
-  <EnumSelectComponent
-    PropertyType="PropertyType"
-    PropertyValue="PropertyValue"
-    ParentCallback="ValidateAndSetValue"
-    ValidationStatusClass="@ValidationStatusClass"/>
+  <MudSelect
+    Label="@Label"
+    HelperText="@HelperText"
+    @bind-Value="ValueAsEnum"
+    Validation="@(new Func<Enum, IEnumerable<string>>(ValidateAs))">
+    @foreach (Enum item in Enum.GetValues(PropertyType))
+    {
+      <MudSelectItem Value="@item">@item</MudSelectItem>
+    }
+  </MudSelect>
 }
 else if (PropertyType == typeof(bool))
 {
-  <BooleanCheckboxComponent
-    PropertyType="PropertyType"
-    PropertyValue="PropertyValue"
-    ParentCallback="ValidateAndSetValue"
-    ValidationStatusClass="@ValidationStatusClass"/>
+  <MudSwitch
+    Label="@Label"
+    @bind-Checked="@ValueAsBoolean"/>
 }
 else
 {
-  <ObjectInputComponent
-    PropertyType="PropertyType"
-    PropertyValue="PropertyValue"
-    ParentCallback="ValidateAndSetValue"
-    ValidationStatusClass="@ValidationStatusClass"/>
+  <MudField
+    Label="@Label"
+    HelperText="@HelperText">
+    @ValueAsObject
+  </MudField>
 }

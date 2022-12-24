@@ -16,7 +16,8 @@
   <Import Project="..\..\GlobalUsings.src.props" />
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.11" />
+    <PackageReference Include="MudBlazor" Version="6.1.6" />
   </ItemGroup>
 
   <ItemGroup>

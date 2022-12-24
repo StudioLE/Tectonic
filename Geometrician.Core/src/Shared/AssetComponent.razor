@@ -2,51 +2,65 @@
 @using Lineweights.Core.Documents
 @inherits AssetComponentBase
 
-<div class="mb-5 card parent" id="card-@Asset.Info.Id">
-  <header class="card-header">
-    <p class="card-header-title">
-      @GetTitle()
-    </p>
-    <p class="card-header-title" style="font-weight: normal; flex-grow: 0;">
-      <TimeComponent DateTime="@Asset.Info.LastRevisionTime"></TimeComponent>
-    </p>
-    <button class="card-header-icon" aria-label="close" @onclick="e => Remove()">
-      <span class="icon">
-        <i class="mdi mdi-close" aria-hidden="true"></i>
-      </span>
-    </button>
-  </header>
+<MosaicComponent>
+  <TileComponent XScale="0.25" YScale="1" Title="@GetTitle()">
+    <MudText Typo="Typo.subtitle1" Align="Align.Right" Style="display: block; color: var(--mud-palette-drawer-text);">
+      <TimeComponent DateTime="@Asset.Info.LastRevisionTime"/>
+    </MudText>
+  </TileComponent>
+  @foreach (Asset child in Asset.Children)
+  {
+    <ViewerComponent Asset="child"></ViewerComponent>
+  }
+</MosaicComponent>
 
-  <div class="card-content">
-    <div class="columns">
-      <div class="column is-4">
-        <div class="card major">
-            @if (Asset.Info.Location is not null)
-            {
-              <ViewerComponent Asset="Asset"></ViewerComponent>
-            }
-            else if (Asset.Children.Any())
-            {
-              <ViewerComponent Asset="Asset.Children.First()"></ViewerComponent>
-            }
-            else
-            {
-              <ViewerComponent Asset="Asset"></ViewerComponent>
-            }
-        </div>
-      </div>
-      <div class="column is-8 px-0 py-0">
-        <div class="is-flex is-flex-wrap-wrap">
-          @foreach (Asset child in Asset.Children)
-          {
-            if (Asset.Info.Location is null && child == Asset.Children.First())
-              continue;
-            <div class="card minor mx-3 my-3">
-              <ViewerComponent Asset="child"></ViewerComponent>
-            </div>
-          }
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+@* <div class="mb-5 card parent" id="card-@Asset.Info.Id"> *@
+@* <header class="card-header"> *@
+@*   <p class="card-header-title"> *@
+@*     @GetTitle() *@
+@*   </p> *@
+@*   <p class="card-header-title" style="font-weight: normal; flex-grow: 0;"> *@
+@*     <TimeComponent DateTime="@Asset.Info.LastRevisionTime"></TimeComponent> *@
+@*   </p> *@
+@*   <button class="card-header-icon" aria-label="close" @onclick="e => Remove()"> *@
+@*     <span class="icon"> *@
+@*       <i class="mdi mdi-close" aria-hidden="true"></i> *@
+@*     </span> *@
+@*   </button> *@
+@* </header> *@
+
+@*    *@
+@*   <div class="card-content"> *@
+@*     <div class="columns"> *@
+@*       <div class="column is-4"> *@
+@*         <div class="card major"> *@
+@*             @if (Asset.Info.Location is not null) *@
+@*             { *@
+@*               <ViewerComponent Asset="Asset"></ViewerComponent> *@
+@*             } *@
+@*             else if (Asset.Children.Any()) *@
+@*             { *@
+@*               <ViewerComponent Asset="Asset.Children.First()"></ViewerComponent> *@
+@*             } *@
+@*             else *@
+@*             { *@
+@*               <ViewerComponent Asset="Asset"></ViewerComponent> *@
+@*             } *@
+@*         </div> *@
+@*       </div> *@
+@*       <div class="column is-8 px-0 py-0"> *@
+@*         <div class="is-flex is-flex-wrap-wrap"> *@
+@*           @foreach (Asset child in Asset.Children) *@
+@*           { *@
+@*             if (Asset.Info.Location is null && child == Asset.Children.First()) *@
+@*               continue; *@
+@*             <div class="card minor mx-3 my-3"> *@
+@*               <ViewerComponent Asset="child"></ViewerComponent> *@
+@*             </div> *@
+@*           } *@
+@*         </div> *@
+@*       </div> *@
+@*     </div> *@
+@*   </div> *@
+@* </div> *@
