@@ -73,11 +73,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Install workload
+        run: dotnet workload install wasm-tools-net6
+
       - name: Restore npm Dependencies
         working-directory: Geometrician.Core/src
         run: |
           npm install
-          npm run restore
           npm run build
 
       - name: Restore NuGet Dependencies
@@ -180,7 +182,7 @@ jobs:
     if: ${{ github.repository == 'StudioLE/Lineweights' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') }}
     needs:
       - analysis
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
@@ -205,8 +207,10 @@ jobs:
         working-directory: Geometrician.Core/src
         run: |
           npm install
-          npm run restore
           npm run build
+
+      - name: Install workload
+        run: dotnet workload install wasm-tools-net6
 
       - name: Build and Publish WebAssembly
         run: >
@@ -264,6 +268,9 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
+
+      - name: Install workload
+        run: dotnet workload install wasm-tools-net6
 
       - name: Build Solution
         run: >
