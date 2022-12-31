@@ -14,11 +14,7 @@ internal sealed class SamplesTests
         // Arrange
         AssetTypes.Inputs inputs = new()
         {
-            Scene = name,
-            IncludeViewsInModel = false,
-            IncludeCsvFileAsAsset = false,
-            IncludeIfcFileAsAsset = false,
-            IncludeJsonAsContentAsset = false
+            Scene = name
         };
 
         // Act
@@ -28,6 +24,6 @@ internal sealed class SamplesTests
         _model.AddElements(outputs.Model.Elements.Values);
 
         // Assert
-        await Verify.ElementsByBounds(outputs.Model.Elements.Values);
+        await Verify.ElementsByBounds(outputs.Model.Elements.Values.OfType<GeometricElement>());
     }
 }
