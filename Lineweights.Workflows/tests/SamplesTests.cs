@@ -14,7 +14,11 @@ internal sealed class SamplesTests
         // Arrange
         AssetTypes.Inputs inputs = new()
         {
-            Scene = name
+            Scene = name,
+            IncludeViewsInModel = false,
+            IncludeCsvFileAsAsset = false,
+            IncludeIfcFileAsAsset = false,
+            IncludeJsonAsContentAsset = false
         };
 
         // Act
