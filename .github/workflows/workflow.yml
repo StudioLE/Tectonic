@@ -33,8 +33,8 @@ jobs:
       - name: Set Metadata
         id: metadata
         run: |
-          echo "::set-output name=configuration::Release"
-          echo "::set-output name=version::$(git describe --tags --abbrev=0 | cut -c 2-)"
+          echo "configuration=Release" >> $GITHUB_OUTPUT
+          echo "version=$(git describe --tags --abbrev=0 | cut -c 2-)" >> $GITHUB_OUTPUT
 
       - name: Read Metadata
         run: |
