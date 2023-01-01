@@ -8,5 +8,5 @@ namespace Lineweights.Workflows.Visualization;
 public interface IVisualizationStrategy
 {
     /// <inheritdoc cref="IVisualizationStrategy"/>
-    public Task<Asset> Execute(Model model, DocumentInformation doc);
+    public Task Execute(Model model, DocumentInformation doc);
 }

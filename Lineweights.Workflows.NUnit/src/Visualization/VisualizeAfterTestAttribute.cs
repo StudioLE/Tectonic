@@ -83,8 +83,8 @@ public class VisualizeAfterTestAttribute : Attribute, ITestAction
         }
 
         Model model = Validate.OrThrow(result);
-        Task<Asset> task = Strategy.Execute(model, doc);
-        Asset asset = task.Result;
+        Task task = Strategy.Execute(model, doc);
+        task.Wait();
     }
 
     private static Result<Model> TryGetModel(ITest test)
