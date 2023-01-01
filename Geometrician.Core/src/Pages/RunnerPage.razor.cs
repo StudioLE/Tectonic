@@ -13,7 +13,7 @@ public class RunnerPageBase : ComponentBase, IDisposable
     [Inject]
     protected ILogger<RunnerPage> Logger { get; set; } = default!;
 
-    /// <inheritdoc cref="Display"/>
+    /// <inheritdoc cref="DisplayState"/>
     [Inject]
     protected DisplayState Display { get; set; } = default!;
 

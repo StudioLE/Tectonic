@@ -4,7 +4,7 @@ namespace Geometrician.Core.Shared;
 
 public class MosaicComponentBase : TemplatedComponentBase
 {
-    /// <inheritdoc cref="Display"/>
+    /// <inheritdoc cref="DisplayState"/>
     [Inject]
     protected DisplayState Display { get; set; } = default!;
 

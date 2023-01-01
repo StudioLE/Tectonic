@@ -14,7 +14,7 @@ public class AssetComponentBase : ComponentBase
     [Inject]
     protected AssetState State { get; set; } = default!;
 
-    /// <inheritdoc cref="Display"/>
+    /// <inheritdoc cref="DisplayState"/>
     [Inject]
     protected DisplayState Display { get; set; } = default!;
 

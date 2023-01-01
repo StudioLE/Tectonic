@@ -15,16 +15,12 @@
 <MudLayout>
   <MudMainContent>
 
-    @* <div class="container is-fluid p-5"> *@
-
     <RunnerComponent AssemblyKey="@AssemblyKey" ActivityKey="@ActivityKey"/>
 
     @foreach (Asset asset in State.Assets.Reverse())
     {
       <AssetComponent @key="asset.Info.Id" Asset="asset"/>
     }
-
-  @* </div> *@
 
   </MudMainContent>
 </MudLayout>
