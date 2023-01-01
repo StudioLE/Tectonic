@@ -5,7 +5,6 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Masterplanning.Tests;
 
-[VisualizeAfterTest]
 internal sealed class MasterplanBuilderTests
 {
     private readonly Model _model = new();
@@ -69,5 +68,11 @@ internal sealed class MasterplanBuilderTests
 
         // Assert
         await Verify.ElementsByBounds(results);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

@@ -8,7 +8,6 @@ using QuestPDF.Fluent;
 
 namespace Lineweights.PDF.Tests;
 
-[VisualizeAfterTest]
 internal sealed class ViewToPdfTests
 {
     private readonly Model _model = new();
@@ -99,5 +98,11 @@ internal sealed class ViewToPdfTests
     private void Preview(FileInfo file)
     {
         _model.AddElement(new DocumentInformation { Location = new(file.FullName) });
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

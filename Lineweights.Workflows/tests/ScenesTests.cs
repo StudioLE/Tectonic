@@ -2,7 +2,6 @@
 
 namespace Lineweights.Workflows.Tests;
 
-[VisualizeAfterTest]
 internal sealed class ScenesTests
 {
     private readonly Model _model = new();
@@ -33,5 +32,11 @@ internal sealed class ScenesTests
 
         // Assert
         await Verify.ElementsByBounds(geometry);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

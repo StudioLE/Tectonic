@@ -2,10 +2,9 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
 
-[VisualizeAfterTest]
 internal sealed class SeatingSamples
 {
-    public Model Model { get; } = new();
+    private readonly Model _model = new();
 
     [Test]
     public async Task Seating_1d_Linear()
@@ -17,7 +16,7 @@ internal sealed class SeatingSamples
         Samples.Seating1dLinear.Outputs outputs = Samples.Seating1dLinear.Execute(inputs);
 
         // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
+        _model.AddElements(outputs.Model.Elements.Values);
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
@@ -34,7 +33,7 @@ internal sealed class SeatingSamples
         Samples.Seating1dRadial.Outputs outputs = Samples.Seating1dRadial.Execute(inputs);
 
         // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
+        _model.AddElements(outputs.Model.Elements.Values);
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
@@ -51,10 +50,16 @@ internal sealed class SeatingSamples
         Samples.Seating2dAlternating.Outputs outputs = Samples.Seating2dAlternating.Execute(inputs);
 
         // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
+        _model.AddElements(outputs.Model.Elements.Values);
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
         await Verify.ElementsByBounds(components);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

@@ -3,7 +3,6 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests;
 
-[VisualizeAfterTest]
 internal sealed class SheetBuilderTests
 {
     private readonly Model _model = new();
@@ -125,5 +124,11 @@ internal sealed class SheetBuilderTests
 
         // Assert
         await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

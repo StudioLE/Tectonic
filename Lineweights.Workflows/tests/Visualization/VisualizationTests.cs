@@ -35,14 +35,20 @@ internal sealed class VisualizationTests
 
     [TestCase(typeof(VisualizeAsFile))]
     [TestCase(typeof(VisualizeWithGeometricianServer))]
-    public void VisualizeAfterTestAttribute_by_Type(Type type)
+    public void Visualize(Type type)
     {
         // Arrange
+        IServiceProvider services = Services.GetInstance();
+        object service = services.GetRequiredService(type);
+        if (service is not IVisualizationStrategy strategy)
+            throw new($"The service is not an {nameof(IVisualizationStrategy)}");
+
+
         // Act
-        VisualizeAfterTestAttribute attribute = new(type);
+        Visualize visualize = new(strategy);
 
         // Assert
-        Assert.That(attribute.Strategy, Is.TypeOf(type), "Strategy");
+        Assert.That(visualize._strategy, Is.TypeOf(type), "Strategy");
     }
 
     [Test]
@@ -58,13 +64,5 @@ internal sealed class VisualizationTests
 
         // Assert
         // Assert.That(asset.Children.Count, Is.EqualTo(1), "Children count");
-    }
-
-    [Test]
-    [Explicit("Requires Azurite")]
-    [Category("Requires Azurite")]
-    [VisualizeAfterTest(typeof(VisualizeWithGeometricianServer), IsEnabled = true)]
-    public void VisualizeInServerAppAfterTest_UsingAttribute()
-    {
     }
 }

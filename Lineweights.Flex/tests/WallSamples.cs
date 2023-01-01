@@ -2,10 +2,9 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
 
-[VisualizeAfterTest]
 internal sealed class WallSamples
 {
-    public Model Model { get; } = new();
+    private readonly Model _model = new();
 
     [Test]
     public async Task Wall_StretcherBond()
@@ -17,7 +16,7 @@ internal sealed class WallSamples
         Samples.WallStretcherBond.Outputs outputs = Samples.WallStretcherBond.Execute(inputs);
 
         // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
+        _model.AddElements(outputs.Model.Elements.Values);
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
@@ -34,10 +33,16 @@ internal sealed class WallSamples
         Samples.WallFlemishBond.Outputs outputs = Samples.WallFlemishBond.Execute(inputs);
 
         // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
+        _model.AddElements(outputs.Model.Elements.Values);
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
         await Verify.ElementsByBounds(components);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

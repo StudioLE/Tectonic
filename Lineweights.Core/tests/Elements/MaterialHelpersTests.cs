@@ -2,7 +2,6 @@
 
 namespace Lineweights.Core.Tests.Elements;
 
-[VisualizeAfterTest]
 internal sealed class MaterialHelpersTests
 {
     private readonly Model _model = new();
@@ -33,5 +32,11 @@ internal sealed class MaterialHelpersTests
             Assert.That(material1.Name, Is.EqualTo(material2.Name));
             Assert.That(material1.Id, Is.EqualTo(material2.Id));
         });
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

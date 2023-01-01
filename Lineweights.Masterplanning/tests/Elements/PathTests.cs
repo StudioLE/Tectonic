@@ -5,7 +5,6 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Masterplanning.Tests.Elements;
 
-[VisualizeAfterTest]
 internal sealed class PathTests
 {
     private readonly Model _model = new();
@@ -78,5 +77,11 @@ internal sealed class PathTests
 
         // Assert
         await Verify.ElementsByBounds(new[] { path });
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

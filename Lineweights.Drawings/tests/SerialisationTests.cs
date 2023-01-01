@@ -4,7 +4,6 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests;
 
-[VisualizeAfterTest]
 internal sealed class SerialisationTests
 {
     private readonly Model _model = new();
@@ -177,5 +176,11 @@ internal sealed class SerialisationTests
                 .First();
             Assert.That(deserialised, Is.EqualTo(sheet), "Matches.");
         });
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

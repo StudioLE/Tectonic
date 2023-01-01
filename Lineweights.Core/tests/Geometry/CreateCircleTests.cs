@@ -2,7 +2,6 @@
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[VisualizeAfterTest]
 internal sealed class CreateCircleTests
 {
     private readonly Model _model = new();
@@ -27,5 +26,11 @@ internal sealed class CreateCircleTests
 
         // Assert
         await Verify.Geometry(circle);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

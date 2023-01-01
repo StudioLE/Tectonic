@@ -2,7 +2,6 @@
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[VisualizeAfterTest]
 internal sealed class CreateRuledSurfaceTests
 {
     private readonly Model _model = new();
@@ -76,5 +75,11 @@ internal sealed class CreateRuledSurfaceTests
 
         // Assert
         await Verify.Geometry(lines);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

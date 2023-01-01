@@ -2,10 +2,9 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
 
-[VisualizeAfterTest]
 internal sealed class FlexSamples
 {
-    public Model Model { get; } = new();
+    private readonly Model _model = new();
 
     [Test]
     public async Task Flex2d_Sample()
@@ -26,12 +25,18 @@ internal sealed class FlexSamples
             displayInputs);
 
         // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
+        _model.AddElements(outputs.Model.Elements.Values);
 
         // Assert
         Assert.That(outputs, Is.Not.Null, "Outputs");
         Assert.That(outputs.Model.Elements.Count, Is.EqualTo(526), "Outputs model count");
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
         await Verify.ElementsByBounds(components);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

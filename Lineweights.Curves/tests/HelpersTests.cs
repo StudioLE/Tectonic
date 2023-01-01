@@ -3,7 +3,6 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Curves.Tests;
 
-[VisualizeAfterTest]
 internal sealed class HelpersTests
 {
     private readonly Model _model = new();
@@ -83,5 +82,11 @@ internal sealed class HelpersTests
 
         // Assert
         await Verify.Geometry(arcs);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

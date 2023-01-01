@@ -2,7 +2,6 @@
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[VisualizeAfterTest]
 internal sealed class TransformHelpersTests
 {
     private readonly Model _model = new();
@@ -60,5 +59,11 @@ internal sealed class TransformHelpersTests
             Assert.That(rounded.ZAxis, Is.EqualTo(target.ZAxis), "Z Axis");
             Assert.That(rounded.Origin, Is.EqualTo(sourceOrigin), "Origin");
         });
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

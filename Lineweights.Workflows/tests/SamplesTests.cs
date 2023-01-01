@@ -2,7 +2,6 @@
 
 namespace Lineweights.Workflows.Tests;
 
-[VisualizeAfterTest]
 internal sealed class SamplesTests
 {
     private readonly Model _model = new();
@@ -25,5 +24,11 @@ internal sealed class SamplesTests
 
         // Assert
         await Verify.ElementsByBounds(outputs.Model.Elements.Values);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

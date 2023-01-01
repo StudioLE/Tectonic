@@ -2,7 +2,6 @@
 
 namespace Lineweights.Core.Tests.Geometry;
 
-[VisualizeAfterTest]
 internal sealed class CreateArcTests
 {
     private readonly Model _model = new();
@@ -69,5 +68,11 @@ internal sealed class CreateArcTests
             Assert.That(vertices[3].IsPointOn(arc, threshold: threshold), Is.True);
         });
         await Verify.Geometry(arc);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

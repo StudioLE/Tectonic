@@ -4,7 +4,6 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Curves.Tests;
 
-[VisualizeAfterTest]
 internal sealed class SplineTests
 {
     private readonly Model _model = new();
@@ -356,5 +355,11 @@ internal sealed class SplineTests
             Assert.That(spline.Interpolation, Is.EqualTo(sourceSpline.Interpolation), "Interpolation type.");
             Assert.That(spline, Is.EqualTo(sourceSpline), "Spline.");
         });
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

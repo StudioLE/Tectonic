@@ -2,7 +2,6 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests;
 
-[VisualizeAfterTest]
 internal sealed class ViewBuilderTests
 {
     private readonly Model _model = new();
@@ -48,5 +47,11 @@ internal sealed class ViewBuilderTests
 
         // Assert
         await Verify.Geometry(view.Scope.ToBox());
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

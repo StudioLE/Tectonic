@@ -4,10 +4,9 @@ namespace Lineweights.Drawings.Tests.Samples;
 
 // TODO Convert to a workflow.
 
-[VisualizeAfterTest]
 internal sealed class GeometricElementsScene
 {
-    public Model Model { get; } = new();
+    private readonly Model _model = new();
 
     [Test]
     [Explicit("Write GeometricElementsScene to JSON")]
@@ -27,7 +26,7 @@ internal sealed class GeometricElementsScene
             .ToArray();
 
         // Preview
-        Model.AddElements(geometry);
+        _model.AddElements(geometry);
 
         // Write to file
         Scenes.ToJson(Scenes.Name.GeometricElements, geometry);
@@ -124,5 +123,11 @@ internal sealed class GeometricElementsScene
             .Append(new(bottomB, MaterialByName("Gray")))
             .Concat(modelCurvesA)
             .Concat(modelCurvesB);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }

@@ -2,7 +2,6 @@ using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Flex.Tests;
 
-[VisualizeAfterTest]
 internal sealed class Flex2dTests
 {
     private readonly Model _model = new();
@@ -177,5 +176,11 @@ internal sealed class Flex2dTests
 
         // Assert
         await Verify.ElementsByBounds(components.SelectMany(x => x).ToArray());
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await new Visualize().Execute(_model);
     }
 }
