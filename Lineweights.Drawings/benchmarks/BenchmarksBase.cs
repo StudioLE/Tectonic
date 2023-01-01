@@ -40,10 +40,10 @@ public abstract class BenchmarksBase
 
         ISequenceBuilder sequenceBuilder = new SequenceBuilder();
         IDistribution2dBuilder defaultViewArrangement = new DefaultViewArrangement();
-        ISheetBuilder builder = new SheetBuilder(sequenceBuilder, defaultViewArrangement)
+        IBuilder<Sheet> builder = new SheetBuilder(sequenceBuilder, defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views);
-        _sheet = (Sheet)builder.Build();
+        _sheet = builder.Build();
     }
 }

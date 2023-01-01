@@ -5,7 +5,7 @@ namespace Lineweights.Drawings;
 /// <summary>
 /// Build a <see cref="Sheet"/> using a <see href="https://refactoring.guru/design-patterns/builder">builder pattern</see>.
 /// </summary>
-public sealed class SheetBuilder : ISheetBuilder
+public sealed class SheetBuilder : IBuilder<Sheet>
 {
     internal double _sheetWidth;
     internal double _sheetHeight;
@@ -34,7 +34,7 @@ public sealed class SheetBuilder : ISheetBuilder
     /// <summary>
     /// Build the <see cref="Sheet"/>.
     /// </summary>
-    public object Build()
+    public Sheet Build()
     {
         BBox3 sheetBounds = CreateBBox3.ByLengths2d(_sheetWidth, _sheetHeight);
 
@@ -56,7 +56,7 @@ public sealed class SheetBuilder : ISheetBuilder
         BBox3 titleBounds = CreateBBox3.ByLengths2d(titleWidth, titleHeight);
         BBox3 contentBounds = CreateBBox3.ByLengths2d(contentWidth, contentHeight);
 
-        return new Sheet
+        return new()
         {
             Bounds = sheetBounds,
             Margin = _sheetMargin ?? new(),

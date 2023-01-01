@@ -10,28 +10,28 @@ public static class SheetBuilderExtensions
     /// <summary>
     /// Set the <see cref="Sheet"/> width and height.
     /// </summary>
-    public static ISheetBuilder SheetSize(this ISheetBuilder @this, double width, double height)
+    public static SheetBuilder SheetSize(this SheetBuilder @this, double width, double height)
     {
-        ((SheetBuilder)@this)._sheetWidth = width;
-        ((SheetBuilder)@this)._sheetHeight = height;
+        @this._sheetWidth = width;
+        @this._sheetHeight = height;
         return @this;
     }
 
     /// <summary>
     /// Set the <see cref="Sheet"/> padding.
     /// </summary>
-    public static ISheetBuilder SheetPadding(this ISheetBuilder @this, double width, double height)
+    public static SheetBuilder SheetPadding(this SheetBuilder @this, double width, double height)
     {
-        ((SheetBuilder)@this)._sheetPadding = new(width, height, 0);
+        @this._sheetPadding = new(width, height, 0);
         return @this;
     }
 
     /// <summary>
     /// Set the <see cref="Sheet"/> margin.
     /// </summary>
-    public static ISheetBuilder SheetMargin(this ISheetBuilder @this, double width, double height)
+    public static SheetBuilder SheetMargin(this SheetBuilder @this, double width, double height)
     {
-        ((SheetBuilder)@this)._sheetMargin = new(width, height, 0);
+        @this._sheetMargin = new(width, height, 0);
         return @this;
     }
 
@@ -42,36 +42,36 @@ public static class SheetBuilderExtensions
     /// <summary>
     /// Set the height of a horizontally oriented <see cref="Sheet.Title"/>.
     /// </summary>
-    public static ISheetBuilder HorizontalTitleArea(this ISheetBuilder @this, double height)
+    public static SheetBuilder HorizontalTitleArea(this SheetBuilder @this, double height)
     {
-        ((SheetBuilder)@this)._titleHeight = height;
+        @this._titleHeight = height;
         return @this;
     }
 
     /// <summary>
     /// Set the width of a vertically oriented <see cref="Sheet.Title"/>.
     /// </summary>
-    public static ISheetBuilder VerticalTitleArea(this ISheetBuilder @this, double width)
+    public static SheetBuilder VerticalTitleArea(this SheetBuilder @this, double width)
     {
-        ((SheetBuilder)@this)._titleWidth = width;
+        @this._titleWidth = width;
         return @this;
     }
 
     /// <summary>
     /// Set the <see cref="Sheet.Title"/> padding.
     /// </summary>
-    public static ISheetBuilder TitlePadding(this ISheetBuilder @this, double width, double height)
+    public static SheetBuilder TitlePadding(this SheetBuilder @this, double width, double height)
     {
-        ((SheetBuilder)@this)._titlePadding = new(width, height, 0);
+        @this._titlePadding = new(width, height, 0);
         return @this;
     }
 
     /// <summary>
     /// Set the <see cref="Sheet.Title"/> margin.
     /// </summary>
-    public static ISheetBuilder TitleMargin(this ISheetBuilder @this, double width, double height)
+    public static SheetBuilder TitleMargin(this SheetBuilder @this, double width, double height)
     {
-        ((SheetBuilder)@this)._titleMargin = new(width, height, 0);
+        @this._titleMargin = new(width, height, 0);
         return @this;
     }
 
@@ -82,51 +82,51 @@ public static class SheetBuilderExtensions
     /// <summary>
     /// Set the <see cref="Sheet.Content"/> padding.
     /// </summary>
-    public static ISheetBuilder ContentPadding(this ISheetBuilder @this, double width, double height)
+    public static SheetBuilder ContentPadding(this SheetBuilder @this, double width, double height)
     {
         // TODO: Implement as an interface...
-        ((SheetBuilder)@this)._contentPadding = new(width, height, 0);
+        @this._contentPadding = new(width, height, 0);
         return @this;
     }
 
     /// <summary>
     /// Set the <see cref="Sheet.Content"/> margin.
     /// </summary>
-    public static ISheetBuilder ContentMargin(this ISheetBuilder @this, double width, double height)
+    public static SheetBuilder ContentMargin(this SheetBuilder @this, double width, double height)
     {
-        ((SheetBuilder)@this)._contentMargin = new(width, height, 0);
+        @this._contentMargin = new(width, height, 0);
         return @this;
     }
 
     /// <summary>
     /// Set the views to be placed on the sheet.
-    /// The position of the view is then set by the <see cref="ViewArrangement(ISheetBuilder, IDistribution2dBuilder)"/>.
+    /// The position of the view is then set by the <see cref="ViewArrangement(SheetBuilder, IDistribution2dBuilder)"/>.
     /// </summary>
-    public static ISheetBuilder Views(this ISheetBuilder @this, IReadOnlyCollection<View> views)
+    public static SheetBuilder Views(this SheetBuilder @this, IReadOnlyCollection<View> views)
     {
-        ((SheetBuilder)@this)._views = views;
+        @this._views = views;
         return @this;
     }
 
     /// <summary>
     /// Set the arrangement of the views as a <see cref="IDistribution2dBuilder"/>.
     /// This method overrides the existing or default ViewArrangement.
-    /// The <see cref="IDistribution2dBuilder"/> is built with the <see cref="Views(ISheetBuilder, IReadOnlyCollection{View})"/> as its elements.
+    /// The <see cref="IDistribution2dBuilder"/> is built with the <see cref="Views(SheetBuilder, IReadOnlyCollection{View})"/> as its elements.
     /// </summary>
-    public static ISheetBuilder ViewArrangement(this ISheetBuilder @this, IDistribution2dBuilder viewArrangement)
+    public static SheetBuilder ViewArrangement(this SheetBuilder @this, IDistribution2dBuilder viewArrangement)
     {
-        ((SheetBuilder)@this)._viewArrangement = viewArrangement;
+        @this._viewArrangement = viewArrangement;
         return @this;
     }
 
     /// <summary>
     /// Set the arrangement of the views as a <see cref="IDistribution2dBuilder"/>.
     /// This method extends the existing or default ViewArrangement.
-    /// The <see cref="IDistribution2dBuilder"/> is built with the <see cref="Views(ISheetBuilder, IReadOnlyCollection{View})"/> as its elements.
+    /// The <see cref="IDistribution2dBuilder"/> is built with the <see cref="Views(SheetBuilder, IReadOnlyCollection{View})"/> as its elements.
     /// </summary>
-    public static ISheetBuilder ViewArrangement(this ISheetBuilder @this, Action<IDistribution2dBuilder> viewArrangement)
+    public static SheetBuilder ViewArrangement(this SheetBuilder @this, Action<IDistribution2dBuilder> viewArrangement)
     {
-        viewArrangement.Invoke(((SheetBuilder)@this)._viewArrangement);
+        viewArrangement.Invoke(@this._viewArrangement);
         return @this;
     }
 

@@ -93,11 +93,11 @@ public static class SheetSample
             .CrossJustification(arrangementInputs.CrossJustification)
             .CrossAlignment(arrangementInputs.CrossAlignment);
 
-        ISheetBuilder builder = new SheetBuilder(sequenceBuilder, viewArrangement)
+        IBuilder<Sheet> builder = new SheetBuilder(sequenceBuilder, viewArrangement)
             .SheetSize(sheetInputs.Width, sheetInputs.Height)
             .VerticalTitleArea(sheetInputs.Title)
             .Views(views);
-        Sheet sheet = (Sheet)builder.Build();
+        Sheet sheet = builder.Build();
 
         // Prepare outputs
         Outputs outputs = new();

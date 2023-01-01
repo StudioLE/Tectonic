@@ -50,11 +50,11 @@ internal sealed class SheetToPdfTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
+        IBuilder<Sheet> builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views);
-        Sheet sheet = (Sheet)builder.Build();
+        Sheet sheet = builder.Build();
 
         // Act
         SheetToPdf converter = new();
@@ -89,11 +89,11 @@ internal sealed class SheetToPdfTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
+        IBuilder<Sheet> builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views);
-        Sheet sheet = (Sheet)builder.Build();
+        Sheet sheet = builder.Build();
 
         // Act
         SheetToPdf converter = new();
@@ -129,11 +129,11 @@ internal sealed class SheetToPdfTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
+        IBuilder<Sheet> builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views);
-        Sheet sheet = (Sheet)builder.Build();
+        Sheet sheet = builder.Build();
 
         // Act
         SheetToPdf converter = new();
@@ -169,11 +169,11 @@ internal sealed class SheetToPdfTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
+        IBuilder<Sheet> builder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views);
-        Sheet sheet = (Sheet)builder.Build();
+        Sheet sheet = builder.Build();
 
         // Act
         SheetToPdf converter = new();

@@ -46,7 +46,7 @@ internal sealed class SheetBuilderTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder sheetBuilder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
+        IBuilder<Sheet> sheetBuilder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
@@ -95,7 +95,7 @@ internal sealed class SheetBuilderTests
                 .Build())
             .ToArray();
 
-        ISheetBuilder sheetBuilder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
+        IBuilder<Sheet> sheetBuilder = new SheetBuilder(_sequenceBuilder, _defaultViewArrangement)
             .SheetSize(.841, .594)
             .VerticalTitleArea(.075)
             .Views(views)
