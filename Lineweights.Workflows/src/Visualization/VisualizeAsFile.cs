@@ -24,7 +24,7 @@ public sealed class VisualizeAsFile : IVisualizationStrategy
     public VisualizeAsFile(IAssetBuilder builder)
     {
         _builder = builder;
-        _builder.StorageStrategy(_storageStrategy);
+        _builder.StorageStrategy = _storageStrategy;
     }
 
     /// <inheritdoc cref="VisualizeAsFile"/>

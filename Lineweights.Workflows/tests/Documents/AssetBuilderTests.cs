@@ -139,7 +139,7 @@ internal sealed class AssetBuilderTests
         model.AddElements(SampleHelpers.CreateViews(model));
 
         // Act
-        IAssetBuilder builder = new AssetBuilder()
+        AssetBuilder builder = new AssetBuilder()
             .ConvertModelToGlb()
             .ConvertModelToIfc()
             .ExtractSheetsAndConvertToPdf()

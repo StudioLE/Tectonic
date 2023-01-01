@@ -22,7 +22,7 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
     public VisualizeWithGeometricianServer(GeometricianService geometrician, IAssetBuilder assetBuilder)
     {
         _assetBuilder = assetBuilder;
-        _assetBuilder.StorageStrategy(_blobStorage);
+        _assetBuilder.StorageStrategy = _blobStorage;
         _httpClient = geometrician.HttpClient;
     }
 

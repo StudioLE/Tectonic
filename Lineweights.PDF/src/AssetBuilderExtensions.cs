@@ -12,22 +12,22 @@ namespace Lineweights.PDF;
 public static class AssetBuilderExtensions
 {
     /// <inheritdoc cref="Asset"/>
-    public static IAssetBuilder ExtractSheetsAndConvertToPdf(this IAssetBuilder @this)
+    public static T ExtractSheetsAndConvertToPdf<T>(this T @this) where T : IAssetBuilder
     {
-        IAssetBuilder.Steps steps = (model, storageStrategy) => model
+        IAssetBuilder.BuildTask build = (model, storageStrategy) => model
             .AllElementsOfType<Sheet>()
             .Select(canvas => ConvertCanvasToPdf(canvas, storageStrategy));
-        @this.AddSteps(steps);
+        @this.Tasks.Add(build);
         return @this;
     }
 
     /// <inheritdoc cref="Asset"/>
-    public static IAssetBuilder ExtractViewsAndConvertToPdf(this IAssetBuilder @this)
+    public static T ExtractViewsAndConvertToPdf<T>(this T @this) where T : IAssetBuilder
     {
-        IAssetBuilder.Steps steps = (model, storageStrategy) => model
+        IAssetBuilder.BuildTask build = (model, storageStrategy) => model
             .AllElementsOfType<View>()
             .Select(canvas => ConvertCanvasToPdf(canvas, storageStrategy));
-        @this.AddSteps(steps);
+        @this.Tasks.Add(build);
         return @this;
     }
 

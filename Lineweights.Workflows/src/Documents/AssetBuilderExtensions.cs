@@ -7,17 +7,18 @@ namespace Lineweights.Workflows.Documents;
 public static class AssetBuilderExtensions
 {
     /// <inheritdoc cref="Asset"/>
-    public static IAssetBuilder AddAssets(this IAssetBuilder @this, params Asset[] assets)
+    public static T AddAssets<T>(this T @this, params Asset[] assets) where T : IAssetBuilder
     {
-        foreach (Asset asset in assets)
-            @this.AddAsset(asset);
+        IAssetBuilder.BuildTask build = (_, _) =>
+            assets.Select(Task.FromResult);
+        @this.Tasks.Add(build);
         return @this;
     }
 
     /// <inheritdoc cref="Asset"/>
-    public static IAssetBuilder ConvertModelToGlb(this IAssetBuilder @this, DocumentInformation? doc = null)
+    public static T ConvertModelToGlb<T>(this T @this, DocumentInformation? doc = null) where T : IAssetBuilder
     {
-        @this.AddStep(async (model, storageStrategy) =>
+        IAssetBuilder.BuildTask build = (model, storageStrategy) =>
         {
             doc ??= new()
             {
@@ -43,15 +44,18 @@ public static class AssetBuilderExtensions
                 throw new FileNotFoundException("Failed to write GLB. Temp file does not exist.");
             Stream stream = File.OpenRead(tempPath);
 
-            return await storageStrategy.WriteAsync(asset, fileName, stream);
-        });
+
+            Task<Asset> task = storageStrategy.WriteAsync(asset, fileName, stream);
+            return new [] { task };
+        };
+        @this.Tasks.Add(build);
         return @this;
     }
 
     /// <inheritdoc cref="Asset"/>
-    public static IAssetBuilder ConvertModelToJson(this IAssetBuilder @this, DocumentInformation? doc = null)
+    public static T ConvertModelToJson<T>(this T @this, DocumentInformation? doc = null) where T : IAssetBuilder
     {
-        @this.AddStep((model, _) =>
+        IAssetBuilder.BuildTask build = (model, _) =>
         {
             doc ??= new()
             {
@@ -66,9 +70,9 @@ public static class AssetBuilderExtensions
                 ContentType = "application/json",
                 Content = json
             };
-            return Task.FromResult(asset);
-        });
-
+            return new [] { Task.FromResult(asset) };
+        };
+        @this.Tasks.Add(build);
         return @this;
     }
 }

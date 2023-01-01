@@ -10,9 +10,9 @@ namespace Lineweights.IFC;
 public static class AssetBuilderExtensions
 {
     /// <inheritdoc cref="Asset"/>
-    public static IAssetBuilder ConvertModelToIfc(this IAssetBuilder @this, DocumentInformation? doc = null)
+    public static T ConvertModelToIfc<T>(this T @this, DocumentInformation? doc = null) where T : IAssetBuilder
     {
-        @this.AddStep(async (model, storageStrategy) =>
+        IAssetBuilder.BuildTask build = (model, storageStrategy) =>
         {
             doc ??= new()
             {
@@ -54,8 +54,11 @@ public static class AssetBuilderExtensions
             Stream stream = File.OpenRead(tempPath);
 
             string fileName = doc.Id + ".ifc";
-            return await storageStrategy.WriteAsync(asset, fileName, stream);
-        });
+
+            Task<Asset> task = storageStrategy.WriteAsync(asset, fileName, stream);
+            return new [] { task };
+        };
+        @this.Tasks.Add(build);
         return @this;
     }
 }

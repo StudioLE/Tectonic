@@ -125,9 +125,10 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
             Name = _activity.Name,
             Description = $"Executed {State.SelectedActivityKey} from {State.SelectedAssemblyKey}."
         };
-        IAssetBuilder builder = new AssetBuilder()
-            .StorageStrategy(StorageStrategy)
-            .DocumentInformation(doc)
+        // TODO: If this is created via DI then the Storage Strategy will be injected automatically.
+        AssetBuilder builder = new AssetBuilder()
+            .SetStorageStrategy(StorageStrategy)
+            .SetDocumentInformation(doc)
             .ConvertModelToGlb()
             .ExtractViewsAndConvertToSvg()
             .ExtractSheetsAndConvertToPdf();

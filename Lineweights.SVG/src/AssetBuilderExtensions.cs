@@ -12,22 +12,22 @@ namespace Lineweights.SVG;
 public static class AssetBuilderExtensions
 {
     /// <inheritdoc cref="Asset"/>
-    public static IAssetBuilder ExtractSheetsAndConvertToSvg(this IAssetBuilder @this)
+    public static T ExtractSheetsAndConvertToSvg<T>(this T @this) where T : IAssetBuilder
     {
-        IAssetBuilder.Steps steps = (model, storageStrategy) => model
+        IAssetBuilder.BuildTask build = (model, storageStrategy) => model
             .AllElementsOfType<Sheet>()
             .Select(canvas => ConvertCanvasToSvg(canvas, storageStrategy));
-        @this.AddSteps(steps);
+        @this.Tasks.Add(build);
         return @this;
     }
 
     /// <inheritdoc cref="Asset"/>
-    public static IAssetBuilder ExtractViewsAndConvertToSvg(this IAssetBuilder @this)
+    public static T ExtractViewsAndConvertToSvg<T>(this T @this) where T : IAssetBuilder
     {
-        IAssetBuilder.Steps steps = (model, storageStrategy) => model
+        IAssetBuilder.BuildTask build = (model, storageStrategy) => model
             .AllElementsOfType<View>()
             .Select(canvas => ConvertCanvasToSvg(canvas, storageStrategy));
-        @this.AddSteps(steps);
+        @this.Tasks.Add(build);
         return @this;
     }
 

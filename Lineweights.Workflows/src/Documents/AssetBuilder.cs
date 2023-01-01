@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Lineweights.Core.Documents;
 
 namespace Lineweights.Workflows.Documents;
@@ -5,56 +6,38 @@ namespace Lineweights.Workflows.Documents;
 /// <inheritdoc cref="IAssetBuilder"/>
 public class AssetBuilder : IAssetBuilder
 {
-    private readonly List<IAssetBuilder.Steps> _steps = new();
-    private IStorageStrategy _storageStrategy = new FileStorageStrategy();
     private DocumentInformation? _doc;
 
-    /// <inheritdoc />
-    public IAssetBuilder StorageStrategy(IStorageStrategy storage)
+    /// <inheritdoc/>
+    public IStorageStrategy StorageStrategy { get; set; } = new FileStorageStrategy();
+
+    public Collection<IAssetBuilder.BuildTask> Tasks { get; } = new();
+
+    /// <inheritdoc cref="StorageStrategy"/>
+    public AssetBuilder SetStorageStrategy(IStorageStrategy storageStrategy)
     {
-        _storageStrategy = storage;
+        StorageStrategy = storageStrategy;
         return this;
     }
 
-    /// <inheritdoc />
-    public IAssetBuilder AddAsset(Asset asset)
-    {
-        AddStep((_, _) => Task.FromResult(asset));
-        return this;
-    }
-
-    /// <inheritdoc />
-    public IAssetBuilder AddStep(IAssetBuilder.Step step)
-    {
-        AddSteps((model, storageStrategy) =>
-        {
-            Task<Asset> task = step.Invoke(model, storageStrategy);
-            return new[] { task };
-        });
-        return this;
-    }
-
-    /// <inheritdoc />
-    public IAssetBuilder AddSteps(IAssetBuilder.Steps steps)
-    {
-        _steps.Add(steps);
-        return this;
-    }
-
-    /// <inheritdoc />
-    public IAssetBuilder DocumentInformation(DocumentInformation doc)
+    /// <summary>
+    /// Set the <see cref="SetDocumentInformation"/> of the parent <see cref="Asset"/>.
+    /// </summary>
+    public AssetBuilder SetDocumentInformation(DocumentInformation doc)
     {
         _doc = doc;
         return this;
     }
 
-    /// <inheritdoc cref="Asset"/>
+    /// <summary>
+    /// Build asset.
+    /// </summary>
     public async Task<Asset> Build(Model model)
     {
-        if (!_steps.Any())
+        if (!Tasks.Any())
             this.ConvertModelToGlb();
         // TODO: Benchmark whether it's worth using tasks.AsParallel()
-        IEnumerable<Task<Asset>> tasks = _steps.SelectMany(steps => steps.Invoke(model, _storageStrategy));
+        IEnumerable<Task<Asset>> tasks = Tasks.SelectMany(steps => steps.Invoke(model, StorageStrategy));
         Asset[] assets = await Task.WhenAll(tasks);
         return new()
         {
