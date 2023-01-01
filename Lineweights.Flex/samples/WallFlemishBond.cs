@@ -30,15 +30,15 @@ public static class WallFlemishBond
         StandardWall wall = new(line, inputs.WallDepth, inputs.WallHeight);
 
         // Configure the sequence
-        ISequenceBuilder sequenceA = new SequenceBuilder()
+        SequenceBuilder sequenceA = new SequenceBuilder()
             .Repetition(true)
             .OddCondition()
-            .Body(Brick.Stretcher, Brick.Half);
-        ISequenceBuilder sequenceB = new SequenceBuilder()
+            .SetBody(Brick.Stretcher, Brick.Half);
+        SequenceBuilder sequenceB = new SequenceBuilder()
             .Repetition(true)
             .OddCondition()
-            .Body(Brick.Half, Brick.Stretcher);
-        ISequenceBuilder crossSequence = new SequenceBuilder()
+            .SetBody(Brick.Half, Brick.Stretcher);
+        SequenceBuilder crossSequence = new SequenceBuilder()
             .Repetition(true)
             .Overflow(true);
 

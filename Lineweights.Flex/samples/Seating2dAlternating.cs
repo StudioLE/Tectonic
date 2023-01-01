@@ -31,15 +31,15 @@ public static class Seating2dAlternating
         Space auditorium = new(Polygon.Rectangle(inputs.AuditoriumWidth, inputs.AuditoriumLength), inputs.AuditoriumHeight);
 
         // Configure the sequence
-        ISequenceBuilder oddSequence = new SequenceBuilder()
+        SequenceBuilder oddSequence = new SequenceBuilder()
             .Repetition(true)
             .OddCondition()
-            .Body(seat);
-        ISequenceBuilder evenSequence = new SequenceBuilder()
+            .SetBody(seat);
+        SequenceBuilder evenSequence = new SequenceBuilder()
             .Repetition(true)
             .EvenCondition()
-            .Body(seat);
-        ISequenceBuilder crossSequence = new SequenceBuilder()
+            .SetBody(seat);
+        SequenceBuilder crossSequence = new SequenceBuilder()
             .Repetition(true);
 
         // Configure the builder

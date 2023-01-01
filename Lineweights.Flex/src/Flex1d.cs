@@ -24,7 +24,7 @@ public sealed class Flex1d : FlexBase
     /// <summary>
     /// The strategy for repeating elements along the main axis.
     /// </summary>
-    private ISequenceBuilder? _sequence;
+    private SequenceBuilder? _sequence;
 
     internal IReadOnlyCollection<Proxy> _proxies = Array.Empty<Proxy>();
 
@@ -114,7 +114,7 @@ public sealed class Flex1d : FlexBase
     }
 
     /// <inheritdoc cref="_sequence"/>
-    public Flex1d Sequence(ISequenceBuilder sequence)
+    public Flex1d Sequence(SequenceBuilder sequence)
     {
         _sequence = sequence;
         return this;

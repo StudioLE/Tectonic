@@ -9,8 +9,8 @@ internal sealed class Flex1dTests
     private Line Line { get; }
     private Vector3 CrossAxis { get; }
     private Arc Arc { get; }
-    private ISequenceBuilder StretcherSoldier { get; }
-    private ISequenceBuilder StretcherHeader { get; }
+    private SequenceBuilder StretcherSoldier { get; }
+    private SequenceBuilder StretcherHeader { get; }
 
     public Flex1dTests()
     {
@@ -21,11 +21,11 @@ internal sealed class Flex1dTests
         StretcherSoldier = new SequenceBuilder()
             .Repetition(true)
             .MaxCountConstraint(20)
-            .Body(Brick.Stretcher, Brick.Soldier);
+            .SetBody(Brick.Stretcher, Brick.Soldier);
         StretcherHeader = new SequenceBuilder()
             .Repetition(true)
             .MaxCountConstraint(20)
-            .Body(Brick.Stretcher, Brick.Header);
+            .SetBody(Brick.Stretcher, Brick.Header);
     }
 
     [SetUp]

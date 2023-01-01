@@ -81,8 +81,8 @@ public static class Flex2dSample
             Material = MaterialByName("Gray")
         };
 
-        ISequenceBuilder firstSequence = GetSequenceByInputs(firstSequenceInputs);
-        ISequenceBuilder secondSequence = GetSequenceByInputs(secondSequenceInputs);
+        SequenceBuilder firstSequence = GetSequenceByInputs(firstSequenceInputs);
+        SequenceBuilder secondSequence = GetSequenceByInputs(secondSequenceInputs);
 
         Flex2d builder = new Flex2d()
             .MainJustification(flexInputs.MainJustification)
@@ -113,16 +113,16 @@ public static class Flex2dSample
         return outputs;
     }
 
-    private static ISequenceBuilder GetSequenceByInputs(SequenceInputs inputs)
+    private static SequenceBuilder GetSequenceByInputs(SequenceInputs inputs)
     {
-        ISequenceBuilder sequence = new SequenceBuilder()
+        SequenceBuilder sequence = new SequenceBuilder()
             .Repetition(true)
             .MaxCountConstraint(inputs.MaxCount);
         return inputs.Type switch
         {
-            SequenceInputs.SequenceType.StretcherSoldier => sequence.Body(Brick.Stretcher, Brick.Soldier),
-            SequenceInputs.SequenceType.SoldierStretcher => sequence.Body(Brick.Soldier, Brick.Stretcher),
-            SequenceInputs.SequenceType.StretcherHeader => sequence.Body(Brick.Stretcher, Brick.Header),
+            SequenceInputs.SequenceType.StretcherSoldier => sequence.SetBody(Brick.Stretcher, Brick.Soldier),
+            SequenceInputs.SequenceType.SoldierStretcher => sequence.SetBody(Brick.Soldier, Brick.Stretcher),
+            SequenceInputs.SequenceType.StretcherHeader => sequence.SetBody(Brick.Stretcher, Brick.Header),
             _ => throw new EnumSwitchException<SequenceInputs.SequenceType>($"Failed to {nameof(GetSequenceByInputs)}", inputs.Type)
         };
     }

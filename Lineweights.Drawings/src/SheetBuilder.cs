@@ -100,12 +100,10 @@ public sealed class SheetBuilder : IBuilder<Sheet>
         ElementInstance[] instances = _views
             .Select(x => x.CreateInstance())
             .ToArray();
-        ISequenceBuilder sequence = _sequenceBuilder
-            .Wrapping(true)
-            .Body(instances);
-
+        _sequenceBuilder.Wrapping = true;
+        _sequenceBuilder.Body = instances;
         _viewArrangement.Container = content;
-        _viewArrangement.MainSequences = new [] { sequence };
+        _viewArrangement.MainSequences = new [] { _sequenceBuilder };
 
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = _viewArrangement.Build();
 

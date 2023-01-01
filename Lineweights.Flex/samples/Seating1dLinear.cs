@@ -23,9 +23,9 @@ public static class Seating1dLinear
         ElementInstance seat = new Seat("Seat").CreateInstance();
 
         // Configure the pattern
-        ISequenceBuilder sequence = new SequenceBuilder()
+        SequenceBuilder sequence = new SequenceBuilder()
             .Repetition(true)
-            .Body(seat);
+            .SetBody(seat);
 
         // Configure the builder
         Flex1d builder = new Flex1d()

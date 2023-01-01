@@ -7,9 +7,9 @@ internal sealed class Flex2dTests
 {
     private readonly Model _model = new();
     private Brick Container { get; }
-    private ISequenceBuilder StretcherSoldier { get; }
-    private ISequenceBuilder SoldierStretcher { get; }
-    private ISequenceBuilder StretcherHeader { get; }
+    private SequenceBuilder StretcherSoldier { get; }
+    private SequenceBuilder SoldierStretcher { get; }
+    private SequenceBuilder StretcherHeader { get; }
 
     public Flex2dTests()
     {
@@ -24,15 +24,15 @@ internal sealed class Flex2dTests
         StretcherSoldier = new SequenceBuilder()
             .Repetition(true)
             .MaxCountConstraint(20)
-            .Body(Brick.Stretcher, Brick.Soldier);
+            .SetBody(Brick.Stretcher, Brick.Soldier);
         SoldierStretcher = new SequenceBuilder()
             .Repetition(true)
             .MaxCountConstraint(20)
-            .Body(Brick.Soldier, Brick.Stretcher);
+            .SetBody(Brick.Soldier, Brick.Stretcher);
         StretcherHeader = new SequenceBuilder()
             .Repetition(true)
             .MaxCountConstraint(20)
-            .Body(Brick.Stretcher, Brick.Header);
+            .SetBody(Brick.Stretcher, Brick.Header);
     }
 
     [SetUp]
@@ -145,7 +145,7 @@ internal sealed class Flex2dTests
     public async Task Flex2d_InvertedCrossAxis(Justification justification)
     {
         // Arrange
-        ISequenceBuilder crossSequence = new SequenceBuilder()
+        SequenceBuilder crossSequence = new SequenceBuilder()
             .Repetition(true)
             .MaxCountConstraint(3);
         Flex2d builder = new Flex2d()

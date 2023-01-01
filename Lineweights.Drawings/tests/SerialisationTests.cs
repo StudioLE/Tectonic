@@ -108,7 +108,7 @@ internal sealed class SerialisationTests
             .VerticalTitleArea(.075)
             .Views(views);
 
-        Sheet sheet = (Sheet)sheetBuilder.Build();
+        Sheet sheet = sheetBuilder.Build();
         Model model = new();
         model.AddElements(sheet.Content);
 
@@ -159,7 +159,7 @@ internal sealed class SerialisationTests
             .VerticalTitleArea(.075)
             .Views(views);
 
-        Sheet sheet = (Sheet)sheetBuilder.Build();
+        Sheet sheet = sheetBuilder.Build();
         Model model = new();
         model.AddElements(sheet);
 

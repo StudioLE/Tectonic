@@ -10,77 +10,72 @@ namespace Lineweights.Flex;
 /// </remarks>
 public class SequenceBuilder : ISequenceBuilder
 {
-    private const int MaxLoopCount = 10_000;
-    private IReadOnlyCollection<Element> _body = Array.Empty<Element>();
-    private IReadOnlyCollection<Element> _prepended = Array.Empty<Element>();
-    private IReadOnlyCollection<Element> _appended = Array.Empty<Element>();
-    private List<ISequenceBuilder.Constraint> _constraints = new();
-    private List<ISequenceBuilder.Condition> _conditions = new();
-    private bool _overflow;
-    private object? _context;
-    private bool _repetition = false;
-    private bool _wrapping = false;
+    internal const int MaxLoopCount = 10_000;
+    internal IReadOnlyCollection<Element> _prepended = Array.Empty<Element>();
+    internal IReadOnlyCollection<Element> _appended = Array.Empty<Element>();
+    internal List<ISequenceBuilder.Constraint> _constraints = new();
+    internal List<ISequenceBuilder.Condition> _conditions = new();
+    internal bool _overflow;
+    internal object? _context;
+    internal bool _repetition = false;
+
+    public IReadOnlyCollection<Element> Body { get; set; } = Array.Empty<Element>();
+
+    public bool Wrapping { get; set; } = false;
 
     #region Builder methods
 
     /// <inheritdoc/>
-    public ISequenceBuilder Body(params Element[] elements)
+    public SequenceBuilder SetBody(params Element[] elements)
     {
-        _body = elements;
+        Body = elements;
         return this;
     }
 
     /// <inheritdoc/>
-    public ISequenceBuilder Prepend(params Element[] elements)
+    public SequenceBuilder Prepend(params Element[] elements)
     {
         _prepended = elements;
         return this;
     }
 
     /// <inheritdoc/>
-    public ISequenceBuilder Append(params Element[] elements)
+    public SequenceBuilder Append(params Element[] elements)
     {
         _appended = elements;
         return this;
     }
 
     /// <inheritdoc/>
-    public ISequenceBuilder AddConstraint(params ISequenceBuilder.Constraint[] constraints)
+    public SequenceBuilder AddConstraint(params ISequenceBuilder.Constraint[] constraints)
     {
         _constraints.AddRange(constraints);
         return this;
     }
 
     /// <inheritdoc/>
-    public ISequenceBuilder AddCondition(params ISequenceBuilder.Condition[] conditions)
+    public SequenceBuilder AddCondition(params ISequenceBuilder.Condition[] conditions)
     {
         _conditions.AddRange(conditions);
         return this;
     }
 
     /// <inheritdoc/>
-    public ISequenceBuilder Overflow(bool overflow)
+    public SequenceBuilder Overflow(bool overflow)
     {
         _overflow = overflow;
         return this;
     }
 
     /// <inheritdoc/>
-    public ISequenceBuilder Context(object context)
+    public SequenceBuilder Context(object context)
     {
         _context = context;
         return this;
     }
 
     /// <inheritdoc/>
-    public ISequenceBuilder Wrapping(bool wrapping)
-    {
-        _wrapping = wrapping;
-        return this;
-    }
-
-    /// <inheritdoc/>
-    public ISequenceBuilder Repetition(bool repetition)
+    public SequenceBuilder Repetition(bool repetition)
     {
         _repetition = repetition;
         return this;
@@ -97,17 +92,10 @@ public class SequenceBuilder : ISequenceBuilder
     {
         if (_context is null)
             throw new("Build was called before the context was set");
-        if (_wrapping)
-            throw new($"Building wrapping sequences is not supported. Use {nameof(BuildWithWrapping)} instead.");
-        return BuildWithoutWrapping();
-    }
-
-    private IReadOnlyCollection<Element> BuildWithoutWrapping()
-    {
-        if (_context is null)
-            throw new("Build was called before the context was set");
+        if (Wrapping)
+            throw new($"Building wrapping sequences is not supported. Use {nameof(SequenceBuilderHelpers.BuildWithWrapping)} instead.");
         IReadOnlyCollection<Element> output = Array.Empty<Element>();
-        int maxCount = _body.Count + _appended.Count + _prepended.Count;
+        int maxCount = Body.Count + _appended.Count + _prepended.Count;
         int taken = 0;
         bool finalLoop = false;
         while (true)
@@ -118,14 +106,14 @@ public class SequenceBuilder : ISequenceBuilder
                 break;
             IReadOnlyCollection<Element> repetition = Array.Empty<Element>();
             int take = taken;
-            int excess = taken - _body.Count;
+            int excess = taken - Body.Count;
             if (_repetition && excess > 0)
             {
-                int complete = (excess / (double)_body.Count).FloorToInt();
-                take = excess % _body.Count;
-                repetition = Enumerable.Repeat(_body, complete).SelectMany(x => x).ToArray();
+                int complete = (excess / (double)Body.Count).FloorToInt();
+                take = excess % Body.Count;
+                repetition = Enumerable.Repeat(Body, complete).SelectMany(x => x).ToArray();
             }
-            IEnumerable<Element> body = _body.Take(take);
+            IEnumerable<Element> body = Body.Take(take);
             IReadOnlyCollection<Element> sequence = Enumerable.Empty<Element>()
                 .Concat(_prepended)
                 .Concat(repetition)
@@ -145,56 +133,6 @@ public class SequenceBuilder : ISequenceBuilder
             output = sequence;
         }
         return output;
-    }
-
-    private IReadOnlyCollection<IReadOnlyCollection<Element>> BuildWithWrapping()
-    {
-        if (_appended.Any() || _prepended.Any())
-            throw new($"{nameof(BuildWithWrapping)} doesn't support appended and prepended.");
-        IReadOnlyCollection<Element> body = _body;
-        List<IReadOnlyCollection<Element>> output = new();
-        while (body.Count > 0)
-        {
-            SequenceBuilder builder = new()
-            {
-                _body = body,
-                _constraints = _constraints,
-                _overflow = _overflow,
-                _context = _context,
-                _wrapping = false
-            };
-
-            IReadOnlyCollection<Element> sequence = builder.BuildWithoutWrapping();
-            output.Add(sequence);
-            int taken = sequence.Count;
-            body = body.Skip(taken).ToArray();
-        }
-
-        return output;
-    }
-
-    /// <summary>
-    /// Split the sequence into multiple sequences.
-    /// </summary>
-    public IReadOnlyCollection<ISequenceBuilder> SplitWrapping()
-    {
-        if (!_wrapping)
-            return new[] { this };
-        IReadOnlyCollection<IReadOnlyCollection<Element>> sequences = BuildWithWrapping();
-        var builders = sequences
-            .Select(sequence =>
-            {
-                SequenceBuilder builder = new()
-                {
-                    _body = sequence,
-                    _constraints = _constraints,
-                    _overflow = _overflow,
-                    _context = _context
-                };
-                return builder;
-            })
-            .ToArray();
-        return builders;
     }
 
     private bool ValidateConstraints(IReadOnlyCollection<Element> sequence, object  context)

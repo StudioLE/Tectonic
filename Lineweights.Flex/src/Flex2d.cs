@@ -28,9 +28,14 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
     /// The strategy for repeating elements along the cross axis.
     /// </summary>
     /// <remarks>
-    /// <see cref="SequenceBuilder.Body"/> is set to the assembly created by <see cref="MainSequences"/>.
+    /// <see cref="SequenceBuilder.Body"/> is set to the assembly created by <see cref="_mainSequences"/>.
     /// </remarks>
-    private ISequenceBuilder _crossSequence = new SequenceBuilder();
+    private SequenceBuilder _crossSequence = new();
+
+    /// <summary>
+    /// The strategies for repeating elements along the main axis.
+    /// </summary>
+    private IReadOnlyCollection<SequenceBuilder> _mainSequences = Array.Empty<SequenceBuilder>();
 
     #endregion
 
@@ -44,7 +49,15 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
     /// <summary>
     /// The strategies for repeating elements along the main axis.
     /// </summary>
-    public IReadOnlyCollection<ISequenceBuilder> MainSequences { get; set; } = Array.Empty<ISequenceBuilder>();
+    public IReadOnlyCollection<ISequenceBuilder> MainSequences
+    {
+        set
+        {
+            if (value.Any(x => x is not SequenceBuilder))
+                throw new($"The sequence can only contain {nameof(SequenceBuilder)}.");
+            _mainSequences = value.OfType<SequenceBuilder>().ToArray();
+        }
+    }
 
     #endregion
 
@@ -99,15 +112,15 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
         return this;
     }
 
-    /// <inheritdoc cref="MainSequences"/>
-    public Flex2d SetMainSequence(params ISequenceBuilder[] sequences)
+    /// <inheritdoc cref="_mainSequences"/>
+    public Flex2d SetMainSequence(params SequenceBuilder[] sequences)
     {
-        MainSequences = sequences;
+        _mainSequences = sequences;
         return this;
     }
 
     /// <inheritdoc cref="_crossSequence"/>
-    public Flex2d CrossSequence(ISequenceBuilder sequence)
+    public Flex2d CrossSequence(SequenceBuilder sequence)
     {
         _crossSequence = sequence;
         return this;
@@ -129,7 +142,7 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
 
         IReadOnlyCollection<ElementInstance> assemblies = DistributeInMainAxis();
 
-        _crossSequence.Body(assemblies.ToArray());
+        _crossSequence.SetBody(assemblies.ToArray());
 
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = DistributeInCrossAxis();
 
@@ -149,7 +162,7 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
             .CrossAlignment(_crossAlignment)
             .NormalAlignment(_normalAlignment);
 
-        ISequenceBuilder[] split = MainSequences
+        SequenceBuilder[] split = _mainSequences
             .SelectMany(sequence => sequence
                 .Context(mainBuilder)
                 .MaxLengthConstraint()

@@ -2,14 +2,14 @@
 
 public static class Conditions
 {
-    public static ISequenceBuilder EvenCondition(this ISequenceBuilder @this)
+    public static SequenceBuilder EvenCondition(this SequenceBuilder @this)
     {
         ISequenceBuilder.Condition constraint = (sequence, context) => sequence.Count % 2 == 0;
         @this.AddCondition(constraint);
         return @this;
     }
 
-    public static ISequenceBuilder OddCondition(this ISequenceBuilder @this)
+    public static SequenceBuilder OddCondition(this SequenceBuilder @this)
     {
         ISequenceBuilder.Condition constraint = (sequence, context) => sequence.Count % 2 == 1;
         @this.AddCondition(constraint);

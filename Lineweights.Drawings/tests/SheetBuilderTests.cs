@@ -9,13 +9,13 @@ internal sealed class SheetBuilderTests
     private readonly Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
-    private ISequenceBuilder _sequenceBuilder = default!;
+    private SequenceBuilder _sequenceBuilder = default!;
     private IDistribution2dBuilder _defaultViewArrangement = default!;
 
     [SetUp]
     public void Setup()
     {
-        _sequenceBuilder = new SequenceBuilder();
+        _sequenceBuilder = new();
         _defaultViewArrangement = new DefaultViewArrangement();
         _model.AddElements(CreateModelArrows.ByTransform(new()));
     }
@@ -59,7 +59,7 @@ internal sealed class SheetBuilderTests
             });
 
         // Act
-        Sheet sheet = (Sheet)sheetBuilder.Build();
+        Sheet sheet = sheetBuilder.Build();
         GeometricElement[] geometry = sheet.Render().ToArray();
 
         // Preview
@@ -108,7 +108,7 @@ internal sealed class SheetBuilderTests
             });
 
         // Act
-        Sheet sheet = (Sheet)sheetBuilder.Build();
+        Sheet sheet = sheetBuilder.Build();
         GeometricElement[] geometry = sheet.Render().ToArray();
 
         // Preview

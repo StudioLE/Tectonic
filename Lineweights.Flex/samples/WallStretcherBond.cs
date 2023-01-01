@@ -29,17 +29,17 @@ public static class WallStretcherBond
         Line line = new(Vector3.Origin, Vector3.XAxis, inputs.WallLength);
         StandardWall wall = new(line, inputs.WallDepth, inputs.WallHeight);
 
-        ISequenceBuilder sequenceA = new SequenceBuilder()
+        SequenceBuilder sequenceA = new SequenceBuilder()
             .Repetition(true)
             .Overflow(true)
-            .Body(Brick.Stretcher);
-        ISequenceBuilder sequenceB = new SequenceBuilder()
+            .SetBody(Brick.Stretcher);
+        SequenceBuilder sequenceB = new SequenceBuilder()
             .Repetition(true)
             .Overflow(true)
-            .Body(Brick.Stretcher)
+            .SetBody(Brick.Stretcher)
             .Append(Brick.Half)
             .Prepend(Brick.Half);
-        ISequenceBuilder crossSequence = new SequenceBuilder()
+        SequenceBuilder crossSequence = new SequenceBuilder()
             .Repetition(true)
             .Overflow(true);
 
