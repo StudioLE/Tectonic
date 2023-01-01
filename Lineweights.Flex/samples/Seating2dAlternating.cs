@@ -49,9 +49,9 @@ public static class Seating2dAlternating
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .CrossSequence(crossSequence);
-        builder.MainSequence(oddSequence, evenSequence);
-        builder.Container(auditorium);
+            .CrossSequence(crossSequence)
+            .SetMainSequence(oddSequence, evenSequence)
+            .SetContainer(auditorium);
 
         // Run the builder
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();

@@ -104,9 +104,8 @@ public sealed class SheetBuilder : IBuilder<Sheet>
             .Wrapping(true)
             .Body(instances);
 
-        _viewArrangement
-            .Container(content)
-            .MainSequence(sequence);
+        _viewArrangement.Container = content;
+        _viewArrangement.MainSequences = new [] { sequence };
 
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = _viewArrangement.Build();
 

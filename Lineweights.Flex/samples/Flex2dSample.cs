@@ -89,9 +89,9 @@ public static class Flex2dSample
             .CrossJustification(flexInputs.CrossJustification)
             .CrossAlignment(flexInputs.CrossAlignment)
             .NormalAlignment(flexInputs.NormalAlignment)
-            .NormalSettingOut(flexInputs.NormalSettingOut);
-        builder.MainSequence(firstSequence, secondSequence);
-        builder.Container(container);
+            .NormalSettingOut(flexInputs.NormalSettingOut)
+            .SetMainSequence(firstSequence, secondSequence)
+            .SetContainer(container);
 
         Outputs outputs = new();
 

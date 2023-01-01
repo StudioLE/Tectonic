@@ -55,9 +55,9 @@ internal sealed class Flex2dTests
             .MainJustification(justification)
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
-            .NormalSettingOut(Alignment.Start);
-        builder.MainSequence(StretcherSoldier, SoldierStretcher);
-        builder.Container(Container);
+            .NormalSettingOut(Alignment.Start)
+            .SetMainSequence(StretcherSoldier, SoldierStretcher)
+            .SetContainer(Container);
         await ExecuteTest(builder);
     }
 
@@ -71,9 +71,9 @@ internal sealed class Flex2dTests
             .MainJustification(Justification.Start)
             .CrossAlignment(crossAlignment)
             .NormalAlignment(Alignment.Start)
-            .NormalSettingOut(Alignment.Start);
-        builder.MainSequence(StretcherHeader, StretcherHeader);
-        builder.Container(Container);
+            .NormalSettingOut(Alignment.Start)
+            .SetMainSequence(StretcherHeader, StretcherHeader)
+            .SetContainer(Container);
         await ExecuteTest(builder);
     }
 
@@ -91,9 +91,9 @@ internal sealed class Flex2dTests
             .CrossJustification(crossJustification)
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
-            .NormalSettingOut(Alignment.Start);
-        builder.MainSequence(StretcherSoldier, SoldierStretcher);
-        builder.Container(Container);
+            .NormalSettingOut(Alignment.Start)
+            .SetMainSequence(StretcherSoldier, SoldierStretcher)
+            .SetContainer(Container);
         await ExecuteTest(builder);
     }
 
@@ -108,9 +108,9 @@ internal sealed class Flex2dTests
             .CrossJustification(Justification.Start)
             .CrossAlignment(Alignment.Start)
             .NormalAlignment(Alignment.Start)
-            .NormalSettingOut(alignment);
-        builder.MainSequence(StretcherSoldier, SoldierStretcher);
-        builder.Container(Container);
+            .NormalSettingOut(alignment)
+            .SetMainSequence(StretcherSoldier, SoldierStretcher)
+            .SetContainer(Container);
         await ExecuteTest(builder);
     }
 
@@ -129,9 +129,9 @@ internal sealed class Flex2dTests
             .CrossJustification(crossJustification)
             .CrossAlignment(Alignment.Center)
             .NormalAlignment(Alignment.Start)
-            .NormalSettingOut(Alignment.Start);
-        builder.MainSequence(StretcherSoldier, SoldierStretcher);
-        builder.Container(Container);
+            .NormalSettingOut(Alignment.Start)
+            .SetMainSequence(StretcherSoldier, SoldierStretcher)
+            .SetContainer(Container);
         await ExecuteTest(builder);
     }
 
@@ -155,9 +155,9 @@ internal sealed class Flex2dTests
             .CrossAlignment(Alignment.Center)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .CrossSequence(crossSequence);
-        builder.MainSequence(StretcherHeader);
-        builder.Container(Container);
+            .CrossSequence(crossSequence)
+            .SetMainSequence(StretcherHeader)
+            .SetContainer(Container);
         await ExecuteTest(builder);
     }
 

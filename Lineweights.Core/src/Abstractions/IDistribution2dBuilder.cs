@@ -2,17 +2,12 @@
 
 public interface IDistribution2dBuilder
 {
-    /// <summary>
-    /// Set the main sequence.
-    /// </summary>
-    public IDistribution2dBuilder MainSequence(params ISequenceBuilder[] sequences);
+    public IReadOnlyCollection<ISequenceBuilder> MainSequences { set; }
 
     /// <summary>
     /// Set the container to distribute inside.
     /// </summary>
-    /// <param name="container"></param>
-    /// <returns></returns>
-    public IDistribution2dBuilder Container(GeometricElement container);
+    public GeometricElement Container { set; }
 
     /// <summary>
     /// Distribute the elements.

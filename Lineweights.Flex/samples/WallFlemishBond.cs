@@ -50,10 +50,9 @@ public static class WallFlemishBond
             .CrossAlignment(Alignment.Center)
             .NormalAlignment(Alignment.Start)
             .NormalSettingOut(Alignment.Start)
-            .CrossSequence(crossSequence);
-
-        builder.MainSequence(sequenceA, sequenceB);
-        builder.Container(wall);
+            .CrossSequence(crossSequence)
+            .SetMainSequence(sequenceA, sequenceB)
+            .SetContainer(wall);
 
         // Run the builder
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();

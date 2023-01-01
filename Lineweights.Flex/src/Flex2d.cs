@@ -25,15 +25,10 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
     private Justification _crossJustification = Justification.Start;
 
     /// <summary>
-    /// The strategies for repeating elements along the main axis.
-    /// </summary>
-    private IReadOnlyCollection<ISequenceBuilder> _mainSequences = Array.Empty<ISequenceBuilder>();
-
-    /// <summary>
     /// The strategy for repeating elements along the cross axis.
     /// </summary>
     /// <remarks>
-    /// <see cref="SequenceBuilder.Body"/> is set to the assembly created by <see cref="_mainSequences"/>.
+    /// <see cref="SequenceBuilder.Body"/> is set to the assembly created by <see cref="MainSequences"/>.
     /// </remarks>
     private ISequenceBuilder _crossSequence = new SequenceBuilder();
 
@@ -43,12 +38,20 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
 
     internal IReadOnlyCollection<ElementInstance> Assemblies { get; private set; } = Array.Empty<ElementInstance>();
 
+    /// <inheritdoc />
+    public GeometricElement Container { set => SetContainer(value); }
+
+    /// <summary>
+    /// The strategies for repeating elements along the main axis.
+    /// </summary>
+    public IReadOnlyCollection<ISequenceBuilder> MainSequences { get; set; } = Array.Empty<ISequenceBuilder>();
+
     #endregion
 
     #region Builder methods
 
     /// <inheritdoc cref="_container"/>
-    public IDistribution2dBuilder Container(GeometricElement container)
+    public Flex2d SetContainer(GeometricElement container)
     {
         _container = new(container);
         return this;
@@ -89,13 +92,6 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
         return this;
     }
 
-    ///// <inheritdoc cref="FlexBase._crossSettingOut"/>
-    //public Flex2d CrossSettingOut(Alignment settingOut)
-    //{
-    //    _crossSettingOut = settingOut;
-    //    return this;
-    //}
-
     /// <inheritdoc cref="FlexBase._normalSettingOut"/>
     public Flex2d NormalSettingOut(Alignment settingOut)
     {
@@ -103,10 +99,10 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
         return this;
     }
 
-    /// <inheritdoc cref="_mainSequences"/>
-    public IDistribution2dBuilder MainSequence(params ISequenceBuilder[] sequences)
+    /// <inheritdoc cref="MainSequences"/>
+    public Flex2d SetMainSequence(params ISequenceBuilder[] sequences)
     {
-        _mainSequences = sequences;
+        MainSequences = sequences;
         return this;
     }
 
@@ -153,7 +149,7 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
             .CrossAlignment(_crossAlignment)
             .NormalAlignment(_normalAlignment);
 
-        ISequenceBuilder[] split = _mainSequences
+        ISequenceBuilder[] split = MainSequences
             .SelectMany(sequence => sequence
                 .Context(mainBuilder)
                 .MaxLengthConstraint()
