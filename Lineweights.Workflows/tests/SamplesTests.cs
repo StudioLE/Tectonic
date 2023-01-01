@@ -24,6 +24,6 @@ internal sealed class SamplesTests
         _model.AddElements(outputs.Model.Elements.Values);
 
         // Assert
-        await Verify.ElementsByBounds(outputs.Model.Elements.Values.OfType<GeometricElement>());
+        await Verify.ElementsByBounds(outputs.Model.Elements.Values);
     }
 }
