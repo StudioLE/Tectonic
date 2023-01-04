@@ -11,66 +11,102 @@ namespace Lineweights.Workflows.Verification;
 /// </remarks>
 public abstract class VerifierBase<T>
 {
-    private readonly IVerifyContext _context;
-    protected FileInfo _receivedFile;
-    protected readonly FileInfo _verifiedFile;
+    protected readonly IVerifyContext _context;
+    protected readonly string _fileExtension;
 
     /// <inheritdoc cref="VerifierBase{T}"/>
     protected VerifierBase(IVerifyContext context, string fileExtension)
     {
         _context = context;
+        _fileExtension = fileExtension;
         if (!context.Directory.Exists)
             throw new DirectoryNotFoundException($"Failed to Verify. The verify directory does not exist: {context.Directory.FullName}");
-        _receivedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.received{fileExtension}"));
-        _verifiedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.verified{fileExtension}"));
     }
 
     /// <summary>
     /// Verify <paramref name="actual"/>.
     /// </summary>
-    public async Task<Result<bool>> Execute(T actual)
+    public virtual async Task<Result<bool>> Execute(T actual)
     {
-        await WriteActual(actual);
-        Result<bool> result = await CompareEquality();
-        _context.OnResult(result, _receivedFile, _verifiedFile);
+        FileInfo receivedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.received{_fileExtension}"));
+        FileInfo verifiedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.verified{_fileExtension}"));
+        await Write(receivedFile, actual);
+        KeyValuePair<string, FileInfo>[] files =
+        {
+            new("Verified", verifiedFile),
+            new("Received", receivedFile)
+        };
+        Result<bool> result = await Compare(files);
+        _context.OnResult(result, receivedFile, verifiedFile);
         return result;
     }
 
     /// <summary>
-    /// Write <paramref name="actual"/> to <see cref="_receivedFile"/>.
+    /// Verify <paramref name="actual"/> matches <paramref name="expected"/>.
     /// </summary>
-    protected abstract Task WriteActual(T actual);
+    public async Task<Result<bool>> Execute(T expected, T actual)
+    {
+        FileInfo expectedFile = new(Path.GetTempFileName() + ".expected.txt");
+        FileInfo actualFile = new(Path.GetTempFileName() + ".actual.txt");
+        await Write(expectedFile, expected);
+        await Write(actualFile, actual);
+        KeyValuePair<string, FileInfo>[] files =
+        {
+            new("Expected", expectedFile),
+            new("Actual", actualFile)
+        };
+        Result<bool> result = await Compare(files);
+        _context.OnResult(result, actualFile, expectedFile);
+        return result;
+    }
 
     /// <summary>
-    /// Compare the equality of <see cref="_verifiedFile"/> with <see cref="_receivedFile"/>.
+    /// Write <paramref name="value"/> to <paramref name="file"/>.
     /// </summary>
-    protected virtual async Task<Result<bool>> CompareEquality()
+    protected abstract Task Write(FileInfo file, T value);
+
+    /// <summary>
+    /// Compare the equality of the contents of <paramref name="files"/>.
+    /// </summary>
+    protected virtual async Task<Result<bool>> Compare(params KeyValuePair<string , FileInfo>[] files)
     {
-        if (!_receivedFile.Exists)
-            return Result<bool>.Error("The received file does not exist.");
-        if (!_verifiedFile.Exists)
-            return Result<bool>.Error("The verified file does not exist.");
-        using StreamReader actualReader = new(_receivedFile.FullName, Verify.Encoding);
-        using StreamReader verifiedReader = new(_verifiedFile.FullName, Verify.Encoding);
+        string[] errors = files
+            .Where(x => !x.Value.Exists)
+            .Select(x => $"The {x.Key} file does not exist.").ToArray();
+        if(errors.Any())
+            return Result<bool>.Error(errors);
+
+        KeyValuePair<string, StreamReader>[] readers = files
+            .Select(x => new KeyValuePair<string, StreamReader>(x.Key, new(x.Value.FullName, Verify.Encoding)))
+            .ToArray();
         int lineNumber = 1;
-        int actualPeek = actualReader.Peek();
-        int verifiedPeek = verifiedReader.Peek();
-        string? actual;
-        string? verified;
-        while (actualPeek >= 0 && verifiedPeek >= 0)
+        while (!errors.Any() && readers.Any(x => x.Value.Peek() != -1))
         {
-            actual = await actualReader.ReadLineAsync();
-            verified = await verifiedReader.ReadLineAsync();
-            if (!actual.Equals(verified))
-                return Result<bool>.Error($"Difference found on line {lineNumber}.", $"Actual  : {actual}", $"Verified: {verified}");
-            actualPeek = actualReader.Peek();
-            verifiedPeek = verifiedReader.Peek();
+            string[] lines = await Task.WhenAll(readers.Select(x => x.Value.ReadLineAsync()));
+            if (lines.Distinct().Skip(1).Any())
+                errors = Array.Empty<string>()
+                    .Append($"Difference found on line {lineNumber}.")
+                    .Concat(readers.Select((_, i) => $"{readers[i].Key}: {lines[i]}"))
+                    .ToArray();
             lineNumber++;
         }
-        if (actualPeek >= 0)
-            return Result<bool>.Error("Line counts don't match. Actual still has lines.");
-        if (verifiedPeek >= 0)
-            return Result<bool>.Error("Line counts don't match. Actual still has lines.");
-        return true;
+
+        if (errors.Any())
+        {
+            foreach (KeyValuePair<string, StreamReader> pair in readers)
+                pair.Value.Dispose();
+            return Result<bool>.Error(errors);
+        }
+
+        errors = readers
+            .Where(x => x.Value.Peek() != -1)
+            .Select(x => $"Line counts don't match. {x.Key} still has lines.")
+            .ToArray();
+
+        foreach (KeyValuePair<string, StreamReader> pair in readers)
+            pair.Value.Dispose();
+        return errors.Any()
+            ? Result<bool>.Error(errors)
+            : true;
     }
 }

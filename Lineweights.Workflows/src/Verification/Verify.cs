@@ -74,15 +74,39 @@ public static class Verify
     }
 
     /// <summary>
-    /// Verify a string.
+    /// Verify <paramref name="actual"/> as JSON.
     /// </summary>
-    public static async Task String(string @string, string fileExtension)
+    public static async Task AsJson(object expected, object actual)
     {
         if (!IsEnabled)
             return;
         IVerifyContext context = GetContext();
-        StringVerifier verifier = new(context, fileExtension);
+        JsonVerifier verifier = new(context);
+        await verifier.Execute(expected, actual);
+    }
+
+    /// <summary>
+    /// Verify a string.
+    /// </summary>
+    public static async Task String(string @string)
+    {
+        if (!IsEnabled)
+            return;
+        IVerifyContext context = GetContext();
+        StringVerifier verifier = new(context, ".txt");
         await verifier.Execute(@string);
+    }
+
+    /// <summary>
+    /// Verify a string.
+    /// </summary>
+    public static async Task String(string expected, string actual)
+    {
+        if (!IsEnabled)
+            return;
+        IVerifyContext context = GetContext();
+        StringVerifier verifier = new(context, ".txt");
+        await verifier.Execute(expected, actual);
     }
 
     /// <summary>

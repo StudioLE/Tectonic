@@ -25,16 +25,16 @@ public sealed class JsonVerifier : VerifierBase<object>
     }
 
     /// <inheritdoc />
-    protected override Task WriteActual(object actual)
+    protected override Task Write(FileInfo file, object value)
     {
         JsonSerializerSettings settings = new()
         {
             Formatting = Formatting.Indented,
             Converters = Converters
         };
-        using StreamWriter writer = new(_receivedFile.FullName, false, Verify.Encoding);
+        using StreamWriter writer = new(file.FullName, false, Verify.Encoding);
         JsonSerializer serializer = JsonSerializer.Create(settings);
-        serializer.Serialize(writer, actual);
+        serializer.Serialize(writer, value);
         return Task.CompletedTask;
     }
 }

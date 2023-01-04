@@ -1,6 +1,7 @@
 using System.IO;
 using System.Security.Cryptography;
 using Ardalis.Result;
+using Lineweights.Core.Elements.Comparers;
 
 namespace Lineweights.Workflows.Verification;
 
@@ -13,27 +14,52 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
     {
     }
 
-    /// <inheritdoc />
-    protected override Task WriteActual(FileInfo actual)
+    /// <summary>
+    /// Verify <paramref name="actual"/>.
+    /// </summary>
+    public override async Task<Result<bool>> Execute(FileInfo actual)
     {
-        _receivedFile = actual;
+        FileInfo receivedFile = actual;
+        FileInfo verifiedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.verified{_fileExtension}"));
+        await Write(receivedFile, actual);
+        KeyValuePair<string, FileInfo>[] files =
+        {
+            new("Verified", verifiedFile),
+            new("Received", receivedFile)
+        };
+        Result<bool> result = await Compare(files);
+        _context.OnResult(result, receivedFile, verifiedFile);
+        return result;
+    }
+
+    /// <inheritdoc />
+    protected override Task Write(FileInfo file, FileInfo value)
+    {
+        file = value;
         return Task.CompletedTask;
     }
 
-    protected override async Task<Result<bool>> CompareEquality()
+    protected override async Task<Result<bool>> Compare(params KeyValuePair<string , FileInfo>[] files)
     {
-        if (IsTextFile(_receivedFile))
-            return await base.CompareEquality();
-        if (!_receivedFile.Exists)
-            return Result<bool>.Error("The received file does not exist.");
-        if (!_verifiedFile.Exists)
-            return Result<bool>.Error("The verified file does not exist.");
-        if (_receivedFile.Length != _verifiedFile.Length)
-            return Result<bool>.Error("File size is different.", $"Actual  : {_receivedFile.Length}", $"Verified: {_verifiedFile.Length}");
-        string actual = GetFileHash(_receivedFile);
-        string verified = GetFileHash(_verifiedFile);
-        if (!actual.Equals(verified))
-            return Result<bool>.Error("File hashes are different.", $"Actual  : {actual}", $"Verified: {verified}");
+        bool areTextFiles = files.All(x => IsTextFile(x.Value));
+        if (areTextFiles)
+            return await base.Compare(files);
+
+        string[] errors = files
+            .Where(x => !x.Value.Exists)
+            .Select(x => $"The {x.Key} file does not exist.")
+            .ToArray();
+        if(errors.Any())
+            return Result<bool>.Error(errors);
+
+        errors = CheckValuesMatch(files, x => x.Length);
+        if(errors.Any())
+            return Result<bool>.Error(errors.Prepend("File sizes are different").ToArray());
+
+        errors = CheckValuesMatch(files, GetFileHash);
+        if(errors.Any())
+            return Result<bool>.Error(errors.Prepend("File hashes are different").ToArray());
+
         return true;
     }
 
@@ -54,5 +80,21 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
         using FileStream stream = File.OpenRead(file.FullName);
         byte[] bytes = md5.ComputeHash(stream);
         return BitConverter.ToString(bytes).Replace("-", "").ToLowerInvariant();
+    }
+
+    private static string[] CheckValuesMatch<TKey, TValue, TCompare>(IEnumerable<KeyValuePair<TKey, TValue>> @this, Func<TValue, TCompare> func)
+    {
+        KeyValuePair<TKey, TCompare>[] hashes = @this
+            .Select(x =>
+            {
+                TCompare result = func.Invoke(x.Value);
+                return new KeyValuePair<TKey, TCompare>(x.Key, result);
+            })
+            .ToArray();
+        var comparer = new KeyValuePairValueComparer<TKey, TCompare>();
+        bool areDifferent = hashes.Distinct(comparer).Skip(1).Any();
+        return areDifferent
+            ? hashes.Select(x => $"{x.Key}: {x.Value}").ToArray()
+            : Array.Empty<string>();
     }
 }
