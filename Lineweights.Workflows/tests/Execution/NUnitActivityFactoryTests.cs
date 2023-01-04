@@ -13,7 +13,7 @@ internal sealed class NUnitActivityFactoryTests
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
 
     [Test]
-    public void NUnitActivityFactory_AllActivityKeysInAssembly()
+    public async Task NUnitActivityFactory_AllActivityKeysInAssembly()
     {
         // Arrange
         NUnitActivityFactory factory = new();
@@ -22,7 +22,8 @@ internal sealed class NUnitActivityFactoryTests
         string[] activities = factory.AllActivityKeysInAssembly(_assembly).ToArray();
 
         // Assert
-        Assert.That(activities.Count, Is.EqualTo(22), "Activity count");
+        await Verify.String(activities.Join());
+        Assert.That(activities.Count, Is.EqualTo(24), "Activity count");
     }
 
     [TestCase(ActivityKey)]

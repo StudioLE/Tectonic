@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Ardalis.Result;
+﻿using System.Reflection;
+using Lineweights.Core.Elements.Comparers;
 
 namespace Lineweights.Core.Elements;
 
@@ -8,27 +8,78 @@ namespace Lineweights.Core.Elements;
 /// </summary>
 public static class ModelHelpers
 {
-    /// <summary>
-    /// Get all <see cref="Element"/> from the model.
-    /// </summary>
-    public static Result<Model> TryGetFromJsonFile(FileInfo file)
+    internal static void AddSubElements(Model @this)
     {
-        if (!file.Exists)
-            return Result<Model>.Error("The file does not exist.");
-        string json = File.ReadAllText(file.FullName);
-        return TryGetFromJson(json);
+        ElementIdComparer comparer = new();
+        IReadOnlyCollection<Element> subElements = @this
+            .Elements
+            .Values
+            .SelectMany(x => x.GetSubElements())
+            .Distinct(comparer)
+            .Where(x => !@this.Elements.ContainsKey(x.Id))
+            .ToArray();
+        @this.AddElements(subElements, false);
     }
 
-    /// <summary>
-    /// Get all <see cref="Element"/> from the model.
-    /// </summary>
-    public static Result<Model> TryGetFromJson(string json)
+    public static void AddSubElements(this Model @this, Element element)
     {
-        Model model = Model.FromJson(json, out List<string> errors, true);
-        // TODO: This is a temporary workaround for an unknown issue with InterfaceConverter
-        if (errors.Any(error => !error.EndsWith("' not found in JSON. Path 'Interpolation'.")
-            && !error.EndsWith("' not found in JSON. Path 'RenderStrategy'.")))
-            return Result<Model>.Error(string.Join(Environment.NewLine, errors));
-        return model;
+        ElementIdComparer comparer = new();
+        IReadOnlyCollection<Element> subElements = element
+            .GetSubElements()
+            .Distinct(comparer)
+            .Where(x => !@this.Elements.ContainsKey(x.Id))
+            .ToArray();
+        @this.AddElements(subElements, false);
+    }
+
+    private static IEnumerable<Element> GetSubElements(this Element element)
+    {
+        PropertyInfo[] properties = element.GetType().GetProperties();
+        return properties
+            .SelectMany(property => Array.Empty<Element>()
+                .Concat(element.GetSubElementsIfElement(property))
+                .Concat(element.GetSubElementsIfEnumerable(property))
+                .Concat(element.GetSubElementsIfRepresentation(property)));
+    }
+
+    private static IEnumerable<Element> GetSubElementsIfElement(this Element element, PropertyInfo property)
+    {
+        bool isElement = typeof(Element).IsAssignableFrom(property.PropertyType);
+        if (!isElement)
+            return Enumerable.Empty<Element>();
+        Element subElement = (Element)property.GetValue(element);
+        return subElement
+            .GetSubElements()
+            .Append(subElement);
+    }
+
+    private static IEnumerable<Element> GetSubElementsIfEnumerable(this Element element, PropertyInfo property)
+    {
+        bool isElementEnumerable = typeof(IEnumerable<Element>).IsAssignableFrom(property.PropertyType);
+        if (!isElementEnumerable)
+            return Enumerable.Empty<Element>();
+        IReadOnlyCollection<Element> subElements = ((IEnumerable<Element>)property.GetValue(element)).ToArray();
+        return subElements
+            .SelectMany(x => x.GetSubElements())
+            .Concat(subElements);
+
+    }
+
+    private static IEnumerable<Element> GetSubElementsIfRepresentation(this Element element, PropertyInfo property)
+    {
+        bool isRepresentation = typeof(Representation).IsAssignableFrom(property.PropertyType);
+        if (!isRepresentation)
+            return Enumerable.Empty<Element>();
+        Representation? representation = (Representation?)property.GetValue(element);
+        if (representation is null)
+            return Enumerable.Empty<Element>();
+        return representation
+            .SolidOperations
+            .SelectMany(solidOperation => solidOperation switch
+            {
+                Extrude extrude => new[] { extrude.Profile },
+                Sweep sweep => new[] { sweep.Profile },
+                _ => Array.Empty<Element>()
+            });
     }
 }

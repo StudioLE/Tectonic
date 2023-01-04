@@ -1,5 +1,5 @@
-using Ardalis.Result;
 using Lineweights.Curves.Interpolation;
+using Lineweights.Workflows.NUnit.Verification;
 using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Curves.Tests;
@@ -336,25 +336,10 @@ internal sealed class SplineTests
             EndTangent = _endTangent,
             FrameType = FrameType.RoadLike
         };
-        Model model = new();
-        model.AddElements(new ModelCurve(sourceSpline, MaterialByName("Gray")));
+        ModelCurve element = new(sourceSpline, MaterialByName("Gray"));
 
         // Act
-        string json = model.ToJson(true);
-        Result<Model> result = ModelHelpers.TryGetFromJson(json);
-
-        // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(result.IsSuccess, "Serialisation succeeded.");
-            Assert.That(result.Errors, Is.Empty, "Serialisation errors.");
-            Spline spline = (Spline)model
-                .AllElementsOfType<ModelCurve>()
-                .First()
-                .Curve;
-            Assert.That(spline.Interpolation, Is.EqualTo(sourceSpline.Interpolation), "Interpolation type.");
-            Assert.That(spline, Is.EqualTo(sourceSpline), "Spline.");
-        });
+        VerifyHelpers.SerialisationAsModel(element);
     }
 
     [TearDown]

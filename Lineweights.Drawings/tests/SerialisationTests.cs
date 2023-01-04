@@ -1,13 +1,10 @@
-using Ardalis.Result;
 using Lineweights.Flex;
-using Lineweights.Workflows.NUnit.Visualization;
+using Lineweights.Workflows.NUnit.Verification;
 
 namespace Lineweights.Drawings.Tests;
 
 internal sealed class SerialisationTests
 {
-    private readonly Model _model = new();
-    private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
     private ISequenceBuilder _sequenceBuilder = default!;
     private IDistribution2dBuilder _defaultViewArrangement = default!;
@@ -32,19 +29,7 @@ internal sealed class SerialisationTests
         model.AddElements(view);
 
         // Act
-        string json = model.ToJson(true);
-        Result<Model> result = ModelHelpers.TryGetFromJson(json);
-
-        // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(result.IsSuccess, "Serialisation succeeded.");
-            Assert.That(result.Errors, Is.Empty, "Serialisation errors.");
-            View deserialised = model
-                .AllElementsOfType<View>()
-                .First();
-            Assert.That(deserialised, Is.EqualTo(view), "Matches.");
-        });
+        VerifyHelpers.SerialisationAsModel(view);
     }
 
     [Test]
@@ -56,28 +41,12 @@ internal sealed class SerialisationTests
             .ViewDirection(ViewDirection.Top)
             .ElementsInView(_geometry);
         View view = builder.Build();
-        Model model = new();
-        model.AddElements(view.Scope);
 
         // Act
-        string json = model.ToJson(true);
-        Result<Model> result = ModelHelpers.TryGetFromJson(json);
-
-        // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(result.IsSuccess, "result.IsSuccess");
-            Assert.That(result.Errors, Is.Empty, "Serialisation errors.");
-            ViewScope deserialised = model
-                .AllElementsOfType<ViewScope>()
-                .First();
-            Assert.That(deserialised, Is.Not.Null, "Not null.");
-            Assert.That(deserialised, Is.EqualTo(view.Scope), "Matches.");
-        });
+        VerifyHelpers.SerialisationAsModel(view.Scope);
     }
 
     [Test]
-    [Ignore("Serialisation failing")]
     public void Serialisation_SheetContent()
     {
         // Arrange
@@ -108,27 +77,12 @@ internal sealed class SerialisationTests
             .Views(views);
 
         Sheet sheet = sheetBuilder.Build();
-        Model model = new();
-        model.AddElements(sheet.Content);
 
         // Act
-        string json = model.ToJson(true);
-        Result<Model> result = ModelHelpers.TryGetFromJson(json);
-
-        // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(result.IsSuccess, "Serialisation succeeded.");
-            Assert.That(result.Errors, Is.Empty, "Serialisation errors.");
-            SheetContent deserialised = model
-                .AllElementsOfType<SheetContent>()
-                .First();
-            Assert.That(deserialised, Is.EqualTo(sheet), "Matches.");
-        });
+        VerifyHelpers.SerialisationAsModel(sheet.Content);
     }
 
     [Test]
-    [Ignore("Serialisation failing")]
     public void Serialisation_Sheet()
     {
         // Arrange
@@ -158,29 +112,9 @@ internal sealed class SerialisationTests
             .VerticalTitleArea(.075)
             .Views(views);
 
-        Sheet sheet = sheetBuilder.Build();
-        Model model = new();
-        model.AddElements(sheet);
+        Sheet expectedSheet = sheetBuilder.Build();
 
         // Act
-        string json = model.ToJson(true);
-        Result<Model> result = ModelHelpers.TryGetFromJson(json);
-
-        // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(result.IsSuccess, "Serialisation succeeded.");
-            Assert.That(result.Errors, Is.Empty, "Serialisation errors.");
-            Sheet deserialised = model
-                .AllElementsOfType<Sheet>()
-                .First();
-            Assert.That(deserialised, Is.EqualTo(sheet), "Matches.");
-        });
-    }
-
-    [TearDown]
-    public async Task TearDown()
-    {
-        await new Visualize().Execute(_model);
+        VerifyHelpers.SerialisationAsModel(expectedSheet);
     }
 }

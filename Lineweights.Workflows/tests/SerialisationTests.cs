@@ -3,6 +3,7 @@ using Lineweights.Core.Documents;
 using Lineweights.Core.Serialisation;
 using Lineweights.Workflows.Documents;
 using Lineweights.Workflows.Hosting;
+using Lineweights.Workflows.NUnit.Verification;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
@@ -70,5 +71,14 @@ internal sealed class SerialisationTests
             Assert.That(deserialised?.Id, Is.EqualTo(_doc.Id), "Id");
             Assert.That(deserialised?.Location, Is.EqualTo(_doc.Location), "Location");
         });
+    }
+
+    [Test]
+    public void Serialisation_DocumentInformation_InModel()
+    {
+        // Arrange
+        // Act
+        // Assert
+        VerifyHelpers.SerialisationAsModel(_doc);
     }
 }

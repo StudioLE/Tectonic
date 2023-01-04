@@ -1,7 +1,7 @@
 using System.IO;
 using System.Reflection;
-using Ardalis.Result;
 using Microsoft.Extensions.FileProviders;
+using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Samples;
 
@@ -60,8 +60,10 @@ public static class Scenes
         using Stream stream = file.CreateReadStream();
         using StreamReader reader = new(stream);
         string json = reader.ReadToEnd();
-        Result<Model> result = ModelHelpers.TryGetFromJson(json);
-        return Validate.OrThrow(result, $"Failed to load scene {name} from JSON");
+        Model model = Model.FromJson(json, out List<string> errors, true);
+        if(errors.Any())
+            Console.WriteLine(errors.Join());
+        return model;
     }
 
     /// <summary>
