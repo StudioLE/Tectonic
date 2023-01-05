@@ -1,8 +1,5 @@
-using System.IO;
 using Lineweights.Core.Documents;
 using Lineweights.Drawings;
-using Lineweights.SVG.From.Elements;
-using StudioLE.Core.Exceptions;
 
 namespace Lineweights.SVG;
 
@@ -11,50 +8,19 @@ namespace Lineweights.SVG;
 /// </summary>
 public static class AssetBuilderExtensions
 {
-    /// <inheritdoc cref="Asset"/>
+    /// <inheritdoc cref="SvgAssetFactory{Sheet}"/>
     public static T ExtractSheetsAndConvertToSvg<T>(this T @this) where T : IAssetBuilder
     {
-        IAssetBuilder.BuildTask build = (model, storageStrategy) => model
-            .AllElementsOfType<Sheet>()
-            .Select(canvas => ConvertCanvasToSvg(canvas, storageStrategy));
-        @this.Tasks.Add(build);
+        SvgAssetFactory<Sheet> factory = new();
+        @this.Factories.Add(factory);
         return @this;
     }
 
-    /// <inheritdoc cref="Asset"/>
+    /// <inheritdoc cref="SvgAssetFactory{View}"/>
     public static T ExtractViewsAndConvertToSvg<T>(this T @this) where T : IAssetBuilder
     {
-        IAssetBuilder.BuildTask build = (model, storageStrategy) => model
-            .AllElementsOfType<View>()
-            .Select(canvas => ConvertCanvasToSvg(canvas, storageStrategy));
-        @this.Tasks.Add(build);
+        SvgAssetFactory<View> factory = new();
+        @this.Factories.Add(factory);
         return @this;
-    }
-
-    /// <inheritdoc cref="Asset"/>
-    private static async Task<Asset> ConvertCanvasToSvg(Canvas canvas, IStorageStrategy storageStrategy)
-    {
-        SvgDocument svgDocument = canvas switch
-        {
-            // TODO: If new() works for View then we should amend SheetToSvg to also return the SVG element.
-            Sheet sheet => new SheetToSvg().Convert(sheet),
-            View view => new(new ViewToSvg().Convert(view)),
-            _ => throw new TypeSwitchException<Canvas>("Failed to convert canvas to svg.", canvas)
-        };
-        MemoryStream stream = new();
-        svgDocument.Save(stream, SaveOptions.None);
-        stream.Seek(0, SeekOrigin.Begin);
-
-        Asset asset = new()
-        {
-            Info = new()
-            {
-                Id = canvas.Id,
-                Name = canvas.Name
-            },
-            ContentType = "image/svg+xml"
-        };
-        string fileName = asset.Info.Id + ".svg";
-        return await storageStrategy.WriteAsync(asset, fileName, stream);
     }
 }

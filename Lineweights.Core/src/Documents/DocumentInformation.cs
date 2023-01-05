@@ -5,7 +5,7 @@ namespace Lineweights.Core.Documents;
 /// This is loosely based on
 /// <see href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/link/ifcdocumentinformation.htm">IfcDocumentInformation</see>.
 /// </summary>
-public class DocumentInformation : Element
+public class DocumentInformation : Element, ICloneable
 {
     /// <summary>
     /// Description of document and its content.
@@ -26,4 +26,18 @@ public class DocumentInformation : Element
     /// Date and time stamp when this document version was created.
     /// </summary>
     public DateTime LastRevisionTime { get; set; } = DateTime.Now;
+
+    /// <inheritdoc />
+    public object Clone()
+    {
+        return new DocumentInformation
+        {
+            Description = Description,
+            Location = Location is not null
+                ? new(Location.OriginalString)
+                : null,
+            CreationTime = CreationTime,
+            LastRevisionTime = LastRevisionTime
+        };
+    }
 }

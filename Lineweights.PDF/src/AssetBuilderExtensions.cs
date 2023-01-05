@@ -1,8 +1,5 @@
-using System.IO;
 using Lineweights.Core.Documents;
 using Lineweights.Drawings;
-using Lineweights.PDF.From.Elements;
-using StudioLE.Core.Exceptions;
 
 namespace Lineweights.PDF;
 
@@ -11,49 +8,19 @@ namespace Lineweights.PDF;
 /// </summary>
 public static class AssetBuilderExtensions
 {
-    /// <inheritdoc cref="Asset"/>
+    /// <inheritdoc cref="PdfAssetFactory{Sheet}"/>
     public static T ExtractSheetsAndConvertToPdf<T>(this T @this) where T : IAssetBuilder
     {
-        IAssetBuilder.BuildTask build = (model, storageStrategy) => model
-            .AllElementsOfType<Sheet>()
-            .Select(canvas => ConvertCanvasToPdf(canvas, storageStrategy));
-        @this.Tasks.Add(build);
+        PdfAssetFactory<Sheet> factory = new();
+        @this.Factories.Add(factory);
         return @this;
     }
 
-    /// <inheritdoc cref="Asset"/>
+    /// <inheritdoc cref="PdfAssetFactory{View}"/>
     public static T ExtractViewsAndConvertToPdf<T>(this T @this) where T : IAssetBuilder
     {
-        IAssetBuilder.BuildTask build = (model, storageStrategy) => model
-            .AllElementsOfType<View>()
-            .Select(canvas => ConvertCanvasToPdf(canvas, storageStrategy));
-        @this.Tasks.Add(build);
+        PdfAssetFactory<View> factory = new();
+        @this.Factories.Add(factory);
         return @this;
-    }
-
-    /// <inheritdoc cref="Asset"/>
-    private static async Task<Asset> ConvertCanvasToPdf(Canvas canvas, IStorageStrategy storageStrategy)
-    {
-        PdfDocument pdfDocument = canvas switch
-        {
-            Sheet sheet => new SheetToPdf().Convert(sheet),
-            View view => new ViewToPdf().Convert(view),
-            _ => throw new TypeSwitchException<Canvas>("Failed to convert canvas to pdf.", canvas)
-        };
-        MemoryStream stream = new();
-        pdfDocument.GeneratePdf(stream);
-        stream.Seek(0, SeekOrigin.Begin);
-
-        Asset asset = new()
-        {
-            Info = new()
-            {
-                Id = canvas.Id,
-                Name = canvas.Name
-            },
-            ContentType = "application/pdf"
-        };
-        string fileName = asset.Info.Id + ".pdf";
-        return await storageStrategy.WriteAsync(asset, fileName, stream);
     }
 }

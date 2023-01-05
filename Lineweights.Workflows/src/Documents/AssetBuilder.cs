@@ -11,7 +11,7 @@ public class AssetBuilder : IAssetBuilder
     /// <inheritdoc/>
     public IStorageStrategy StorageStrategy { get; set; } = new FileStorageStrategy();
 
-    public Collection<IAssetBuilder.BuildTask> Tasks { get; } = new();
+    public Collection<IAssetFactory> Factories { get; } = new();
 
     /// <inheritdoc cref="StorageStrategy"/>
     public AssetBuilder SetStorageStrategy(IStorageStrategy storageStrategy)
@@ -34,10 +34,16 @@ public class AssetBuilder : IAssetBuilder
     /// </summary>
     public async Task<Asset> Build(Model model)
     {
-        if (!Tasks.Any())
+        if (!Factories.Any())
             SetDefaultTasks();
+        AssetBuilderContext context = new()
+        {
+            Model = model,
+            StorageStrategy = StorageStrategy
+        };
         // TODO: Benchmark whether it's worth using tasks.AsParallel()
-        IEnumerable<Task<Asset>> tasks = Tasks.SelectMany(steps => steps.Invoke(model, StorageStrategy));
+        IEnumerable<Task<Asset>> tasks = Factories
+            .SelectMany(factory => factory.Execute(context));
         Asset[] assets = await Task.WhenAll(tasks);
         return new()
         {

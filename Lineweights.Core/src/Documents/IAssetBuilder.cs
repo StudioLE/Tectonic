@@ -9,12 +9,11 @@ public interface IAssetBuilder
 {
     public IStorageStrategy StorageStrategy { set; }
 
-    public Collection<BuildTask> Tasks { get; }
+    public Collection<IAssetFactory> Factories { get; }
 
     /// <summary>
     /// Build asset.
     /// </summary>
     public Task<Asset> Build(Model model);
 
-    public delegate IEnumerable<Task<Asset>> BuildTask(Model model, IStorageStrategy storageStrategy);
 }
