@@ -48,6 +48,6 @@ public class AssetBuilder : IAssetBuilder
 
     private void SetDefaultTasks()
     {
-        this.ConvertModelToJson();
+        this.ConvertModelToGlb();
     }
 }

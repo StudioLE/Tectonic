@@ -23,7 +23,7 @@ internal sealed class NUnitActivityFactoryTests
 
         // Assert
         await Verify.String(activities.Join());
-        Assert.That(activities.Count, Is.EqualTo(24), "Activity count");
+        Assert.That(activities.Count, Is.EqualTo(26), "Activity count");
     }
 
     [TestCase(ActivityKey)]
