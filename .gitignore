@@ -2,6 +2,7 @@
 .azurite
 .env
 .secrets
+*.patch
 *.received.json
 *.received.svg
 *.received.txt

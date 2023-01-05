@@ -21,14 +21,9 @@ internal sealed class SamplesTests
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);
+        await new Visualize().Execute(_model, outputs.Assets);
 
         // Assert
         await Verify.ElementsByBounds(outputs.Model.Elements.Values);
-    }
-
-    [TearDown]
-    public async Task TearDown()
-    {
-        await new Visualize().Execute(_model);
     }
 }

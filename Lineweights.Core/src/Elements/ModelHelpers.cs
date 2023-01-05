@@ -82,4 +82,15 @@ public static class ModelHelpers
                 _ => Array.Empty<Element>()
             });
     }
+
+    public static IEnumerable<Assembly> GetElementTypeAssemblies(this Model model)
+    {
+        return model
+            .Elements
+            .Values
+            .Select(x => x.GetType())
+            .Distinct()
+            .Select(x => x.Assembly)
+            .Distinct();
+    }
 }

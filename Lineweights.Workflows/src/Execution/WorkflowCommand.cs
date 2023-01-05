@@ -33,12 +33,19 @@ public class WorkflowCommand
             _logger.LogWarning("Activity output was not a model.");
             return;
         }
-        DocumentInformation doc = new()
+        VisualizeRequest request = new()
         {
-            Name = _activity.Name,
-            Description = $"Executed {_activity.Name}."
+            Model = model,
+            Asset =
+            {
+                Info = new()
+                {
+                    Name = _activity.Name,
+                    Description = $"Executed {_activity.Name}."
+                }
+            }
         };
-        _visualizationStrategy.Execute(model, doc);
+        _visualizationStrategy.Execute(request);
     }
 
     /// <summary>

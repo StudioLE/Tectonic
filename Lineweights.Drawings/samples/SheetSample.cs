@@ -1,14 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using Lineweights.Core.Documents;
 using Lineweights.Flex;
-using Lineweights.PDF;
-using Lineweights.PDF.From.Elements;
-using Lineweights.SVG;
-using Lineweights.SVG.From.Elements;
 using Lineweights.Workflows.Samples;
-using QuestPDF.Fluent;
-using StudioLE.Core.System.IO;
 
 namespace Lineweights.Drawings.Samples;
 
@@ -101,47 +94,9 @@ public static class SheetSample
 
         // Prepare outputs
         Outputs outputs = new();
-        outputs.Model.AddElements(sheet.Render());
-        // outputs.Model.AddElements(model.Elements.Values);
-        // outputs.Model.AddElements(views);
-        // outputs.Model.AddElement(sheet);
-        outputs.Assets.Add(CreateSvg(sheet));
-        outputs.Assets.Add(CreatePdf(sheet));
+        outputs.Model.AddSubElements(sheet);
+        outputs.Model.AddElements(sheet);
 
         return outputs;
-    }
-
-    private static Asset CreatePdf(Sheet sheet)
-    {
-        SheetToPdf converter = new();
-        FileInfo file = PathHelpers.GetTempFile(".pdf");
-        PdfSheet pdfSheet = converter.Convert(sheet);
-        pdfSheet.GeneratePdf(file.FullName);
-        return new()
-        {
-            Info = new()
-            {
-                Name = "PDF of Sheet",
-                Location = new(file.FullName)
-            },
-            ContentType = "application/pdf"
-        };
-    }
-
-    private static Asset CreateSvg(Sheet sheet)
-    {
-        SheetToSvg converter = new();
-        FileInfo file = PathHelpers.GetTempFile(".svg");
-        SvgDocument svgDocument = converter.Convert(sheet);
-        svgDocument.Save(file.FullName);
-        return new()
-        {
-            Info = new()
-            {
-                Name = "SVG of Sheet",
-                Location = new(file.FullName)
-            },
-            ContentType = "image/svg+xml"
-        };
     }
 }

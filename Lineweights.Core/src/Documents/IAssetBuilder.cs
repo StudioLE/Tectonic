@@ -7,7 +7,7 @@ namespace Lineweights.Core.Documents;
 /// </summary>
 public interface IAssetBuilder
 {
-    public IStorageStrategy StorageStrategy { get; set; }
+    public IStorageStrategy StorageStrategy { set; }
 
     public Collection<BuildTask> Tasks { get; }
 

@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Lineweights.Flex\src\Lineweights.Flex.csproj" />
     <ProjectReference Include="..\src\Lineweights.Drawings.csproj" />
+    <ProjectReference Include="..\samples\Lineweights.Drawings.Samples.csproj" />
   </ItemGroup>
 
 </Project>

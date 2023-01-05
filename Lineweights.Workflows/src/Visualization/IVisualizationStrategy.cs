@@ -1,5 +1,3 @@
-using Lineweights.Core.Documents;
-
 namespace Lineweights.Workflows.Visualization;
 
 /// <summary>
@@ -8,5 +6,5 @@ namespace Lineweights.Workflows.Visualization;
 public interface IVisualizationStrategy
 {
     /// <inheritdoc cref="IVisualizationStrategy"/>
-    public Task Execute(Model model, DocumentInformation doc);
+    public Task Execute(VisualizeRequest request);
 }

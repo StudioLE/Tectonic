@@ -53,30 +53,17 @@ public static class VerifyHelpers
             DiffRunner.MaxInstancesToLaunch(2);
 
             // Verify element names
-            IReadOnlyCollection<string> expectedElements = GetElementNames(expectedModel);
-            IReadOnlyCollection<string> actualElements = GetElementNames(actualModel);
-            await Verify.String(expectedElements.Join(), actualElements.Join());
+            await Verify.ByElementIds(expectedModel, actualModel);
 
             // Verify json
             await Verify.String(json, json2);
             Assert.That(actualModel.Elements.Count, Is.EqualTo(expectedModel.Elements.Count), "Element count.");
             Assert.That(errors, Is.Empty, "Serialisation errors.");
-            CollectionAssert.AreEqual(actualElements, expectedElements);
             TElement deserializedElement = expectedModel
                 .AllElementsOfType<TElement>()
                 .First();
             Assert.That(deserializedElement, Is.EqualTo(expectedElement), "Matches.");
         });
-    }
-
-    private static IReadOnlyCollection<string> GetElementNames(Model model)
-    {
-        return model
-            .Elements
-            .Values
-            .Select(element => $"{element.Id} {element.GetType()}")
-            .OrderBy(x => x)
-            .ToArray();
     }
 
     private static string CleanJson(string json)

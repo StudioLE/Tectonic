@@ -1,8 +1,6 @@
 using System.Text;
 using Ardalis.Result;
-using Elements.Serialization.JSON;
 using Lineweights.Core.Documents;
-using Lineweights.Core.Serialisation;
 using Lineweights.Workflows.Documents;
 using Newtonsoft.Json;
 using StudioLE.Core.System;
@@ -18,31 +16,29 @@ namespace Lineweights.Workflows.Visualization;
 public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
 {
     private readonly BlobStorageStrategy _blobStorage = new();
-    private readonly IAssetBuilder _assetBuilder;
     private readonly HttpClient _httpClient;
 
-    public VisualizeWithGeometricianServer(GeometricianService geometrician, IAssetBuilder assetBuilder)
+    public VisualizeWithGeometricianServer(GeometricianService geometrician)
     {
-        _assetBuilder = assetBuilder;
-        _assetBuilder.StorageStrategy = _blobStorage;
         _httpClient = geometrician.HttpClient;
     }
 
     /// <inheritdoc cref="VisualizeWithGeometricianServer"/>
-    public async Task Execute(Model model, DocumentInformation doc)
+    public async Task Execute(VisualizeRequest request)
     {
         Result<bool> connectResult = await TryConnect();
         if (!connectResult.IsSuccess)
         {
-            Console.WriteLine(connectResult.Errors.Join());
+            Console.WriteLine(connectResult.Errors.Prepend("Failed to connect.").Join());
             return;
         }
 
-        Asset asset = await _assetBuilder.Build(model);
-
-        Result<bool> postResult = await TryPostAsset(asset);
+        // TODO: Cancel the following tasks if try connect fails.
+        Task task = _blobStorage.RecursiveWriteLocalFilesToStorage(request.Asset);
+        task.Wait();
+        Result<bool> postResult = await TryPost(request);
         if(!postResult.IsSuccess)
-            Console.WriteLine(postResult.Errors.Join());
+            Console.WriteLine(postResult.Errors.Prepend("Failed to post.").Join());
     }
 
     /// <inheritdoc cref="VisualizeWithGeometricianServer"/>
@@ -50,7 +46,7 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
     {
         try
         {
-            HttpResponseMessage response = await _httpClient.SendAsync(new(HttpMethod.Head, GeometricianService.AssetUrl));
+            HttpResponseMessage response = await _httpClient.SendAsync(new(HttpMethod.Head, GeometricianService.VisualizeRoute));
             return response.IsSuccessStatusCode
                 ? Result<bool>.Success(true)
                 : Result<bool>.Error($"{response.StatusCode}: {response.ReasonPhrase}");
@@ -66,17 +62,14 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
     }
 
     /// <inheritdoc cref="VisualizeWithGeometricianServer"/>
-    private async Task<Result<bool>> TryPostAsset(Asset asset)
+    private async Task<Result<bool>> TryPost(VisualizeRequest request)
     {
         try
         {
-            JsonSerializerSettings settings = new()
-            {
-                ContractResolver = new IgnoreConverterResolver(typeof(JsonInheritanceConverter))
-            };
-            string json = JsonConvert.SerializeObject(asset, settings);
+            VisualizeRequestConverter converter = new();
+            string json = JsonConvert.SerializeObject(request, converter);
             StringContent content = new(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _httpClient.PostAsync(GeometricianService.AssetUrl, content);
+            HttpResponseMessage response = await _httpClient.PostAsync(GeometricianService.VisualizeRoute, content);
             return response.IsSuccessStatusCode
                 ? Result<bool>.Success(true)
                 : Result<bool>.Error($"{response.StatusCode}: {response.ReasonPhrase}");

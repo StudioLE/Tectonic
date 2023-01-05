@@ -28,12 +28,14 @@ public sealed class VisualizeAsFile : IVisualizationStrategy
     }
 
     /// <inheritdoc cref="VisualizeAsFile"/>
-    public async Task Execute(Model model, DocumentInformation doc)
+    public async Task Execute(VisualizeRequest request)
     {
-        Asset asset = await _builder.Build(model);
-        await _storageStrategy.RecursiveWriteContentToStorage(asset);
+        request.Asset = await _builder
+            .AddAssets(request.Asset)
+            .Build(request.Model);
+        await _storageStrategy.RecursiveWriteContentToStorage(request.Asset);
         if (IsOpenEnabled)
-            RecursiveOpen(asset);
+            RecursiveOpen(request.Asset);
     }
 
     private static void RecursiveOpen(Asset asset)

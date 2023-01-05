@@ -38,10 +38,12 @@ internal sealed class SerialisationTests
         // Act
         string json = JsonConvert.SerializeObject(asset);
         Asset? deserialised = JsonConvert.DeserializeObject<Asset>(json);
+        string json2 = JsonConvert.SerializeObject(deserialised);
 
         // Assert
-        Assert.Multiple(() =>
+        Assert.Multiple(async () =>
         {
+            await Verify.String(json, json2);
             Assert.That(deserialised, Is.Not.Null, "Not null");
             Assert.That(deserialised?.Info.Id, Is.EqualTo(asset.Info.Id), "Parent Id");
             Asset? glb = asset.Children.FirstOrDefault();
@@ -63,10 +65,12 @@ internal sealed class SerialisationTests
         // Act
         string json = JsonConvert.SerializeObject(_doc, settings);
         DocumentInformation? deserialised = JsonConvert.DeserializeObject<DocumentInformation>(json, settings);
+        string json2 = JsonConvert.SerializeObject(deserialised, settings);
 
         // Assert
-        Assert.Multiple(() =>
+        Assert.Multiple(async () =>
         {
+            await Verify.String(json, json2);
             Assert.That(deserialised, Is.Not.Null, "Not null");
             Assert.That(deserialised?.Id, Is.EqualTo(_doc.Id), "Id");
             Assert.That(deserialised?.Location, Is.EqualTo(_doc.Location), "Location");

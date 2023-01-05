@@ -23,9 +23,13 @@ internal sealed class VisualizationTests
         // Arrange
         VisualizeAsFile strategy = _services.GetRequiredService<VisualizeAsFile>();
         strategy.IsOpenEnabled = false;
+        VisualizeRequest request = new()
+        {
+            Model = _model
+        };
 
         // Act
-        await strategy.Execute(_model, new());
+        await strategy.Execute(request);
 
         // Assert
         // Assert.That(asset.Children.Count, Is.EqualTo(1), "Children count");
@@ -35,7 +39,7 @@ internal sealed class VisualizationTests
 
     [TestCase(typeof(VisualizeAsFile))]
     [TestCase(typeof(VisualizeWithGeometricianServer))]
-    public void Visualize(Type type)
+    public async Task Visualize(Type type)
     {
         // Arrange
         IServiceProvider services = Services.GetInstance();
@@ -46,6 +50,7 @@ internal sealed class VisualizationTests
 
         // Act
         Visualize visualize = new(strategy);
+        await visualize.Execute(_model);
 
         // Assert
         Assert.That(visualize._strategy, Is.TypeOf(type), "Strategy");
@@ -58,9 +63,13 @@ internal sealed class VisualizationTests
     {
         // Arrange
         VisualizeWithGeometricianServer strategy = _services.GetRequiredService<VisualizeWithGeometricianServer>();
+        VisualizeRequest request = new()
+        {
+            Model = _model
+        };
 
         // Act
-        await strategy.Execute(_model, new());
+        await strategy.Execute(request);
 
         // Assert
         // Assert.That(asset.Children.Count, Is.EqualTo(1), "Children count");

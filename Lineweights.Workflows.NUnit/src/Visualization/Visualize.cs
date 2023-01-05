@@ -38,14 +38,10 @@ public class Visualize
     }
 
     /// <inheritdoc cref="Visualize" />
-    public async Task Execute(Model model)
+    public async Task Execute(Model model, IReadOnlyCollection<Asset>? assets = null)
     {
         if (!NUnitActivityFactory.IsExecuting && !IsEnabled)
             return;
-        DocumentInformation doc = new()
-        {
-            Name = CreateSummary()
-        };
 
         if (NUnitActivityFactory.IsExecuting)
         {
@@ -56,7 +52,21 @@ public class Visualize
             };
             return;
         }
-        await _strategy.Execute(model, doc);
+
+        VisualizeRequest request = new()
+        {
+            Model = model,
+            Asset = new()
+            {
+                Info = new()
+                {
+                    Name = CreateSummary()
+                },
+                Children = assets ?? Array.Empty<Asset>()
+            }
+        };
+
+        await _strategy.Execute(request);
     }
 
     private static string CreateSummary()

@@ -4,17 +4,18 @@ public class GeometricianService
 {
     public HttpClient HttpClient { get; } = new()
     {
-        Timeout = TimeSpan.FromMilliseconds(50)
+        Timeout = TimeSpan.FromMilliseconds(200),
+        BaseAddress = new(BaseAddress)
     };
 
     /// <summary>
     /// The path of the asset API endpoint.
     /// </summary>
-    public const string AssetUrl = $"http://localhost:3000/{AssetRoute}";
+    public const string BaseAddress = "http://localhost:3000";
 
     // TODO: This should be determined by settings
     /// <summary>
-    /// The path of the asset API endpoint.
+    /// The path of the visualize API endpoint.
     /// </summary>
-    public const string AssetRoute = "asset";
+    public const string VisualizeRoute = "visualize";
 }

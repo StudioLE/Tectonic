@@ -86,6 +86,26 @@ public static class Verify
     }
 
     /// <summary>
+    /// Verify a <see cref="Model"/> by the element ids.
+    /// </summary>
+    public static async Task ByElementIds(Model expected, Model actual)
+    {
+        IReadOnlyCollection<string> expectedElements = GetElementIds(expected);
+        IReadOnlyCollection<string> actualElements = GetElementIds(actual);
+        await String(expectedElements.Join(), actualElements.Join());
+    }
+
+    private static IReadOnlyCollection<string> GetElementIds(Model model)
+    {
+        return model
+            .Elements
+            .Values
+            .Select(element => $"{element.Id} {element.GetType()}")
+            .OrderBy(x => x)
+            .ToArray();
+    }
+
+    /// <summary>
     /// Verify a string.
     /// </summary>
     public static async Task String(string @string)

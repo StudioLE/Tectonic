@@ -35,7 +35,7 @@ public class AssetBuilder : IAssetBuilder
     public async Task<Asset> Build(Model model)
     {
         if (!Tasks.Any())
-            this.ConvertModelToGlb();
+            SetDefaultTasks();
         // TODO: Benchmark whether it's worth using tasks.AsParallel()
         IEnumerable<Task<Asset>> tasks = Tasks.SelectMany(steps => steps.Invoke(model, StorageStrategy));
         Asset[] assets = await Task.WhenAll(tasks);
@@ -44,5 +44,10 @@ public class AssetBuilder : IAssetBuilder
             Info = _doc ?? new(),
             Children = assets
         };
+    }
+
+    private void SetDefaultTasks()
+    {
+        this.ConvertModelToJson();
     }
 }
