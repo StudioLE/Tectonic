@@ -4,7 +4,8 @@ namespace Lineweights.Flex.Tests;
 
 internal sealed class Flex2dTests
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
     private Brick Container { get; }
     private SequenceBuilder StretcherSoldier { get; }
     private SequenceBuilder SoldierStretcher { get; }
@@ -179,8 +180,15 @@ internal sealed class Flex2dTests
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

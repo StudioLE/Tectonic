@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.Text;
 using Lineweights.Core.Documents;
 using Lineweights.Workflows.Hosting;
 using Lineweights.Workflows.NUnit.Execution;
@@ -16,8 +17,8 @@ namespace Lineweights.Workflows.NUnit.Visualization;
 /// </summary>
 public class Visualize
 {
-    /// <inheritdoc cref="IVisualizationStrategy" />
     internal readonly IVisualizationStrategy _strategy;
+    private readonly Collection<VisualizeRequest> _requests = new();
 
     /// <summary>
     /// Should the strategy be executed.
@@ -38,7 +39,7 @@ public class Visualize
     }
 
     /// <inheritdoc cref="Visualize" />
-    public async Task Execute(Model model, IReadOnlyCollection<Asset>? assets = null)
+    public void Queue(Model model, IReadOnlyCollection<Asset>? assets = null)
     {
         if (!NUnitActivityFactory.IsExecuting && !IsEnabled)
             return;
@@ -55,7 +56,7 @@ public class Visualize
 
         VisualizeRequest request = new()
         {
-            Model = model,
+            Model = new(model.Transform, model.Elements),
             Asset = new()
             {
                 Info = new()
@@ -65,8 +66,15 @@ public class Visualize
                 Children = assets ?? Array.Empty<Asset>()
             }
         };
+        _requests.Add(request);
+    }
 
-        await _strategy.Execute(request);
+    /// <inheritdoc cref="Visualize" />
+    public async Task Execute()
+    {
+        if (!NUnitActivityFactory.IsExecuting && !IsEnabled)
+            return;
+        await _strategy.Execute(_requests.ToArray());
     }
 
     private static string CreateSummary()

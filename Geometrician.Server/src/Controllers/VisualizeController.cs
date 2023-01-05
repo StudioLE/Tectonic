@@ -43,14 +43,18 @@ public class VisualizeController : Controller
     private async Task ProcessReceived(JsonElement jsonElement)
     {
         string json = jsonElement.GetRawText();
-        VisualizeRequest? receivedAsset = JsonConvert.DeserializeObject<VisualizeRequest>(json);
-        if (receivedAsset is null)
+        VisualizeRequest[]? requests = JsonConvert.DeserializeObject<VisualizeRequest[]>(json);
+        if (requests is null)
         {
             _logger.LogWarning("Failed to deserialize asset from JSON.");
             return;
         }
-        Asset asset = await BuildAsset(receivedAsset);
-        _state.Assets.Add(asset);
+
+        foreach (VisualizeRequest request in requests)
+        {
+            Asset asset = await BuildAsset(request);
+            _state.Assets.Add(asset);
+        }
     }
 
     private async Task<Asset> BuildAsset(VisualizeRequest request)
@@ -63,7 +67,6 @@ public class VisualizeController : Controller
             .ExtractViewsAndConvertToSvg()
             .ExtractSheetsAndConvertToPdf()
             .AddAssets(request.Asset.Children.ToArray());
-        // TODO: We may need to ensure the Assets are stored using the correct StorageStrategy?
         return await builder.Build(request.Model);
     }
 }

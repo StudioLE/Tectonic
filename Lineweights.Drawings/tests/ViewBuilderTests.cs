@@ -4,7 +4,8 @@ namespace Lineweights.Drawings.Tests;
 
 internal sealed class ViewBuilderTests
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
 
     [SetUp]
@@ -50,8 +51,15 @@ internal sealed class ViewBuilderTests
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

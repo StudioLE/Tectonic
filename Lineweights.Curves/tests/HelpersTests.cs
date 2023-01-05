@@ -5,7 +5,8 @@ namespace Lineweights.Curves.Tests;
 
 internal sealed class HelpersTests
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
 
     [TestCase(0.1)]
     [TestCase(0.5)]
@@ -85,8 +86,15 @@ internal sealed class HelpersTests
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

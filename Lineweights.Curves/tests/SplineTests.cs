@@ -6,7 +6,8 @@ namespace Lineweights.Curves.Tests;
 
 internal sealed class SplineTests
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
     internal static readonly IReadOnlyCollection<Vector3> _points = new[]
     {
         new Vector3(1, 3.5),
@@ -343,8 +344,15 @@ internal sealed class SplineTests
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

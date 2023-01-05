@@ -4,7 +4,8 @@ namespace Lineweights.Core.Tests.Geometry;
 
 internal sealed class CreateArcTests
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
 
     [TestCase(1, 0, 0, 1, 0, 0)]
     [TestCase(1, 0, 0, 1, 2, 2)]
@@ -71,8 +72,15 @@ internal sealed class CreateArcTests
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

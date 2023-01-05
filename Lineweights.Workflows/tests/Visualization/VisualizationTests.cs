@@ -50,7 +50,8 @@ internal sealed class VisualizationTests
 
         // Act
         Visualize visualize = new(strategy);
-        await visualize.Execute(_model);
+        visualize.Queue(_model);
+        await visualize.Execute();
 
         // Assert
         Assert.That(visualize._strategy, Is.TypeOf(type), "Strategy");

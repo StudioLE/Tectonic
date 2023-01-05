@@ -6,7 +6,8 @@ namespace Lineweights.Drawings.Tests.Samples;
 
 internal sealed class GeometricElementsScene
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
 
     [Test]
     [Explicit("Write GeometricElementsScene to JSON")]
@@ -126,8 +127,15 @@ internal sealed class GeometricElementsScene
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

@@ -4,7 +4,8 @@ namespace Lineweights.Flex.Tests;
 
 internal sealed class Flex1dTests
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
     private Line Line { get; }
     private Vector3 CrossAxis { get; }
     private Arc Arc { get; }
@@ -255,8 +256,15 @@ internal sealed class Flex1dTests
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

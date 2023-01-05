@@ -28,6 +28,13 @@ public sealed class VisualizeAsFile : IVisualizationStrategy
     }
 
     /// <inheritdoc cref="VisualizeAsFile"/>
+    public async Task Execute(params VisualizeRequest[] requests)
+    {
+        foreach (VisualizeRequest request in requests)
+            await Execute(request);
+    }
+
+    /// <inheritdoc cref="VisualizeAsFile"/>
     public async Task Execute(VisualizeRequest request)
     {
         request.Asset = await _builder

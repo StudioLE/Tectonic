@@ -24,7 +24,7 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
     }
 
     /// <inheritdoc cref="VisualizeWithGeometricianServer"/>
-    public async Task Execute(VisualizeRequest request)
+    public async Task Execute(params VisualizeRequest[] requests)
     {
         Result<bool> connectResult = await TryConnect();
         if (!connectResult.IsSuccess)
@@ -34,9 +34,12 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
         }
 
         // TODO: Cancel the following tasks if try connect fails.
-        Task task = _blobStorage.RecursiveWriteLocalFilesToStorage(request.Asset);
-        task.Wait();
-        Result<bool> postResult = await TryPost(request);
+        Task[] tasks = requests
+            .Select(x => _blobStorage.RecursiveWriteLocalFilesToStorage(x.Asset))
+            .ToArray();
+        Task.WaitAll(tasks);
+
+        Result<bool> postResult = await TryPost(requests);
         if(!postResult.IsSuccess)
             Console.WriteLine(postResult.Errors.Prepend("Failed to post.").Join());
     }
@@ -62,12 +65,12 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
     }
 
     /// <inheritdoc cref="VisualizeWithGeometricianServer"/>
-    private async Task<Result<bool>> TryPost(VisualizeRequest request)
+    private async Task<Result<bool>> TryPost(VisualizeRequest[] requests)
     {
         try
         {
             VisualizeRequestConverter converter = new();
-            string json = JsonConvert.SerializeObject(request, converter);
+            string json = JsonConvert.SerializeObject(requests, converter);
             StringContent content = new(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await _httpClient.PostAsync(GeometricianService.VisualizeRoute, content);
             return response.IsSuccessStatusCode

@@ -6,5 +6,5 @@ namespace Lineweights.Workflows.Visualization;
 public interface IVisualizationStrategy
 {
     /// <inheritdoc cref="IVisualizationStrategy"/>
-    public Task Execute(VisualizeRequest request);
+    public Task Execute(params VisualizeRequest[] requests);
 }

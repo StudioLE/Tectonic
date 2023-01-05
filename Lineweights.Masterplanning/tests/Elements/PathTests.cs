@@ -7,7 +7,8 @@ namespace Lineweights.Masterplanning.Tests.Elements;
 
 internal sealed class PathTests
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
     //private readonly IReadOnlyCollection<Vector3> _points = new[]
     //{
     //    new Vector3(0, 0),
@@ -80,8 +81,15 @@ internal sealed class PathTests
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

@@ -4,7 +4,8 @@ namespace Lineweights.Core.Tests.Elements;
 
 internal sealed class MaterialHelpersTests
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
 
     [TestCase("blue", "bed58e79-27fb-5c9e-a631-6489bd1bf316")]
     [TestCase("green", "27b63f21-9576-5303-94c1-dbc3c704d273")]
@@ -35,8 +36,15 @@ internal sealed class MaterialHelpersTests
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

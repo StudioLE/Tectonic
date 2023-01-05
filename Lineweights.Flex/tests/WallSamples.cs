@@ -4,7 +4,8 @@ namespace Lineweights.Flex.Tests;
 
 internal sealed class WallSamples
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
 
     [Test]
     public async Task Wall_StretcherBond()
@@ -41,8 +42,15 @@ internal sealed class WallSamples
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

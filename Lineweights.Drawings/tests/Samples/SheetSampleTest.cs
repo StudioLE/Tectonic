@@ -5,7 +5,8 @@ namespace Lineweights.Drawings.Tests.Samples;
 
 internal sealed class SheetSampleTest
 {
-    public Model Model { get; } = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
 
     [Test]
     public void SheetSample_Execute()
@@ -19,7 +20,7 @@ internal sealed class SheetSampleTest
         SheetSample.Outputs outputs = SheetSample.Execute(viewInputs, sheetInputs, arrangementInputs);
 
         // Preview
-        Model.AddElements(outputs.Model.Elements.Values);
+        _model.AddElements(outputs.Model.Elements.Values);
 
         // Assert
         // IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
@@ -27,8 +28,15 @@ internal sealed class SheetSampleTest
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(Model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }

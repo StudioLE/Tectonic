@@ -10,7 +10,8 @@ namespace Lineweights.PDF.Tests;
 
 internal sealed class ViewToPdfTests
 {
-    private readonly Model _model = new();
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
 
     [TestCase(ViewDirection.Back)]
     public async Task ViewToPdf_Wireframe_Brickwork(ViewDirection viewDirection)
@@ -101,8 +102,15 @@ internal sealed class ViewToPdfTests
     }
 
     [TearDown]
-    public async Task TearDown()
+    public void TearDown()
     {
-        await new Visualize().Execute(_model);
+        _visualize.Queue(_model);
+        _model = new();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _visualize.Execute();
     }
 }
