@@ -13,17 +13,17 @@ public static class AssetBuilderExtensions
     }
 
     /// <inheritdoc cref="GlbAssetFactory"/>
-    public static T ConvertModelToGlb<T>(this T @this, DocumentInformation? doc = null) where T : IAssetBuilder
+    public static T ConvertModelToGlb<T>(this T @this) where T : IAssetBuilder
     {
-        GlbAssetFactory factory = new(doc);
+        GlbAssetFactory factory = new();
         @this.Factories.Add(factory);
         return @this;
     }
 
     /// <inheritdoc cref="JsonAssetFactory"/>
-    public static T ConvertModelToJson<T>(this T @this, DocumentInformation? doc = null) where T : IAssetBuilder
+    public static T ConvertModelToJson<T>(this T @this) where T : IAssetBuilder
     {
-        JsonAssetFactory factory = new(doc);
+        JsonAssetFactory factory = new();
         @this.Factories.Add(factory);
         return @this;
     }

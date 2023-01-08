@@ -8,9 +8,9 @@ namespace Lineweights.IFC;
 public static class AssetBuilderExtensions
 {
     /// <inheritdoc cref="Asset"/>
-    public static T ConvertModelToIfc<T>(this T @this, DocumentInformation? doc = null) where T : IAssetBuilder
+    public static T ConvertModelToIfc<T>(this T @this) where T : IAssetBuilder
     {
-        IfcAssetFactory factory = new(doc);
+        IfcAssetFactory factory = new();
         @this.Factories.Add(factory);
         return @this;
     }
