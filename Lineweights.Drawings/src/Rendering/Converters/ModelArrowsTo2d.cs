@@ -9,11 +9,13 @@ namespace Lineweights.Drawings.Rendering.Converters;
 internal sealed class ModelArrowsTo2d<T> : IConverter<ModelArrows, IEnumerable<Result<T>>> where T : GeometricElement
 {
     private readonly IRenderStrategy<T> _strategy;
+    private readonly Plane _plane;
 
     /// <inheritdoc cref="ModelArrowsTo2d{T}"/>
-    public ModelArrowsTo2d(IRenderStrategy<T> strategy)
+    public ModelArrowsTo2d(IRenderStrategy<T> strategy, Plane plane)
     {
         _strategy = strategy;
+        _plane = plane;
     }
 
     /// <inheritdoc cref="ModelArrowsTo2d{T}"/>
@@ -28,7 +30,7 @@ internal sealed class ModelArrowsTo2d<T> : IConverter<ModelArrows, IEnumerable<R
                 Material material = x.color is null
                     ? arrows.Material
                     : new(x.color.ToString(), (Color)x.color);
-                return _strategy.FromCurve(line, arrows.Transform, material);
+                return _strategy.FromCurve(_plane, line, arrows.Transform, material);
             });
     }
 }

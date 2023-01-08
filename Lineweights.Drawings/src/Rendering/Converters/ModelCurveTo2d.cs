@@ -9,16 +9,18 @@ namespace Lineweights.Drawings.Rendering.Converters;
 internal sealed class ModelCurveTo2d<T> : IConverter<ModelCurve, Result<T>> where T : GeometricElement
 {
     private readonly IRenderStrategy<T> _strategy;
+    private readonly Plane _plane;
 
     /// <inheritdoc cref="ModelCurveTo2d{T}"/>
-    public ModelCurveTo2d(IRenderStrategy<T> strategy)
+    public ModelCurveTo2d(IRenderStrategy<T> strategy, Plane plane)
     {
         _strategy = strategy;
+        _plane = plane;
     }
 
     /// <inheritdoc cref="ModelCurveTo2d{T}"/>
     public Result<T> Convert(ModelCurve modelCurve)
     {
-        return _strategy.FromCurve(modelCurve.Curve, modelCurve.Transform, modelCurve.Material);
+        return _strategy.FromCurve(_plane, modelCurve.Curve, modelCurve.Transform, modelCurve.Material);
     }
 }

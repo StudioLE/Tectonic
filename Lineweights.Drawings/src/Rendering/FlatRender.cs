@@ -5,13 +5,9 @@ namespace Lineweights.Drawings.Rendering;
 /// <inheritdoc/>
 public sealed class FlatRender : IRenderStrategy<Panel>
 {
-    /// <inheritdoc cref="ViewScope.Plane"/>
-    public Plane Plane { get; private set; }
-
     /// <inheritdoc />
     public ParallelQuery<GeometricElement> Render(ViewScope viewScope)
     {
-        Plane = viewScope.Plane;
         // TODO: ZIndex order disabled as results are unreliable.
         return this.RenderAs(viewScope)
             //.OrderBy(panel =>
@@ -24,7 +20,7 @@ public sealed class FlatRender : IRenderStrategy<Panel>
     }
 
     /// <inheritdoc />
-    public Result<Panel> FromCurve(Curve curve, Transform transform, Material material)
+    public Result<Panel> FromCurve(Plane plane, Curve curve, Transform transform, Material material)
     {
         if (curve is not Polygon polygon)
             return Result<Panel>.Error("Curve must be a polygon.");
@@ -33,7 +29,7 @@ public sealed class FlatRender : IRenderStrategy<Panel>
             .Vertices
             .Select(x =>
             {
-                double zIndex = x.DistanceTo(Plane);
+                double zIndex = x.DistanceTo(plane);
                 // TODO: A negative result means the element is outside or intersecting with the view.
                 //if (zIndex < 0)
                 //    throw new("Element is outside the view.");
@@ -43,7 +39,7 @@ public sealed class FlatRender : IRenderStrategy<Panel>
             .ToArray();
 
         Polygon transformed = polygon.TransformedPolygon(transform);
-        Result<Polygon> result = transformed.TryProject(Plane);
+        Result<Polygon> result = transformed.TryProject(plane);
         if (!result.IsSuccess)
             return Result<Panel>.Error(result.Errors.ToArray());
 

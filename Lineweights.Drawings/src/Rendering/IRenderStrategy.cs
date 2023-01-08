@@ -17,11 +17,8 @@ public interface IRenderStrategy
 /// </summary>
 public interface IRenderStrategy<T> : IRenderStrategy where T : GeometricElement
 {
-    /// <inheritdoc cref="ViewScope.Plane"/>
-    public Plane Plane { get; }
-
      /// <summary>
-     /// Render <paramref name="curve"/> as <typeparamref name="T"/> on <see cref="Plane"/>.
+     /// Render <paramref name="curve"/> as <typeparamref name="T"/> on <paramref name="plane"/>.
      /// </summary>
-     public Result<T> FromCurve(Curve curve, Transform transform, Material material);
+     public Result<T> FromCurve(Plane plane, Curve curve, Transform transform, Material material);
 }

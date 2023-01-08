@@ -9,11 +9,13 @@ namespace Lineweights.Drawings.Rendering.Converters;
 internal sealed class ElementInstanceTo2d<T> : IConverter<ElementInstance, IEnumerable<Result<T>>> where T : GeometricElement
 {
     private readonly IRenderStrategy<T> _strategy;
+    private readonly Plane _plane;
 
     /// <inheritdoc cref="ElementInstanceTo2d{T}"/>
-    public ElementInstanceTo2d(IRenderStrategy<T> strategy)
+    public ElementInstanceTo2d(IRenderStrategy<T> strategy, Plane plane)
     {
         _strategy = strategy;
+        _plane = plane;
     }
 
     /// <inheritdoc cref="ElementInstanceTo2d{T}"/>
@@ -29,6 +31,6 @@ internal sealed class ElementInstanceTo2d<T> : IConverter<ElementInstance, IEnum
             .Representation
             .SolidOperations
             .SelectMany(RenderHelpers.GetFacesAsPolygons)
-            .Select(polygon => _strategy.FromCurve(polygon, transform, instance.BaseDefinition.Material));
+            .Select(polygon => _strategy.FromCurve(_plane, polygon, transform, instance.BaseDefinition.Material));
     }
 }

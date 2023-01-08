@@ -9,17 +9,19 @@ namespace Lineweights.Drawings.Rendering.Converters;
 internal sealed class MeshElementTo2d<T> : IConverter<MeshElement, IEnumerable<Result<T>>> where T : GeometricElement
 {
     private readonly IRenderStrategy<T> _strategy;
+    private readonly Plane _plane;
 
     /// <inheritdoc cref="MeshElementTo2d{T}"/>
-    public MeshElementTo2d(IRenderStrategy<T> strategy)
+    public MeshElementTo2d(IRenderStrategy<T> strategy, Plane plane)
     {
         _strategy = strategy;
+        _plane = plane;
     }
 
     /// <inheritdoc cref="MeshElementTo2d{T}"/>
     public IEnumerable<Result<T>> Convert(MeshElement element)
     {
         return RenderHelpers.GetTrianglesAsPolygons(element.Mesh)
-            .Select(polygon => _strategy.FromCurve(polygon, element.Transform, element.Material));
+            .Select(polygon => _strategy.FromCurve(_plane, polygon, element.Transform, element.Material));
     }
 }

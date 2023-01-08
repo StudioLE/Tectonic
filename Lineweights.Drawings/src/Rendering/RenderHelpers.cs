@@ -12,7 +12,7 @@ internal static class RenderHelpers
     /// <inheritdoc cref="IRenderStrategy"/>
     internal static ParallelQuery<T> RenderAs<T>(this IRenderStrategy<T> @this, ViewScope viewScope) where T : GeometricElement
     {
-        ElementTo2d<T> converter = new(@this);
+        ElementTo2d<T> converter = new(@this, viewScope.Plane);
         return viewScope
             .Elements
             .AsParallel()
