@@ -5,10 +5,10 @@ namespace Lineweights.SVG.From.Elements;
 /// <summary>
 /// Convert a <see cref="Sheet"/> to a <see cref="SvgDocument"/>
 /// </summary>
-internal sealed class SheetToSvg : IConverter<Sheet, SvgDocument>
+internal sealed class SheetToSvg : IConverter<Sheet, SvgElement>
 {
     /// <inheritdoc cref="SheetToSvg" />
-    public SvgDocument Convert(Sheet sheet)
+    public SvgElement Convert(Sheet sheet)
     {
         SvgElement svgElement = new("svg");
         svgElement.RemoveAttributes();
@@ -22,9 +22,6 @@ internal sealed class SheetToSvg : IConverter<Sheet, SvgDocument>
             .Select(converter.Convert);
 
         svgElement.Add(childElements);
-
-        SvgDocument svgDocument = new();
-        svgDocument.Add(svgElement);
-        return svgDocument;
+        return svgElement;
     }
 }

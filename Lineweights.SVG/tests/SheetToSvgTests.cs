@@ -57,7 +57,8 @@ internal sealed class SheetToSvgTests
         Sheet sheet = builder.Build();
 
         // Act
-        SvgDocument svgDocument = _converter.Convert(sheet);
+        SvgElement svgElement = _converter.Convert(sheet);
+        SvgDocument svgDocument = new(svgElement);
 
         // Asset
         await VerifySvg(svgDocument);
@@ -95,7 +96,8 @@ internal sealed class SheetToSvgTests
         Sheet sheet = builder.Build();
 
         // Act
-        SvgDocument svgDocument = _converter.Convert(sheet);
+        SvgElement svgElement = _converter.Convert(sheet);
+        SvgDocument svgDocument = new(svgElement);
 
         // Asset
         await VerifySvg(svgDocument);
@@ -133,7 +135,8 @@ internal sealed class SheetToSvgTests
         Sheet sheet = builder.Build();
 
         // Act
-        SvgDocument svgDocument = _converter.Convert(sheet);
+        SvgElement svgElement = _converter.Convert(sheet);
+        SvgDocument svgDocument = new(svgElement);
 
         // Asset
         await VerifySvg(svgDocument);
@@ -172,7 +175,8 @@ internal sealed class SheetToSvgTests
         Sheet sheet = builder.Build();
 
         // Act
-        SvgDocument svgDocument = _converter.Convert(sheet);
+        SvgElement svgElement = _converter.Convert(sheet);
+        SvgDocument svgDocument = new(svgElement);
 
         // Asset
         await VerifySvg(svgDocument);

@@ -15,7 +15,7 @@ internal sealed class SvgBenchmarks : BenchmarksBase
 
     [Benchmark(Baseline = true)]
     [BenchmarkCategory("SVG", "Sheet")]
-    public SvgDocument Svg_Convert_Sheet_Wireframe()
+    public SvgElement Svg_Convert_Sheet_Wireframe()
     {
         return new SheetToSvg().Convert(_sheet);
     }
