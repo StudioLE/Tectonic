@@ -41,14 +41,14 @@ public sealed class PdfSheet : PdfDocument
 
         layers
             .Layer()
-            .Canvas((skCanvas, size) => new CanvasToPdf(skCanvas, size).Convert(_sheet));
+            .Canvas((skCanvas, size) => new CanvasToSkCanvas(skCanvas, size).Convert(_sheet));
     }
 
     /// <summary>
     /// Compose the sheet title.
     /// </summary>
     /// <remarks>
-    /// Note: When converting the <see cref="Sheet"/> using <see cref="CanvasToPdf"/> the <see cref="Sheet.Title"/>
+    /// Note: When converting the <see cref="Sheet"/> using <see cref="CanvasToSkCanvas"/> the <see cref="Sheet.Title"/>
     /// is rendered on the canvas layer so it is not necessary to compose anything here.
     /// </remarks>
     private static void ComposeSheetTitle(IContainer container)
@@ -60,7 +60,7 @@ public sealed class PdfSheet : PdfDocument
     /// Compose the sheet content.
     /// </summary>
     /// <remarks>
-    /// Note: When converting the <see cref="Sheet"/> using <see cref="CanvasToPdf"/> the <see cref="Sheet.Title"/>
+    /// Note: When converting the <see cref="Sheet"/> using <see cref="CanvasToSkCanvas"/> the <see cref="Sheet.Title"/>
     /// is rendered on the canvas layer so it is not necessary to compose anything here.
     /// </remarks>
     private static void ComposeSheetContent(IContainer container)

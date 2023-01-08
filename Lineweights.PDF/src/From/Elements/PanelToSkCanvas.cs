@@ -6,17 +6,17 @@ namespace Lineweights.PDF.From.Elements;
 /// Convert a <see cref="Panel"/> to PDF
 /// by drawing the 2d filled polygon on the <see cref="SKCanvas"/>.
 /// </summary>
-internal sealed class PanelToPdf : IConverter<Panel, SKCanvas>
+internal sealed class PanelToSkCanvas : IConverter<Panel, SKCanvas>
 {
     private readonly SKCanvas _skCanvas;
 
-    /// <inheritdoc cref="PanelToPdf" />
-    public PanelToPdf(SKCanvas skCanvas)
+    /// <inheritdoc cref="PanelToSkCanvas" />
+    public PanelToSkCanvas(SKCanvas skCanvas)
     {
         _skCanvas = skCanvas;
     }
 
-    /// <inheritdoc cref="PanelToPdf" />
+    /// <inheritdoc cref="PanelToSkCanvas" />
     public SKCanvas Convert(Panel element)
     {
         Polygon polygon = element.Perimeter.TransformedPolygon(element.Transform);

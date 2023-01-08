@@ -7,19 +7,19 @@ namespace Lineweights.PDF.From.Elements;
 /// Convert either a <see cref="Sheet"/> or <see cref="View"/> to PDF
 /// by rendering them and drawing the 2d representation on the <see cref="SKCanvas"/>.
 /// </summary>
-internal sealed class CanvasToPdf : IConverter<Canvas, SKCanvas>
+internal sealed class CanvasToSkCanvas : IConverter<Canvas, SKCanvas>
 {
     private readonly SKCanvas _skCanvas;
     private readonly Size? _size;
 
-    /// <inheritdoc cref="CanvasToPdf"/>
-    public CanvasToPdf(SKCanvas skCanvas, Size? size = null)
+    /// <inheritdoc cref="CanvasToSkCanvas"/>
+    public CanvasToSkCanvas(SKCanvas skCanvas, Size? size = null)
     {
         _skCanvas = skCanvas;
         _size = size;
     }
 
-    /// <inheritdoc cref="CanvasToPdf"/>
+    /// <inheritdoc cref="CanvasToSkCanvas"/>
     public SKCanvas Convert(Canvas canvas)
     {
         if (_size is Size size)
@@ -35,7 +35,7 @@ internal sealed class CanvasToPdf : IConverter<Canvas, SKCanvas>
             _ => throw new TypeSwitchException<Canvas>("Failed to convert to pdf.", canvas)
         };
 
-        var converter = new ElementToPdf(_skCanvas);
+        var converter = new ElementToSkCanvas(_skCanvas);
         foreach (GeometricElement element in geometry)
             converter.Convert(element);
 

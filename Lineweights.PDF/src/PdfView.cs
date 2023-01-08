@@ -21,6 +21,6 @@ public sealed class PdfView : PdfDocument
     {
         layers
             .PrimaryLayer()
-            .Canvas((skCanvas, size) => new CanvasToPdf(skCanvas, size).Convert(_view));
+            .Canvas((skCanvas, size) => new CanvasToSkCanvas(skCanvas, size).Convert(_view));
     }
 }

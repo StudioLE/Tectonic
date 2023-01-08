@@ -6,23 +6,23 @@ namespace Lineweights.PDF.From.Elements;
 /// Convert a <see cref="ModelCurve"/> or <see cref="Panel"/> to PDF
 /// by drawing the 2d representation on the <see cref="SKCanvas"/>.
 /// </summary>
-internal sealed class ElementToPdf : IConverter<Element, SKCanvas>
+internal sealed class ElementToSkCanvas : IConverter<Element, SKCanvas>
 {
     private readonly SKCanvas _skCanvas;
 
-    /// <inheritdoc cref="ElementToPdf"/>
-    public ElementToPdf(SKCanvas skCanvas)
+    /// <inheritdoc cref="ElementToSkCanvas"/>
+    public ElementToSkCanvas(SKCanvas skCanvas)
     {
         _skCanvas = skCanvas;
     }
 
-    /// <inheritdoc cref="ElementToPdf"/>
+    /// <inheritdoc cref="ElementToSkCanvas"/>
     public SKCanvas Convert(Element element)
     {
         return element switch
         {
-            ModelCurve curve => new ModelCurveToPdf(_skCanvas).Convert(curve),
-            Panel panel => new PanelToPdf(_skCanvas).Convert(panel),
+            ModelCurve curve => new ModelCurveToSkCanvas(_skCanvas).Convert(curve),
+            Panel panel => new PanelToSkCanvas(_skCanvas).Convert(panel),
             // TODO: Implement ModelTextToSvg conversion.
             _ => throw new TypeSwitchException<Element>("Failed to convert element to PDF.", element)
         };
