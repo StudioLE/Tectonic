@@ -6,10 +6,18 @@ namespace Lineweights.Drawings.Rendering.Converters;
 /// <summary>
 /// Convert an <see cref="ElementInstance"/> to a 2d representation of type <typeparamref name="T"/>.
 /// </summary>
-internal sealed class ElementInstanceTo2d<T> : IConverter<ElementInstance, IEnumerable<Result<T>>, RenderBase<T>> where T : GeometricElement
+internal sealed class ElementInstanceTo2d<T> : IConverter<ElementInstance, IEnumerable<Result<T>>> where T : GeometricElement
 {
+    private readonly RenderBase<T> _strategy;
+
     /// <inheritdoc cref="ElementInstanceTo2d{T}"/>
-    public IEnumerable<Result<T>> Convert(ElementInstance instance, RenderBase<T> render)
+    public ElementInstanceTo2d(RenderBase<T> strategy)
+    {
+        _strategy = strategy;
+    }
+
+    /// <inheritdoc cref="ElementInstanceTo2d{T}"/>
+    public IEnumerable<Result<T>> Convert(ElementInstance instance)
     {
         if (instance.BaseDefinition.Representation is null)
             return new[] { Result<T>.Error("BaseDefinition didn't have a representation") };
@@ -21,6 +29,6 @@ internal sealed class ElementInstanceTo2d<T> : IConverter<ElementInstance, IEnum
             .Representation
             .SolidOperations
             .SelectMany(RenderHelpers.GetFacesAsPolygons)
-            .Select(polygon => render.FromCurve(polygon, transform, instance.BaseDefinition.Material));
+            .Select(polygon => _strategy.FromCurve(polygon, transform, instance.BaseDefinition.Material));
     }
 }

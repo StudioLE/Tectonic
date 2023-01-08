@@ -39,8 +39,9 @@ public sealed class PdfSheet : PdfDocument
             //.Background(Colors.Grey.Lighten3)
             .Element(ComposeSheetContent);
 
-        layers.Layer()
-            .Canvas((canvas, size) => new CanvasToPdf().Convert(_sheet, canvas, size));
+        layers
+            .Layer()
+            .Canvas((skCanvas, size) => new CanvasToPdf(skCanvas, size).Convert(_sheet));
     }
 
     /// <summary>

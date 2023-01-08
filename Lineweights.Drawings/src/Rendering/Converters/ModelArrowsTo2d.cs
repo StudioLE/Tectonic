@@ -6,10 +6,18 @@ namespace Lineweights.Drawings.Rendering.Converters;
 /// <summary>
 /// Convert a <see cref="ModelArrows"/> to a 2d representation of type <typeparamref name="T"/>.
 /// </summary>
-internal sealed class ModelArrowsTo2d<T> : IConverter<ModelArrows, IEnumerable<Result<T>>, RenderBase<T>> where T : GeometricElement
+internal sealed class ModelArrowsTo2d<T> : IConverter<ModelArrows, IEnumerable<Result<T>>> where T : GeometricElement
 {
+    private readonly RenderBase<T> _strategy;
+
     /// <inheritdoc cref="ModelArrowsTo2d{T}"/>
-    public IEnumerable<Result<T>> Convert(ModelArrows arrows, RenderBase<T> render)
+    public ModelArrowsTo2d(RenderBase<T> strategy)
+    {
+        _strategy = strategy;
+    }
+
+    /// <inheritdoc cref="ModelArrowsTo2d{T}"/>
+    public IEnumerable<Result<T>> Convert(ModelArrows arrows)
     {
         return arrows
             .Vectors
@@ -20,7 +28,7 @@ internal sealed class ModelArrowsTo2d<T> : IConverter<ModelArrows, IEnumerable<R
                 Material material = x.color is null
                     ? arrows.Material
                     : new(x.color.ToString(), (Color)x.color);
-                return render.FromCurve(line, arrows.Transform, material);
+                return _strategy.FromCurve(line, arrows.Transform, material);
             });
     }
 }

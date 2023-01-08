@@ -6,10 +6,18 @@ namespace Lineweights.PDF.From.Elements;
 /// Convert a <see cref="Panel"/> to PDF
 /// by drawing the 2d filled polygon on the <see cref="SKCanvas"/>.
 /// </summary>
-internal sealed class PanelToPdf : IConverter<Panel, SKCanvas, SKCanvas>
+internal sealed class PanelToPdf : IConverter<Panel, SKCanvas>
 {
+    private readonly SKCanvas _skCanvas;
+
     /// <inheritdoc cref="PanelToPdf" />
-    public SKCanvas Convert(Panel element, SKCanvas canvas)
+    public PanelToPdf(SKCanvas skCanvas)
+    {
+        _skCanvas = skCanvas;
+    }
+
+    /// <inheritdoc cref="PanelToPdf" />
+    public SKCanvas Convert(Panel element)
     {
         Polygon polygon = element.Perimeter.TransformedPolygon(element.Transform);
         SKColor color = new ColorToPdf().Convert(element.Material.Color);
@@ -25,8 +33,8 @@ internal sealed class PanelToPdf : IConverter<Panel, SKCanvas, SKCanvas>
             IsStroke = true,
             Color = SKColors.Black
         };
-        canvas.DrawPath(path, fill);
-        canvas.DrawPath(path, stroke);
-        return canvas;
+        _skCanvas.DrawPath(path, fill);
+        _skCanvas.DrawPath(path, stroke);
+        return _skCanvas;
     }
 }

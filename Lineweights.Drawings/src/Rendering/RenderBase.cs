@@ -16,12 +16,12 @@ public abstract class RenderBase<T> : IRenderStrategy where T : GeometricElement
     public ParallelQuery<T> RenderAsT(ViewScope viewScope)
     {
         Plane = viewScope.Plane;
-        ElementTo2d<T> converter = new();
+        ElementTo2d<T> converter = new(this);
         return viewScope
             .Elements
             .AsParallel()
             .AsOrdered()
-            .SelectMany(x => converter.Convert(x, this))
+            .SelectMany(converter.Convert)
             .Where(x => x.IsSuccess)
             .Select(x => x.Value);
         // TODO: Remove overlapping lines

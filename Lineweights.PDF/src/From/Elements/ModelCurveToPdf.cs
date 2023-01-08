@@ -6,10 +6,18 @@ namespace Lineweights.PDF.From.Elements;
 /// Convert a <see cref="ModelCurve"/> to PDF
 /// by drawing the 2d curve on the <see cref="SKCanvas"/>.
 /// </summary>
-internal sealed class ModelCurveToPdf : IConverter<ModelCurve, SKCanvas, SKCanvas>
+internal sealed class ModelCurveToPdf : IConverter<ModelCurve, SKCanvas>
 {
+    private readonly SKCanvas _skCanvas;
+
     /// <inheritdoc cref="ModelCurveToPdf"/>
-    public SKCanvas Convert(ModelCurve element, SKCanvas canvas)
+    public ModelCurveToPdf(SKCanvas skCanvas)
+    {
+        _skCanvas = skCanvas;
+    }
+
+    /// <inheritdoc cref="ModelCurveToPdf"/>
+    public SKCanvas Convert(ModelCurve element)
     {
         Curve curve = element.Curve.Transformed(element.Transform);
         SKPath path = new CurveToPdf().Convert(curve);
@@ -20,7 +28,7 @@ internal sealed class ModelCurveToPdf : IConverter<ModelCurve, SKCanvas, SKCanva
             IsStroke = true,
             Color = color
         };
-        canvas.DrawPath(path, paint);
-        return canvas;
+        _skCanvas.DrawPath(path, paint);
+        return _skCanvas;
     }
 }

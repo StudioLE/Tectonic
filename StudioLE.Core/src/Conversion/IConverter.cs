@@ -6,19 +6,7 @@ namespace StudioLE.Core.Conversion;
 public interface IConverter<in TSource, out TResult>
 {
     /// <summary>
-    /// Convert from <typeparamref name="TSource"/> to <typeparamref name="TResult"/>. 
+    /// Convert from <typeparamref name="TSource"/> to <typeparamref name="TResult"/>.
     /// </summary>
     public TResult Convert(TSource source);
-}
-
-/// <summary>
-/// Convert from a <typeparamref name="TSource"/> to <typeparamref name="TResult"/>
-/// using <typeparamref name="TContext"/>.
-/// </summary>
-public interface IConverter<in TSource, out TResult, in TContext>
-{
-    /// <summary>
-    /// Convert from <typeparamref name="TSource"/> to <typeparamref name="TResult"/>. 
-    /// </summary>
-    public TResult Convert(TSource source, TContext context);
 }
