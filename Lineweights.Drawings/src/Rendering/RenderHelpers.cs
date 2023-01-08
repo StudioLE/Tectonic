@@ -1,3 +1,5 @@
+using Lineweights.Drawings.Rendering.Converters;
+
 namespace Lineweights.Drawings.Rendering;
 
 /// <summary>
@@ -5,6 +7,23 @@ namespace Lineweights.Drawings.Rendering;
 /// </summary>
 internal static class RenderHelpers
 {
+
+
+    /// <inheritdoc cref="IRenderStrategy"/>
+    internal static ParallelQuery<T> RenderAs<T>(this IRenderStrategy<T> @this, ViewScope viewScope) where T : GeometricElement
+    {
+        ElementTo2d<T> converter = new(@this);
+        return viewScope
+            .Elements
+            .AsParallel()
+            .AsOrdered()
+            .SelectMany(converter.Convert)
+            .Where(x => x.IsSuccess)
+            .Select(x => x.Value);
+        // TODO: Remove overlapping lines
+        //.Distinct(new ModelCurveComparer());
+    }
+
     internal static IEnumerable<Polygon> GetFacesAsPolygons(SolidOperation solid)
     {
         // TODO: Handle LocalTransform

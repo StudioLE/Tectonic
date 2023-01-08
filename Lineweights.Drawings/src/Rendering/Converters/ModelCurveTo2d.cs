@@ -8,10 +8,10 @@ namespace Lineweights.Drawings.Rendering.Converters;
 /// </summary>
 internal sealed class ModelCurveTo2d<T> : IConverter<ModelCurve, Result<T>> where T : GeometricElement
 {
-    private readonly RenderBase<T> _strategy;
+    private readonly IRenderStrategy<T> _strategy;
 
     /// <inheritdoc cref="ModelCurveTo2d{T}"/>
-    public ModelCurveTo2d(RenderBase<T> strategy)
+    public ModelCurveTo2d(IRenderStrategy<T> strategy)
     {
         _strategy = strategy;
     }

@@ -3,13 +3,17 @@ using Ardalis.Result;
 namespace Lineweights.Drawings.Rendering;
 
 /// <inheritdoc/>
-public sealed class FlatRender : RenderBase<Panel>
+public sealed class FlatRender : IRenderStrategy<Panel>
 {
+    /// <inheritdoc cref="ViewScope.Plane"/>
+    public Plane Plane { get; private set; }
+
     /// <inheritdoc />
-    public override ParallelQuery<GeometricElement> Render(ViewScope viewScope)
+    public ParallelQuery<GeometricElement> Render(ViewScope viewScope)
     {
+        Plane = viewScope.Plane;
         // TODO: ZIndex order disabled as results are unreliable.
-        return RenderAsT(viewScope)
+        return this.RenderAs(viewScope)
             //.OrderBy(panel =>
             //    {
             //        Result<ZIndex> result = panel.GetProperty<ZIndex>();
@@ -20,7 +24,7 @@ public sealed class FlatRender : RenderBase<Panel>
     }
 
     /// <inheritdoc />
-    public override Result<Panel> FromCurve(Curve curve, Transform transform, Material material)
+    public Result<Panel> FromCurve(Curve curve, Transform transform, Material material)
     {
         if (curve is not Polygon polygon)
             return Result<Panel>.Error("Curve must be a polygon.");

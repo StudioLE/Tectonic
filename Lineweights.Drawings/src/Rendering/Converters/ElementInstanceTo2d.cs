@@ -8,10 +8,10 @@ namespace Lineweights.Drawings.Rendering.Converters;
 /// </summary>
 internal sealed class ElementInstanceTo2d<T> : IConverter<ElementInstance, IEnumerable<Result<T>>> where T : GeometricElement
 {
-    private readonly RenderBase<T> _strategy;
+    private readonly IRenderStrategy<T> _strategy;
 
     /// <inheritdoc cref="ElementInstanceTo2d{T}"/>
-    public ElementInstanceTo2d(RenderBase<T> strategy)
+    public ElementInstanceTo2d(IRenderStrategy<T> strategy)
     {
         _strategy = strategy;
     }
