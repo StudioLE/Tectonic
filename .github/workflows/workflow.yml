@@ -28,7 +28,7 @@ jobs:
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release ${{ env.DRY_RUN }}
+        run: npx semantic-release@v19.0.5 ${{ env.DRY_RUN }}
 
       - name: Set Metadata
         id: metadata
