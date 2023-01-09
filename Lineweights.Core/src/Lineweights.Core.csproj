@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.Result" Version="3.1.2" />
     <PackageReference Include="GeometryEx" Version="8.2.0" />
     <PackageReference Include="Hypar.Elements" Version="1.0.0">
       <IncludeAssets>all</IncludeAssets>

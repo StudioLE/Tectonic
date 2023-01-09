@@ -1,5 +1,5 @@
 using System.IO;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Workflows.Verification;
 
@@ -26,7 +26,7 @@ public abstract class VerifierBase<T>
     /// <summary>
     /// Verify <paramref name="actual"/>.
     /// </summary>
-    public virtual async Task<Result<bool>> Execute(T actual)
+    public virtual async Task<IResult> Execute(T actual)
     {
         FileInfo receivedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.received{_fileExtension}"));
         FileInfo verifiedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.verified{_fileExtension}"));
@@ -36,7 +36,7 @@ public abstract class VerifierBase<T>
             new("Verified", verifiedFile),
             new("Received", receivedFile)
         };
-        Result<bool> result = await Compare(files);
+        IResult result = await Compare(files);
         _context.OnResult(result, receivedFile, verifiedFile);
         return result;
     }
@@ -44,7 +44,7 @@ public abstract class VerifierBase<T>
     /// <summary>
     /// Verify <paramref name="actual"/> matches <paramref name="expected"/>.
     /// </summary>
-    public async Task<Result<bool>> Execute(T expected, T actual)
+    public async Task<IResult> Execute(T expected, T actual)
     {
         FileInfo expectedFile = new(Path.GetTempFileName() + ".expected.txt");
         FileInfo actualFile = new(Path.GetTempFileName() + ".actual.txt");
@@ -55,7 +55,7 @@ public abstract class VerifierBase<T>
             new("Expected", expectedFile),
             new("Actual", actualFile)
         };
-        Result<bool> result = await Compare(files);
+        IResult result = await Compare(files);
         _context.OnResult(result, actualFile, expectedFile);
         return result;
     }
@@ -68,13 +68,13 @@ public abstract class VerifierBase<T>
     /// <summary>
     /// Compare the equality of the contents of <paramref name="files"/>.
     /// </summary>
-    protected virtual async Task<Result<bool>> Compare(params KeyValuePair<string , FileInfo>[] files)
+    protected virtual async Task<IResult> Compare(params KeyValuePair<string , FileInfo>[] files)
     {
         string[] errors = files
             .Where(x => !x.Value.Exists)
             .Select(x => $"The {x.Key} file does not exist.").ToArray();
         if(errors.Any())
-            return Result<bool>.Error(errors);
+            return new Failure(errors);
 
         KeyValuePair<string, StreamReader>[] readers = files
             .Select(x => new KeyValuePair<string, StreamReader>(x.Key, new(x.Value.FullName, Verify.Encoding)))
@@ -95,7 +95,7 @@ public abstract class VerifierBase<T>
         {
             foreach (KeyValuePair<string, StreamReader> pair in readers)
                 pair.Value.Dispose();
-            return Result<bool>.Error(errors);
+            return new Failure(errors);
         }
 
         errors = readers
@@ -106,7 +106,7 @@ public abstract class VerifierBase<T>
         foreach (KeyValuePair<string, StreamReader> pair in readers)
             pair.Value.Dispose();
         return errors.Any()
-            ? Result<bool>.Error(errors)
-            : true;
+            ? new Failure(errors)
+            : new Success();
     }
 }

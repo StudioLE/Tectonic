@@ -1,5 +1,5 @@
 using System.IO;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -29,7 +29,7 @@ public class BlobStorageStrategy : IStorageStrategy
     private readonly BlobContainerClient _container = new(BlobConnectionString, BlobContainer, _blobOptions);
 
     /// <inheritdoc/>
-    public async Task<Result<Uri>> WriteAsync(string fileName, Stream stream)
+    public async Task<IResult<Uri>> WriteAsync(string fileName, Stream stream)
     {
         try
         {
@@ -41,11 +41,11 @@ public class BlobStorageStrategy : IStorageStrategy
             await blob.UploadAsync(stream, headers);
             stream.Close();
             stream.Dispose();
-            return blob.Uri;
+            return new Success<Uri>(blob.Uri);
         }
         catch (Exception e)
         {
-            return Result<Uri>.Error(e.Message);
+            return new Failure<Uri>(e);
         }
     }
 }

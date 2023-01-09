@@ -1,4 +1,4 @@
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using StudioLE.Core.Conversion;
 
 namespace Lineweights.Drawings.Rendering.Converters;
@@ -6,7 +6,7 @@ namespace Lineweights.Drawings.Rendering.Converters;
 /// <summary>
 /// Convert an <see cref="Element"/> to a 2d representation of type <typeparamref name="T"/>.
 /// </summary>
-internal sealed class ElementTo2d<T> : IConverter<Element, IEnumerable<Result<T>>> where T : GeometricElement
+internal sealed class ElementTo2d<T> : IConverter<Element, IEnumerable<IResult<T>>> where T : GeometricElement
 {
     private readonly IRenderStrategy<T> _strategy;
     private readonly Plane _plane;
@@ -19,7 +19,7 @@ internal sealed class ElementTo2d<T> : IConverter<Element, IEnumerable<Result<T>
     }
 
     /// <inheritdoc cref="ElementTo2d{T}"/>
-    public IEnumerable<Result<T>> Convert(Element element)
+    public IEnumerable<IResult<T>> Convert(Element element)
     {
         return element switch
         {
@@ -29,7 +29,7 @@ internal sealed class ElementTo2d<T> : IConverter<Element, IEnumerable<Result<T>
             GeometricElement geometric => new GeometricElementTo2d<T>(_strategy, _plane).Convert(geometric),
             ElementInstance instance => new ElementInstanceTo2d<T>(_strategy, _plane).Convert(instance),
             // TODO: Add ModelTextToWireframe
-            _ => new[] { Result<T>.Error($"Failed to convert element to 2d. Unsupported type ({element.GetType()}).") }
+            _ => new[] { new Failure<T>($"Failed to convert element to 2d. Unsupported type ({element.GetType()}).") }
         };
     }
 }

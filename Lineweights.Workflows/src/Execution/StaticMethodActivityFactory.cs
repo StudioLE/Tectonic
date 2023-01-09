@@ -1,5 +1,5 @@
 using System.Reflection;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Workflows.Execution;
 
@@ -14,21 +14,21 @@ public sealed class StaticMethodActivityFactory : IActivityFactory
     }
 
     /// <inheritdoc />
-    public Result<ActivityCommand> TryCreateByKey(Assembly assembly, string activityKey)
+    public IResult<ActivityCommand> TryCreateByKey(Assembly assembly, string activityKey)
     {
         MethodInfo? method = GetActivityMethodByKey(assembly, activityKey);
         if (method is null)
-            return Result<ActivityCommand>.Error("No activity in the assembly matched the key.");
+            return new Failure<ActivityCommand>("No activity in the assembly matched the key.");
         object[] inputs = CreateParameterInstances(method);
         Func<object[], object> invocation = CreateInvocation(method);
-        return new ActivityCommand
+        return new Success<ActivityCommand>(new()
         {
             Name = activityKey,
             Key = activityKey,
             Inputs = inputs,
             Invocation = invocation,
 
-        };
+        });
     }
 
     /// <summary>

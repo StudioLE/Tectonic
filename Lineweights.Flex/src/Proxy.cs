@@ -1,6 +1,6 @@
-﻿using Ardalis.Result;
-using Lineweights.Core.Distribution;
+﻿using Lineweights.Core.Distribution;
 using StudioLE.Core.Exceptions;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Flex;
 
@@ -78,9 +78,9 @@ internal sealed class Proxy
         Bounds = GetBounds(element);
         if (Bounds.IsInverted())
             throw new($"Failed to construct {nameof(Proxy)}. The element bounding box was inverted.");
-        Result<Spacing> spacing = element.GetProperty<Spacing>();
-        if (spacing.IsSuccess)
-            MinSpacing = spacing;
+        IResult<Spacing> result = element.GetProperty<Spacing>();
+        if (result is Success<Spacing> success)
+            MinSpacing = success;
     }
 
     /// <inheritdoc cref="Proxy"/>
@@ -90,9 +90,9 @@ internal sealed class Proxy
         Bounds = instance.TransformedBounds();
         if (Bounds.IsInverted())
             throw new($"Failed to construct {nameof(Proxy)}. The element bounding box was inverted.");
-        Result<Spacing> spacing = instance.BaseDefinition.GetProperty<Spacing>();
-        if (spacing.IsSuccess)
-            MinSpacing = spacing;
+        IResult<Spacing> result = instance.BaseDefinition.GetProperty<Spacing>();
+        if (result is Success<Spacing> success)
+            MinSpacing = success;
     }
 
     public static Proxy Create(Element element)

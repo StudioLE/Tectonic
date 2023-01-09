@@ -1,4 +1,4 @@
-﻿using Ardalis.Result;
+﻿using StudioLE.Core.Results;
 
 namespace Lineweights.Core.Geometry;
 
@@ -32,9 +32,9 @@ public static class CreateBBox3
         return elements
             .SelectMany(element =>
             {
-                Result<BBox3> result = element.TryGetTransformedBounds();
-                return result.IsSuccess
-                    ? new[] { result.Value }
+                IResult<BBox3> result = element.TryGetTransformedBounds();
+                return result is Success<BBox3> success
+                    ? new[] { success.Value }
                     : Enumerable.Empty<BBox3>();
             })
             .Merged();

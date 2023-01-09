@@ -1,6 +1,7 @@
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Lineweights.Workflows.Verification;
 using Newtonsoft.Json;
+using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Tests.Verification;
 
@@ -18,12 +19,12 @@ internal sealed class JsonVerifierTests
         BBox3[]? actual = JsonConvert.DeserializeObject<BBox3[]>(actualJson, JsonVerifier.Converters);
         if (actual is null)
             throw new("Failed to de-serialize.");
-        Result<bool> result = await verifier.Execute(actual);
-        foreach (string error in result.Errors)
-            Console.WriteLine(error);
+        IResult result = await verifier.Execute(actual);
+        if(result.Errors.Any())
+            Console.WriteLine(result.Errors.Join());
 
         // Assert
-        Assert.That(result.IsSuccess, Is.True, "IsSuccess");
+        Assert.That(result is Success, "Is Success");
         Assert.That(result.Errors, Is.Empty, "Errors");
     }
 
@@ -39,12 +40,12 @@ internal sealed class JsonVerifierTests
         BBox3[]? actual = JsonConvert.DeserializeObject<BBox3[]>(actualJson, JsonVerifier.Converters);
         if (actual is null)
             throw new("Failed to de-serialize.");
-        Result<bool> result = await verifier.Execute(actual);
-        foreach (string error in result.Errors)
-            Console.WriteLine(error);
+        IResult result = await verifier.Execute(actual);
+        if(result.Errors.Any())
+            Console.WriteLine(result.Errors.Join());
 
         // Assert
-        Assert.That(result.IsSuccess, Is.False, "IsSuccess");
+        Assert.That(result is Success, Is.False, "Is Success");
         Assert.That(result.Errors, Is.Not.Empty, "Errors");
     }
 }

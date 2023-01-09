@@ -1,5 +1,5 @@
 using System.Reflection;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Workflows.Execution;
 
@@ -18,5 +18,5 @@ public interface IActivityFactory
     /// Create an <see cref="ActivityCommand"/> by searching the assembly for an implementation
     /// that matches the key.
     /// </summary>
-    public Result<ActivityCommand> TryCreateByKey(Assembly assembly, string activityKey);
+    public IResult<ActivityCommand> TryCreateByKey(Assembly assembly, string activityKey);
 }

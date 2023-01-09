@@ -1,5 +1,5 @@
 using System.Reflection;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Lineweights.Workflows.Execution;
 using StudioLE.Core.System;
 
@@ -56,7 +56,7 @@ internal sealed class StaticMethodActivityFactoryTests
         StaticMethodActivityFactory factory = new();
 
         // Act
-        Result<ActivityCommand> result = factory.TryCreateByKey(_assembly, activityKey);
+        IResult<ActivityCommand> result = factory.TryCreateByKey(_assembly, activityKey);
         ActivityCommand activity = Validate.OrThrow(result);
 
         // Assert
@@ -73,7 +73,7 @@ internal sealed class StaticMethodActivityFactoryTests
         StaticMethodActivityFactory factory = new();
 
         // Act
-        Result<ActivityCommand> result = factory.TryCreateByKey(_assembly, activityKey);
+        IResult<ActivityCommand> result = factory.TryCreateByKey(_assembly, activityKey);
         ActivityCommand activity = Validate.OrThrow(result);
 
         // Act

@@ -8,7 +8,7 @@
 using System.IO;
 using System.Reflection;
 using System.Text;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using DiffEngine;
 using Lineweights.Workflows.Verification;
 using NUnit.Framework.Internal;
@@ -40,16 +40,13 @@ internal class NUnitVerifyContext : IVerifyContext
     }
 
     /// <inheritdoc/>
-    public void OnResult(Result<bool> result, FileInfo receivedFile, FileInfo verifiedFile)
+    public void OnResult(IResult result, FileInfo receivedFile, FileInfo verifiedFile)
     {
-        if (result.IsSuccess)
+        if (result is Success)
             return;
         if (AssemblyHelpers.IsDebugBuild())
             DiffRunner.LaunchAsync(receivedFile.FullName, verifiedFile.FullName);
-        Assert.Fail(
-                "Actual results did not match the verified results:"
-                + Environment.NewLine
-                + string.Join(Environment.NewLine, result.Errors));
+        Assert.Fail(result.Errors.Prepend("Actual results did not match the verified results:").Join());
     }
 
     /// <summary>

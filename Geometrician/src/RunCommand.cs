@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Lineweights.Workflows.Execution;
 using Microsoft.Extensions.Logging;
 using StudioLE.Core.System;
@@ -41,13 +41,13 @@ public sealed class RunCommand
             return $"Failed: {e.Message}";
         }
 
-        Result<ActivityCommand> result = _factory.TryCreateByKey(assembly, activity);
+        IResult<ActivityCommand> result = _factory.TryCreateByKey(assembly, activity);
 
-        if (!result.IsSuccess)
+        if (result is not Success<ActivityCommand> success)
             return "Failed: " + result.Errors.Join(". ");
 
         // TODO: This would make so much more sense as a workflow and we get the IVisualizeStrategy via DI.
-        object outputs = result.Value.Execute();
+        object outputs = success.Value.Execute();
 
         return "Execution complete..";
     }

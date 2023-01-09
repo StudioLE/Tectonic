@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Workflows;
 
@@ -11,34 +11,34 @@ internal static class ReflectionHelpers
     /// <summary>
     /// Try and get the value of the field.
     /// </summary>
-    internal static Result<T> TryGetFieldValue<T>(this object @this, string name, BindingFlags? flags = null)
+    internal static IResult<T> TryGetFieldValue<T>(this object @this, string name, BindingFlags? flags = null)
     {
         Type type = @this.GetType();
         FieldInfo? property = flags is null
             ? type.GetField(name)
             : type.GetField(name, (BindingFlags)flags);
         if (property is null)
-            return Result<T>.Error($"Field {name} does not exist");
+            return new Failure<T>($"Field {name} does not exist");
         object? value = property.GetValue(@this);
-        if (value is T tValue)
-            return tValue;
-        return Result<T>.Error($"Property type was {value?.GetType()}.");
+        return value is T tValue
+            ? new Success<T>(tValue)
+            : new Failure<T>($"Property type was {value?.GetType()}.");
     }
     /// <summary>
     /// Try and get the value of the property.
     /// </summary>
-    internal static Result<T> TryGetPropertyValue<T>(this object @this, string name, BindingFlags? flags = null)
+    internal static IResult<T> TryGetPropertyValue<T>(this object @this, string name, BindingFlags? flags = null)
     {
         Type type = @this.GetType();
         PropertyInfo? property = flags is null
             ? type.GetProperty(name)
             : type.GetProperty(name, (BindingFlags)flags);
         if (property is null)
-            return Result<T>.Error($"Property {name} does not exist");
+            return new Failure<T>($"Property {name} does not exist");
         object? value = property.GetValue(@this);
-        if (value is T tValue)
-            return tValue;
-        return Result<T>.Error($"Property type was {value?.GetType()}.");
+        return value is T tValue
+            ? new Success<T>(tValue)
+            : new Failure<T>($"Property type was {value?.GetType()}.");
     }
 
     /// <summary>

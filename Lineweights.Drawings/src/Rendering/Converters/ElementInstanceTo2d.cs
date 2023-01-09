@@ -1,4 +1,4 @@
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using StudioLE.Core.Conversion;
 
 namespace Lineweights.Drawings.Rendering.Converters;
@@ -6,7 +6,7 @@ namespace Lineweights.Drawings.Rendering.Converters;
 /// <summary>
 /// Convert an <see cref="ElementInstance"/> to a 2d representation of type <typeparamref name="T"/>.
 /// </summary>
-internal sealed class ElementInstanceTo2d<T> : IConverter<ElementInstance, IEnumerable<Result<T>>> where T : GeometricElement
+internal sealed class ElementInstanceTo2d<T> : IConverter<ElementInstance, IEnumerable<IResult<T>>> where T : GeometricElement
 {
     private readonly IRenderStrategy<T> _strategy;
     private readonly Plane _plane;
@@ -19,10 +19,10 @@ internal sealed class ElementInstanceTo2d<T> : IConverter<ElementInstance, IEnum
     }
 
     /// <inheritdoc cref="ElementInstanceTo2d{T}"/>
-    public IEnumerable<Result<T>> Convert(ElementInstance instance)
+    public IEnumerable<IResult<T>> Convert(ElementInstance instance)
     {
         if (instance.BaseDefinition.Representation is null)
-            return new[] { Result<T>.Error("BaseDefinition didn't have a representation") };
+            return new[] { new Failure<T>("BaseDefinition didn't have a representation") };
         Transform transform = instance
             .Transform
             .Concatenated(instance.BaseDefinition.Transform);

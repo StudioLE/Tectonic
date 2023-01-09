@@ -1,4 +1,4 @@
-using Ardalis.Result;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Drawings.Rendering;
 
@@ -13,12 +13,12 @@ public sealed class WireframeRender : IRenderStrategy<ModelCurve>
     }
 
     /// <inheritdoc />
-    public Result<ModelCurve> FromCurve(Plane plane, Curve curve, Transform transform, Material material)
+    public IResult<ModelCurve> FromCurve(Plane plane, Curve curve, Transform transform, Material material)
     {
         Curve transformed = curve.Transformed(transform);
-        Result<Curve> result = transformed.TryProject(plane);
-        return result.IsSuccess
-            ? new(new(result, material))
-            : Result<ModelCurve>.Error(result.Errors.ToArray());
+        IResult<Curve> result = transformed.TryProject(plane);
+        return result is Success<Curve> success
+            ? new Success<ModelCurve>(new(success, material))
+            : new Failure<ModelCurve>(result.Errors);
     }
 }

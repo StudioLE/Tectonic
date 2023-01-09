@@ -1,6 +1,6 @@
 using System.IO;
 using System.Text;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using StudioLE.Core.System.IO;
 
 namespace Lineweights.Core.Documents;
@@ -13,7 +13,7 @@ public interface IStorageStrategy
     /// <summary>
     /// Write a file asynchronously via a stream.
     /// </summary>
-    Task<Result<Uri>> WriteAsync(string fileName, Stream stream);
+    Task<IResult<Uri>> WriteAsync(string fileName, Stream stream);
 }
 
 
@@ -25,10 +25,10 @@ public static class StorageStrategyExtensions
     /// </summary>
     public static async Task<Asset> WriteAsync(this IStorageStrategy storageStrategy, Asset asset, string fileName, Stream stream)
     {
-        Result<Uri> uriResult = await storageStrategy.WriteAsync(fileName, stream);
-        if (!uriResult.IsSuccess)
-            asset.Errors = asset.Errors.Concat(uriResult.Errors).ToArray();
-        asset.Info.Location = uriResult;
+        IResult<Uri> result = await storageStrategy.WriteAsync(fileName, stream);
+        if (result is Success<Uri> success)
+            asset.Info.Location = success;
+        asset.Errors = asset.Errors.Concat(result.Errors).ToArray();
         return asset;
     }
 

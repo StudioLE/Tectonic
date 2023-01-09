@@ -1,4 +1,4 @@
-﻿using Ardalis.Result;
+﻿using StudioLE.Core.Results;
 
 namespace Lineweights.Core.Geometry;
 
@@ -12,74 +12,80 @@ public static class ProjectionHelpers
     /// This method tries Line, Polygon, and then Polyline projection sequentially
     /// to find the best possible projection.
     /// </summary>
-    public static Result<Curve> TryProject(this Curve curve, Plane plane)
+    public static IResult<Curve> TryProject(this Curve curve, Plane plane)
     {
-        List<IResult> results = new();
         if (curve is Line line)
-            results.Add(line.TryProject(plane));
+        {
+            IResult<Line> result = line.TryProject(plane);
+            if (result is Success<Line> success)
+                return new Success<Curve>(success.Value);
+        }
         if (curve is Polygon polygon)
-            results.Add(polygon.TryProject(plane));
+        {
+            IResult<Polygon> result = polygon.TryProject(plane);
+            if (result is Success<Polygon> success)
+                return new Success<Curve>(success.Value);
+        }
         if (curve is Polyline polyline)
-            results.Add(polyline.TryProject(plane));
-
-        IResult? result = results.FirstOrDefault(x => x.Status == ResultStatus.Ok);
-
-        return result is not null
-            ? (Curve)result.GetValue()
-            : Result<Curve>.Error("Failed to find a projection.");
+        {
+            IResult<Polyline> result = polyline.TryProject(plane);
+            if (result is Success<Polyline> success)
+                return new Success<Curve>(success.Value);
+        }
+        return new Failure<Curve>("Failed to find a projection.");
     }
 
     /// <summary>
     /// Try and project <paramref name="this"/> onto <paramref name="plane"/>.
     /// </summary>
-    public static Result<Line> TryProject(this Line @this, Plane plane)
+    public static IResult<Line> TryProject(this Line @this, Plane plane)
     {
         try
         {
             Vector3 start = @this.Start.Project(plane);
             Vector3 end = @this.End.Project(plane);
             if (start.IsAlmostEqualTo(end))
-                return Result<Line>.Error("Line is perpendicular to view.");
-            return new Line(start, end);
+                return new Failure<Line>("Line is perpendicular to view.");
+            return new Success<Line>(new(start, end));
         }
         catch (Exception e)
         {
-            return Result<Line>.Error(e.Message);
+            return new Failure<Line>(e);
         }
     }
 
     /// <summary>
     /// Try and project <paramref name="this"/> onto <paramref name="plane"/>.
     /// </summary>
-    public static Result<Polyline> TryProject(this Polyline @this, Plane plane)
+    public static IResult<Polyline> TryProject(this Polyline @this, Plane plane)
     {
         try
         {
-            return @this.Project(plane);
+            return new Success<Polyline>(@this.Project(plane));
         }
         catch (Exception e)
         {
-            return Result<Polyline>.Error(e.Message);
+            return new Failure<Polyline>(e);
         }
     }
 
     /// <summary>
     /// Try and project <paramref name="this"/> onto <paramref name="plane"/>.
     /// </summary>
-    public static Result<Polygon> TryProject(this Polygon @this, Plane plane)
+    public static IResult<Polygon> TryProject(this Polygon @this, Plane plane)
     {
         try
         {
             Vector3[] projected = @this.Vertices.Project(plane).ToArray();
             if (projected.Length < 3)
-                return Result<Polygon>.Error("At least 3 vertices are required.");
+                return new Failure<Polygon>("At least 3 vertices are required.");
             if (projected.AreCollinear())
-                return Result<Polygon>.Error("Vertices are collinear.");
-            return new Polygon(projected);
+                return new Failure<Polygon>("Vertices are collinear.");
+            return new Success<Polygon>(new(projected));
         }
         catch (Exception e)
         {
-            return Result<Polygon>.Error(e.Message);
+            return new Failure<Polygon>(e);
         }
     }
 

@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Geometrician.Core.Shared;
 using Lineweights.Core.Documents;
 using Lineweights.PDF;
@@ -9,7 +9,6 @@ using Lineweights.Workflows.Documents;
 using Lineweights.Workflows.Execution;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using StudioLE.Core.System;
 
 namespace Geometrician.Core.Execution;
 
@@ -56,14 +55,14 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
             return;
         }
 
-        Result<ActivityCommand> result = Factory.TryCreateByKey(assembly!, State.SelectedActivityKey);
-        if (!result.IsSuccess)
+        IResult<ActivityCommand> result = Factory.TryCreateByKey(assembly!, State.SelectedActivityKey);
+        if (result is not Success<ActivityCommand> success)
         {
             State.ShowError(Logger, "Failed to load activity. Method does not exist.");
             State.SelectedActivityKey = string.Empty;
             return;
         }
-        _activity = result.Value;
+        _activity = success;
         Inputs = _activity.Inputs;
 
     }
@@ -82,14 +81,14 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
 
         // TODO: Move this logic to workflow execution
 
-        Result<object> executionResult;
+        object outputs;
         Logger.LogDebug("Execution started.");
         // TODO: Add a timer
         // TODO: Add task cancellation
         // TODO: Add spinner during execution.
         try
         {
-            executionResult = _activity.Execute();
+            outputs = _activity.Execute();
         }
         catch (TargetInvocationException e)
         {
@@ -103,18 +102,8 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
         }
         Logger.LogDebug("Execution completed.");
 
-        if (!executionResult.IsSuccess)
-        {
-            State.ShowWarning(Logger, executionResult.Errors.Join());
-            return;
-        }
-
-        // TODO: Move this logic to an IVisualizationStrategy
-
-        object outputs = executionResult.Value;
-
-        Result<Model> model = outputs.TryGetPropertyValue<Model>("Model");
-        if (!model.IsSuccess)
+        IResult<Model> model = outputs.TryGetPropertyValue<Model>("Model");
+        if (model is not Success<Model> successModel)
         {
             State.ShowWarning(Logger, "Activity output was not a model.");
             return;
@@ -132,15 +121,15 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
             .ConvertModelToGlb()
             .ExtractViewsAndConvertToSvg()
             .ExtractSheetsAndConvertToPdf();
-        Result<IReadOnlyCollection<Asset>> assets = outputs.TryGetPropertyValue<IReadOnlyCollection<Asset>>("Assets");
-        if (assets.IsSuccess)
+        IResult<IReadOnlyCollection<Asset>> assetsResult = outputs.TryGetPropertyValue<IReadOnlyCollection<Asset>>("Assets");
+        if (assetsResult is Success<IReadOnlyCollection<Asset>> assetsSuccess)
         {
-            foreach (Asset child in assets.Value)
+            foreach (Asset child in assetsSuccess.Value)
                 await StorageStrategy.RecursiveWriteLocalFilesToStorage(child);
-            builder.AddAssets(assets.Value.ToArray());
+            builder.AddAssets(assetsSuccess.Value.ToArray());
         }
 
-        Asset asset = await builder.Build(model.Value);
+        Asset asset = await builder.Build(successModel);
         AssetState.Assets.Add(asset);
     }
 

@@ -1,4 +1,4 @@
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using StudioLE.Core.Conversion;
 
 namespace Lineweights.Drawings.Rendering.Converters;
@@ -6,7 +6,7 @@ namespace Lineweights.Drawings.Rendering.Converters;
 /// <summary>
 /// Convert a <see cref="MeshElement"/> to a 2d representation of type <typeparamref name="T"/>.
 /// </summary>
-internal sealed class MeshElementTo2d<T> : IConverter<MeshElement, IEnumerable<Result<T>>> where T : GeometricElement
+internal sealed class MeshElementTo2d<T> : IConverter<MeshElement, IEnumerable<IResult<T>>> where T : GeometricElement
 {
     private readonly IRenderStrategy<T> _strategy;
     private readonly Plane _plane;
@@ -19,7 +19,7 @@ internal sealed class MeshElementTo2d<T> : IConverter<MeshElement, IEnumerable<R
     }
 
     /// <inheritdoc cref="MeshElementTo2d{T}"/>
-    public IEnumerable<Result<T>> Convert(MeshElement element)
+    public IEnumerable<IResult<T>> Convert(MeshElement element)
     {
         return RenderHelpers.GetTrianglesAsPolygons(element.Mesh)
             .Select(polygon => _strategy.FromCurve(_plane, polygon, element.Transform, element.Material));

@@ -1,4 +1,4 @@
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using StudioLE.Core.Conversion;
 
 namespace Lineweights.Drawings.Rendering.Converters;
@@ -6,7 +6,7 @@ namespace Lineweights.Drawings.Rendering.Converters;
 /// <summary>
 /// Convert a <see cref="ModelArrows"/> to a 2d representation of type <typeparamref name="T"/>.
 /// </summary>
-internal sealed class ModelArrowsTo2d<T> : IConverter<ModelArrows, IEnumerable<Result<T>>> where T : GeometricElement
+internal sealed class ModelArrowsTo2d<T> : IConverter<ModelArrows, IEnumerable<IResult<T>>> where T : GeometricElement
 {
     private readonly IRenderStrategy<T> _strategy;
     private readonly Plane _plane;
@@ -19,7 +19,7 @@ internal sealed class ModelArrowsTo2d<T> : IConverter<ModelArrows, IEnumerable<R
     }
 
     /// <inheritdoc cref="ModelArrowsTo2d{T}"/>
-    public IEnumerable<Result<T>> Convert(ModelArrows arrows)
+    public IEnumerable<IResult<T>> Convert(ModelArrows arrows)
     {
         return arrows
             .Vectors

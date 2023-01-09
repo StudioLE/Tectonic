@@ -1,4 +1,4 @@
-﻿using Ardalis.Result;
+﻿using StudioLE.Core.Results;
 using StudioLE.Core.System;
 
 namespace Lineweights.Core.Constraints;
@@ -23,10 +23,10 @@ public static class Validate
     /// Validate the <paramref name="result"/>.
     /// Throw an exception if it is not a success.
     /// </summary>
-    public static T OrThrow<T>(Result<T> result, string? contextMessage = null)
+    public static T OrThrow<T>(IResult<T> result, string? contextMessage = null)
     {
-        if (result.IsSuccess)
-            return result;
+        if (result is Success<T> success)
+            return success;
         string message = contextMessage is null
             ? string.Empty
             : contextMessage + Environment.NewLine;

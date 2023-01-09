@@ -1,5 +1,4 @@
-﻿using Ardalis.Result;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
 namespace Geometrician.Core.Forms;
@@ -67,9 +66,6 @@ public class DynamicInputComponentBase : ComponentBase
     protected IEnumerable<string> ValidateAs<T>(T value)
     {
         Logger.LogDebug($"{nameof(ValidateAs)} called.");
-        Result<bool> result = State.Validate();
-        return result.IsSuccess
-            ? Array.Empty<string>()
-            : result.Errors;
+        return State.Validate().Errors;
     }
 }

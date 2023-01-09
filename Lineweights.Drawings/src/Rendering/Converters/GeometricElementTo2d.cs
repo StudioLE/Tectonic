@@ -1,4 +1,4 @@
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using StudioLE.Core.Conversion;
 
 namespace Lineweights.Drawings.Rendering.Converters;
@@ -6,7 +6,7 @@ namespace Lineweights.Drawings.Rendering.Converters;
 /// <summary>
 /// Convert a <see cref="GeometricElement"/> to a 2d representation of type <typeparamref name="T"/>.
 /// </summary>
-internal sealed class GeometricElementTo2d<T> : IConverter<GeometricElement, IEnumerable<Result<T>>> where T : GeometricElement
+internal sealed class GeometricElementTo2d<T> : IConverter<GeometricElement, IEnumerable<IResult<T>>> where T : GeometricElement
 {
     private readonly IRenderStrategy<T> _strategy;
     private readonly Plane _plane;
@@ -19,10 +19,10 @@ internal sealed class GeometricElementTo2d<T> : IConverter<GeometricElement, IEn
     }
 
     /// <inheritdoc cref="GeometricElementTo2d{T}"/>
-    public IEnumerable<Result<T>> Convert(GeometricElement element)
+    public IEnumerable<IResult<T>> Convert(GeometricElement element)
     {
         if (element.Representation is null)
-            return new[] { Result<T>.Error("GeometricElement didn't have a representation") };
+            return new[] { new Failure<T>("GeometricElement didn't have a representation") };
         return element
             .Representation
             .SolidOperations

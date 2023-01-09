@@ -1,4 +1,4 @@
-﻿using Ardalis.Result;
+﻿using StudioLE.Core.Results;
 
 namespace Lineweights.Core.Elements;
 
@@ -13,7 +13,7 @@ public static class ElementBoundsHelpers
     /// Returns false if the bounds could not be determined.
     /// </summary>
     [Obsolete("Produces inconsistent results.")]
-    public static Result<BBox3> TryGetBounds(this Element @this)
+    public static IResult<BBox3> TryGetBounds(this Element @this)
     {
         BBox3 bounds = @this switch
         {
@@ -22,9 +22,9 @@ public static class ElementBoundsHelpers
             _ => new(@this)
         };
         if (bounds.IsInfinite())
-            return Result<BBox3>.Error("Bounds were infinite.");
+            return IResult<BBox3>.Error("Bounds were infinite.");
         if (bounds.IsInverted())
-            return Result<BBox3>.Error("Bounds were inverted.");
+            return IResult<BBox3>.Error("Bounds were inverted.");
         return bounds;
     }
 #endif
@@ -72,7 +72,7 @@ public static class ElementBoundsHelpers
     /// Try and get the bounds of the <see cref="Element"/>.
     /// Returns false if the bounds could not be determined.
     /// </summary>
-    public static Result<BBox3> TryGetTransformedBounds(this Element @this)
+    public static IResult<BBox3> TryGetTransformedBounds(this Element @this)
     {
         BBox3 bounds = @this switch
         {
@@ -81,10 +81,10 @@ public static class ElementBoundsHelpers
             _ => new(@this)
         };
         if (bounds.IsInfinite())
-            return Result<BBox3>.Error("Bounds were infinite.");
+            return new Failure<BBox3>("Bounds were infinite.");
         if (bounds.IsInverted())
-            return Result<BBox3>.Error("Bounds were inverted.");
-        return bounds;
+            return new Failure<BBox3>("Bounds were inverted.");
+        return new Success<BBox3>(bounds);
     }
 
     /// <summary>
@@ -108,8 +108,6 @@ public static class ElementBoundsHelpers
     /// </summary>
     public static BBox3 TransformedBounds(this ElementInstance @this)
     {
-        if (@this is IHasBounds)
-            throw new($"Failed to get transformed bounds. {nameof(ElementInstance)} should not implement IHasBounds.");
         return @this
             .BaseDefinition
             .TransformedBounds()
@@ -135,9 +133,9 @@ public static class ElementBoundsHelpers
     public static void AddBounds(this Model @this, Element element, Material? material = null)
     {
         material ??= MaterialByName("White");
-        Result<BBox3> result = element.TryGetTransformedBounds();
-        if (result.IsSuccess)
-            @this.AddElements(result.Value.ToModelCurves(null, material));
+        IResult<BBox3> result = element.TryGetTransformedBounds();
+        if (result is Success<BBox3> success)
+            @this.AddElements(success.Value.ToModelCurves(null, material));
     }
 
     /// <summary>

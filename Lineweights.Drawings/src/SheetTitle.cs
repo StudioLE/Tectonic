@@ -1,4 +1,4 @@
-﻿using Ardalis.Result;
+﻿using StudioLE.Core.Results;
 
 namespace Lineweights.Drawings;
 
@@ -38,40 +38,38 @@ public sealed class SheetTitle : Canvas
     /// <summary>
     /// Get a <see cref="TextField"/> by its title.
     /// </summary>
-    public Result<TextField> TryGetField(string title)
+    public IResult<TextField> TryGetField(string title)
     {
         return _fields.TryGetValue(title, out TextField field)
-            ? field
-            : Result<TextField>.NotFound();
+            ? new Success<TextField>(field)
+            : new Failure<TextField>("Not found.");
     }
 
     /// <summary>
     /// Update the content of an existing <see cref="TextField"/>.
     /// </summary>
-    public Result<TextField> TryUpdateField(string title, string content)
+    public IResult TryUpdateField(string title, string content)
     {
-        Result<TextField> result = TryGetField(title);
-        if (!result.IsSuccess)
-            return result;
-        TextField field = new()
+        IResult<TextField> result = TryGetField(title);
+        if (result is not Success<TextField> success)
+            return new Failure(result.Errors);
+        TextField field = success.Value with
         {
-            Order = result.Value.Order,
-            Title = result.Value.Title,
             Content = content
         };
         _fields[title] = field;
-        return field;
+        return new Success();
     }
 
     /// <summary>
     /// Add a <see cref="TextField"/>.
     /// The field is placed at the end of the collection.
     /// </summary>
-    public Result<TextField> TryAddField(string title, string content)
+    public IResult<TextField> TryAddField(string title, string content)
     {
-        Result<TextField> result = TryGetField(title);
-        if (result.IsSuccess)
-            return Result<TextField>.Error("A field with that title already exists.");
+        IResult<TextField> result = TryGetField(title);
+        if (result is Success<TextField>)
+            return new Failure<TextField>("A field with that title already exists.");
         TextField field = new()
         {
             Order = _fields.Count,
@@ -79,7 +77,7 @@ public sealed class SheetTitle : Canvas
             Content = content
         };
         _fields[title] = field;
-        return field;
+        return new Success<TextField>(field);
     }
 
     /// <summary>

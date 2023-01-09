@@ -114,7 +114,7 @@ dotnet_naming_symbols.protected_fields.applicable_accessibilities = protected
 # Code style defaults
 csharp_using_directive_placement = outside_namespace:warning
 dotnet_sort_system_directives_first = true
-csharp_prefer_braces = false:warning
+csharp_prefer_braces = false:suggestion
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = false
 csharp_prefer_static_local_function = true:warning

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Workflows.Verification;
 
@@ -21,5 +21,5 @@ public interface IVerifyContext
     /// <summary>
     /// Process the result after verification.
     /// </summary>
-    public void OnResult(Result<bool> result, FileInfo receivedFile, FileInfo verifiedFile);
+    public void OnResult(IResult result, FileInfo receivedFile, FileInfo verifiedFile);
 }

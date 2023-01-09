@@ -1,4 +1,5 @@
 using Lineweights.Drawings.Rendering.Converters;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Drawings.Rendering;
 
@@ -18,8 +19,8 @@ internal static class RenderHelpers
             .AsParallel()
             .AsOrdered()
             .SelectMany(converter.Convert)
-            .Where(x => x.IsSuccess)
-            .Select(x => x.Value);
+            .Where(x => x is Success<T>)
+            .Select(x => ((Success<T>)x).Value);
         // TODO: Remove overlapping lines
         //.Distinct(new ModelCurveComparer());
     }

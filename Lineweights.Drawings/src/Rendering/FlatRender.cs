@@ -1,4 +1,4 @@
-using Ardalis.Result;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Drawings.Rendering;
 
@@ -12,7 +12,7 @@ public sealed class FlatRender : IRenderStrategy<Panel>
         return this.RenderAs(viewScope)
             //.OrderBy(panel =>
             //    {
-            //        Result<ZIndex> result = panel.GetProperty<ZIndex>();
+            //        IResult<ZIndex> result = panel.GetProperty<ZIndex>();
             //        Validate.OrThrow(result, "Failed to render the view.");
             //        return result.Value.Min;
             //    })
@@ -20,10 +20,10 @@ public sealed class FlatRender : IRenderStrategy<Panel>
     }
 
     /// <inheritdoc />
-    public Result<Panel> FromCurve(Plane plane, Curve curve, Transform transform, Material material)
+    public IResult<Panel> FromCurve(Plane plane, Curve curve, Transform transform, Material material)
     {
         if (curve is not Polygon polygon)
-            return Result<Panel>.Error("Curve must be a polygon.");
+            return new Failure<Panel>("Curve must be a polygon.");
 
         double[] zIndices = polygon
             .Vertices
@@ -39,13 +39,13 @@ public sealed class FlatRender : IRenderStrategy<Panel>
             .ToArray();
 
         Polygon transformed = polygon.TransformedPolygon(transform);
-        Result<Polygon> result = transformed.TryProject(plane);
-        if (!result.IsSuccess)
-            return Result<Panel>.Error(result.Errors.ToArray());
+        IResult<Polygon> result = transformed.TryProject(plane);
+        if (result is not Success<Polygon> success)
+            return new Failure<Panel>(result.Errors.ToArray());
 
-        Polygon projected = result;
+        Polygon projected = success;
         Panel panel = new(projected, material);
         panel.SetProperty<ZIndex>(new(zIndices));
-        return panel;
+        return new Success<Panel>(panel);
     }
 }

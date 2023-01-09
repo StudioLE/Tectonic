@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Lineweights.Workflows.Execution;
 using Lineweights.Workflows.Verification;
 using NUnit.Engine;
@@ -25,24 +25,24 @@ public class NUnitActivityFactory : IActivityFactory, IDisposable
     }
 
     /// <inheritdoc />
-    public Result<ActivityCommand> TryCreateByKey(Assembly assembly, string activityKey)
+    public IResult<ActivityCommand> TryCreateByKey(Assembly assembly, string activityKey)
     {
         object[] inputs = Array.Empty<object>();
         TestFilter filter = new($"<filter><test>{activityKey}</test></filter>");
         ITestRunner runner = GetTestRunner(assembly);
         string? result = AllActivityKeysInAssembly(runner, filter).FirstOrDefault();
         if(result is null)
-            return Result<ActivityCommand>.Error("No activity in the assembly matched the key.");
+            return new Failure<ActivityCommand>("No activity in the assembly matched the key.");
         Func<object[], object> invocation = CreateInvocation(runner, filter);
         Action dispose = () => runner.Dispose();
-        return new ActivityCommand
+        return new Success<ActivityCommand>(new()
         {
             Name = activityKey,
             Key = activityKey,
             Inputs = inputs,
             Invocation = invocation,
             OnDispose = dispose
-        };
+        });
     }
 
     private static IEnumerable<string> AllActivityKeysInAssembly(ITestRunner runner, TestFilter filter)

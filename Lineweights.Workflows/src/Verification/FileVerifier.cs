@@ -1,6 +1,6 @@
 using System.IO;
 using System.Security.Cryptography;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Lineweights.Core.Elements.Comparers;
 
 namespace Lineweights.Workflows.Verification;
@@ -17,7 +17,7 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
     /// <summary>
     /// Verify <paramref name="actual"/>.
     /// </summary>
-    public override async Task<Result<bool>> Execute(FileInfo actual)
+    public override async Task<IResult> Execute(FileInfo actual)
     {
         FileInfo receivedFile = actual;
         FileInfo verifiedFile = new(Path.Combine(_context.Directory.FullName, $"{_context.FileNamePrefix}.verified{_fileExtension}"));
@@ -27,7 +27,7 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
             new("Verified", verifiedFile),
             new("Received", receivedFile)
         };
-        Result<bool> result = await Compare(files);
+        IResult result = await Compare(files);
         _context.OnResult(result, receivedFile, verifiedFile);
         return result;
     }
@@ -39,7 +39,7 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
         return Task.CompletedTask;
     }
 
-    protected override async Task<Result<bool>> Compare(params KeyValuePair<string , FileInfo>[] files)
+    protected override async Task<IResult> Compare(params KeyValuePair<string , FileInfo>[] files)
     {
         bool areTextFiles = files.All(x => IsTextFile(x.Value));
         if (areTextFiles)
@@ -50,17 +50,17 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
             .Select(x => $"The {x.Key} file does not exist.")
             .ToArray();
         if(errors.Any())
-            return Result<bool>.Error(errors);
+            return new Failure(errors);
 
         errors = CheckValuesMatch(files, x => x.Length);
         if(errors.Any())
-            return Result<bool>.Error(errors.Prepend("File sizes are different").ToArray());
+            return new Failure("File sizes are different", errors);
 
         errors = CheckValuesMatch(files, GetFileHash);
         if(errors.Any())
-            return Result<bool>.Error(errors.Prepend("File hashes are different").ToArray());
+            return new Failure("File hashes are different", errors);
 
-        return true;
+        return new Success();
     }
 
     private static bool IsTextFile(FileInfo file)

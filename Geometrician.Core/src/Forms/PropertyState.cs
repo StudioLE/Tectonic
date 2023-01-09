@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 
 namespace Geometrician.Core.Forms;
 
@@ -44,13 +44,15 @@ public class PropertyState
             Property.SetValue(_instance, value);
     }
 
-    public Result<bool> Validate()
+    public IResult Validate()
     {
         object? value = GetValue();
         List<ValidationResult> results = new();
-        bool isValid = Validator.TryValidateProperty(value, _context, results);
-        return isValid
-            ? true
-            : Result<bool>.Error(results.Select(x => x.ErrorMessage).ToArray());
+        return Validator.TryValidateProperty(value, _context, results)
+            ? new Success()
+            : new Failure(results
+                .Select(x => x.ErrorMessage)
+                .OfType<string>()
+                .ToArray());
     }
 }

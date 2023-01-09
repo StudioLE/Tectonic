@@ -1,5 +1,5 @@
 using System.IO;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Lineweights.Core.Documents;
 using StudioLE.Core.System.IO;
 
@@ -20,7 +20,7 @@ public class ObjectUrlStorageStrategy : IStorageStrategy
     }
 
     /// <inheritdoc/>
-    public async Task<Result<Uri>> WriteAsync(string fileName, Stream stream)
+    public async Task<IResult<Uri>> WriteAsync(string fileName, Stream stream)
     {
         try
         {
@@ -31,11 +31,11 @@ public class ObjectUrlStorageStrategy : IStorageStrategy
             Uri uri = await _facade.Create(fileName, contentType, byteArray);
             stream.Close();
             stream.Dispose();
-            return uri;
+            return new Success<Uri>(uri);
         }
         catch (Exception e)
         {
-            return Result<Uri>.Error(e.Message);
+            return new Failure<Uri>(e.Message);
         }
     }
 }

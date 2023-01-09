@@ -1,4 +1,4 @@
-﻿using Ardalis.Result;
+﻿using StudioLE.Core.Results;
 
 namespace Lineweights.Drawings.Rendering;
 
@@ -20,5 +20,5 @@ public interface IRenderStrategy<T> : IRenderStrategy where T : GeometricElement
      /// <summary>
      /// Render <paramref name="curve"/> as <typeparamref name="T"/> on <paramref name="plane"/>.
      /// </summary>
-     public Result<T> FromCurve(Plane plane, Curve curve, Transform transform, Material material);
+     public IResult<T> FromCurve(Plane plane, Curve curve, Transform transform, Material material);
 }

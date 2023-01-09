@@ -1,7 +1,8 @@
 using System.IO;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Lineweights.Core.Documents;
 using Lineweights.Workflows.Documents;
+using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Tests.Documents;
 
@@ -20,16 +21,17 @@ internal sealed class StorageStrategyTests
         string fileName = Guid.NewGuid() + ".txt";
 
         // Act
-        Result<Uri> result = await storageStrategy.WriteAsync(fileName, stream);
-        Uri uri = result.Value;
+        IResult<Uri> result = await storageStrategy.WriteAsync(fileName, stream);
+        if (result.Errors.Any())
+            Console.WriteLine(result.Errors.Join());
 
         // Assert
-        Assert.That(uri, Is.Not.Null, "Uri is not null");
-        Assert.That(uri.IsFile, "Uri is file");
-        Assert.That(File.Exists(uri.AbsolutePath), "File exists");
-        if (result.Errors.Any())
-            foreach (string error in result.Errors)
-                Console.WriteLine(error);
+        Assert.That(result is Success<Uri>, "Result is success.");
+        if (result is Success<Uri> success)
+        {
+            Assert.That(success.Value.IsFile, "Uri is file");
+            Assert.That(File.Exists(success.Value.AbsolutePath), "File exists");
+        }
     }
 
     [Test]
@@ -47,12 +49,16 @@ internal sealed class StorageStrategyTests
         string fileName = Guid.NewGuid() + ".txt";
 
         // Act
-        Result<Uri> result = await storageStrategy.WriteAsync(fileName, stream);
-        Uri uri = result.Value;
+        IResult<Uri> result = await storageStrategy.WriteAsync(fileName, stream);
+        if (result.Errors.Any())
+            Console.WriteLine(result.Errors.Join());
 
         // Assert
-        Assert.That(uri, Is.Not.Null, "Uri is not null");
-        Assert.That(!uri.IsFile, "Uri is not file");
+        Assert.That(result is Success<Uri>, "Result is success.");
+        if (result is Success<Uri> success)
+        {
+            Assert.That(success.Value.IsFile, Is.False, "Uri is file");
+        }
         if (result.Errors.Any())
             foreach (string error in result.Errors)
                 Console.WriteLine(error);

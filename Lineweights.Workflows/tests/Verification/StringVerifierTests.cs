@@ -1,5 +1,6 @@
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Lineweights.Workflows.Verification;
+using StudioLE.Core.System;
 
 namespace Lineweights.Workflows.Tests.Verification;
 
@@ -14,12 +15,12 @@ internal sealed class StringVerifierTests
         string actual = context.ReadSourceFile(".txt");
 
         // Act
-        Result<bool> result = await verifier.Execute(actual);
-        foreach (string error in result.Errors)
-            Console.WriteLine(error);
+        IResult result = await verifier.Execute(actual);
+        if(result.Errors.Any())
+            Console.WriteLine(result.Errors.Join());
 
         // Assert
-        Assert.That(result.IsSuccess, Is.True, "IsSuccess");
+        Assert.That(result is Success, "Is Success");
         Assert.That(result.Errors, Is.Empty, "Errors");
     }
 
@@ -32,12 +33,12 @@ internal sealed class StringVerifierTests
         string actual = context.ReadSourceFile(".txt");
 
         // Act
-        Result<bool> result = await verifier.Execute(actual);
-        foreach (string error in result.Errors)
-            Console.WriteLine(error);
+        IResult result = await verifier.Execute(actual);
+        if(result.Errors.Any())
+            Console.WriteLine(result.Errors.Join());
 
         // Assert
-        Assert.That(result.IsSuccess, Is.False, "IsSuccess");
+        Assert.That(result is Success, Is.False, "Is Success");
         Assert.That(result.Errors, Is.Not.Empty, "Errors");
     }
 }

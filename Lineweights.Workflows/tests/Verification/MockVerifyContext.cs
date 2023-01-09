@@ -1,5 +1,5 @@
 using System.IO;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Lineweights.Workflows.Verification;
 
 namespace Lineweights.Workflows.Tests.Verification;
@@ -13,7 +13,7 @@ internal sealed class MockVerifyContext : IVerifyContext
     public DirectoryInfo Directory { get; }
 
     /// <inheritdoc />
-    public void OnResult(Result<bool> result, FileInfo receivedFile, FileInfo verifiedFile)
+    public void OnResult(IResult result, FileInfo receivedFile, FileInfo verifiedFile)
     {
         // if (AssemblyHelpers.IsDebugBuild())
         //     DiffRunner.LaunchAsync(receivedFile.FullName, verifiedFile.FullName);

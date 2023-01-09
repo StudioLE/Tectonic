@@ -1,5 +1,5 @@
 using System.Reflection;
-using Ardalis.Result;
+using StudioLE.Core.Results;
 using Lineweights.Workflows.Execution;
 using Lineweights.Workflows.NUnit.Execution;
 using StudioLE.Core.System;
@@ -33,7 +33,7 @@ internal sealed class NUnitActivityFactoryTests
         NUnitActivityFactory factory = new();
 
         // Act
-        Result<ActivityCommand> result = factory.TryCreateByKey(_assembly, activityKey);
+        IResult<ActivityCommand> result = factory.TryCreateByKey(_assembly, activityKey);
         ActivityCommand activity = Validate.OrThrow(result);
 
         // Assert
@@ -50,7 +50,7 @@ internal sealed class NUnitActivityFactoryTests
         NUnitActivityFactory factory = new();
 
         // Act
-        Result<ActivityCommand> result = factory.TryCreateByKey(_assembly, activityKey);
+        IResult<ActivityCommand> result = factory.TryCreateByKey(_assembly, activityKey);
         ActivityCommand activity = Validate.OrThrow(result);
 
         // Act
@@ -59,9 +59,10 @@ internal sealed class NUnitActivityFactoryTests
         // Assert
         // TODO: obtain outputs from test fixture.
         Assert.That(outputs, Is.Not.Null, "Outputs");
-        Result<Model?> model = outputs.TryGetPropertyValue<Model?>("Model");
-        Assert.That(model.IsSuccess, "Outputs has model");
-        Assert.That(model.Value?.Elements.Count, Is.EqualTo(25), "Outputs model count");
+        IResult<Model?> model = outputs.TryGetPropertyValue<Model?>("Model");
+        Assert.That(model is Success<Model?>, "Outputs has model");
+        if(model is Success<Model?> success)
+            Assert.That(success?.Value?.Elements.Count, Is.EqualTo(25), "Outputs model count");
     }
 
 

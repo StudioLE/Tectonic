@@ -1,4 +1,4 @@
-﻿using Ardalis.Result;
+﻿using StudioLE.Core.Results;
 
 namespace Lineweights.Core.Elements;
 
@@ -11,16 +11,16 @@ public static class PropertyHelpers
     /// Get the value of an additional property by <paramref name="key"/>.
     /// Returns true if successful.
     /// </summary>
-    public static Result<T> GetProperty<T>(this Element element, string key)
+    public static IResult<T> GetProperty<T>(this Element element, string key)
     {
         bool isSet = element
             .AdditionalProperties
             .TryGetValue(key, out object obj);
         if (!isSet)
-            return Result<T>.NotFound();
+            return new Failure<T>($"The element does not have a property with key: {key}.");
         if (obj is not T value)
-            return Result<T>.Error("InvalidType");
-        return value;
+            return new Failure<T>($"The property type was not {typeof(T)}.");
+        return new Success<T>(value);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public static class PropertyHelpers
     /// The full name (including namespace) of <typeparamref name="T"/> is used as the key.
     /// Returns true if successful.
     /// </summary>
-    public static Result<T> GetProperty<T>(this Element element)
+    public static IResult<T> GetProperty<T>(this Element element)
     {
         return element.GetProperty<T>(KeyByType<T>());
     }
@@ -57,7 +57,7 @@ public static class PropertyHelpers
     /// The full name (including namespace) of <see cref="IEnumerable{T}"/> is used as the key.
     /// Returns true if successful.
     /// </summary>
-    public static Result<IEnumerable<T>> TryGetProperties<T>(this Element element)
+    public static IResult<IEnumerable<T>> TryGetProperties<T>(this Element element)
     {
         return element.GetProperty<IEnumerable<T>>(KeyByType<IEnumerable<T>>());
     }
