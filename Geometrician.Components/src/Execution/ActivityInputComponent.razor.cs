@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using Geometrician.Components.Composition;
+using Geometrician.Components.Shared;
 using StudioLE.Core.Results;
 using Geometrician.Components.Visualization;
 using Geometrician.Core;
@@ -6,6 +8,7 @@ using Geometrician.Core.Execution;
 using Lineweights.Core.Storage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using MudBlazor;
 
 namespace Geometrician.Components.Execution;
 
@@ -25,6 +28,10 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
     [Inject]
     private ExecutionState Execution { get; set; } = null!;
 
+    /// <inheritdoc cref="DisplayState"/>
+    [Inject]
+    protected DisplayState Display { get; set; } = default!;
+
     /// <inheritdoc cref="VisualizationState"/>
     [Inject]
     private VisualizationState Visualization { get; set; } = default!;
@@ -37,12 +44,14 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
     [Inject]
     private IActivityFactory Factory { get; set; } = default!;
 
-    /// <summary>
-    /// The inputs for the activity.
-    /// </summary>
-    public IReadOnlyCollection<object> Inputs { get; private set; } = Array.Empty<object>();
+    protected IReadOnlyCollection<ObjectState> States { get; private set; } = Array.Empty<ObjectState>();
 
-    /// <inheritdoc />
+    protected MudForm Form { get; set; } = default!;
+
+    protected string[] Errors { get; set; } = Array.Empty<string>();
+
+    protected bool IsValid { get; set; }
+
     protected override void OnInitialized()
     {
         Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Execution.SelectedActivityKey} Assembly: {Execution.SelectedActivityKey}");
@@ -60,8 +69,27 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
             return;
         }
         _activity = success;
-        Inputs = _activity.Inputs;
+        States = _activity
+            .Inputs
+            .Select(x => new ObjectState(x))
+            .ToArray();
+    }
 
+    protected async Task SubmitAsync()
+    {
+        Logger.LogDebug($"{nameof(SubmitAsync)} called");
+
+        await Form.Validate();
+
+        if (IsValid)
+        {
+            Logger.LogDebug("Validation passed.");
+            BuildAndExecute();
+        }
+        else
+            Logger.LogDebug("Validation failed.");
+
+        // Process the valid form
     }
 
     protected void BuildAndExecute()
@@ -74,7 +102,6 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
             Execution.ShowError(Logger, "Failed to load activity. Method does not exist.");
             return;
         }
-        _activity.Inputs = Inputs.ToArray();
 
         // TODO: Move this logic to workflow execution
 
