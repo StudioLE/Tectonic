@@ -2,18 +2,20 @@ using System.Diagnostics;
 using System.IO;
 using Lineweights.Core.Documents;
 using Lineweights.Workflows.Documents;
+using StudioLE.Core.Results;
+using StudioLE.Core.System.IO;
 
 namespace Lineweights.Workflows.Visualization;
 
 /// <summary>
 /// Visualize a <see cref="Model"/> as local files.
-/// Use an <see cref="AssetBuilder"/> to convert the <see cref="Model"/> to individual <see cref="Asset"/>.
+/// Use an <see cref="AssetFactoryProvider"/> to convert the <see cref="Model"/> to individual <see cref="IAsset"/>.
 /// Save the assets to local file storage and then open them in the default programs of the operating system.
 /// </summary>
 public sealed class VisualizeAsFile : IVisualizationStrategy
 {
+    private readonly AssetFactoryProvider _provider;
     private readonly IStorageStrategy _storageStrategy = new FileStorageStrategy();
-    private readonly IAssetBuilder _builder;
 
     /// <summary>
     /// Should the file be opened.
@@ -21,10 +23,9 @@ public sealed class VisualizeAsFile : IVisualizationStrategy
     public bool IsOpenEnabled { get; set; } = true;
 
     /// <inheritdoc cref="VisualizeAsFile"/>
-    public VisualizeAsFile(IAssetBuilder builder)
+    public VisualizeAsFile(AssetFactoryProvider provider)
     {
-        _builder = builder;
-        _builder.StorageStrategy = _storageStrategy;
+        _provider = provider;
     }
 
     /// <inheritdoc cref="VisualizeAsFile"/>
@@ -37,22 +38,40 @@ public sealed class VisualizeAsFile : IVisualizationStrategy
     /// <inheritdoc cref="VisualizeAsFile"/>
     public async Task Execute(VisualizeRequest request)
     {
-        request.Asset = await _builder
-            .AddAssets(request.Asset)
-            .Build(request.Model);
-        await _storageStrategy.RecursiveWriteContentToStorage(request.Asset);
-        if (IsOpenEnabled)
-            RecursiveOpen(request.Asset);
-    }
+        IReadOnlyCollection<IAssetFactory<IAsset>> factories = _provider.GetFactoriesForObjectProperties(request);
 
-    private static void RecursiveOpen(Asset asset)
-    {
-        if (File.Exists(asset.Info.Location?.AbsolutePath))
-            Process.Start(new ProcessStartInfo(asset.Info.Location!.AbsolutePath)
+        IEnumerable<Task<ExternalAsset?>> assets = factories
+            .Select(async factory =>
             {
-                UseShellExecute = true
+                await factory.Execute();
+                switch (factory.Asset)
+                {
+                    case ExternalAsset externalAsset:
+                        return externalAsset;
+                    case InternalAsset internalAsset:
+                        string fileExtension = factory.Asset.ContentType.GetExtensionByContentType() ?? ".txt";
+                        string fileName = factory.Asset.Id + fileExtension;
+                        IResult<ExternalAsset> result = await internalAsset.ToExternalAsset(_storageStrategy, fileName);
+                        return result is Success<ExternalAsset> success
+                            ? success.Value
+                            : null;
+                    default:
+                        return null;
+                }
             });
-        foreach (Asset child in asset.Children)
-            RecursiveOpen(child);
+
+
+
+        foreach (Task<ExternalAsset?> task in assets)
+        {
+            ExternalAsset? asset = await task;
+            if (IsOpenEnabled
+                && asset?.Location is not null
+                && File.Exists(asset.Location.AbsolutePath))
+                Process.Start(new ProcessStartInfo(asset.Location.AbsolutePath)
+                {
+                    UseShellExecute = true
+                });
+        }
     }
 }

@@ -2,14 +2,14 @@
 
 public interface IResult
 {
-    public string[] Warnings { get; }
+    public string[] Warnings { get; set; }
 
     public string[] Errors { get; }
 }
 
 public interface IResult<out T>
 {
-    public string[] Warnings { get; }
+    public string[] Warnings { get; set; }
 
     public string[] Errors { get; }
 }

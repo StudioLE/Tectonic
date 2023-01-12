@@ -1,10 +1,10 @@
 ﻿@page "/run/{AssemblyKey?}/{ActivityKey?}"
-@using Lineweights.Core.Documents
+@using Geometrician.Core.Visualization
 @inherits RunnerPageBase
 
 <PageTitle>
-  Geometrician@(State.Assets.Count > 0
-                ? $" ({State.Assets.Count})"
+  Geometrician@(State.Outcomes.Count > 0
+                ? $" ({State.Outcomes.Count})"
                 : string.Empty)
 </PageTitle>
 
@@ -17,9 +17,9 @@
 
     <RunnerComponent AssemblyKey="@AssemblyKey" ActivityKey="@ActivityKey"/>
 
-    @foreach (Asset asset in State.Assets.Reverse())
+    @foreach (Outcome outcome in State.Outcomes.Reverse())
     {
-      <AssetComponent @key="asset.Info.Id" Asset="asset"/>
+      <OutcomeComponent @key="outcome.Id" Outcome="outcome"/>
     }
 
   </MudMainContent>

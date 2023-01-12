@@ -1,7 +1,5 @@
 using System.Text;
 using StudioLE.Core.Results;
-using Lineweights.Core.Documents;
-using Lineweights.Workflows.Documents;
 using Newtonsoft.Json;
 using StudioLE.Core.System;
 
@@ -9,16 +7,12 @@ namespace Lineweights.Workflows.Visualization;
 
 /// <summary>
 /// Visualize a <see cref="Model"/> in <c>Geometrician.Server</c>.
-/// Use an <see cref="AssetBuilder"/> to convert the <see cref="Model"/> to individual <see cref="Asset"/>.
-/// Save the assets to blob storage and then send the assets via SignalR to be visualised by a remote
-/// app such as <c>Geometrician.Server</c>.
 /// </summary>
 public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
 {
-    private readonly BlobStorageStrategy _blobStorage = new();
     private readonly HttpClient _httpClient;
 
-    public VisualizeWithGeometricianServer(GeometricianService geometrician)
+    public VisualizeWithGeometricianServer(VisualizationConfiguration geometrician)
     {
         _httpClient = geometrician.HttpClient;
     }
@@ -34,10 +28,10 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
         }
 
         // TODO: Cancel the following tasks if try connect fails.
-        Task[] tasks = requests
-            .Select(x => _blobStorage.RecursiveWriteLocalFilesToStorage(x.Asset))
-            .ToArray();
-        Task.WaitAll(tasks);
+        // Task[] tasks = requests
+        //     // .Select(x => _blobStorage.RecursiveWriteLocalFilesToStorage(x.Asset))
+        //     .ToArray();
+        // Task.WaitAll(tasks);
 
         IResult postResult = await TryPost(requests);
         if(postResult is not Success)
@@ -49,7 +43,7 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
     {
         try
         {
-            HttpResponseMessage response = await _httpClient.SendAsync(new(HttpMethod.Head, GeometricianService.VisualizeRoute));
+            HttpResponseMessage response = await _httpClient.SendAsync(new(HttpMethod.Head, VisualizationConfiguration.VisualizeRoute));
             return response.IsSuccessStatusCode
                 ? new Success()
                 : new Failure($"{response.StatusCode}: {response.ReasonPhrase}");
@@ -72,7 +66,7 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
             VisualizeRequestConverter converter = new();
             string json = JsonConvert.SerializeObject(requests, converter);
             StringContent content = new(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _httpClient.PostAsync(GeometricianService.VisualizeRoute, content);
+            HttpResponseMessage response = await _httpClient.PostAsync(VisualizationConfiguration.VisualizeRoute, content);
             return response.IsSuccessStatusCode
                 ? new Success()
                 : new Failure($"{response.StatusCode}: {response.ReasonPhrase}");

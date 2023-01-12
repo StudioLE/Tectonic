@@ -7,11 +7,10 @@ namespace Lineweights.Workflows.Tests.Hosting;
 
 internal sealed class ServicesTests
 {
-    [TestCase(typeof(GeometricianService))]
+    [TestCase(typeof(VisualizationConfiguration))]
     [TestCase(typeof(IVisualizationStrategy))]
     [TestCase(typeof(IActivityFactory))]
     [TestCase(typeof(IStorageStrategy))]
-    [TestCase(typeof(IAssetBuilder))]
     public void Services_GetService(Type type)
     {
         // Arrange

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using StudioLE.Core.Results;
 using Lineweights.Core.Documents;
 using Lineweights.Drawings;
 using StudioLE.Core.Exceptions;
@@ -7,19 +8,22 @@ namespace Lineweights.SVG.From.Elements;
 
 /// <summary>
 /// Convert either a <see cref="Sheet"/> or <see cref="View"/> to an SVG file
-/// referenced as <see cref="Asset"/>.
+/// referenced as <see cref="IAsset"/>.
 /// </summary>
-public class CanvasToSvgAsset : IConverter<Canvas, Task<Asset>>
+public class CanvasToSvgFile : IConverter<Canvas, Task<IResult<Uri>>>
 {
     private readonly IStorageStrategy _storageStrategy;
+    private readonly string _fileName;
 
-    public CanvasToSvgAsset(IStorageStrategy storageStrategy)
+    /// <inheritdoc cref="CanvasToSvgFile" />
+    public CanvasToSvgFile(IStorageStrategy storageStrategy, string fileName)
     {
         _storageStrategy = storageStrategy;
+        _fileName = fileName;
     }
 
     /// <inheritdoc />
-    public async Task<Asset> Convert(Canvas canvas)
+    public Task<IResult<Uri>> Convert(Canvas canvas)
     {
         SvgElement svgElement = canvas switch
         {
@@ -31,17 +35,6 @@ public class CanvasToSvgAsset : IConverter<Canvas, Task<Asset>>
         MemoryStream stream = new();
         svgDocument.Save(stream, SaveOptions.None);
         stream.Seek(0, SeekOrigin.Begin);
-
-        Asset asset = new()
-        {
-            Info = new()
-            {
-                Id = canvas.Id,
-                Name = canvas.Name
-            },
-            ContentType = "image/svg+xml"
-        };
-        string fileName = asset.Info.Id + ".svg";
-        return await _storageStrategy.WriteAsync(asset, fileName, stream);
+        return _storageStrategy.WriteAsync(_fileName, stream);
     }
 }

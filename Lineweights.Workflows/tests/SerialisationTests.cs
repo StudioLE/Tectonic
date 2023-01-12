@@ -1,70 +1,32 @@
 using Elements.Serialization.JSON;
 using Lineweights.Core.Documents;
 using Lineweights.Core.Serialisation;
-using Lineweights.Workflows.Documents;
-using Lineweights.Workflows.Hosting;
 using Lineweights.Workflows.NUnit.Verification;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
 namespace Lineweights.Workflows.Tests;
 
 internal sealed class SerialisationTests
 {
-    private readonly AssetBuilder _builder;
-
-    private static readonly DocumentInformation _doc = new()
-    {
-        Name = "Example",
-        Description = "Hello, world.",
-        Location = new("https://localhost/my/file.txt")
-    };
-
-    public SerialisationTests()
-    {
-        IServiceProvider services = Services.GetInstance();
-        _builder = (AssetBuilder)services.GetRequiredService<IAssetBuilder>();
-    }
-
     [Test]
-    public async Task Serialisation_Asset()
-    {
-        // Arrange
-        Model model = new();
-        model.AddElements(Scenes.GeometricElements());
-        _builder.SetDocumentInformation(_doc);
-        Asset asset = await _builder.Build(model);
-
-        // Act
-        string json = JsonConvert.SerializeObject(asset);
-        Asset? deserialised = JsonConvert.DeserializeObject<Asset>(json);
-        string json2 = JsonConvert.SerializeObject(deserialised);
-
-        // Assert
-        Assert.Multiple(async () =>
-        {
-            await Verify.String(json, json2);
-            Assert.That(deserialised, Is.Not.Null, "Not null");
-            Assert.That(deserialised?.Info.Id, Is.EqualTo(asset.Info.Id), "Parent Id");
-            Asset? glb = asset.Children.FirstOrDefault();
-            Asset? deserialisedGlb = deserialised?.Children.FirstOrDefault();
-            Assert.That(deserialisedGlb, Is.Not.Null, "Child not null");
-            Assert.That(deserialisedGlb?.Info.Id, Is.EqualTo(glb?.Info.Id), "Child Id");
-        });
-    }
-
-    [Test]
-    public void Serialisation_DocumentInformation()
+    public void Serialisation_InternalAsset()
     {
         // Arrange
         JsonSerializerSettings settings = new()
         {
             ContractResolver = new IgnoreConverterResolver(typeof(JsonInheritanceConverter))
         };
+        InternalAsset asset = new()
+        {
+            Name = "An example document",
+            Description = "A description of the document.",
+            ContentType = "text/plain",
+            Content = "Hello, world!"
+        };
 
         // Act
-        string json = JsonConvert.SerializeObject(_doc, settings);
-        DocumentInformation? deserialised = JsonConvert.DeserializeObject<DocumentInformation>(json, settings);
+        string json = JsonConvert.SerializeObject(asset, settings);
+        InternalAsset? deserialised = JsonConvert.DeserializeObject<InternalAsset>(json, settings);
         string json2 = JsonConvert.SerializeObject(deserialised, settings);
 
         // Assert
@@ -72,17 +34,75 @@ internal sealed class SerialisationTests
         {
             await Verify.String(json, json2);
             Assert.That(deserialised, Is.Not.Null, "Not null");
-            Assert.That(deserialised?.Id, Is.EqualTo(_doc.Id), "Id");
-            Assert.That(deserialised?.Location, Is.EqualTo(_doc.Location), "Location");
+            Assert.That(deserialised?.Id, Is.EqualTo(asset.Id), "Id");
+            Assert.That(deserialised?.ContentType, Is.EqualTo(asset.ContentType), "ContentType");
+            Assert.That(deserialised?.Content, Is.EqualTo(asset.Content), "Content");
         });
     }
 
     [Test]
-    public void Serialisation_DocumentInformation_InModel()
+    public void Serialisation_ExternalAsset()
     {
         // Arrange
+        JsonSerializerSettings settings = new()
+        {
+            ContractResolver = new IgnoreConverterResolver(typeof(JsonInheritanceConverter))
+        };
+        ExternalAsset asset = new()
+        {
+            Name = "An example document",
+            Description = "A description of the document.",
+            ContentType = "text/plain",
+            Location = new("https://localhost/my/file.txt")
+        };
+
+        // Act
+        string json = JsonConvert.SerializeObject(asset, settings);
+        ExternalAsset? deserialised = JsonConvert.DeserializeObject<ExternalAsset>(json, settings);
+        string json2 = JsonConvert.SerializeObject(deserialised, settings);
+
+        // Assert
+        Assert.Multiple(async () =>
+        {
+            await Verify.String(json, json2);
+            Assert.That(deserialised, Is.Not.Null, "Not null");
+            Assert.That(deserialised?.Id, Is.EqualTo(asset.Id), "Id");
+            Assert.That(deserialised?.ContentType, Is.EqualTo(asset.ContentType), "ContentType");
+            Assert.That(deserialised?.Location, Is.EqualTo(asset.Location), "Location");
+        });
+    }
+
+    [Test]
+    public void Serialisation_InternalAsset_InModel()
+    {
+        // Arrange
+        InternalAsset asset = new()
+        {
+            Name = "An example document",
+            Description = "A description of the document.",
+            ContentType = "text/plain",
+            Content = "Hello, world!"
+        };
+
         // Act
         // Assert
-        VerifyHelpers.SerialisationAsModel(_doc);
+        VerifyHelpers.SerialisationAsModel(asset);
+    }
+
+    [Test]
+    public void Serialisation_ExternalAsset_InModel()
+    {
+        // Arrange
+        ExternalAsset asset = new()
+        {
+            Name = "An example document",
+            Description = "A description of the document.",
+            ContentType = "text/plain",
+            Location = new("https://localhost/my/file.txt")
+        };
+
+        // Act
+        // Assert
+        VerifyHelpers.SerialisationAsModel(asset);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Lineweights.Core.Documents;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StudioLE.Core.System;
@@ -14,8 +13,8 @@ public class VisualizeRequestConverter : JsonConverter<VisualizeRequest>
         JObject jObject = new();
 
         // Assets
-        JToken? asset = JRaw.FromObject(request.Asset);
-        jObject.Add("Asset", asset);
+        // JToken? asset = JRaw.FromObject(request.Asset);
+        // jObject.Add("Asset", asset);
 
         // Model
         JToken modelJRaw = JRaw.Parse(request.Model.ToJson(true));
@@ -57,12 +56,12 @@ public class VisualizeRequestConverter : JsonConverter<VisualizeRequest>
             Console.WriteLine(errors.Join());
 
         // Assets
-        string assetJson = jObject["Asset"].ToString();
-        Asset asset = JsonConvert.DeserializeObject<Asset>(assetJson);
+        // string assetJson = jObject["Asset"].ToString();
+        // IAsset asset = JsonConvert.DeserializeObject<IAsset>(assetJson);
 
         return new()
         {
-            Asset = asset,
+            // Asset = asset,
             Model = model,
             Assemblies = assemblyPaths,
         };

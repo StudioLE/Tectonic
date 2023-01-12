@@ -23,12 +23,7 @@ public static class Scenes
         /// <summary>
         /// A sample scene of geometric elements.
         /// </summary>
-        GeometricElements,
-
-        /// <summary>
-        /// A sample scene of geometric elements with views and a sheet.
-        /// </summary>
-        GeometricElementsOnSheet
+        GeometricElements
     }
 
     /// <inheritdoc cref="Name.Brickwork"/>

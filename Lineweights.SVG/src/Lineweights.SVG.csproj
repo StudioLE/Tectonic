@@ -28,4 +28,8 @@
     <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="AssetBuilderExtensions.cs" />
+  </ItemGroup>
+
 </Project>

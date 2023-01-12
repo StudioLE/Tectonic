@@ -112,15 +112,6 @@ internal sealed class SheetBuilderTests
         GeometricElement[] geometry = sheet.Render().ToArray();
 
         // Preview
-#if false
-        IEnumerable<Element> elements = Enumerable.Empty<Element>()
-            .Concat(_geometry)
-            .Concat(views);
-        // TODO: View seems to work but not sheet? Possibly due to sheet.Content.Views?
-            //.Append(sheet)
-            //.Concat(sheet.Content.Views); // TODO: Sub sub content isn't gathered by Model.ToJson().
-        Scenes.ToJson(Scenes.Name.GeometricElementsOnSheet, elements);
-#endif
         _model.AddElements(geometry);
 
         // Assert

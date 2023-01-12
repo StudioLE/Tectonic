@@ -192,7 +192,7 @@ internal sealed class SheetToSvgTests
 
     private void Preview(FileInfo file)
     {
-        _model.AddElement(new DocumentInformation { Location = new(file.FullName) });
+        _model.AddElement(new ExternalAsset { Location = new(file.FullName) });
     }
 
     [TearDown]

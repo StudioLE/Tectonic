@@ -1,0 +1,16 @@
+﻿@inherits StringAssetComponentBase
+
+<TileComponent XScale="1" YScale="0.5" Style="overflow: scroll">
+  <DeferExecutionComponent Factory="Factory" AfterExecution="AfterExecution">
+    <code>
+      @if (!string.IsNullOrEmpty(Json))
+      {
+        <pre>@Json</pre>
+      }
+      else
+      {
+        <pre>@Content</pre>
+      }
+    </code>
+  </DeferExecutionComponent>
+</TileComponent>

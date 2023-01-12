@@ -1,6 +1,7 @@
 using Geometrician.Core.Execution;
 using Geometrician.Core.Scripts;
 using Geometrician.Core.Shared;
+using Geometrician.Core.Visualization;
 using Geometrician.WebAssembly;
 using Lineweights.Core.Documents;
 using Lineweights.Workflows.Execution;
@@ -19,7 +20,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddMudServices();
 
 // Inject Lineweights singleton services
-builder.Services.AddSingleton<AssetState>();
+builder.Services.AddSingleton<VisualizationState>();
 builder.Services.AddSingleton<ObjectUrlStorage>();
 builder.Services.AddSingleton<IStorageStrategy, ObjectUrlStorageStrategy>();
 builder.Services.AddSingleton<ModelViewer>();

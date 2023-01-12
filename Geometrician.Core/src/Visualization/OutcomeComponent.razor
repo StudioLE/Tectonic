@@ -1,15 +1,14 @@
-﻿@using System.Linq
-@using Lineweights.Core.Documents
-@inherits AssetComponentBase
+﻿@using Lineweights.Core.Documents
+@inherits OutcomeComponentBase
 
 <MosaicComponent>
   <TileComponent XScale="0.25" YScale="1" Title="@GetTitle()">
     <MudText Typo="Typo.subtitle1" Align="Align.Right" Style="display: block; color: var(--mud-palette-drawer-text);">
-      <TimeComponent DateTime="@Asset.Info.LastRevisionTime"/>
+      <TimeComponent DateTime="@Outcome.CreationTime"/>
     </MudText>
   </TileComponent>
-  @foreach (Asset child in Asset.Children)
+  @foreach (IAssetFactory<IAsset> factory in Outcome.Assets)
   {
-    <ViewerComponent Asset="child"></ViewerComponent>
+    <DynamicViewerComponent Factory="@factory"/>
   }
 </MosaicComponent>

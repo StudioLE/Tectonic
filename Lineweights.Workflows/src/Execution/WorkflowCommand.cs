@@ -24,7 +24,7 @@ public class WorkflowCommand
     }
 
     /// <summary>
-    /// The method called each time a <see cref="Asset"/> is produced by the workflow.
+    /// The method called each time a <see cref="IAsset"/> is produced by the workflow.
     /// </summary>
     public void OnResult(object outputs)
     {
@@ -36,14 +36,10 @@ public class WorkflowCommand
         VisualizeRequest request = new()
         {
             Model = model,
-            Asset =
-            {
-                Info = new()
-                {
-                    Name = _activity.Name,
-                    Description = $"Executed {_activity.Name}."
-                }
-            }
+
+            // TODO: Implement these
+            // Name = _activity.Name,
+            // Description = $"Executed {_activity.Name}."
         };
         _visualizationStrategy.Execute(request);
     }

@@ -51,13 +51,23 @@ public static class Services
                 // Abstract services
 
                 services.AddTransient<IActivityFactory, StaticMethodActivityFactory>();
-                services.AddTransient<IAssetBuilder, AssetBuilder>();
                 services.AddTransient<IStorageStrategy, FileStorageStrategy>();
                 services.AddSingleton<IVisualizationStrategy, VisualizeWithGeometricianServer>();
 
                 // Concrete services
 
-                services.AddSingleton<GeometricianService>();
+                services.AddTransient<AssetFactoryProvider>();
+                services.AddTransient<VisualizationConfiguration>(_ => new VisualizationConfiguration()
+                    .RegisterAssetFactory<Model, GlbAssetFactory>()
+                    .RegisterAssetFactory<ExternalAsset, AssetFactory>()
+                    .RegisterAssetFactory<InternalAsset, AssetFactory>()
+                    .RegisterAssetFactory<Model, CsvElementTypesAssetFactory>()
+                    .RegisterAssetFactory<Model, JsonAssetFactory>());
+
+                services.AddTransient<GlbAssetFactory>();
+                services.AddTransient<AssetFactory>();
+                services.AddTransient<CsvElementTypesAssetFactory>();
+                services.AddTransient<JsonAssetFactory>();
                 // IActivityFactory
                 services.AddTransient<StaticMethodActivityFactory>();
                 // IStorageStrategy

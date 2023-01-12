@@ -1,24 +1,25 @@
 ﻿using Lineweights.Core.Documents;
 using Lineweights.Drawings;
 using Lineweights.SVG.From.Elements;
+using StudioLE.Core.Results;
 
 namespace Lineweights.SVG;
 
-public class SvgAssetFactory<T> : IAssetFactory where T : Canvas
+public class SvgAssetFactory<T> : ExternalAssetFactoryBase<T> where T : Canvas
 {
-    /// <inheritdoc/>
-    public IEnumerable<Task<Asset>> Execute(IAssetBuilderContext context)
+    /// <inheritdoc />
+    protected override IConverter<T, Task<IResult<Uri>>> Converter { get; }
+
+    /// <inheritdoc cref="SvgAssetFactory{T}"/>
+    public SvgAssetFactory(IStorageStrategy storageStrategy)
     {
-        return context
-            .Model
-            .AllElementsOfType<T>()
-            .Select(canvas => ConvertCanvasToSvg(canvas, context.StorageStrategy));
+        Converter = new CanvasToSvgFile(storageStrategy, Asset.Id + ".svg");
+        Asset.ContentType = "image/svg+xml";
     }
 
-    /// <inheritdoc cref="Asset"/>
-    private static async Task<Asset> ConvertCanvasToSvg(Canvas canvas, IStorageStrategy storageStrategy)
+    /// <inheritdoc />
+    protected override void AfterSetup(T source)
     {
-        CanvasToSvgAsset converter = new(storageStrategy);
-        return await converter.Convert(canvas);
+        Asset.Name = source.Name;
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System.Text.Json;
-using Geometrician.Core.Shared;
-using Lineweights.Core.Documents;
-using Lineweights.PDF;
-using Lineweights.SVG;
-using Lineweights.Workflows.Documents;
+using Geometrician.Core.Visualization;
 using Lineweights.Workflows.Visualization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -13,25 +9,23 @@ namespace Geometrician.Server.Controllers;
 public class VisualizeController : Controller
 {
     private readonly ILogger<VisualizeController> _logger;
-    private readonly AssetState _state;
-    private readonly IStorageStrategy _storageStrategy;
+    private readonly VisualizationState _state;
 
-    public VisualizeController(ILogger<VisualizeController> logger, AssetState state, IStorageStrategy storageStrategy)
+    public VisualizeController(ILogger<VisualizeController> logger, VisualizationState state)
     {
         _logger = logger;
         _state = state;
-        _storageStrategy = storageStrategy;
     }
 
-    [HttpHead(GeometricianService.VisualizeRoute)]
-    [HttpGet(GeometricianService.VisualizeRoute)]
+    [HttpHead(VisualizationConfiguration.VisualizeRoute)]
+    [HttpGet(VisualizationConfiguration.VisualizeRoute)]
     public ActionResult Get()
     {
         _logger.LogDebug($"{nameof(Get)} called.");
         return Ok();
     }
 
-    [HttpPost(GeometricianService.VisualizeRoute)]
+    [HttpPost(VisualizationConfiguration.VisualizeRoute)]
     public ActionResult Post([FromBody] JsonElement jsonElement)
     {
         _logger.LogDebug($"{nameof(Post)} called.");
@@ -40,7 +34,7 @@ public class VisualizeController : Controller
         return StatusCode(StatusCodes.Status202Accepted);
     }
 
-    private async Task ProcessReceived(JsonElement jsonElement)
+    private void ProcessReceived(JsonElement jsonElement)
     {
         string json = jsonElement.GetRawText();
         VisualizeRequest[]? requests = JsonConvert.DeserializeObject<VisualizeRequest[]>(json);
@@ -51,22 +45,6 @@ public class VisualizeController : Controller
         }
 
         foreach (VisualizeRequest request in requests)
-        {
-            Asset asset = await BuildAsset(request);
-            _state.Assets.Add(asset);
-        }
-    }
-
-    private async Task<Asset> BuildAsset(VisualizeRequest request)
-    {
-        // TODO: If this is created via DI then the Storage Strategy will be injected automatically.
-        AssetBuilder builder = new AssetBuilder()
-            .SetStorageStrategy(_storageStrategy)
-            .SetDocumentInformation(request.Asset.Info)
-            .ConvertModelToGlb()
-            .ExtractViewsAndConvertToSvg()
-            .ExtractSheetsAndConvertToPdf()
-            .AddAssets(request.Asset.Children.ToArray());
-        return await builder.Build(request.Model);
+            _state.AddOutcome(new(), request);
     }
 }

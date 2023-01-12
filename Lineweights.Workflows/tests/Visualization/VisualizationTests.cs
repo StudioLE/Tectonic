@@ -33,7 +33,7 @@ internal sealed class VisualizationTests
 
         // Assert
         // Assert.That(asset.Children.Count, Is.EqualTo(1), "Children count");
-        // string? path = asset.Children.First().Info.Location?.LocalPath;
+        // string? path = asset.Children.First().Location?.LocalPath;
         // Assert.That(File.Exists(path), "File exists");
     }
 

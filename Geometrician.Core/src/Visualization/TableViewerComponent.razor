@@ -1,0 +1,30 @@
+﻿@inherits StringAssetComponentBase
+
+<TileComponent XScale="1.5" YScale="0.5" Padding="false" Style="overflow: scroll">
+  <DeferExecutionComponent Factory="Factory" AfterExecution="AfterExecution">
+    <MudSimpleTable Dense="true">
+      @if (Table.Any())
+      {
+        <thead>
+        <tr>
+          @foreach (string field in Table.First())
+          {
+            <th>@field</th>
+          }
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (IReadOnlyCollection<string> row in Table.Skip(1))
+        {
+          <tr>
+            @foreach (string field in row)
+            {
+              <td>@field</td>
+            }
+          </tr>
+        }
+        </tbody>
+      }
+    </MudSimpleTable>
+  </DeferExecutionComponent>
+</TileComponent>

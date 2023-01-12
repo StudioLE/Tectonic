@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using StudioLE.Core.Results;
 using Elements.Serialization.IFC;
 using Lineweights.Core.Documents;
 
@@ -6,21 +7,23 @@ namespace Lineweights.IFC;
 
 /// <summary>
 /// Convert a <see cref="Model"/> to an IFC file
-/// referenced as <see cref="Asset"/>.
+/// referenced as <see cref="IAsset"/>.
 /// </summary>
-public class ModelToIfcAsset : IConverter<Model, Task<Asset>>
+public class ModelToIfcFile : IConverter<Model, Task<IResult<Uri>>>
 {
     private readonly IStorageStrategy _storageStrategy;
+    private readonly string _fileName;
 
 
-    /// <inheritdoc cref="ModelToIfcAsset"/>
-    public ModelToIfcAsset(IStorageStrategy storageStrategy)
+    /// <inheritdoc cref="ModelToIfcFile"/>
+    public ModelToIfcFile(IStorageStrategy storageStrategy, string fileName)
     {
         _storageStrategy = storageStrategy;
+        _fileName = fileName;
     }
 
     /// <inheritdoc />
-    public async Task<Asset> Convert(Model model)
+    public async Task<IResult<Uri>> Convert(Model model)
     {
         string tempPath = Path.GetTempFileName();
 
@@ -40,28 +43,12 @@ public class ModelToIfcAsset : IConverter<Model, Task<Asset>>
         };
         Console.SetOut(standardOutputWriter);
 
-        Asset asset = new()
-        {
-            Info = new()
-            {
-                Name = "IFC of Model"
-            },
-            ContentType = "application/x-step"
-        };
-        if (!string.IsNullOrWhiteSpace(console))
-            asset.Errors = new[]
-            {
-                "Failed to convert Model to IFC.",
-                console
-            };
-
         if (!File.Exists(tempPath))
             throw new FileNotFoundException("Failed to write GLB. Temp file does not exist.");
         Stream stream = File.OpenRead(tempPath);
-
-        string fileName = asset.Info.Id + ".ifc";
-
-        Task<Asset> task = _storageStrategy.WriteAsync(asset, fileName, stream);
-        return await task;
+        IResult<Uri> result = await _storageStrategy.WriteAsync(_fileName, stream);
+        if (!string.IsNullOrWhiteSpace(console))
+            result.Warnings = new [] { console };
+        return result;
     }
 }

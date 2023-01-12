@@ -1,13 +1,19 @@
-﻿using Lineweights.Core.Documents;
+﻿using Lineweights.Core.Converters;
+using Lineweights.Core.Documents;
+using StudioLE.Core.Conversion;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Workflows.Documents;
 
-public class JsonAssetFactory : IAssetFactory
+public class JsonAssetFactory : InternalAssetFactoryBase<Model>
 {
-    /// <inheritdoc/>
-    public IEnumerable<Task<Asset>> Execute(IAssetBuilderContext context)
+    /// <inheritdoc />
+    protected override IConverter<Model, Task<IResult<string>>> Converter { get; } = new ModelToJson();
+
+    /// <inheritdoc cref="JsonAssetFactory"/>
+    public JsonAssetFactory()
     {
-        ModelToJsonAsset converter = new();
-        return new [] { converter.Convert(context.Model) };
+        Asset.Name = "JSON of Model";
+        Asset.ContentType = "application/json";
     }
 }

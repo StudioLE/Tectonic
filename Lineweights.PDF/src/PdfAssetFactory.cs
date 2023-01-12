@@ -1,24 +1,25 @@
 ﻿using Lineweights.Core.Documents;
 using Lineweights.Drawings;
 using Lineweights.PDF.From.Elements;
+using StudioLE.Core.Results;
 
 namespace Lineweights.PDF;
 
-public class PdfAssetFactory<T> : IAssetFactory where T : Canvas
+public class PdfAssetFactory<T> : ExternalAssetFactoryBase<T> where T : Canvas
 {
-    /// <inheritdoc/>
-    public IEnumerable<Task<Asset>> Execute(IAssetBuilderContext context)
+    /// <inheritdoc />
+    protected override IConverter<T, Task<IResult<Uri>>> Converter { get; }
+
+    /// <inheritdoc cref="PdfAssetFactory{T}"/>
+    public PdfAssetFactory(IStorageStrategy storageStrategy)
     {
-        return context
-            .Model
-            .AllElementsOfType<T>()
-            .Select(canvas => ConvertCanvasToPdf(canvas, context.StorageStrategy));
+        Converter = new CanvasToPdfFile(storageStrategy, Asset.Id + ".pdf");
+        Asset.ContentType = "application/pdf";
     }
 
-    /// <inheritdoc cref="Asset"/>
-    private static async Task<Asset> ConvertCanvasToPdf(Canvas canvas, IStorageStrategy storageStrategy)
+    /// <inheritdoc />
+    protected override void AfterSetup(T source)
     {
-        CanvasToPdfAsset converter = new(storageStrategy);
-        return await converter.Convert(canvas);
+        Asset.Name = source.Name;
     }
 }

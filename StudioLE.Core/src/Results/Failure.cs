@@ -3,7 +3,7 @@
 public class Failure : IResult
 {
     /// <inheritdoc />
-    public string[] Warnings { get; } = Array.Empty<string>();
+    public string[] Warnings { get; set; } = Array.Empty<string>();
 
     public string[] Errors { get; }
 
@@ -37,7 +37,7 @@ public class Failure : IResult
 public class Failure<T> : IResult<T>
 {
     /// <inheritdoc />
-    public string[] Warnings { get; } = Array.Empty<string>();
+    public string[] Warnings { get; set; } = Array.Empty<string>();
 
     public string[] Errors { get; }
 

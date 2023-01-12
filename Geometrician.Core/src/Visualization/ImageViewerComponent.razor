@@ -1,0 +1,8 @@
+﻿@using Lineweights.Core.Documents
+@inherits ViewerComponentBase<ExternalAsset>
+
+<TileComponent XScale="0.5" YScale="0.5" Padding="false">
+  <DeferExecutionComponent Factory="Factory" AfterExecution="AfterExecution">
+    <img src="@Factory.Asset.Location" alt="@Factory.Asset.Name" style="width: 100%; height: 100%; object-fit: contain; object-position: center;"/>
+  </DeferExecutionComponent>
+</TileComponent>

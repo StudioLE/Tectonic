@@ -1,125 +1,53 @@
-using System.Globalization;
-using System.IO;
-using CsvHelper;
-using CsvHelper.Configuration.Attributes;
-using Elements.Serialization.IFC;
-using Lineweights.Core.Documents;
 using Lineweights.Drawings;
-using StudioLE.Core.System;
-using StudioLE.Core.System.IO;
+using Lineweights.Flex;
+using StudioLE.Core.Exceptions;
 
 namespace Lineweights.Workflows.Samples;
 
 internal static class SampleHelpers
 {
-
-    internal static IReadOnlyCollection<View> CreateViews(Model model)
+    internal static View[] CreateViews(Model model, Scenes.Name sceneName)
     {
-        ViewDirection[] viewDirections = {
+        double scopePadding = sceneName switch
+        {
+            Scenes.Name.Brickwork => .250,
+            Scenes.Name.GeometricElements => .050,
+            _ => throw new EnumSwitchException<Scenes.Name>("Failed to create views,", sceneName)
+        };
+
+        double scale = sceneName switch
+        {
+            Scenes.Name.Brickwork => 1d / 10,
+            Scenes.Name.GeometricElements => 1d / 5,
+            _ => throw new EnumSwitchException<Scenes.Name>("Failed to create views,", sceneName)
+        };
+
+        ViewBuilder viewBuilder = new ViewBuilder()
+            .ScopePadding(scopePadding, scopePadding, scopePadding)
+            .Scale(scale)
+            .ElementsInView(model.Elements.Values.ToArray());
+
+        ViewDirection[] viewDirections =
+        {
             ViewDirection.Top,
             ViewDirection.Left,
             ViewDirection.Front
         };
 
-        return viewDirections.Select(viewDirection =>
-            {
-                ViewBuilder builder = new ViewBuilder()
-                    .ScopePadding(.25, .25, .25)
-                    .ViewDirection(viewDirection)
-                    .ElementsInView(model.Elements.Values.ToArray());
-                return builder.Build();
-            })
+        return viewDirections
+            .Select(direction => viewBuilder
+                .ViewDirection(direction)
+                .Build())
             .ToArray();
     }
 
-    internal static IReadOnlyCollection<TableRow> CreateTableOfElements(Model model)
+    internal static Sheet CreateSheet(Model model)
     {
-        return model.Elements.Values
-            .GroupBy(x => x.GetType())
-            .Select(grouping =>
-            {
-                TableRow row = new()
-                {
-                    Type = grouping.Key.Name,
-                    Count = grouping.Count()
-                };
-                Element prototype = grouping.First();
-                if (prototype is not GeometricElement geometric)
-                    return row;
-                IEnumerable<string> representationNames = geometric
-                                                              .Representation
-                                                              ?.SolidOperations
-                                                              .Select(x => x.GetType().Name)
-                                                          ?? Enumerable.Empty<string>();
-                row.IsGeometricElement = true;
-                row.Representations = representationNames.Join(", ");
-                return row;
-            })
-            .ToArray();
-    }
-
-    internal static Asset CreateCsvFileAsAsset(Model model)
-    {
-        IReadOnlyCollection<TableRow> table = CreateTableOfElements(model);
-
-        FileInfo file = PathHelpers.GetTempFile(".csv");
-        using StreamWriter writer = new(file.FullName);
-        using CsvWriter csv = new(writer, CultureInfo.InvariantCulture);
-        csv.WriteRecords(table);
-
-        return new()
-        {
-            Info = new()
-            {
-                Name = "Table of Elements in Model",
-                Location = new(file.FullName)
-            },
-            ContentType = "text/csv"
-        };
-    }
-
-    internal static Asset CreateIfcFileAsAsset(Model model)
-    {
-        FileInfo file = PathHelpers.GetTempFile(".ifc");
-        model.ToIFC(file.FullName);
-        return new()
-        {
-            Info = new()
-            {
-                Name = "IFC of Model",
-                Location = new(file.FullName)
-            },
-            ContentType = "application/x-step"
-        };
-    }
-
-    internal static Asset CreateJsonAsContentAsset(Model model)
-    {
-        string json = model.ToJson();
-
-        return new()
-        {
-            Info = new()
-            {
-                Name = "Json of Model"
-            },
-            ContentType = "application/json",
-            Content = json
-        };
-    }
-
-    internal class TableRow
-    {
-        [Name("Type")]
-        public string Type { get; set; } = string.Empty;
-
-        [Name("Count")]
-        public int Count { get; set; }
-
-        [Name("Is Geometric?")]
-        public bool IsGeometricElement { get; set; } = false;
-        [Name("Representation Types")]
-
-        public string Representations { get; set; } = string.Empty;
+        View[] views = model.AllElementsOfType<View>().ToArray();
+        IBuilder<Sheet> builder = new SheetBuilder(new SequenceBuilder(), new DefaultViewArrangement())
+            .SheetSize(.841, .594)
+            .VerticalTitleArea(.075)
+            .Views(views);
+        return builder.Build();
     }
 }

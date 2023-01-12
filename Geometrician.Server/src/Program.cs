@@ -1,9 +1,15 @@
 using Geometrician.Core.Execution;
 using Geometrician.Core.Scripts;
 using Geometrician.Core.Shared;
+using Geometrician.Core.Visualization;
 using Lineweights.Core.Documents;
+using Lineweights.Drawings;
+using Lineweights.IFC;
+using Lineweights.PDF;
+using Lineweights.SVG;
 using Lineweights.Workflows.Documents;
 using Lineweights.Workflows.Execution;
+using Lineweights.Workflows.Visualization;
 using MudBlazor.Services;
 
 // Create Builder
@@ -17,15 +23,40 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 
 // Inject Geometrician services
-builder.Services.AddSingleton<AssetState>();
+builder.Services.AddSingleton<VisualizationState>();
 builder.Services.AddTransient<ModelViewer>();
 builder.Services.AddScoped<RunnerState>();
 builder.Services.AddTransient<ObjectUrlStorage>();
 builder.Services.AddTransient<DisplayState>();
+builder.Services.AddTransient<AssetFactoryProvider>();
+builder.Services.AddTransient<ViewerComponentProvider>();
+builder.Services.AddTransient<VisualizationConfiguration>(_ => new VisualizationConfiguration()
+    .RegisterAssetFactory<Model, GlbAssetFactory>()
+    .RegisterAssetFactory<ExternalAsset, AssetFactory>()
+    .RegisterAssetFactory<InternalAsset, AssetFactory>()
+    .RegisterAssetFactory<Sheet, SvgAssetFactory<Sheet>>()
+    .RegisterAssetFactory<View, SvgAssetFactory<View>>()
+    .RegisterAssetFactory<Model, CsvElementTypesAssetFactory>()
+    .RegisterAssetFactory<Sheet, PdfAssetFactory<Sheet>>()
+    .RegisterAssetFactory<View, PdfAssetFactory<View>>()
+    .RegisterAssetFactory<Model, IfcAssetFactory>()
+    .RegisterAssetFactory<Model, JsonAssetFactory>()
+    .RegisterContentType("application/pdf", typeof(ObjectViewerComponent))
+    .RegisterContentType("model/gltf-binary", typeof(ThreeViewerComponent))
+    .RegisterContentType("text/csv", typeof(TableViewerComponent))
+    .RegisterContentType("text/plain", typeof(TextViewerComponent)));
+builder.Services.AddTransient<GlbAssetFactory>();
+builder.Services.AddTransient<AssetFactory>();
+builder.Services.AddTransient<SvgAssetFactory<Sheet>>();
+builder.Services.AddTransient<SvgAssetFactory<View>>();
+builder.Services.AddTransient<CsvElementTypesAssetFactory>();
+builder.Services.AddTransient<PdfAssetFactory<Sheet>>();
+builder.Services.AddTransient<PdfAssetFactory<View>>();
+builder.Services.AddTransient<IfcAssetFactory>();
+builder.Services.AddTransient<JsonAssetFactory>();
 
 // Inject Lineweights services
 builder.Services.AddTransient<IActivityFactory, StaticMethodActivityFactory>();
-builder.Services.AddTransient<IAssetBuilder, AssetBuilder>();
 builder.Services.AddTransient<IStorageStrategy, BlobStorageStrategy>();
 
 // Build application

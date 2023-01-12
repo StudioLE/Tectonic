@@ -1,13 +1,20 @@
-﻿using Lineweights.Core.Documents;
+﻿using Lineweights.Core.Converters;
+using Lineweights.Core.Documents;
+using StudioLE.Core.Conversion;
+using StudioLE.Core.Results;
 
 namespace Lineweights.Workflows.Documents;
 
-public class GlbAssetFactory : IAssetFactory
+public class GlbAssetFactory : ExternalAssetFactoryBase<Model>
 {
-    /// <inheritdoc/>
-    public IEnumerable<Task<Asset>> Execute(IAssetBuilderContext context)
+    /// <inheritdoc />
+    protected override IConverter<Model, Task<IResult<Uri>>> Converter { get; }
+
+    /// <inheritdoc cref="GlbAssetFactory"/>
+    public GlbAssetFactory(IStorageStrategy storageStrategy)
     {
-        ModelToGlbAsset converter = new(context.StorageStrategy);
-        return new [] { converter.Convert(context.Model) };
+        Converter = new ModelToGlbFile(storageStrategy, Asset.Id + ".glb");
+        Asset.Name = "GlTF of Model";
+        Asset.ContentType = "model/gltf-binary";
     }
 }

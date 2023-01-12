@@ -50,7 +50,7 @@ public static class SheetSample
     {
         public Model Model { get; set; } = new();
 
-        public List<Asset> Assets { get; } = new();
+        public List<IAsset> Assets { get; } = new();
     }
 
     public static Outputs Execute(ViewInputs viewInputs, SheetInputs sheetInputs, ArrangementInputs arrangementInputs)

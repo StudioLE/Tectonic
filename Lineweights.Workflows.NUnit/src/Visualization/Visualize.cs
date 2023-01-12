@@ -39,7 +39,7 @@ public class Visualize
     }
 
     /// <inheritdoc cref="Visualize" />
-    public void Queue(Model model, IReadOnlyCollection<Asset>? assets = null)
+    public void Queue(Model model, IReadOnlyCollection<IAsset>? assets = null)
     {
         if (!NUnitActivityFactory.IsExecuting && !IsEnabled)
             return;
@@ -56,15 +56,7 @@ public class Visualize
 
         VisualizeRequest request = new()
         {
-            Model = new(model.Transform, model.Elements),
-            Asset = new()
-            {
-                Info = new()
-                {
-                    Name = CreateSummary()
-                },
-                Children = assets ?? Array.Empty<Asset>()
-            }
+            Model = new(model.Transform, model.Elements)
         };
         _requests.Add(request);
     }

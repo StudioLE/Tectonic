@@ -1,11 +1,8 @@
 ﻿using System.Reflection;
 using StudioLE.Core.Results;
-using Geometrician.Core.Shared;
+using Geometrician.Core.Visualization;
 using Lineweights.Core.Documents;
-using Lineweights.PDF;
-using Lineweights.SVG;
 using Lineweights.Workflows;
-using Lineweights.Workflows.Documents;
 using Lineweights.Workflows.Execution;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
@@ -28,9 +25,9 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
     [Inject]
     public RunnerState State { get; set; } = null!;
 
-    /// <inheritdoc cref="Geometrician.Core.Shared.AssetState"/>
+    /// <inheritdoc cref="VisualizationState"/>
     [Inject]
-    protected AssetState AssetState { get; set; } = default!;
+    protected VisualizationState VisualizationState { get; set; } = default!;
 
     /// <inheritdoc cref="IStorageStrategy"/>
     [Inject]
@@ -67,7 +64,7 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
 
     }
 
-    protected async void BuildAndExecute()
+    protected void BuildAndExecute()
     {
         State.Messages.Clear();
         Logger.LogDebug($"{nameof(BuildAndExecute)} called.");
@@ -109,28 +106,13 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
             return;
         }
 
-        DocumentInformation doc = new()
+        Outcome outcome = new()
         {
-            Name = _activity.Name,
+            Name = _activity.Name ?? string.Empty,
             Description = $"Executed {State.SelectedActivityKey} from {State.SelectedAssemblyKey}."
         };
-        // TODO: If this is created via DI then the Storage Strategy will be injected automatically.
-        AssetBuilder builder = new AssetBuilder()
-            .SetStorageStrategy(StorageStrategy)
-            .SetDocumentInformation(doc)
-            .ConvertModelToGlb()
-            .ExtractViewsAndConvertToSvg()
-            .ExtractSheetsAndConvertToPdf();
-        IResult<IReadOnlyCollection<Asset>> assetsResult = outputs.TryGetPropertyValue<IReadOnlyCollection<Asset>>("Assets");
-        if (assetsResult is Success<IReadOnlyCollection<Asset>> assetsSuccess)
-        {
-            foreach (Asset child in assetsSuccess.Value)
-                await StorageStrategy.RecursiveWriteLocalFilesToStorage(child);
-            builder.AddAssets(assetsSuccess.Value.ToArray());
-        }
 
-        Asset asset = await builder.Build(successModel);
-        AssetState.Assets.Add(asset);
+        VisualizationState.AddOutcome(outcome, outputs);
     }
 
     /// <inheritdoc />
