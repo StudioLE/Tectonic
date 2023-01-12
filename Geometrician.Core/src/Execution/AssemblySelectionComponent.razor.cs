@@ -10,19 +10,19 @@ public class AssemblySelectionComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]
-    public ILogger<AssemblySelectionComponent> Logger { get; set; } = null!;
+    private ILogger<AssemblySelectionComponent> Logger { get; set; } = null!;
 
     /// <inheritdoc cref="NavigationManager"/>
     [Inject]
-    public NavigationManager Navigation { get; set; } = null!;
+    private NavigationManager Navigation { get; set; } = null!;
 
     /// <inheritdoc cref="RunnerState"/>
     [Inject]
-    public RunnerState State { get; set; } = null!;
+    private RunnerState State { get; set; } = null!;
 
     /// <inheritdoc cref="DisplayState"/>
     [Inject]
-    public DisplayState Display { get; set; } = null!;
+    private DisplayState Display { get; set; } = null!;
 
     protected string[] Errors { get; set; } = Array.Empty<string>();
 

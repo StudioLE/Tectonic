@@ -7,7 +7,7 @@ public class TileComponentBase : TemplatedComponentBase
 {
     /// <inheritdoc cref="DisplayState"/>
     [Inject]
-    protected DisplayState Display { get; set; } = default!;
+    private DisplayState Display { get; set; } = default!;
 
     [Parameter]
     public double XScale { get; set; } = 0.5;

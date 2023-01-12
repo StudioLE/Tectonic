@@ -14,7 +14,7 @@ public class ThreeViewerComponentBase : ViewerComponentBase<ExternalAsset>
 
     /// <inheritdoc cref="ModelViewer"/>
     [Inject]
-    protected ModelViewer Three { get; set; } = default!;
+    private ModelViewer Three { get; set; } = default!;
 
     /// <inheritdoc />
     protected override async Task OnAfterRenderAsync(bool firstRender)

@@ -9,19 +9,19 @@ public class ActivitySelectionComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]
-    public ILogger<ActivitySelectionComponent> Logger { get; set; } = null!;
+    private ILogger<ActivitySelectionComponent> Logger { get; set; } = null!;
 
     /// <inheritdoc cref="NavigationManager"/>
     [Inject]
-    public NavigationManager Navigation { get; set; } = null!;
+    private NavigationManager Navigation { get; set; } = null!;
 
     /// <inheritdoc cref="RunnerState"/>
     [Inject]
-    public RunnerState State { get; set; } = null!;
+    private RunnerState State { get; set; } = null!;
 
     /// <inheritdoc cref="IActivityFactory"/>
     [Inject]
-    protected IActivityFactory Factory { get; set; } = default!;
+    private IActivityFactory Factory { get; set; } = default!;
 
     /// <summary>
     /// Binding for the options of the assembly select element.

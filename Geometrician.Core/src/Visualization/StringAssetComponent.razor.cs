@@ -19,11 +19,11 @@ public class StringAssetComponentBase : ViewerComponentBase<IAsset>
 
     /// <inheritdoc cref="IStorageStrategy"/>
     [Inject]
-    protected IStorageStrategy StorageStrategy { get; set; } = default!;
+    private IStorageStrategy StorageStrategy { get; set; } = default!;
 
     /// <inheritdoc cref="Geometrician.Core.Scripts.ObjectUrlStorage"/>
     [Inject]
-    protected ObjectUrlStorage ObjectUrlStorage { get; set; } = default!;
+    private ObjectUrlStorage ObjectUrlStorage { get; set; } = default!;
 
     protected string Content { get; private set; } = string.Empty;
 

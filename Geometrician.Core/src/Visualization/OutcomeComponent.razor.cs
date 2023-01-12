@@ -7,11 +7,11 @@ public class OutcomeComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]
-    protected ILogger<OutcomeComponent> Logger { get; set; } = default!;
+    private ILogger<OutcomeComponent> Logger { get; set; } = default!;
 
     /// <inheritdoc cref="VisualizationState"/>
     [Inject]
-    protected VisualizationState State { get; set; } = default!;
+    private VisualizationState State { get; set; } = default!;
 
     /// <summary>
     /// The id of the card.

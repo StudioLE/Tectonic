@@ -12,11 +12,11 @@ public class RunnerComponentBase : ComponentBase, IDisposable
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]
-    public ILogger<RunnerComponent> Logger { get; set; } = null!;
+    private ILogger<RunnerComponent> Logger { get; set; } = null!;
 
     /// <inheritdoc cref="RunnerState"/>
     [Inject]
-    public RunnerState State { get; set; } = null!;
+    protected RunnerState State { get; set; } = null!;
 
     /// <summary>
     /// The assemblies to populate the <see cref="AssemblySelectionComponent"/> with

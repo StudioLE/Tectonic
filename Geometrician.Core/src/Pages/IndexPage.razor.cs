@@ -10,11 +10,11 @@ public class IndexPageBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]
-    protected ILogger<IndexPage> Logger { get; set; } = default!;
+    private ILogger<IndexPage> Logger { get; set; } = default!;
 
     /// <inheritdoc cref="NavigationManager"/>
     [Inject]
-    protected NavigationManager Navigation { get; set; } = default!;
+    private NavigationManager Navigation { get; set; } = default!;
 
     /// <inheritdoc />
     protected override void OnInitialized()

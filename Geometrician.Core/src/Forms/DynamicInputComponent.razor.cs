@@ -6,7 +6,7 @@ namespace Geometrician.Core.Forms;
 public class DynamicInputComponentBase : ComponentBase
 {
     [Inject]
-    public ILogger<DynamicInputComponent> Logger { get; set; } = default!;
+    private ILogger<DynamicInputComponent> Logger { get; set; } = default!;
 
     [Parameter]
     public PropertyState State { get; set; } = default!;

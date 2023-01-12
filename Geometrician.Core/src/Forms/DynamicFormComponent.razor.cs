@@ -9,7 +9,7 @@ public class DynamicFormComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]
-    protected ILogger<DynamicFormComponent> Logger { get; set; } = default!;
+    private ILogger<DynamicFormComponent> Logger { get; set; } = default!;
 
     /// <inheritdoc cref="DisplayState"/>
     [Inject]

@@ -10,7 +10,7 @@ public class TimeComponentBase : ComponentBase, IDisposable
     private Timer? _timer;
 
     [Inject]
-    public ILogger<TimeComponent> Logger { get; set; } = default!;
+    private ILogger<TimeComponent> Logger { get; set; } = default!;
 
     /// <summary>
     /// The <see cref="System.DateTime"/> to display.
