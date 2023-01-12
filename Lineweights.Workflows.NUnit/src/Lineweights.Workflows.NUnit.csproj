@@ -12,7 +12,7 @@
   <Import Project="..\..\GlobalUsings.src.props" />
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Lineweights.Workflows.Tests" />
+    <InternalsVisibleTo Include="Lineweights.Diagnostics.Tests" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj" />
-    <ProjectReference Include="..\..\Lineweights.Workflows\src\Lineweights.Workflows.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Diagnostics\src\Lineweights.Diagnostics.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using Geometrician.Components.Visualization;
-using Lineweights.Workflows.Visualization;
+using Geometrician.Core.Visualization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

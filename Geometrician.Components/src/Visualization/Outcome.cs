@@ -1,4 +1,4 @@
-﻿using Lineweights.Core.Documents;
+﻿using Lineweights.Core.Assets;
 
 namespace Geometrician.Components.Visualization;
 

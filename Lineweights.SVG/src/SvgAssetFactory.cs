@@ -1,4 +1,5 @@
-﻿using Lineweights.Core.Documents;
+﻿using Lineweights.Core.Assets;
+using Lineweights.Core.Storage;
 using Lineweights.Drawings;
 using Lineweights.SVG.From.Elements;
 using StudioLE.Core.Results;

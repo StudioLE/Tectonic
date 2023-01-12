@@ -1,5 +1,6 @@
 ﻿using System.IO;
-using Lineweights.Core.Documents;
+using Lineweights.Core.Assets;
+using Lineweights.Core.Storage;
 using StudioLE.Core.Conversion;
 using StudioLE.Core.Results;
 

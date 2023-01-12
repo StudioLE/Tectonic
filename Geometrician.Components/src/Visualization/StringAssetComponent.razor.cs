@@ -2,7 +2,8 @@
 using System.IO;
 using CsvHelper;
 using Geometrician.Components.Scripts;
-using Lineweights.Core.Documents;
+using Lineweights.Core.Assets;
+using Lineweights.Core.Storage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

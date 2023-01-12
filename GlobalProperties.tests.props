@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Lineweights.Workflows\samples\Lineweights.Workflows.Samples.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Diagnostics\samples\Lineweights.Diagnostics.Samples.csproj" />
     <ProjectReference Include="..\..\Lineweights.Workflows.NUnit\src\Lineweights.Workflows.NUnit.csproj" />
   </ItemGroup>
 

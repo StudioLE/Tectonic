@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Text;
 using StudioLE.Core.Results;
 using DiffEngine;
-using Lineweights.Workflows.Verification;
+using Lineweights.Diagnostics.Verification;
 using NUnit.Framework.Internal;
 using StudioLE.Core.System;
 

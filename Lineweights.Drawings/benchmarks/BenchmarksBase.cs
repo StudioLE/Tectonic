@@ -1,5 +1,5 @@
+using Lineweights.Diagnostics.Samples;
 using Lineweights.Flex;
-using Lineweights.Workflows.Samples;
 
 namespace Lineweights.Drawings.Benchmarks;
 

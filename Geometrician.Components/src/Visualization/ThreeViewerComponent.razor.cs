@@ -1,5 +1,5 @@
 ﻿using Geometrician.Components.Scripts;
-using Lineweights.Core.Documents;
+using Lineweights.Core.Assets;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using StudioLE.Core.Results;

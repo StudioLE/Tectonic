@@ -1,7 +1,8 @@
 ﻿using System.IO;
 using StudioLE.Core.Results;
 using Elements.Serialization.IFC;
-using Lineweights.Core.Documents;
+using Lineweights.Core.Assets;
+using Lineweights.Core.Storage;
 
 namespace Lineweights.IFC;
 

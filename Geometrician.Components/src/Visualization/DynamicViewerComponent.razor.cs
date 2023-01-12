@@ -1,5 +1,5 @@
-﻿using Lineweights.Core.Documents;
-using Lineweights.Workflows.Documents;
+﻿using Geometrician.Core.Assets;
+using Lineweights.Core.Assets;
 using Microsoft.AspNetCore.Components;
 
 namespace Geometrician.Components.Visualization;

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Lineweights.Core.Serialisation;
+using Lineweights.Diagnostics.Samples;
 using Newtonsoft.Json;
 
 namespace Lineweights.Core.Tests.Serialisation;

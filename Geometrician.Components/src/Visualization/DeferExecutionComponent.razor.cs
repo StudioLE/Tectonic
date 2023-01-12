@@ -1,5 +1,5 @@
 ﻿using Geometrician.Components.Shared;
-using Lineweights.Core.Documents;
+using Lineweights.Core.Assets;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 

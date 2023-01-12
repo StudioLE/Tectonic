@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
-using Lineweights.Core.Documents;
-using Lineweights.Workflows.Hosting;
+using Geometrician.Core.Visualization;
+using Lineweights.Core.Assets;
+using Lineweights.Diagnostics.Hosting;
 using Lineweights.Workflows.NUnit.Execution;
-using Lineweights.Workflows.Visualization;
 using Microsoft.Extensions.DependencyInjection;
 using StudioLE.Core.System;
 

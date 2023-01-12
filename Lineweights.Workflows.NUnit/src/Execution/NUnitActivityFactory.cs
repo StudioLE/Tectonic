@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
+using Geometrician.Core.Execution;
+using Lineweights.Diagnostics.Verification;
 using StudioLE.Core.Results;
-using Lineweights.Workflows.Execution;
-using Lineweights.Workflows.Verification;
 using NUnit.Engine;
 
 namespace Lineweights.Workflows.NUnit.Execution;

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using DiffEngine;
-using Lineweights.Workflows.Verification;
+using Lineweights.Diagnostics.Verification;
 using Newtonsoft.Json.Linq;
 using StudioLE.Core.System;
 

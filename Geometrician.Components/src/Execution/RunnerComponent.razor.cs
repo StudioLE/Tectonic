@@ -1,8 +1,8 @@
 ﻿using System.Collections.Specialized;
 using System.Reflection;
+using Geometrician.Core.Samples;
 using Lineweights.Drawings.Samples;
 using Lineweights.Flex.Samples;
-using Lineweights.Workflows.Samples;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 

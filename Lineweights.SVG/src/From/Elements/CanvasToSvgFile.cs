@@ -1,6 +1,7 @@
 ﻿using System.IO;
+using Lineweights.Core.Assets;
+using Lineweights.Core.Storage;
 using StudioLE.Core.Results;
-using Lineweights.Core.Documents;
 using Lineweights.Drawings;
 using StudioLE.Core.Exceptions;
 

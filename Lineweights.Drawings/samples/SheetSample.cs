@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Lineweights.Core.Documents;
+using Lineweights.Core.Assets;
+using Lineweights.Diagnostics.Samples;
 using Lineweights.Flex;
-using Lineweights.Workflows.Samples;
 
 namespace Lineweights.Drawings.Samples;
 

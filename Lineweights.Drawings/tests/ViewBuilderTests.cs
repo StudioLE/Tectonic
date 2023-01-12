@@ -1,3 +1,4 @@
+using Lineweights.Diagnostics.Samples;
 using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Drawings.Tests;

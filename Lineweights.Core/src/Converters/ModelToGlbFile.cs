@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Elements.Serialization.glTF;
-using Lineweights.Core.Documents;
+using Lineweights.Core.Assets;
+using Lineweights.Core.Storage;
 using StudioLE.Core.Conversion;
 using StudioLE.Core.Results;
 

@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using StudioLE.Core.Results;
 using Geometrician.Components.Visualization;
-using Lineweights.Core.Documents;
-using Lineweights.Workflows;
-using Lineweights.Workflows.Execution;
+using Geometrician.Core;
+using Geometrician.Core.Execution;
+using Lineweights.Core.Storage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
