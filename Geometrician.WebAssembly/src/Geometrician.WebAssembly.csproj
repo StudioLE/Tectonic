@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Components\src\Geometrician.Components.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using Geometrician.Core.Visualization;
+using Geometrician.Components.Visualization;
 using Lineweights.Workflows.Visualization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

@@ -88,7 +88,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.Workflows.Sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.WebAssemblyAssembly", "Geometrician.WebAssembly\src\Geometrician.WebAssembly.csproj", "{1834A1DD-5E94-4C2C-ACE4-BCA40C490782}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.Core", "Geometrician.Core\src\Geometrician.Core.csproj", "{F5D4093C-518F-4D0A-B1CA-1AC672B2D4CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.Components", "Geometrician.Components\src\Geometrician.Components.csproj", "{F5D4093C-518F-4D0A-B1CA-1AC672B2D4CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{1BC91E56-935C-40B0-A013-49CBD3511C2F}"
 EndProject

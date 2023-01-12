@@ -77,7 +77,7 @@ jobs:
         run: dotnet workload install wasm-tools-net6
 
       - name: Restore npm Dependencies
-        working-directory: Geometrician.Core/src
+        working-directory: Geometrician.Components/src
         run: |
           npm install
           npm run build
@@ -204,7 +204,7 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Restore npm Dependencies
-        working-directory: Geometrician.Core/src
+        working-directory: Geometrician.Components/src
         run: |
           npm install
           npm run build

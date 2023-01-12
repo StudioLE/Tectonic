@@ -1,7 +1,7 @@
-using Geometrician.Core.Execution;
-using Geometrician.Core.Scripts;
-using Geometrician.Core.Shared;
-using Geometrician.Core.Visualization;
+using Geometrician.Components.Execution;
+using Geometrician.Components.Scripts;
+using Geometrician.Components.Shared;
+using Geometrician.Components.Visualization;
 using Geometrician.WebAssembly;
 using Lineweights.Core.Documents;
 using Lineweights.Workflows.Execution;

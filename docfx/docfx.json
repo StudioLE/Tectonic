@@ -3,9 +3,9 @@
     {
       "src": [
         {
-          "src": "../Geometrician.Core/src",
+          "src": "../Geometrician.Components/src",
           "files": [
-            "bin/Release/**/Geometrician.Core.dll"
+            "bin/Release/**/Geometrician.Components.dll"
           ],
           "exclude": [
             "**/obj/**"
