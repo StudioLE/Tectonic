@@ -41,6 +41,6 @@ public abstract class InternalAssetFactoryBase<TSource> : IAssetFactory<TSource,
             Asset.Content = success.Value;
         }
         else
-            Result = new Failure();
+            Result = new Failure(result);
     }
 }

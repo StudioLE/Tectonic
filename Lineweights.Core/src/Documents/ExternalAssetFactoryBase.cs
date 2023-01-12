@@ -42,6 +42,6 @@ public abstract class ExternalAssetFactoryBase<TSource> : IAssetFactory<TSource,
             Asset.Location = success.Value;
         }
         else
-            Result = new Failure();
+            Result = new Failure(result);
     }
 }

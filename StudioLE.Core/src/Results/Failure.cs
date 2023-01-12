@@ -9,16 +9,30 @@ public class Failure : IResult
 
     public Exception? Exception { get; }
 
+    [Obsolete("Failure should contain at least one error.")]
+    public Failure()
+    {
+        Errors = new[] { "An unspecified error occurred." };
+    }
+
     public Failure(params string[] errors)
     {
-        if (!errors.Any())
-            throw new("Failure must contain at least one error.");
-        Errors = errors;
+        Errors = errors.Any()
+            ? errors
+            : new[] { "An unspecified error occurred." };
     }
 
     public Failure(string error, params string[] errors)
     {
         Errors = errors.Prepend(error).ToArray();
+    }
+
+    public Failure(IResult<object> result, params string[] error)
+    {
+        Errors = error
+            .Concat(result.Errors)
+            .ToArray();
+        Warnings = result.Warnings;
     }
 
     public Failure(Exception exception, params string[] errors)
@@ -43,6 +57,12 @@ public class Failure<T> : IResult<T>
 
     public Exception? Exception { get; }
 
+    [Obsolete("Failure should contain at least one error.")]
+    public Failure()
+    {
+        Errors = new[] { "An unspecified error occurred." };
+    }
+
     public Failure(params string[] errors)
     {
         if (!errors.Any())
@@ -53,6 +73,14 @@ public class Failure<T> : IResult<T>
     public Failure(string error, params string[] errors)
     {
         Errors = errors.Prepend(error).ToArray();
+    }
+
+    public Failure(IResult<object> result, params string[] error)
+    {
+        Errors = error
+            .Concat(result.Errors)
+            .ToArray();
+        Warnings = result.Warnings;
     }
 
     public Failure(Exception exception, params string[] errors)
