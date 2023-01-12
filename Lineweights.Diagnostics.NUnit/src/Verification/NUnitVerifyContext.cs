@@ -8,13 +8,13 @@
 using System.IO;
 using System.Reflection;
 using System.Text;
-using StudioLE.Core.Results;
 using DiffEngine;
 using Lineweights.Diagnostics.Verification;
 using NUnit.Framework.Internal;
+using StudioLE.Core.Results;
 using StudioLE.Core.System;
 
-namespace Lineweights.Workflows.NUnit.Verification;
+namespace Lineweights.Diagnostics.NUnit.Verification;
 
 /// <summary>
 /// The NUnit specific <see cref="IVerifyContext"/>.

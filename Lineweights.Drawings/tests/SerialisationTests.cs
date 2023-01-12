@@ -1,6 +1,6 @@
+using Lineweights.Diagnostics.NUnit.Verification;
 using Lineweights.Diagnostics.Samples;
 using Lineweights.Flex;
-using Lineweights.Workflows.NUnit.Verification;
 
 namespace Lineweights.Drawings.Tests;
 

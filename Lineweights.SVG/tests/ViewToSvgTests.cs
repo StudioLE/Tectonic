@@ -1,10 +1,11 @@
 using System.IO;
 using Lineweights.Core.Assets;
+using Lineweights.Diagnostics.NUnit;
+using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Diagnostics.Samples;
 using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.SVG.From.Elements;
-using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.SVG.Tests;
 

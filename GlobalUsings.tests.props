@@ -11,11 +11,7 @@
     <Using Include="Lineweights.Core.Constraints" />
     <Using Include="Lineweights.Core.Elements" />
     <Using Include="Lineweights.Core.Geometry" />
-    <Using Include="Lineweights.Workflows.NUnit" />
-    <Using Include="Lineweights.Workflows.Samples" />
-    <Using Include="Lineweights.Workflows" />
-    <Using Alias="Is" Include="Lineweights.Workflows.NUnit.Is" />
-    <Using Alias="Verify" Include="Lineweights.Workflows.Verification.Verify" />
+    <Using Alias="Verify" Include="Lineweights.Diagnostics.Verification.Verify" />
     <Using Static="true" Include="Lineweights.Core.Elements.MaterialHelpers" />
   </ItemGroup>
 

@@ -1,11 +1,12 @@
 using System.IO;
 using Lineweights.Core.Assets;
+using Lineweights.Diagnostics.NUnit;
+using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Diagnostics.Samples;
 using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.Flex;
 using Lineweights.PDF.From.Elements;
-using Lineweights.Workflows.NUnit.Visualization;
 using QuestPDF.Fluent;
 
 namespace Lineweights.PDF.Tests;

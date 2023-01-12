@@ -1,4 +1,4 @@
-﻿using Lineweights.Workflows.NUnit.Visualization;
+﻿using Lineweights.Diagnostics.NUnit.Visualization;
 
 namespace Lineweights.Core.Tests.Elements;
 

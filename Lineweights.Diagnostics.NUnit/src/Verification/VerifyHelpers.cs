@@ -4,7 +4,7 @@ using Lineweights.Diagnostics.Verification;
 using Newtonsoft.Json.Linq;
 using StudioLE.Core.System;
 
-namespace Lineweights.Workflows.NUnit.Verification;
+namespace Lineweights.Diagnostics.NUnit.Verification;
 
 public static class VerifyHelpers
 {

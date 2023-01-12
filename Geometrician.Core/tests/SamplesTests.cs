@@ -1,8 +1,8 @@
 ﻿using Geometrician.Core.Samples;
 using Lineweights.Core.Assets;
+using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Diagnostics.Samples;
 using Lineweights.Drawings;
-using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Geometrician.Core.Tests;
 

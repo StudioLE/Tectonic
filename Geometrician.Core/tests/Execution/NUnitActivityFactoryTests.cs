@@ -1,6 +1,6 @@
 using System.Reflection;
 using Geometrician.Core.Execution;
-using Lineweights.Workflows.NUnit.Execution;
+using Lineweights.Diagnostics.NUnit.Execution;
 using StudioLE.Core.Results;
 using StudioLE.Core.System;
 

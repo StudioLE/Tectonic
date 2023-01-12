@@ -1,7 +1,7 @@
 using System.IO;
 using StudioLE.Core.System.IO;
 
-namespace Lineweights.Workflows.NUnit;
+namespace Lineweights.Diagnostics.NUnit;
 
 /// <summary>
 /// Methods to help with creating and viewing samples.

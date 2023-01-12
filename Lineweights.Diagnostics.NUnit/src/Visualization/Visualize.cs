@@ -3,11 +3,11 @@ using System.Text;
 using Geometrician.Core.Visualization;
 using Lineweights.Core.Assets;
 using Lineweights.Diagnostics.Hosting;
-using Lineweights.Workflows.NUnit.Execution;
+using Lineweights.Diagnostics.NUnit.Execution;
 using Microsoft.Extensions.DependencyInjection;
 using StudioLE.Core.System;
 
-namespace Lineweights.Workflows.NUnit.Visualization;
+namespace Lineweights.Diagnostics.NUnit.Visualization;
 
 /// <summary>
 /// Execute an <see cref="IVisualizationStrategy"/> after a test has run.

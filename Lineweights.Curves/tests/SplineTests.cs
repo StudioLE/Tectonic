@@ -1,6 +1,6 @@
 using Lineweights.Curves.Interpolation;
-using Lineweights.Workflows.NUnit.Verification;
-using Lineweights.Workflows.NUnit.Visualization;
+using Lineweights.Diagnostics.NUnit.Verification;
+using Lineweights.Diagnostics.NUnit.Visualization;
 
 namespace Lineweights.Curves.Tests;
 

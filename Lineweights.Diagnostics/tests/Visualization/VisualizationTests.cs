@@ -1,8 +1,8 @@
 using Geometrician.Core.Visualization;
 using Lineweights.Diagnostics.Hosting;
+using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Diagnostics.Samples;
 using Lineweights.Diagnostics.Visualization;
-using Lineweights.Workflows.NUnit.Visualization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lineweights.Diagnostics.Tests.Visualization;

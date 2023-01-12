@@ -3,10 +3,10 @@ using System.Xml;
 using System.Xml.Linq;
 using Geometrician.Core.Execution;
 using Lineweights.Diagnostics.Verification;
-using StudioLE.Core.Results;
 using NUnit.Engine;
+using StudioLE.Core.Results;
 
-namespace Lineweights.Workflows.NUnit.Execution;
+namespace Lineweights.Diagnostics.NUnit.Execution;
 
 /// <inheritdoc cref="IActivityFactory"/>
 public class NUnitActivityFactory : IActivityFactory, IDisposable

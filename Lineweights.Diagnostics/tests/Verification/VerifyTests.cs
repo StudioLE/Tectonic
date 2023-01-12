@@ -1,6 +1,6 @@
 using System.IO;
+using Lineweights.Diagnostics.NUnit.Verification;
 using Lineweights.Diagnostics.Verification;
-using Lineweights.Workflows.NUnit.Verification;
 
 namespace Lineweights.Diagnostics.Tests.Verification;
 

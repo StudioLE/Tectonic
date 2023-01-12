@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework.Constraints;
 
-namespace Lineweights.Workflows.NUnit;
+namespace Lineweights.Diagnostics.NUnit;
 
 /// <summary>
 /// Compare an actual value with an expected value within a given a tolerance.

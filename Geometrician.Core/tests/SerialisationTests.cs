@@ -1,7 +1,7 @@
 using Elements.Serialization.JSON;
 using Lineweights.Core.Assets;
 using Lineweights.Core.Serialisation;
-using Lineweights.Workflows.NUnit.Verification;
+using Lineweights.Diagnostics.NUnit.Verification;
 using Newtonsoft.Json;
 
 namespace Geometrician.Core.Tests;

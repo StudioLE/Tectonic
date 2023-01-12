@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Workflows.NUnit", "Lineweights.Workflows.NUnit\src\Lineweights.Workflows.NUnit.csproj", "{18E202EE-C9BF-4715-824D-3EBCDDB847B6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Curves", "Lineweights.Curves\src\Lineweights.Curves.csproj", "{B4AE41A8-DF28-4405-9CAD-6922FE869740}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lineweights.Curves.Tests", "Lineweights.Curves\tests\Lineweights.Curves.Tests.csproj", "{58F45B15-0759-451C-BEFF-4031A76B2AA9}"
@@ -104,16 +102,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.Diagnostics.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.Diagnostics.Samples", "Lineweights.Diagnostics\samples\Lineweights.Diagnostics.Samples.csproj", "{34BC15B7-E6F9-4ADE-BD9B-E7A4667447C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lineweights.Diagnostics.NUnit", "Lineweights.Diagnostics.NUnit\src\Lineweights.Diagnostics.NUnit.csproj", "{59A1DFFE-52CD-43B7-A27C-36970F82F076}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{18E202EE-C9BF-4715-824D-3EBCDDB847B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18E202EE-C9BF-4715-824D-3EBCDDB847B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18E202EE-C9BF-4715-824D-3EBCDDB847B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18E202EE-C9BF-4715-824D-3EBCDDB847B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B4AE41A8-DF28-4405-9CAD-6922FE869740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B4AE41A8-DF28-4405-9CAD-6922FE869740}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4AE41A8-DF28-4405-9CAD-6922FE869740}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -234,12 +230,15 @@ Global
 		{34BC15B7-E6F9-4ADE-BD9B-E7A4667447C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34BC15B7-E6F9-4ADE-BD9B-E7A4667447C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34BC15B7-E6F9-4ADE-BD9B-E7A4667447C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59A1DFFE-52CD-43B7-A27C-36970F82F076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A1DFFE-52CD-43B7-A27C-36970F82F076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A1DFFE-52CD-43B7-A27C-36970F82F076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59A1DFFE-52CD-43B7-A27C-36970F82F076}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{18E202EE-C9BF-4715-824D-3EBCDDB847B6} = {1DA041CF-77AA-4489-A353-99206FC09556}
 		{DD74D331-9F85-489F-988D-BF60D367DD0A} = {DA7B57FA-5CD1-4DEF-9A9A-9690F4036F18}
 		{8D32AE72-8DFE-48C2-935E-0433A6A08EA4} = {DA7B57FA-5CD1-4DEF-9A9A-9690F4036F18}
 		{9F6DC194-4AF1-42B1-B3E3-19BB2821F0A3} = {DA7B57FA-5CD1-4DEF-9A9A-9690F4036F18}
@@ -273,6 +272,7 @@ Global
 		{BBE73CDF-44B4-48B5-867F-89BF39A0AF4C} = {1DA041CF-77AA-4489-A353-99206FC09556}
 		{A0C9B3FD-E4EF-4CC5-942A-37D8F6A2C89F} = {1DA041CF-77AA-4489-A353-99206FC09556}
 		{34BC15B7-E6F9-4ADE-BD9B-E7A4667447C7} = {1DA041CF-77AA-4489-A353-99206FC09556}
+		{59A1DFFE-52CD-43B7-A27C-36970F82F076} = {1DA041CF-77AA-4489-A353-99206FC09556}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB249DC8-BB8F-4BD8-A5D6-2206C1BC3442}

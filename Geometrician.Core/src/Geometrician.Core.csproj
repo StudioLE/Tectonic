@@ -14,7 +14,7 @@
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Geometrician.Components" />
-    <InternalsVisibleTo Include="Lineweights.Workflows.NUnit" />
+    <InternalsVisibleTo Include="Lineweights.Diagnostics.NUnit" />
   </ItemGroup>
 
   <ItemGroup>

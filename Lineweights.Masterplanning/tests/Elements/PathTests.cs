@@ -1,7 +1,7 @@
 using Lineweights.Curves;
 using Lineweights.Curves.Interpolation;
+using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Masterplanning.Elements;
-using Lineweights.Workflows.NUnit.Visualization;
 
 namespace Lineweights.Masterplanning.Tests.Elements;
 
