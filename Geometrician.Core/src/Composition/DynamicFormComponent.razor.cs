@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
 
-namespace Geometrician.Core.Forms;
+namespace Geometrician.Core.Composition;
 
 public class DynamicFormComponentBase : ComponentBase
 {

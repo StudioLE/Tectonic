@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
-namespace Geometrician.Core.Forms;
+namespace Geometrician.Core.Composition;
 
 public class DynamicInputComponentBase : ComponentBase
 {

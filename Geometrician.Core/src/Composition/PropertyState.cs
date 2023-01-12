@@ -2,7 +2,7 @@
 using System.Reflection;
 using StudioLE.Core.Results;
 
-namespace Geometrician.Core.Forms;
+namespace Geometrician.Core.Composition;
 
 public class PropertyState
 {

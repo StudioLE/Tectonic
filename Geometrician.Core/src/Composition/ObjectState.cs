@@ -1,4 +1,4 @@
-﻿namespace Geometrician.Core.Forms;
+﻿namespace Geometrician.Core.Composition;
 
 public class ObjectState
 {
