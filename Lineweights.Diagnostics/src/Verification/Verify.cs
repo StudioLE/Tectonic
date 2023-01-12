@@ -155,7 +155,7 @@ public static class Verify
 
     private static void RegisterContexts()
     {
-        AssemblyHelpers.LoadAllAssemblies("Lineweights.Workflows.");
+        AssemblyHelpers.LoadAllAssemblies("Lineweights.Diagnostics.");
         IEnumerable<Type> contextTypes = AppDomain.CurrentDomain
             .GetAssemblies()
             .SelectMany(x => x.GetTypes())
