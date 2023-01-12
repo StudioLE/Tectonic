@@ -146,34 +146,34 @@
     {
       "src": [
         {
-          "src": "../Lineweights.Workflows/src",
+          "src": "../Lineweights.Diagnostics/src",
           "files": [
-            "bin/Release/**/Lineweights.Workflows.dll"
+            "bin/Release/**/Lineweights.Diagnostics.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         },
         {
-          "src": "../Lineweights.Workflows.NUnit/src",
+          "src": "../Lineweights.Diagnostics.NUnit/src",
           "files": [
-            "bin/Release/**/Lineweights.Workflows.NUnit.dll"
+            "bin/Release/**/Lineweights.Diagnostics.NUnit.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         },
         {
-          "src": "../Lineweights.Workflows/samples",
+          "src": "../Lineweights.Diagnostics/samples",
           "files": [
-            "bin/Release/**/Lineweights.Workflows.Samples.dll"
+            "bin/Release/**/Lineweights.Diagnostics.Samples.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         }
       ],
-      "dest": "Workflows",
+      "dest": "Diagnostics",
       "disableDefaultFilter": false,
       "force": true
     }
