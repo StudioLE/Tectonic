@@ -28,7 +28,7 @@ public static class VerifyHelpers
             await DiffRunner.LaunchAsync(actualFile.FullName, expectedFile.FullName);
     }
 
-    public static void SerialisationAsModel<TElement>(TElement expectedElement) where TElement : Element
+    public static void SerializationAsModel<TElement>(TElement expectedElement) where TElement : Element
     {
         Model expectedModel = new();
         // TODO: Sub elements MUST be added before the element.
@@ -58,7 +58,7 @@ public static class VerifyHelpers
             // Verify json
             await Verify.String(json, json2);
             Assert.That(actualModel.Elements.Count, Is.EqualTo(expectedModel.Elements.Count), "Element count.");
-            Assert.That(errors, Is.Empty, "Serialisation errors.");
+            Assert.That(errors, Is.Empty, "Serialization errors.");
             TElement deserializedElement = expectedModel
                 .AllElementsOfType<TElement>()
                 .First();

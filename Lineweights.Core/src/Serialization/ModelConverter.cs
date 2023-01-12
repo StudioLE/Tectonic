@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using StudioLE.Core.System;
 
-namespace Lineweights.Core.Serialisation;
+namespace Lineweights.Core.Serialization;
 
 public class ModelConverter : JsonConverter<Model>
 {

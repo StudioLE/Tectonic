@@ -324,7 +324,7 @@ internal sealed class SplineTests
     }
 
     [Test]
-    public void Spline_Serialisation()
+    public void Spline_Serialization()
     {
         // Arrange
         var sourceSpline = new Spline(_points)
@@ -340,7 +340,7 @@ internal sealed class SplineTests
         ModelCurve element = new(sourceSpline, MaterialByName("Gray"));
 
         // Act
-        VerifyHelpers.SerialisationAsModel(element);
+        VerifyHelpers.SerializationAsModel(element);
     }
 
     [TearDown]

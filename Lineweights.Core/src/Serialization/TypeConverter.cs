@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using StudioLE.Core.System;
 
-namespace Lineweights.Core.Serialisation;
+namespace Lineweights.Core.Serialization;
 
 /// <summary>
 /// Convert a <see cref="Type"/> to and from JSON.

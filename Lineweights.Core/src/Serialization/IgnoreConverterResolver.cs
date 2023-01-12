@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Lineweights.Core.Serialisation;
+namespace Lineweights.Core.Serialization;
 
 /// <summary>
 /// Ignore the specified converters.

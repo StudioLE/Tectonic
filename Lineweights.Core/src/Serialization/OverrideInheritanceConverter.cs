@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Lineweights.Core.Serialisation;
+namespace Lineweights.Core.Serialization;
 
 /// <summary>
 /// Disable the behaviour of <see cref="JsonInheritanceConverter"/>.

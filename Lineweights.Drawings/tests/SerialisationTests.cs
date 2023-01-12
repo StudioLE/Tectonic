@@ -4,7 +4,7 @@ using Lineweights.Flex;
 
 namespace Lineweights.Drawings.Tests;
 
-internal sealed class SerialisationTests
+internal sealed class SerializationTests
 {
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
     private ISequenceBuilder _sequenceBuilder = default!;
@@ -18,7 +18,7 @@ internal sealed class SerialisationTests
     }
 
     [Test]
-    public void Serialisation_View()
+    public void Serialization_View()
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -30,11 +30,11 @@ internal sealed class SerialisationTests
         model.AddElements(view);
 
         // Act
-        VerifyHelpers.SerialisationAsModel(view);
+        VerifyHelpers.SerializationAsModel(view);
     }
 
     [Test]
-    public void Serialisation_ViewScope()
+    public void Serialization_ViewScope()
     {
         // Arrange
         ViewBuilder builder = new ViewBuilder()
@@ -44,11 +44,11 @@ internal sealed class SerialisationTests
         View view = builder.Build();
 
         // Act
-        VerifyHelpers.SerialisationAsModel(view.Scope);
+        VerifyHelpers.SerializationAsModel(view.Scope);
     }
 
     [Test]
-    public void Serialisation_SheetContent()
+    public void Serialization_SheetContent()
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -80,11 +80,11 @@ internal sealed class SerialisationTests
         Sheet sheet = sheetBuilder.Build();
 
         // Act
-        VerifyHelpers.SerialisationAsModel(sheet.Content);
+        VerifyHelpers.SerializationAsModel(sheet.Content);
     }
 
     [Test]
-    public void Serialisation_Sheet()
+    public void Serialization_Sheet()
     {
         // Arrange
         ViewDirection[] viewDirections =
@@ -116,6 +116,6 @@ internal sealed class SerialisationTests
         Sheet expectedSheet = sheetBuilder.Build();
 
         // Act
-        VerifyHelpers.SerialisationAsModel(expectedSheet);
+        VerifyHelpers.SerializationAsModel(expectedSheet);
     }
 }

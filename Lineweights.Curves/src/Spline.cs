@@ -1,4 +1,4 @@
-﻿using Lineweights.Core.Serialisation;
+﻿using Lineweights.Core.Serialization;
 using Lineweights.Curves.Interpolation;
 using Newtonsoft.Json;
 using StudioLE.Core.Exceptions;

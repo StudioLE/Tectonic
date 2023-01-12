@@ -1,14 +1,14 @@
 ﻿using System.IO;
-using Lineweights.Core.Serialisation;
+using Lineweights.Core.Serialization;
 using Lineweights.Diagnostics.Samples;
 using Newtonsoft.Json;
 
-namespace Lineweights.Core.Tests.Serialisation;
+namespace Lineweights.Core.Tests.Serialization;
 
-internal sealed class SerialisationTests
+internal sealed class SerializationTests
 {
     [Test]
-    public async Task Serialisation_FileInfoConverter()
+    public async Task Serialization_FileInfoConverter()
     {
         // Arrange
         FileInfo expected = new(Path.GetTempFileName());
@@ -26,7 +26,7 @@ internal sealed class SerialisationTests
     }
 
     [Test]
-    public async Task Serialisation_TypeConverter()
+    public async Task Serialization_TypeConverter()
     {
         // Arrange
         Type expected = typeof(HashCode);
@@ -46,7 +46,7 @@ internal sealed class SerialisationTests
 
     [TestCase(Scenes.Name.GeometricElements)]
     [TestCase(Scenes.Name.Brickwork)]
-    public async Task Serialisation_ModelConverter(Scenes.Name name)
+    public async Task Serialization_ModelConverter(Scenes.Name name)
     {
         // Arrange
         Model model = Scenes.FromJson(name);

@@ -1,15 +1,15 @@
 using Elements.Serialization.JSON;
 using Lineweights.Core.Assets;
-using Lineweights.Core.Serialisation;
+using Lineweights.Core.Serialization;
 using Lineweights.Diagnostics.NUnit.Verification;
 using Newtonsoft.Json;
 
 namespace Geometrician.Core.Tests;
 
-internal sealed class SerialisationTests
+internal sealed class SerializationTests
 {
     [Test]
-    public void Serialisation_InternalAsset()
+    public void Serialization_InternalAsset()
     {
         // Arrange
         JsonSerializerSettings settings = new()
@@ -41,7 +41,7 @@ internal sealed class SerialisationTests
     }
 
     [Test]
-    public void Serialisation_ExternalAsset()
+    public void Serialization_ExternalAsset()
     {
         // Arrange
         JsonSerializerSettings settings = new()
@@ -73,7 +73,7 @@ internal sealed class SerialisationTests
     }
 
     [Test]
-    public void Serialisation_InternalAsset_InModel()
+    public void Serialization_InternalAsset_InModel()
     {
         // Arrange
         InternalAsset asset = new()
@@ -86,11 +86,11 @@ internal sealed class SerialisationTests
 
         // Act
         // Assert
-        VerifyHelpers.SerialisationAsModel(asset);
+        VerifyHelpers.SerializationAsModel(asset);
     }
 
     [Test]
-    public void Serialisation_ExternalAsset_InModel()
+    public void Serialization_ExternalAsset_InModel()
     {
         // Arrange
         ExternalAsset asset = new()
@@ -103,6 +103,6 @@ internal sealed class SerialisationTests
 
         // Act
         // Assert
-        VerifyHelpers.SerialisationAsModel(asset);
+        VerifyHelpers.SerializationAsModel(asset);
     }
 }

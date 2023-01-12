@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Lineweights.Core.Serialisation;
+namespace Lineweights.Core.Serialization;
 
 /// <summary>
 /// Serialise an interface or abstract to a concrete type.
@@ -22,12 +22,12 @@ public class AbstractConverter : JsonConverter
         if (proxy is null
             || proxy.Type is null
             || proxy.Properties is null)
-            throw new($"JSON de-serialisation failed. JSON was not a {nameof(Proxy)}.");
+            throw new($"JSON de-Serialization failed. JSON was not a {nameof(Proxy)}.");
         if (!type.IsAssignableFrom(proxy.Type))
-            throw new($"JSON de-serialisation failed. {proxy.Type} is not assignable from {type}");
+            throw new($"JSON de-Serialization failed. {proxy.Type} is not assignable from {type}");
         object? result = proxy.Properties.ToObject(proxy.Type);
         if (result is null)
-            throw new($"JSON de-serialisation failed. JSON was not a {type}.");
+            throw new($"JSON de-Serialization failed. JSON was not a {type}.");
         return result;
     }
 
