@@ -28,8 +28,4 @@
     <ProjectReference Include="..\..\StudioLE.Core\src\StudioLE.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Documents\DocumentInformation.cs" />
-  </ItemGroup>
-
 </Project>

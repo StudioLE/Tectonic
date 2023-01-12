@@ -27,7 +27,7 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
 
     /// <inheritdoc cref="VisualizationState"/>
     [Inject]
-    protected VisualizationState VisualizationState { get; set; } = default!;
+    protected VisualizationState Visualization { get; set; } = default!;
 
     /// <inheritdoc cref="IStorageStrategy"/>
     [Inject]
@@ -112,7 +112,7 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
             Description = $"Executed {State.SelectedActivityKey} from {State.SelectedAssemblyKey}."
         };
 
-        VisualizationState.AddOutcome(outcome, outputs);
+        Visualization.AddOutcome(outcome, outputs);
     }
 
     /// <inheritdoc />
