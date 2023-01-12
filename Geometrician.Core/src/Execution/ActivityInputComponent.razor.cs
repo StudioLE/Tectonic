@@ -21,9 +21,9 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
     [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
-    /// <inheritdoc cref="RunnerState"/>
+    /// <inheritdoc cref="ExecutionState"/>
     [Inject]
-    private RunnerState State { get; set; } = null!;
+    private ExecutionState Execution { get; set; } = null!;
 
     /// <inheritdoc cref="VisualizationState"/>
     [Inject]
@@ -45,18 +45,18 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {State.SelectedActivityKey} Assembly: {State.SelectedActivityKey}");
-        if (!State.TryGetAssemblyByKey(State.SelectedAssemblyKey, out Assembly? assembly))
+        Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Execution.SelectedActivityKey} Assembly: {Execution.SelectedActivityKey}");
+        if (!Execution.TryGetAssemblyByKey(Execution.SelectedAssemblyKey, out Assembly? assembly))
         {
-            State.SelectedAssemblyKey = string.Empty;
+            Execution.SelectedAssemblyKey = string.Empty;
             return;
         }
 
-        IResult<ActivityCommand> result = Factory.TryCreateByKey(assembly!, State.SelectedActivityKey);
+        IResult<ActivityCommand> result = Factory.TryCreateByKey(assembly!, Execution.SelectedActivityKey);
         if (result is not Success<ActivityCommand> success)
         {
-            State.ShowError(Logger, "Failed to load activity. Method does not exist.");
-            State.SelectedActivityKey = string.Empty;
+            Execution.ShowError(Logger, "Failed to load activity. Method does not exist.");
+            Execution.SelectedActivityKey = string.Empty;
             return;
         }
         _activity = success;
@@ -66,12 +66,12 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
 
     protected void BuildAndExecute()
     {
-        State.Messages.Clear();
+        Execution.Messages.Clear();
         Logger.LogDebug($"{nameof(BuildAndExecute)} called.");
 
         if (_activity is null)
         {
-            State.ShowError(Logger, "Failed to load activity. Method does not exist.");
+            Execution.ShowError(Logger, "Failed to load activity. Method does not exist.");
             return;
         }
         _activity.Inputs = Inputs.ToArray();
@@ -89,12 +89,12 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
         }
         catch (TargetInvocationException e)
         {
-            State.ShowError(Logger, e.InnerException ?? e, "Execution failed");
+            Execution.ShowError(Logger, e.InnerException ?? e, "Execution failed");
             return;
         }
         catch (Exception e)
         {
-            State.ShowError(Logger, e, "Execution failed");
+            Execution.ShowError(Logger, e, "Execution failed");
             return;
         }
         Logger.LogDebug("Execution completed.");
@@ -102,14 +102,14 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
         IResult<Model> model = outputs.TryGetPropertyValue<Model>("Model");
         if (model is not Success<Model> successModel)
         {
-            State.ShowWarning(Logger, "Activity output was not a model.");
+            Execution.ShowWarning(Logger, "Activity output was not a model.");
             return;
         }
 
         Outcome outcome = new()
         {
             Name = _activity.Name ?? string.Empty,
-            Description = $"Executed {State.SelectedActivityKey} from {State.SelectedAssemblyKey}."
+            Description = $"Executed {Execution.SelectedActivityKey} from {Execution.SelectedAssemblyKey}."
         };
 
         Visualization.AddOutcome(outcome, outputs);

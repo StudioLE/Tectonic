@@ -15,9 +15,9 @@ public class ActivitySelectionComponentBase : ComponentBase
     [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
-    /// <inheritdoc cref="RunnerState"/>
+    /// <inheritdoc cref="ExecutionState"/>
     [Inject]
-    private RunnerState State { get; set; } = null!;
+    private ExecutionState Execution { get; set; } = null!;
 
     /// <inheritdoc cref="IActivityFactory"/>
     [Inject]
@@ -36,8 +36,8 @@ public class ActivitySelectionComponentBase : ComponentBase
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {State.SelectedActivityKey} Assembly: {State.SelectedActivityKey}");
-        if (!State.TryGetAssemblyByKey(State.SelectedAssemblyKey, out Assembly? assembly))
+        Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Execution.SelectedActivityKey} Assembly: {Execution.SelectedActivityKey}");
+        if (!Execution.TryGetAssemblyByKey(Execution.SelectedAssemblyKey, out Assembly? assembly))
             return;
         ActivitySelectOptions = Factory.AllActivityKeysInAssembly(assembly!).ToArray();
         if (ActivitySelectOptions.Any())
@@ -47,6 +47,6 @@ public class ActivitySelectionComponentBase : ComponentBase
     protected void SetActivity()
     {
         Logger.LogDebug($"{nameof(SetActivity)} called with {ActivitySelectValue}.");
-        Navigation.NavigateTo($"/run/{State.SelectedAssemblyKey}/{ActivitySelectValue}");
+        Navigation.NavigateTo($"/run/{Execution.SelectedAssemblyKey}/{ActivitySelectValue}");
     }
 }

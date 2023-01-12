@@ -5,12 +5,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Geometrician.Core.Execution;
 
-// TODO: Rename to ExecutionState
-public class RunnerState
+public class ExecutionState
 {
-    private readonly ILogger<RunnerState> _logger;
+    private readonly ILogger<ExecutionState> _logger;
 
-    public RunnerState(ILogger<RunnerState> logger)
+    public ExecutionState(ILogger<ExecutionState> logger)
     {
         _logger = logger;
     }

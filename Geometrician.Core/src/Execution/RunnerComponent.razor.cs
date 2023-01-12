@@ -14,9 +14,9 @@ public class RunnerComponentBase : ComponentBase, IDisposable
     [Inject]
     private ILogger<RunnerComponent> Logger { get; set; } = null!;
 
-    /// <inheritdoc cref="RunnerState"/>
+    /// <inheritdoc cref="ExecutionState"/>
     [Inject]
-    protected RunnerState State { get; set; } = null!;
+    protected ExecutionState Execution { get; set; } = null!;
 
     /// <summary>
     /// The assemblies to populate the <see cref="AssemblySelectionComponent"/> with
@@ -41,14 +41,14 @@ public class RunnerComponentBase : ComponentBase, IDisposable
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        State.Messages.CollectionChanged += OnMessagesChanged;
+        Execution.Messages.CollectionChanged += OnMessagesChanged;
     }
 
     /// <inheritdoc />
     protected override void OnParametersSet()
     {
-        State.SelectedAssemblyKey = AssemblyKey ?? string.Empty;
-        State.SelectedActivityKey = ActivityKey ?? string.Empty;
+        Execution.SelectedAssemblyKey = AssemblyKey ?? string.Empty;
+        Execution.SelectedActivityKey = ActivityKey ?? string.Empty;
         if (!Assemblies.Any())
             Assemblies = new[]
             {
@@ -57,7 +57,7 @@ public class RunnerComponentBase : ComponentBase, IDisposable
                 typeof(WallFlemishBond).Assembly
             };
         foreach (Assembly assembly in Assemblies)
-            State.LoadedAssemblies.TryAdd(assembly.GetName().Name ?? "Unnamed", assembly);
+            Execution.LoadedAssemblies.TryAdd(assembly.GetName().Name ?? "Unnamed", assembly);
     }
 
     private async void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -69,6 +69,6 @@ public class RunnerComponentBase : ComponentBase, IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
-        State.Messages.CollectionChanged -= OnMessagesChanged;
+        Execution.Messages.CollectionChanged -= OnMessagesChanged;
     }
 }

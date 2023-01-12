@@ -28,7 +28,7 @@ builder.Services.AddSingleton<IActivityFactory, StaticMethodActivityFactory>();
 builder.Services.AddTransient<DisplayState>();
 
 // Inject Lineweights scoped services
-builder.Services.AddScoped<RunnerState>();
+builder.Services.AddScoped<ExecutionState>();
 
 // Inject Blazor WebAssembly services
 builder.Services.AddScoped(_ => new HttpClient

@@ -16,9 +16,9 @@ public class AssemblySelectionComponentBase : ComponentBase
     [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
-    /// <inheritdoc cref="RunnerState"/>
+    /// <inheritdoc cref="ExecutionState"/>
     [Inject]
-    private RunnerState State { get; set; } = null!;
+    private ExecutionState Execution { get; set; } = null!;
 
     /// <inheritdoc cref="DisplayState"/>
     [Inject]
@@ -46,15 +46,15 @@ public class AssemblySelectionComponentBase : ComponentBase
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        AssemblySelectOptions = State.LoadedAssemblies.Keys.ToArray();
+        AssemblySelectOptions = Execution.LoadedAssemblies.Keys.ToArray();
         if (AssemblySelectOptions.Any())
             AssemblySelectValue = AssemblySelectOptions.First();
     }
 
     protected void SetAssemblyByKey()
     {
-        Logger.LogDebug($"{nameof(SetAssemblyByKey)} called. Activity: {State.SelectedActivityKey} Assembly: {State.SelectedActivityKey}");
-        if (!State.TryGetAssemblyByKey(AssemblySelectValue, out Assembly? assembly))
+        Logger.LogDebug($"{nameof(SetAssemblyByKey)} called. Activity: {Execution.SelectedActivityKey} Assembly: {Execution.SelectedActivityKey}");
+        if (!Execution.TryGetAssemblyByKey(AssemblySelectValue, out Assembly? assembly))
             return;
         AssemblyInputValue = $"{AssemblySelectValue}.dll";
         SetAssembly(assembly!);
@@ -62,7 +62,7 @@ public class AssemblySelectionComponentBase : ComponentBase
 
     protected void SetAssemblyByPath()
     {
-        State.Messages.Clear();
+        Execution.Messages.Clear();
         Logger.LogDebug($"{nameof(SetAssemblyByPath)} called with {AssemblyInputValue}.");
         string assemblyPath = AssemblyInputValue;
         if (!Path.IsPathFullyQualified(assemblyPath))
@@ -72,7 +72,7 @@ public class AssemblySelectionComponentBase : ComponentBase
         }
         if (!File.Exists(assemblyPath))
         {
-            State.ShowWarning(Logger, "Failed to load assembly. File not found.");
+            Execution.ShowWarning(Logger, "Failed to load assembly. File not found.");
             return;
         }
         Assembly assembly = Assembly.LoadFrom(assemblyPath);
@@ -84,10 +84,10 @@ public class AssemblySelectionComponentBase : ComponentBase
         string? assemblyName = assembly.GetName().Name;
         if (assemblyName is null)
         {
-            State.ShowWarning(Logger, "Failed to load assembly. Assembly doesn't have a name.");
+            Execution.ShowWarning(Logger, "Failed to load assembly. Assembly doesn't have a name.");
             return;
         }
-        _ = State.LoadedAssemblies.TryAdd(assemblyName, assembly);
+        _ = Execution.LoadedAssemblies.TryAdd(assemblyName, assembly);
         Navigation.NavigateTo($"/run/{assemblyName}");
     }
 }

@@ -1,13 +1,13 @@
 ﻿@using Geometrician.Core.Shared
 @inherits RunnerComponentBase
 
-@foreach (Message message in State.Messages)
+@foreach (Message message in Execution.Messages)
 {
   <MessageComponent Message="message"></MessageComponent>
 }
 
 <MosaicComponent>
-  @if (State.IsAssemblySet)
+  @if (Execution.IsAssemblySet)
   {
     <TileComponent XScale="0.25" YScale="1" Padding="false">
       <MudButton
@@ -19,7 +19,7 @@
       </MudButton>
     </TileComponent>
   }
-  @if (State.IsActivitySet)
+  @if (Execution.IsActivitySet)
   {
     <TileComponent XScale="0.25" YScale="1" Padding="false">
       <MudButton
@@ -32,11 +32,11 @@
     </TileComponent>
   }
 
-  @if (State.IsActivitySet)
+  @if (Execution.IsActivitySet)
   {
     <ActivityInputComponent/>
   }
-  else if (State.IsAssemblySet)
+  else if (Execution.IsAssemblySet)
   {
     <ActivitySelectionComponent/>
   }
