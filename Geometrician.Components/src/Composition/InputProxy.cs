@@ -4,27 +4,32 @@ using StudioLE.Core.Results;
 
 namespace Geometrician.Components.Composition;
 
-public class PropertyState
+public class InputProxy
 {
-    private readonly object _instance;
-
+    private readonly object _inputPackInstance;
+    private readonly PropertyInfo _property;
     private readonly ValidationContext _context;
 
-    public PropertyInfo Property { get; }
+    public string Label => _property.Name;
 
-    public PropertyState(object instance, PropertyInfo property)
+    public string HelperText => _property.Name;
+
+    public Type Type { get; }
+
+    public InputProxy(object inputPackInstance, PropertyInfo property)
     {
-        _instance = instance;
-        Property = property;
-        _context = new(_instance)
+        _inputPackInstance = inputPackInstance;
+        _property = property;
+        _context = new(_inputPackInstance)
         {
-            MemberName = Property.Name
+            MemberName = _property.Name
         };
+        Type = Nullable.GetUnderlyingType(_property.PropertyType) ?? _property.PropertyType;
     }
 
     public object? GetValue()
     {
-        return Property.GetValue(_instance);
+        return _property.GetValue(_inputPackInstance);
     }
 
     public T GetValueAs<T>()
@@ -41,7 +46,7 @@ public class PropertyState
         bool? hasChanged = !value?.Equals(previousValue);
         // bool hasChanged = !EqualityComparer<object>.Default.Equals(value, PropertyValue);
         if (hasChanged == true)
-            Property.SetValue(_instance, value);
+            _property.SetValue(_inputPackInstance, value);
     }
 
     public IResult Validate()

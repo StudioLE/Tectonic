@@ -9,63 +9,55 @@ public class DynamicInputComponentBase : ComponentBase
     private ILogger<DynamicInputComponent> Logger { get; set; } = default!;
 
     [Parameter]
-    public PropertyState State { get; set; } = default!;
-
-    protected string Label { get; set; } = string.Empty;
-
-    protected string HelperText { get; set; } = string.Empty;
-
-    protected Type PropertyType { get; set; } = default!;
+    public InputProxy Input { get; set; } = default!;
 
     protected string ValueAsString
     {
-        get => State.GetValueAs<string>();
-        set => State.SetValue(value);
+        get => Input.GetValueAs<string>();
+        set => Input.SetValue(value);
     }
 
     protected int ValueAsInteger
     {
-        get => State.GetValueAs<int>();
-        set => State.SetValue(value);
+        get => Input.GetValueAs<int>();
+        set => Input.SetValue(value);
     }
 
     protected double ValueAsDouble
     {
-        get => State.GetValueAs<double>();
-        set => State.SetValue(value);
+        get => Input.GetValueAs<double>();
+        set => Input.SetValue(value);
     }
 
     protected Enum ValueAsEnum
     {
-        get => State.GetValueAs<Enum>();
-        set => State.SetValue(value);
+        get => Input.GetValueAs<Enum>();
+        set => Input.SetValue(value);
     }
 
     protected bool ValueAsBoolean
     {
-        get => State.GetValueAs<bool>();
-        set => State.SetValue(value);
+        get => Input.GetValueAs<bool>();
+        set => Input.SetValue(value);
     }
 
     protected object? ValueAsObject
     {
-        get => State.GetValue();
-        set => State.SetValue(value);
+        get => Input.GetValue();
+        set => Input.SetValue(value);
     }
 
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        if (State is null)
+        base.OnInitialized();
+        if (Input is null)
             throw new("State is not set;");
-        Label = State.Property.Name;
-        HelperText = State.Property.Name;
-        PropertyType = Nullable.GetUnderlyingType(State.Property.PropertyType) ?? State.Property.PropertyType;
     }
 
     protected IEnumerable<string> ValidateAs<T>(T value)
     {
         Logger.LogDebug($"{nameof(ValidateAs)} called.");
-        return State.Validate().Errors;
+        return Input.Validate().Errors;
     }
 }

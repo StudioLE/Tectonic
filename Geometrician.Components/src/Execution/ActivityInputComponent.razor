@@ -1,7 +1,7 @@
 ﻿@inherits ActivityInputComponentBase
 
 
-@if (States.Count == 0)
+@if (InputPacks.Count == 0)
 {
   <TileComponent XScale="0.75" YScale="1">
     This activity has no inputs.
@@ -13,14 +13,14 @@
   @bind-Errors="Errors"
   Style="width: fit-content;"
   Class="@($"d-flex gap-{Display.GapMultiplier}")">
-  @foreach (ObjectState objectState in States)
+  @foreach (InputPackProxy inputPack in InputPacks)
   {
-    <TileComponent XScale="0.25" YScale="1" Title="@objectState.Title" SubTitle="@objectState.Title"/>
+    <TileComponent XScale="0.25" YScale="1" Title="@inputPack.Title" SubTitle="@inputPack.Title"/>
 
     <TileComponent XScale="0.75" YScale="1" style="overflow: scroll;">
-      @foreach (PropertyState propertyState in objectState.Properties)
+      @foreach (InputProxy input in inputPack.Inputs)
       {
-        <DynamicInputComponent State="@propertyState"/>
+        <DynamicInputComponent Input="@input"/>
       }
     </TileComponent>
   }

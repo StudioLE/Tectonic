@@ -44,7 +44,7 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
     [Inject]
     private IActivityFactory Factory { get; set; } = default!;
 
-    protected IReadOnlyCollection<ObjectState> States { get; private set; } = Array.Empty<ObjectState>();
+    protected IReadOnlyCollection<InputPackProxy> InputPacks { get; private set; } = Array.Empty<InputPackProxy>();
 
     protected MudForm Form { get; set; } = default!;
 
@@ -69,9 +69,9 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
             return;
         }
         _activity = success;
-        States = _activity
+        InputPacks = _activity
             .Inputs
-            .Select(x => new ObjectState(x))
+            .Select(x => new InputPackProxy(x))
             .ToArray();
     }
 
