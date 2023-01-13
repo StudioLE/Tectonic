@@ -11,7 +11,7 @@ public class OutcomeComponentBase : ComponentBase
 
     /// <inheritdoc cref="VisualizationState"/>
     [Inject]
-    private VisualizationState State { get; set; } = default!;
+    private VisualizationState Visualization { get; set; } = default!;
 
     /// <summary>
     /// The id of the card.
@@ -25,7 +25,7 @@ public class OutcomeComponentBase : ComponentBase
     protected void Remove()
     {
         Logger.LogDebug($"{nameof(Remove)}() called on result {Outcome.Id}.");
-        State.RemoveOutcome(Outcome);
+        Visualization.RemoveOutcome(Outcome);
     }
 
     public string GetTitle()

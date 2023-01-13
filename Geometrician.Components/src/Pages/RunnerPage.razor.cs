@@ -1,5 +1,11 @@
-﻿using Geometrician.Components.Shared;
+﻿using System.Collections.Specialized;
+using System.Reflection;
+using Geometrician.Components.Composition;
+using Geometrician.Components.Shared;
 using Geometrician.Components.Visualization;
+using Geometrician.Core.Samples;
+using Lineweights.Drawings.Samples;
+using Lineweights.Flex.Samples;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
@@ -18,9 +24,13 @@ public class RunnerPageBase : ComponentBase, IDisposable
     [Inject]
     protected DisplayState Display { get; set; } = default!;
 
+    /// <inheritdoc cref="CompositionState"/>
+    [Inject]
+    protected CompositionState Resolver { get; set; } = null!;
+
     /// <inheritdoc cref="VisualizationState"/>
     [Inject]
-    protected VisualizationState State { get; set; } = default!;
+    protected VisualizationState Visualization { get; set; } = default!;
 
     /// <summary>
     /// The key of the currently selected assembly.
@@ -36,25 +46,51 @@ public class RunnerPageBase : ComponentBase, IDisposable
     [Parameter]
     public string? ActivityKey { get; set; }
 
+    /// <summary>
+    /// The assemblies to populate the <see cref="AssemblyResolverComponent"/> with
+    /// </summary>
+    [Parameter]
+    public IReadOnlyCollection<Assembly> Assemblies { get; set; } = Array.Empty<Assembly>();
+
     /// <inheritdoc />
     protected override void OnInitialized()
     {
         Logger.LogDebug($"{nameof(OnInitialized)}() called. Assembly: {AssemblyKey ?? "[null]"}; Activity: {ActivityKey ?? "[null]"};");
-        State.OutcomesChanged += NotifyStateHasChanged;
+        Visualization.OutcomesChanged += NotifyStateHasChanged;
+        Resolver.Messages.CollectionChanged += OnMessagesChanged;
     }
 
-    /// <summary>
-    /// Notify that the state has changed.
-    /// </summary>
+    /// <inheritdoc />
+    protected override void OnParametersSet()
+    {
+        Resolver.SelectedAssemblyKey = AssemblyKey ?? string.Empty;
+        Resolver.SelectedActivityKey = ActivityKey ?? string.Empty;
+        if (!Assemblies.Any())
+            Assemblies = new[]
+            {
+                typeof(SheetSample).Assembly,
+                typeof(AssetTypes).Assembly,
+                typeof(WallFlemishBond).Assembly
+            };
+        foreach (Assembly assembly in Assemblies)
+            Resolver.LoadedAssemblies.TryAdd(assembly.GetName().Name ?? "Unnamed", assembly);
+    }
+
     private async void NotifyStateHasChanged(object? sender, EventArgs e)
     {
-        Logger.LogDebug($"{nameof(NotifyStateHasChanged)}() called.");
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        Logger.LogDebug($"{nameof(OnMessagesChanged)}() called.");
         await InvokeAsync(StateHasChanged);
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        State.OutcomesChanged -= NotifyStateHasChanged;
+        Visualization.OutcomesChanged -= NotifyStateHasChanged;
+        Resolver.Messages.CollectionChanged -= OnMessagesChanged;
     }
 }

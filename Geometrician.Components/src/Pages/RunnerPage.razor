@@ -3,8 +3,8 @@
 @inherits RunnerPageBase
 
 <PageTitle>
-  Geometrician@(State.Outcomes.Count > 0
-                ? $" ({State.Outcomes.Count})"
+  Geometrician@(Visualization.Outcomes.Count > 0
+                ? $" ({Visualization.Outcomes.Count})"
                 : string.Empty)
 </PageTitle>
 
@@ -15,9 +15,53 @@
 <MudLayout>
   <MudMainContent>
 
-    <RunnerComponent AssemblyKey="@AssemblyKey" ActivityKey="@ActivityKey"/>
+    @foreach (Message message in Resolver.Messages)
+    {
+      <MessageComponent Message="message"></MessageComponent>
+    }
 
-    @foreach (Outcome outcome in State.Outcomes.Reverse())
+    <MosaicComponent>
+      @if (Resolver.IsAssemblySet)
+      {
+        <TileComponent XScale="0.25" YScale="1" Padding="false">
+          <MudButton
+            Variant="Variant.Filled"
+            Color="Color.Secondary"
+            Href="/run"
+            style="width: 100%; height: 100%; writing-mode: sideways-lr;">
+            @AssemblyKey
+          </MudButton>
+        </TileComponent>
+      }
+      @if (Resolver.IsActivitySet)
+      {
+        <TileComponent XScale="0.25" YScale="1" Padding="false">
+          <MudButton
+            Variant="Variant.Filled"
+            Color="Color.Secondary"
+            Href="@($"/run/{AssemblyKey}")"
+            style="width: 100%; height: 100%; writing-mode: sideways-lr;">
+            @ActivityKey
+          </MudButton>
+        </TileComponent>
+      }
+
+      @if (Resolver.IsActivitySet)
+      {
+        <InputComposerComponent/>
+      }
+      else if (Resolver.IsAssemblySet)
+      {
+        <ActivityResolverComponent/>
+      }
+      else
+      {
+        <AssemblyResolverComponent/>
+      }
+    </MosaicComponent>
+
+
+    @foreach (Outcome outcome in Visualization.Outcomes.Reverse())
     {
       <OutcomeComponent @key="outcome.Id" Outcome="outcome"/>
     }

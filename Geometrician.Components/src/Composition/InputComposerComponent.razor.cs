@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Geometrician.Components.Execution;
 using Geometrician.Components.Shared;
 using Geometrician.Components.Visualization;
 using Geometrician.Core;
