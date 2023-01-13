@@ -20,6 +20,11 @@ public class ModelViewer
         _logger = logger;
     }
 
+    /// <summary>
+    /// Load a glb file into a Three.js scene.
+    /// </summary>
+    /// <param name="id">The id of the Three.js html element.</param>
+    /// <param name="uri">The uri to load the glb from.</param>
     public async Task Create(string id, string uri)
     {
         _logger.LogDebug($"{nameof(Create)}() called.");

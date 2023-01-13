@@ -6,6 +6,9 @@ using StudioLE.Core.Results;
 
 namespace Geometrician.Components.Visualization;
 
+/// <summary>
+/// A <see cref="IComponent"/> to render an <see cref="IAsset"/> using the Three.js viewer.
+/// </summary>
 public class ThreeViewerComponentBase : ViewerComponentBase<ExternalAsset>
 {
     /// <inheritdoc cref="ILogger"/>
@@ -32,7 +35,7 @@ public class ThreeViewerComponentBase : ViewerComponentBase<ExternalAsset>
     }
 
     /// <summary>
-    /// Load the GLB with Three.js
+    /// Load the GLB with Three.js.
     /// </summary>
     private async Task LoadGlb()
     {

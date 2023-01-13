@@ -5,6 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Geometrician.Components.Composition;
 
+/// <summary>
+/// A <see cref="IComponent"/> to select an activity from an assembly.
+/// </summary>
 public class ActivityResolverComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
@@ -26,12 +29,12 @@ public class ActivityResolverComponentBase : ComponentBase
     /// <summary>
     /// Binding for the options of the assembly select element.
     /// </summary>
-    public IReadOnlyCollection<string> ActivitySelectOptions { get; private set; } = Array.Empty<string>();
+    protected IReadOnlyCollection<string> ActivitySelectOptions { get; private set; } = Array.Empty<string>();
 
     /// <summary>
     /// Binding for the activity select element value.
     /// </summary>
-    public string ActivitySelectValue { get; set; } = string.Empty;
+    protected string ActivitySelectValue { get; set; } = string.Empty;
 
     /// <inheritdoc />
     protected override void OnInitialized()
@@ -44,6 +47,9 @@ public class ActivityResolverComponentBase : ComponentBase
             ActivitySelectValue = ActivitySelectOptions.First();
     }
 
+    /// <summary>
+    /// Set the activity according to <see cref="ActivitySelectValue"/> by changing page.
+    /// </summary>
     protected void SetActivity()
     {
         Logger.LogDebug($"{nameof(SetActivity)} called with {ActivitySelectValue}.");

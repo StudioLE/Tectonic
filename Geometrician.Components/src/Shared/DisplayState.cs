@@ -2,18 +2,34 @@
 
 namespace Geometrician.Components.Shared;
 
+/// <summary>
+/// Configuration settings for the UI.
+/// </summary>
 public class DisplayState
 {
-    public int Elevation { get; set; }  = 0;
-
+    /// <summary>
+    /// The value of a single gap between elements.
+    /// </summary>
     public int Gap { get; set; }  = 4;
 
+    /// <summary>
+    /// The multiplier to use against <see cref="Gap"/> to increase the distance.
+    /// </summary>
     public int GapMultiplier { get; set; } = 2;
 
+    /// <summary>
+    /// The height of mosaic element which contains tiles.
+    /// </summary>
     public int MosaicHeight { get; set; } = 340;
 
+    /// <summary>
+    /// Should dark mode be enabled?
+    /// </summary>
     public bool IsDarkMode { get; set; } = false;
 
+    /// <summary>
+    /// Configuration for the MudBlazor theme.
+    /// </summary>
     public MudTheme Theme { get; } = new()
     {
         Palette = new()

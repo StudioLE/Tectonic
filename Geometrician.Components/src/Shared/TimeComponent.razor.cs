@@ -3,6 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Geometrician.Components.Shared;
 
+/// <summary>
+/// A <see cref="IComponent"/> to display the time elapsed since <see cref="DateTime"/>.
+/// </summary>
 public class TimeComponentBase : ComponentBase, IDisposable
 {
     private readonly TimeSpan _initialDelay = TimeSpan.FromSeconds(4);
@@ -38,6 +41,7 @@ public class TimeComponentBase : ComponentBase, IDisposable
         InvokeAsync(StateHasChanged);
     }
 
+    /// <inheritdoc />
     public void Dispose()
     {
         Logger.LogDebug($"{nameof(Dispose)} called. DateTime: {DateTime}");

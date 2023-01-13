@@ -1,4 +1,5 @@
-﻿using CsvHelper.Configuration.Attributes;
+﻿using System.Diagnostics.CodeAnalysis;
+using CsvHelper.Configuration.Attributes;
 using Geometrician.Core.Converters;
 using Lineweights.Core.Assets;
 using Lineweights.Core.Storage;
@@ -48,6 +49,7 @@ public class CsvElementTypesAssetFactory : ExternalAssetFactoryBase<Model>
             .ToArray();
     }
 
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     private class TableRow
     {
         [Name("Type")]

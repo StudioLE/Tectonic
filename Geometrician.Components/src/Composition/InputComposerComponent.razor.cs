@@ -3,7 +3,6 @@ using Geometrician.Components.Shared;
 using Geometrician.Components.Visualization;
 using Geometrician.Core;
 using Geometrician.Core.Execution;
-using Lineweights.Core.Storage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
@@ -11,6 +10,9 @@ using StudioLE.Core.Results;
 
 namespace Geometrician.Components.Composition;
 
+/// <summary>
+/// A <see cref="IComponent"/> to set inputs for an activity.
+/// </summary>
 public class InputComposerComponentBase : ComponentBase, IDisposable
 {
     private ActivityCommand? _activity;
@@ -18,10 +20,6 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     /// <inheritdoc cref="ILogger"/>
     [Inject]
     private ILogger<ActivityResolverComponent> Logger { get; set; } = null!;
-
-    /// <inheritdoc cref="NavigationManager"/>
-    [Inject]
-    private NavigationManager Navigation { get; set; } = null!;
 
     /// <inheritdoc cref="CompositionState"/>
     [Inject]
@@ -35,22 +33,31 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     [Inject]
     private VisualizationState Visualization { get; set; } = default!;
 
-    /// <inheritdoc cref="IStorageStrategy"/>
-    [Inject]
-    private IStorageStrategy StorageStrategy { get; set; } = default!;
-
     /// <inheritdoc cref="IActivityFactory"/>
     [Inject]
     private IActivityFactory Factory { get; set; } = default!;
 
+    /// <summary>
+    /// Proxies for each input pack for the activity.
+    /// </summary>
     protected IReadOnlyCollection<InputPackProxy> InputPacks { get; private set; } = Array.Empty<InputPackProxy>();
 
+    /// <summary>
+    /// The form.
+    /// </summary>
     protected MudForm Form { get; set; } = default!;
 
+    /// <summary>
+    /// The error messages.
+    /// </summary>
     protected string[] Errors { get; set; } = Array.Empty<string>();
 
+    /// <summary>
+    /// Are the form inputs valid?
+    /// </summary>
     protected bool IsValid { get; set; }
 
+    /// <inheritdoc />
     protected override void OnInitialized()
     {
         Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Resolver.SelectedActivityKey} Assembly: {Resolver.SelectedActivityKey}");
@@ -74,6 +81,9 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
             .ToArray();
     }
 
+    /// <summary>
+    /// The form submit action.
+    /// </summary>
     protected async Task SubmitAsync()
     {
         Logger.LogDebug($"{nameof(SubmitAsync)} called");
@@ -91,7 +101,10 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         // Process the valid form
     }
 
-    protected void BuildAndExecute()
+    /// <summary>
+    /// Build the <see cref="ActivityCommand"/>, execute it, and process the results.
+    /// </summary>
+    private void BuildAndExecute()
     {
         Resolver.Messages.Clear();
         Logger.LogDebug($"{nameof(BuildAndExecute)} called.");

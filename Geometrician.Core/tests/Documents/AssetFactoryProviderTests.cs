@@ -1,4 +1,5 @@
-﻿using Geometrician.Core.Assets;
+﻿using System.Diagnostics.CodeAnalysis;
+using Geometrician.Core.Assets;
 using Lineweights.Core.Assets;
 using Lineweights.Diagnostics.Hosting;
 using Lineweights.Diagnostics.Samples;
@@ -65,6 +66,8 @@ internal sealed class AssetFactoryProviderTests
         Assert.That(factories.Length, Is.EqualTo(8), "Count");
     }
 
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Local")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     private class ExampleClass
     {
         public Model Model { get; }

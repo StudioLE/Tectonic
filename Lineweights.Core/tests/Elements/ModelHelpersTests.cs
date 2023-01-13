@@ -1,8 +1,11 @@
-﻿namespace Lineweights.Core.Tests.Elements;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Lineweights.Core.Tests.Elements;
 
 internal sealed class ModelHelpersTests
 {
 
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     private class TestElement : Element
     {
         public IReadOnlyCollection<Material> Materials { get; set; } = Array.Empty<Material>();

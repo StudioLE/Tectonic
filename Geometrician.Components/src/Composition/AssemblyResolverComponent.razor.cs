@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.Reflection;
-using Geometrician.Components.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
 namespace Geometrician.Components.Composition;
 
+/// <summary>
+/// A <see cref="IComponent"/> to select an assembly to load activities from.
+/// </summary>
 public class AssemblyResolverComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
@@ -20,12 +22,14 @@ public class AssemblyResolverComponentBase : ComponentBase
     [Inject]
     private CompositionState Resolver { get; set; } = null!;
 
-    /// <inheritdoc cref="DisplayState"/>
-    [Inject]
-    private DisplayState Display { get; set; } = null!;
-
+    /// <summary>
+    /// The error messages.
+    /// </summary>
     protected string[] Errors { get; set; } = Array.Empty<string>();
 
+    /// <summary>
+    /// Are the form inputs valid?
+    /// </summary>
     protected bool IsValid { get; set; }
 
     /// <summary>
@@ -51,15 +55,21 @@ public class AssemblyResolverComponentBase : ComponentBase
             AssemblySelectValue = AssemblySelectOptions.First();
     }
 
+    /// <summary>
+    /// Set the assembly by key.
+    /// </summary>
     protected void SetAssemblyByKey()
     {
-        Logger.LogDebug($"{nameof(SetAssemblyByKey)} called. Activity: {Resolver.SelectedActivityKey} Assembly: {Resolver.SelectedActivityKey}");
+        Logger.LogDebug($"{nameof(SetAssemblyByKey)} called. Activity: {Resolver.SelectedActivityKey} Assembly: {Resolver.SelectedAssemblyKey}");
         if (!Resolver.TryGetAssemblyByKey(AssemblySelectValue, out Assembly? assembly))
             return;
         AssemblyInputValue = $"{AssemblySelectValue}.dll";
         SetAssembly(assembly!);
     }
 
+    /// <summary>
+    /// Set the assembly by path.
+    /// </summary>
     protected void SetAssemblyByPath()
     {
         Resolver.Messages.Clear();

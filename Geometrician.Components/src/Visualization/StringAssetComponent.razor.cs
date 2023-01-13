@@ -12,6 +12,9 @@ using StudioLE.Core.Results;
 
 namespace Geometrician.Components.Visualization;
 
+/// <summary>
+/// A <see cref="IComponent"/> to render <see cref="IAsset"/> with string based content.
+/// </summary>
 public class StringAssetComponentBase : ViewerComponentBase<IAsset>
 {
     /// <inheritdoc cref="ILogger"/>
@@ -26,10 +29,21 @@ public class StringAssetComponentBase : ViewerComponentBase<IAsset>
     [Inject]
     private ObjectUrlStorage ObjectUrlStorage { get; set; } = default!;
 
+    /// <summary>
+    /// The content of the asset.
+    /// </summary>
     protected string Content { get; private set; } = string.Empty;
 
+    /// <summary>
+    /// The content of the asset as formatted JSON.
+    /// Or empty if the content is not JSON.
+    /// </summary>
     protected string Json { get; private set; } = string.Empty;
 
+    /// <summary>
+    /// The content of the asset formatted as a table.
+    /// Or empty if the content is not a CSV.
+    /// </summary>
     protected IReadOnlyCollection<IReadOnlyCollection<string>> Table { get; private set; } = Array.Empty<IReadOnlyCollection<string>>();
 
     /// <inheritdoc />
@@ -49,6 +63,10 @@ public class StringAssetComponentBase : ViewerComponentBase<IAsset>
         await LoadContent();
     }
 
+    /// <summary>
+    /// Load the content of the <see cref="IAsset"/>.
+    /// </summary>
+    /// <exception cref="TypeSwitchException{IAsset}"></exception>
     private async Task LoadContent()
     {
         Content = Factory.Asset switch
@@ -67,7 +85,6 @@ public class StringAssetComponentBase : ViewerComponentBase<IAsset>
                 break;
         }
     }
-
     private Task<string> GetContent(InternalAsset asset)
     {
         return Task.FromResult(asset.Content);

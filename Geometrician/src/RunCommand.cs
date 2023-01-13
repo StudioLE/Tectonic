@@ -7,23 +7,37 @@ using StudioLE.Core.System;
 
 namespace Geometrician;
 
+/// <summary>
+/// Run an <see cref="ActivityCommand"/>.
+/// </summary>
+/// <remarks>
+/// The <see cref="ActivityCommand"/> is obtained using an <see cref="IActivityFactory"/>.
+/// </remarks>
 public sealed class RunCommand
 {
     private readonly ILogger<RunCommand> _logger;
     private readonly IActivityFactory _factory;
 
+    /// <inheritdoc cref="RunCommand"/>
     public RunCommand(ILogger<RunCommand> logger, IActivityFactory factory)
     {
         _logger = logger;
         _factory = factory;
     }
 
-    public string Execute(string assemblyPath, string activity, string json)
+    /// <summary>
+    /// <inheritdoc cref="RunCommand"/>
+    /// </summary>
+    /// <param name="assemblyPath">The path to the assembly.</param>
+    /// <param name="activity">The key of the activity.</param>
+    /// <param name="inputsPath">The path to a the inputs as a json file.</param>
+    /// <returns>A message describing the status.</returns>
+    public string Execute(string assemblyPath, string activity, string inputsPath)
     {
         _logger.LogDebug($"{nameof(Execute)} called.");
         _logger.LogDebug("Assembly: {$0}", assemblyPath);
         _logger.LogDebug("Activity: {$0}", activity);
-        _logger.LogDebug("JSON: {$0}", json);
+        _logger.LogDebug("JSON: {$0}", inputsPath);
 
         assemblyPath = Path.GetFullPath(assemblyPath);
 

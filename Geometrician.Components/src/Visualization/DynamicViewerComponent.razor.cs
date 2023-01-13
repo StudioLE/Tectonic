@@ -4,14 +4,23 @@ using Microsoft.AspNetCore.Components;
 
 namespace Geometrician.Components.Visualization;
 
+/// <summary>
+/// A <see cref="IComponent"/> to dynamically determine which viewer should be used to render an <see cref="IAsset"/>.
+/// </summary>
 public class DynamicViewerComponentBase : ViewerComponentBase<IAsset>
 {
     /// <inheritdoc cref="ViewerComponentProvider"/>
     [Inject]
     private ViewerComponentProvider Provider { get; set; } = default!;
 
+    /// <summary>
+    /// The <see cref="Type"/> of the viewer <see cref="IComponent"/> to use.
+    /// </summary>
     protected Type ComponentType { get; private set; } = default!;
 
+    /// <summary>
+    /// The parameters to pass to the viewer <see cref="IComponent"/>.
+    /// </summary>
     protected Dictionary<string, object> ComponentParameters { get; } = new();
 
     /// <inheritdoc />

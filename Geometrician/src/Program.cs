@@ -6,10 +6,17 @@ using static Towel.CommandLine;
 
 namespace Geometrician;
 
+/// <summary>
+/// The entry point for the program.
+/// </summary>
 public static class Program
 {
     private static IServiceProvider _services = null!;
 
+    /// <summary>
+    /// The entry point for the program.
+    /// </summary>
+    /// <param name="args">The program arguments.</param>
     public static void Main(string[] args)
     {
         IHostBuilder? builder = Host.CreateDefaultBuilder(args);

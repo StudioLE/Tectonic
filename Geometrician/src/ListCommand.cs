@@ -6,17 +6,29 @@ using StudioLE.Core.System;
 
 namespace Geometrician;
 
+/// <summary>
+/// List all <see cref="ActivityCommand"/>.
+/// </summary>
+/// <remarks>
+/// The <see cref="ActivityCommand"/>s are obtained using an <see cref="IActivityFactory"/>.
+/// </remarks>
 public sealed class ListCommand
 {
     private readonly ILogger<ListCommand> _logger;
     private readonly IActivityFactory _factory;
 
+    /// <inheritdoc cref="ListCommand"/>
     public ListCommand(ILogger<ListCommand> logger, IActivityFactory factory)
     {
         _logger = logger;
         _factory = factory;
     }
 
+    /// <summary>
+    /// <inheritdoc cref="ListCommand"/>
+    /// </summary>
+    /// <param name="assemblyPath">The path to the assembly.</param>
+    /// <returns>A message describing the status.</returns>
     public string Execute(string assemblyPath)
     {
         _logger.LogDebug($"{nameof(Execute)} called.");

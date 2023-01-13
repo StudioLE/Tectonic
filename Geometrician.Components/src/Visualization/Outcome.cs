@@ -2,6 +2,10 @@
 
 namespace Geometrician.Components.Visualization;
 
+/// <summary>
+/// The outcome of an activity execution.
+/// The <see cref="Assets"/> are rendered in the UI.
+/// </summary>
 public class Outcome : IAsset
 {
     /// <inheritdoc />
@@ -21,5 +25,8 @@ public class Outcome : IAsset
     /// </summary>
     public DateTime CreationTime { get; set; } = DateTime.Now;
 
+    /// <summary>
+    /// The factories to use to render the outcome in the UI.
+    /// </summary>
     public IReadOnlyCollection<IAssetFactory<IAsset>> Assets { get; set; } = Array.Empty<IAssetFactory<IAsset>>();
 }

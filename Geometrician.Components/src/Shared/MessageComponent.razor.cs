@@ -3,6 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Geometrician.Components.Shared;
 
+/// <summary>
+/// A <see cref="IComponent"/> to render a <see cref="Message"/> in the UI.
+/// </summary>
 public class MessageComponentBase : ComponentBase
 {
     /// <summary>
@@ -11,6 +14,9 @@ public class MessageComponentBase : ComponentBase
     [Parameter]
     public Message Message { get; set; } = default!;
 
+    /// <summary>
+    /// The css class based on the message severity.
+    /// </summary>
     protected string Class => Message.Level switch
     {
         LogLevel.Trace => "is-dark",
