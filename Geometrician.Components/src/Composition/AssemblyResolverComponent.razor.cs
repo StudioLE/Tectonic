@@ -4,21 +4,21 @@ using Geometrician.Components.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
-namespace Geometrician.Components.Execution;
+namespace Geometrician.Components.Composition;
 
-public class AssemblySelectionComponentBase : ComponentBase
+public class AssemblyResolverComponentBase : ComponentBase
 {
     /// <inheritdoc cref="ILogger"/>
     [Inject]
-    private ILogger<AssemblySelectionComponent> Logger { get; set; } = null!;
+    private ILogger<AssemblyResolverComponent> Logger { get; set; } = null!;
 
     /// <inheritdoc cref="NavigationManager"/>
     [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
-    /// <inheritdoc cref="ExecutionState"/>
+    /// <inheritdoc cref="CompositionState"/>
     [Inject]
-    private ExecutionState Execution { get; set; } = null!;
+    private CompositionState Resolver { get; set; } = null!;
 
     /// <inheritdoc cref="DisplayState"/>
     [Inject]
@@ -46,15 +46,15 @@ public class AssemblySelectionComponentBase : ComponentBase
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        AssemblySelectOptions = Execution.LoadedAssemblies.Keys.ToArray();
+        AssemblySelectOptions = Resolver.LoadedAssemblies.Keys.ToArray();
         if (AssemblySelectOptions.Any())
             AssemblySelectValue = AssemblySelectOptions.First();
     }
 
     protected void SetAssemblyByKey()
     {
-        Logger.LogDebug($"{nameof(SetAssemblyByKey)} called. Activity: {Execution.SelectedActivityKey} Assembly: {Execution.SelectedActivityKey}");
-        if (!Execution.TryGetAssemblyByKey(AssemblySelectValue, out Assembly? assembly))
+        Logger.LogDebug($"{nameof(SetAssemblyByKey)} called. Activity: {Resolver.SelectedActivityKey} Assembly: {Resolver.SelectedActivityKey}");
+        if (!Resolver.TryGetAssemblyByKey(AssemblySelectValue, out Assembly? assembly))
             return;
         AssemblyInputValue = $"{AssemblySelectValue}.dll";
         SetAssembly(assembly!);
@@ -62,7 +62,7 @@ public class AssemblySelectionComponentBase : ComponentBase
 
     protected void SetAssemblyByPath()
     {
-        Execution.Messages.Clear();
+        Resolver.Messages.Clear();
         Logger.LogDebug($"{nameof(SetAssemblyByPath)} called with {AssemblyInputValue}.");
         string assemblyPath = AssemblyInputValue;
         if (!Path.IsPathFullyQualified(assemblyPath))
@@ -72,7 +72,7 @@ public class AssemblySelectionComponentBase : ComponentBase
         }
         if (!File.Exists(assemblyPath))
         {
-            Execution.ShowWarning(Logger, "Failed to load assembly. File not found.");
+            Resolver.ShowWarning(Logger, "Failed to load assembly. File not found.");
             return;
         }
         Assembly assembly = Assembly.LoadFrom(assemblyPath);
@@ -84,10 +84,10 @@ public class AssemblySelectionComponentBase : ComponentBase
         string? assemblyName = assembly.GetName().Name;
         if (assemblyName is null)
         {
-            Execution.ShowWarning(Logger, "Failed to load assembly. Assembly doesn't have a name.");
+            Resolver.ShowWarning(Logger, "Failed to load assembly. Assembly doesn't have a name.");
             return;
         }
-        _ = Execution.LoadedAssemblies.TryAdd(assemblyName, assembly);
+        _ = Resolver.LoadedAssemblies.TryAdd(assemblyName, assembly);
         Navigation.NavigateTo($"/run/{assemblyName}");
     }
 }

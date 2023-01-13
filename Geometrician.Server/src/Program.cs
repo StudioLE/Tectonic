@@ -1,3 +1,4 @@
+using Geometrician.Components.Composition;
 using Geometrician.Components.Execution;
 using Geometrician.Components.Scripts;
 using Geometrician.Components.Shared;
@@ -27,7 +28,7 @@ builder.Services.AddMudServices();
 // Inject Geometrician services
 builder.Services.AddSingleton<VisualizationState>();
 builder.Services.AddTransient<ModelViewer>();
-builder.Services.AddScoped<ExecutionState>();
+builder.Services.AddScoped<CompositionState>();
 builder.Services.AddTransient<ObjectUrlStorage>();
 builder.Services.AddTransient<DisplayState>();
 builder.Services.AddTransient<AssetFactoryProvider>();

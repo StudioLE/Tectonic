@@ -3,13 +3,13 @@ using System.Reflection;
 using Geometrician.Components.Shared;
 using Microsoft.Extensions.Logging;
 
-namespace Geometrician.Components.Execution;
+namespace Geometrician.Components.Composition;
 
-public class ExecutionState
+public class CompositionState
 {
-    private readonly ILogger<ExecutionState> _logger;
+    private readonly ILogger<CompositionState> _logger;
 
-    public ExecutionState(ILogger<ExecutionState> logger)
+    public CompositionState(ILogger<CompositionState> logger)
     {
         _logger = logger;
     }

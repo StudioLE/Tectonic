@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
-using Geometrician.Components.Composition;
+using Geometrician.Components.Execution;
 using Geometrician.Components.Shared;
-using StudioLE.Core.Results;
 using Geometrician.Components.Visualization;
 using Geometrician.Core;
 using Geometrician.Core.Execution;
@@ -9,24 +8,25 @@ using Lineweights.Core.Storage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
+using StudioLE.Core.Results;
 
-namespace Geometrician.Components.Execution;
+namespace Geometrician.Components.Composition;
 
-public class ActivityInputComponentBase : ComponentBase, IDisposable
+public class InputComposerComponentBase : ComponentBase, IDisposable
 {
     private ActivityCommand? _activity;
 
     /// <inheritdoc cref="ILogger"/>
     [Inject]
-    private ILogger<ActivitySelectionComponent> Logger { get; set; } = null!;
+    private ILogger<ActivityResolverComponent> Logger { get; set; } = null!;
 
     /// <inheritdoc cref="NavigationManager"/>
     [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
-    /// <inheritdoc cref="ExecutionState"/>
+    /// <inheritdoc cref="CompositionState"/>
     [Inject]
-    private ExecutionState Execution { get; set; } = null!;
+    private CompositionState Resolver { get; set; } = null!;
 
     /// <inheritdoc cref="DisplayState"/>
     [Inject]
@@ -54,18 +54,18 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
 
     protected override void OnInitialized()
     {
-        Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Execution.SelectedActivityKey} Assembly: {Execution.SelectedActivityKey}");
-        if (!Execution.TryGetAssemblyByKey(Execution.SelectedAssemblyKey, out Assembly? assembly))
+        Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Resolver.SelectedActivityKey} Assembly: {Resolver.SelectedActivityKey}");
+        if (!Resolver.TryGetAssemblyByKey(Resolver.SelectedAssemblyKey, out Assembly? assembly))
         {
-            Execution.SelectedAssemblyKey = string.Empty;
+            Resolver.SelectedAssemblyKey = string.Empty;
             return;
         }
 
-        IResult<ActivityCommand> result = Factory.TryCreateByKey(assembly!, Execution.SelectedActivityKey);
+        IResult<ActivityCommand> result = Factory.TryCreateByKey(assembly!, Resolver.SelectedActivityKey);
         if (result is not Success<ActivityCommand> success)
         {
-            Execution.ShowError(Logger, "Failed to load activity. Method does not exist.");
-            Execution.SelectedActivityKey = string.Empty;
+            Resolver.ShowError(Logger, "Failed to load activity. Method does not exist.");
+            Resolver.SelectedActivityKey = string.Empty;
             return;
         }
         _activity = success;
@@ -94,12 +94,12 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
 
     protected void BuildAndExecute()
     {
-        Execution.Messages.Clear();
+        Resolver.Messages.Clear();
         Logger.LogDebug($"{nameof(BuildAndExecute)} called.");
 
         if (_activity is null)
         {
-            Execution.ShowError(Logger, "Failed to load activity. Method does not exist.");
+            Resolver.ShowError(Logger, "Failed to load activity. Method does not exist.");
             return;
         }
 
@@ -116,12 +116,12 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
         }
         catch (TargetInvocationException e)
         {
-            Execution.ShowError(Logger, e.InnerException ?? e, "Execution failed");
+            Resolver.ShowError(Logger, e.InnerException ?? e, "Execution failed");
             return;
         }
         catch (Exception e)
         {
-            Execution.ShowError(Logger, e, "Execution failed");
+            Resolver.ShowError(Logger, e, "Execution failed");
             return;
         }
         Logger.LogDebug("Execution completed.");
@@ -129,14 +129,14 @@ public class ActivityInputComponentBase : ComponentBase, IDisposable
         IResult<Model> model = outputs.TryGetPropertyValue<Model>("Model");
         if (model is not Success<Model> successModel)
         {
-            Execution.ShowWarning(Logger, "Activity output was not a model.");
+            Resolver.ShowWarning(Logger, "Activity output was not a model.");
             return;
         }
 
         Outcome outcome = new()
         {
             Name = _activity.Name ?? string.Empty,
-            Description = $"Executed {Execution.SelectedActivityKey} from {Execution.SelectedAssemblyKey}."
+            Description = $"Executed {Resolver.SelectedActivityKey} from {Resolver.SelectedAssemblyKey}."
         };
 
         Visualization.AddOutcome(outcome, outputs);

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Reflection;
+using Geometrician.Components.Composition;
 using Geometrician.Core.Samples;
 using Lineweights.Drawings.Samples;
 using Lineweights.Flex.Samples;
@@ -14,9 +15,9 @@ public class RunnerComponentBase : ComponentBase, IDisposable
     [Inject]
     private ILogger<RunnerComponent> Logger { get; set; } = null!;
 
-    /// <inheritdoc cref="ExecutionState"/>
+    /// <inheritdoc cref="CompositionState"/>
     [Inject]
-    protected ExecutionState Execution { get; set; } = null!;
+    protected CompositionState Resolver { get; set; } = null!;
 
     /// <summary>
     /// The assemblies to populate the <see cref="AssemblySelectionComponent"/> with
@@ -41,14 +42,14 @@ public class RunnerComponentBase : ComponentBase, IDisposable
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        Execution.Messages.CollectionChanged += OnMessagesChanged;
+        Resolver.Messages.CollectionChanged += OnMessagesChanged;
     }
 
     /// <inheritdoc />
     protected override void OnParametersSet()
     {
-        Execution.SelectedAssemblyKey = AssemblyKey ?? string.Empty;
-        Execution.SelectedActivityKey = ActivityKey ?? string.Empty;
+        Resolver.SelectedAssemblyKey = AssemblyKey ?? string.Empty;
+        Resolver.SelectedActivityKey = ActivityKey ?? string.Empty;
         if (!Assemblies.Any())
             Assemblies = new[]
             {
@@ -57,7 +58,7 @@ public class RunnerComponentBase : ComponentBase, IDisposable
                 typeof(WallFlemishBond).Assembly
             };
         foreach (Assembly assembly in Assemblies)
-            Execution.LoadedAssemblies.TryAdd(assembly.GetName().Name ?? "Unnamed", assembly);
+            Resolver.LoadedAssemblies.TryAdd(assembly.GetName().Name ?? "Unnamed", assembly);
     }
 
     private async void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -69,6 +70,6 @@ public class RunnerComponentBase : ComponentBase, IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
-        Execution.Messages.CollectionChanged -= OnMessagesChanged;
+        Resolver.Messages.CollectionChanged -= OnMessagesChanged;
     }
 }

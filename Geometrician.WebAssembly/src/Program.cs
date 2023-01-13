@@ -1,3 +1,4 @@
+using Geometrician.Components.Composition;
 using Geometrician.Components.Execution;
 using Geometrician.Components.Scripts;
 using Geometrician.Components.Shared;
@@ -28,7 +29,7 @@ builder.Services.AddSingleton<IActivityFactory, StaticMethodActivityFactory>();
 builder.Services.AddTransient<DisplayState>();
 
 // Inject Lineweights scoped services
-builder.Services.AddScoped<ExecutionState>();
+builder.Services.AddScoped<CompositionState>();
 
 // Inject Blazor WebAssembly services
 builder.Services.AddScoped(_ => new HttpClient

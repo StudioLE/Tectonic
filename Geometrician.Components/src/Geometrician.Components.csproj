@@ -31,4 +31,8 @@
     <Watch Include="wwwroot\*.js" />
     <Watch Include="wwwroot\*.css" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resolution" />
+  </ItemGroup>
 </Project>
