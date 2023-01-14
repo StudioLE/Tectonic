@@ -60,13 +60,14 @@ public static class Services
 
                 // Concrete services
 
-                services.AddTransient<AssetFactoryResolver>();
-                services.AddTransient<VisualizationConfiguration>(_ => new VisualizationConfiguration()
-                    .RegisterAssetFactory<Model, GlbAssetFactory>()
-                    .RegisterAssetFactory<ExternalAsset, AssetFactory>()
-                    .RegisterAssetFactory<InternalAsset, AssetFactory>()
-                    .RegisterAssetFactory<Model, CsvElementTypesAssetFactory>()
-                    .RegisterAssetFactory<Model, JsonAssetFactory>());
+                services.AddTransient<AssetFactoryResolver>(x => new AssetFactoryResolverBuilder(x)
+                    .Register<Model, GlbAssetFactory>()
+                    .Register<ExternalAsset, AssetFactory>()
+                    .Register<InternalAsset, AssetFactory>()
+                    .Register<Model, CsvElementTypesAssetFactory>()
+                    .Register<Model, JsonAssetFactory>()
+                    .Build());
+                services.AddTransient<VisualizationConfiguration>();
 
                 services.AddTransient<GlbAssetFactory>();
                 services.AddTransient<AssetFactory>();

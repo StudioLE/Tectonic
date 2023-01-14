@@ -1,6 +1,4 @@
-﻿using Lineweights.Core.Assets;
-
-namespace Geometrician.Core.Visualization;
+﻿namespace Geometrician.Core.Visualization;
 
 public class VisualizationConfiguration
 {
@@ -20,26 +18,7 @@ public class VisualizationConfiguration
     /// </summary>
     public const string VisualizeRoute = "visualize";
 
-    internal Dictionary<Type, Type[]> AssetFactories { get; } = new();
-
     internal Dictionary<string, Type> ContentTypes { get; } = new();
-
-    internal Dictionary<Type, int> AssertFactoriesOrder { get; } = new();
-
-    public VisualizationConfiguration RegisterAssetFactory<TSource, TAssetFactory>(int? order = null) where TAssetFactory : IAssetFactory<TSource, IAsset>
-    {
-        order ??= AssertFactoriesOrder.Count + 100;
-        Type sourceType = typeof(TSource);
-        Type converterType = typeof(TAssetFactory);
-        Type[] converters = AssetFactories.ContainsKey(sourceType)
-            ? AssetFactories[sourceType]
-            : Array.Empty<Type>();
-        converters = converters.Append(converterType).ToArray();
-        AssetFactories[sourceType] = converters;
-        AssertFactoriesOrder[converterType] = (int)order;
-
-        return this;
-    }
 
     public VisualizationConfiguration RegisterContentType(string contentType, Type component)
     {

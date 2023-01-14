@@ -34,24 +34,25 @@ builder.Services.AddTransient<ModelViewer>();
 builder.Services.AddScoped<CompositionState>();
 builder.Services.AddTransient<ObjectUrlStorage>();
 builder.Services.AddTransient<DisplayState>();
-builder.Services.AddTransient<AssetFactoryResolver>();
 builder.Services.AddTransient<ViewerComponentProvider>();
 builder.Services.AddTransient<AssemblyResolver>(_ => new AssemblyResolverBuilder()
     .Register(typeof(SheetSample).Assembly)
     .Register(typeof(AssetTypes).Assembly)
     .Register(typeof(WallFlemishBond).Assembly)
     .Build());
+builder.Services.AddTransient<AssetFactoryResolver>(services => new AssetFactoryResolverBuilder(services)
+    .Register<Model, GlbAssetFactory>()
+    .Register<ExternalAsset, AssetFactory>()
+    .Register<InternalAsset, AssetFactory>()
+    .Register<Sheet, SvgAssetFactory<Sheet>>()
+    .Register<View, SvgAssetFactory<View>>()
+    .Register<Model, CsvElementTypesAssetFactory>()
+    .Register<Sheet, PdfAssetFactory<Sheet>>()
+    .Register<View, PdfAssetFactory<View>>()
+    .Register<Model, IfcAssetFactory>()
+    .Register<Model, JsonAssetFactory>()
+    .Build());
 builder.Services.AddTransient<VisualizationConfiguration>(_ => new VisualizationConfiguration()
-    .RegisterAssetFactory<Model, GlbAssetFactory>()
-    .RegisterAssetFactory<ExternalAsset, AssetFactory>()
-    .RegisterAssetFactory<InternalAsset, AssetFactory>()
-    .RegisterAssetFactory<Sheet, SvgAssetFactory<Sheet>>()
-    .RegisterAssetFactory<View, SvgAssetFactory<View>>()
-    .RegisterAssetFactory<Model, CsvElementTypesAssetFactory>()
-    .RegisterAssetFactory<Sheet, PdfAssetFactory<Sheet>>()
-    .RegisterAssetFactory<View, PdfAssetFactory<View>>()
-    .RegisterAssetFactory<Model, IfcAssetFactory>()
-    .RegisterAssetFactory<Model, JsonAssetFactory>()
     .RegisterContentType("application/pdf", typeof(ObjectViewerComponent))
     .RegisterContentType("model/gltf-binary", typeof(ThreeViewerComponent))
     .RegisterContentType("text/csv", typeof(TableViewerComponent))
