@@ -4,6 +4,9 @@ using StudioLE.Core.Results;
 
 namespace Geometrician.Core.Assets;
 
+/// <summary>
+/// Create an
+/// </summary>
 public class AssetFactory : IAssetFactory<IAsset, IAsset>
 {
     private readonly IStorageStrategy _storageStrategy;
