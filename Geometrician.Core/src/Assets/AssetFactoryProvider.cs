@@ -6,6 +6,20 @@ using StudioLE.Core.Results;
 
 namespace Geometrician.Core.Assets;
 
+/// <summary>
+/// A registry of <see cref="IAssetFactory{TResult}"/> assigned to specific types.
+/// </summary>
+/// <remarks>
+/// <para>
+/// The registry is populated from <see cref="VisualizationConfiguration"/> by
+/// <see href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection">dependency injection</see>.
+/// </para>
+/// <para>
+/// The
+/// </para>
+/// The <see cref="GetFactoriesForObjectProperties"/>
+/// <see href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection">dependency injection</see>
+/// </remarks>
 public class AssetFactoryProvider
 {
     private readonly IServiceProvider _services;
