@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using Geometrician.Core.Assets;
+using Geometrician.Core.Configuration;
 
 namespace Geometrician.Components.Visualization;
 

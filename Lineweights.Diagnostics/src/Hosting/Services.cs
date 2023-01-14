@@ -1,4 +1,5 @@
 ﻿using Geometrician.Core.Assets;
+using Geometrician.Core.Configuration;
 using Geometrician.Core.Execution;
 using Geometrician.Core.Storage;
 using Geometrician.Core.Visualization;

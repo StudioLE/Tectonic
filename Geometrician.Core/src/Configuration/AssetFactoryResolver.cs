@@ -4,7 +4,7 @@ using Lineweights.Core.Assets;
 using Microsoft.Extensions.DependencyInjection;
 using StudioLE.Core.Results;
 
-namespace Geometrician.Core.Assets;
+namespace Geometrician.Core.Configuration;
 
 /// <summary>
 /// A registry of <see cref="IAssetFactory{TResult}"/> assigned to specific types.
@@ -23,14 +23,14 @@ namespace Geometrician.Core.Assets;
 public class AssetFactoryResolver
 {
     private readonly IServiceProvider _services;
-    private readonly Dictionary<Type, Type[]> _factories;
-    private readonly Dictionary<Type, int> _order;
+    private readonly IReadOnlyDictionary<Type, Type[]> _factories;
+    private readonly IReadOnlyDictionary<Type, int> _order;
 
-    public AssetFactoryResolver(IServiceProvider services, VisualizationConfiguration configuration)
+    internal AssetFactoryResolver(IServiceProvider services, IReadOnlyDictionary<Type, Type[]> factories, IReadOnlyDictionary<Type, int> order)
     {
         _services = services;
-        _factories = configuration.AssetFactories;
-        _order = configuration.AssertFactoriesOrder;
+        _factories = factories;
+        _order = order;
     }
 
     public IReadOnlyCollection<IAssetFactory<IAsset>> ResolveForObjectProperties(object obj)
