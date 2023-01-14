@@ -1,5 +1,4 @@
-﻿using System.Collections.Specialized;
-using Geometrician.Components.Composition;
+﻿using Geometrician.Components.Composition;
 using Geometrician.Components.Shared;
 using Geometrician.Components.Visualization;
 using Microsoft.AspNetCore.Components;
@@ -47,7 +46,6 @@ public class RunnerPageBase : ComponentBase, IDisposable
     {
         Logger.LogDebug($"{nameof(OnInitialized)}() called. Assembly: {AssemblyKey ?? "[null]"}; Activity: {ActivityKey ?? "[null]"};");
         Visualization.OutcomesChanged += NotifyStateHasChanged;
-        Resolver.Messages.CollectionChanged += OnMessagesChanged;
     }
 
     /// <inheritdoc />
@@ -62,16 +60,9 @@ public class RunnerPageBase : ComponentBase, IDisposable
         await InvokeAsync(StateHasChanged);
     }
 
-    private async void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        Logger.LogDebug($"{nameof(OnMessagesChanged)}() called.");
-        await InvokeAsync(StateHasChanged);
-    }
-
     /// <inheritdoc />
     public void Dispose()
     {
         Visualization.OutcomesChanged -= NotifyStateHasChanged;
-        Resolver.Messages.CollectionChanged -= OnMessagesChanged;
     }
 }

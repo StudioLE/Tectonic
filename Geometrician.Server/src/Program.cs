@@ -16,6 +16,7 @@ using Lineweights.Flex.Samples;
 using Lineweights.IFC;
 using Lineweights.PDF;
 using Lineweights.SVG;
+using MudBlazor;
 using MudBlazor.Services;
 
 // Create Builder
@@ -26,12 +27,17 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 // Add MudBlazor
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(config =>
+{
+    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopCenter;
+    config.SnackbarConfiguration.RequireInteraction = true;
+});
 
 // Inject Geometrician services
 builder.Services.AddSingleton<VisualizationState>();
 builder.Services.AddTransient<ModelViewer>();
 builder.Services.AddScoped<CompositionState>();
+builder.Services.AddScoped<CommunicationState>();
 builder.Services.AddTransient<ObjectUrlStorage>();
 builder.Services.AddTransient<DisplayState>();
 builder.Services.AddTransient<AssemblyResolver>(_ => new AssemblyResolverBuilder()

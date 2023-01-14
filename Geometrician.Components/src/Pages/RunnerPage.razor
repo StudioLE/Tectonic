@@ -15,11 +15,6 @@
 <MudLayout>
   <MudMainContent>
 
-    @foreach (Message message in Resolver.Messages)
-    {
-      <MessageComponent Message="message"></MessageComponent>
-    }
-
     <MosaicComponent>
       @if (Resolver.IsAssemblySet)
       {

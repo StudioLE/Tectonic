@@ -30,6 +30,10 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     [Inject]
     private CompositionState Composition { get; set; } = null!;
 
+    /// <inheritdoc cref="CommunicationState"/>
+    [Inject]
+    private CommunicationState Communication { get; set; } = null!;
+
     /// <inheritdoc cref="DisplayState"/>
     [Inject]
     protected DisplayState Display { get; set; } = default!;
@@ -69,14 +73,19 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         Assembly? assembly = AssemblyResolver.ResolveByName(Composition.SelectedAssemblyKey);
         if (assembly is null)
         {
-            Composition.ShowError(Logger, "Failed to load assembly. Key not found: " + Composition.SelectedActivityKey);
+
+            string message = "Failed to load assembly. Key not found: " + Composition.SelectedAssemblyKey;
+            Logger.LogError(message);
+            Communication.ShowError(message);
             return;
         }
 
         IResult<ActivityCommand> result = Factory.TryCreateByKey(assembly, Composition.SelectedActivityKey);
         if (result is not Success<ActivityCommand> success)
         {
-            Composition.ShowError(Logger, "Failed to load activity. Method does not exist.");
+            string message = "Failed to load activity. Key not found: " + Composition.SelectedActivityKey;
+            Logger.LogError(message);
+            Communication.ShowError(message);
             Composition.SelectedActivityKey = string.Empty;
             return;
         }
@@ -112,12 +121,13 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     /// </summary>
     private void BuildAndExecute()
     {
-        Composition.Messages.Clear();
         Logger.LogDebug($"{nameof(BuildAndExecute)} called.");
 
         if (_activity is null)
         {
-            Composition.ShowError(Logger, "Failed to load activity. Method does not exist.");
+            string message = "Failed to load activity. Method does not exist.";
+            Logger.LogError(message);
+            Communication.ShowError(message);
             return;
         }
 
@@ -134,12 +144,16 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         }
         catch (TargetInvocationException e)
         {
-            Composition.ShowError(Logger, e.InnerException ?? e, "Execution failed");
+            string message = "Execution failed.";
+            Logger.LogError(e.InnerException ?? e, message);
+            Communication.ShowError(message);
             return;
         }
         catch (Exception e)
         {
-            Composition.ShowError(Logger, e, "Execution failed");
+            string message = "Execution failed.";
+            Logger.LogError(e, message);
+            Communication.ShowError(message);
             return;
         }
         Logger.LogDebug("Execution completed.");
@@ -147,7 +161,9 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         IResult<Model> model = outputs.TryGetPropertyValue<Model>("Model");
         if (model is not Success<Model> successModel)
         {
-            Composition.ShowWarning(Logger, "Activity output was not a model.");
+            string message = "Activity output was not a model.";
+            Logger.LogWarning(message);
+            Communication.ShowWarning(message);
             return;
         }
 

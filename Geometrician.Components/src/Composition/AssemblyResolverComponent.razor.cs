@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Reflection;
+using Geometrician.Components.Shared;
 using Geometrician.Core.Configuration;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
@@ -26,6 +27,10 @@ public class AssemblyResolverComponentBase : ComponentBase
     /// <inheritdoc cref="CompositionState"/>
     [Inject]
     private CompositionState Composition { get; set; } = null!;
+
+    /// <inheritdoc cref="CommunicationState"/>
+    [Inject]
+    private CommunicationState Communication { get; set; } = null!;
 
     /// <summary>
     /// The error messages.
@@ -68,7 +73,9 @@ public class AssemblyResolverComponentBase : ComponentBase
         Assembly? assembly = AssemblyResolver.ResolveByName(AssemblySelectValue);
         if (assembly is null)
         {
-            Composition.ShowError(Logger, "Failed to load assembly. Key not found: " + Composition.SelectedActivityKey);
+            string message = "Failed to load assembly. Key not found: " + Composition.SelectedAssemblyKey;
+            Logger.LogError(message);
+            Communication.ShowError(message);
             return;
         }
         AssemblyInputValue = $"{AssemblySelectValue}.dll";
@@ -80,7 +87,6 @@ public class AssemblyResolverComponentBase : ComponentBase
     /// </summary>
     protected void SetAssemblyByPath()
     {
-        Composition.Messages.Clear();
         Logger.LogDebug($"{nameof(SetAssemblyByPath)} called with {AssemblyInputValue}.");
         string assemblyPath = AssemblyInputValue;
         if (!Path.IsPathFullyQualified(assemblyPath))
@@ -90,7 +96,9 @@ public class AssemblyResolverComponentBase : ComponentBase
         }
         if (!File.Exists(assemblyPath))
         {
-            Composition.ShowWarning(Logger, "Failed to load assembly. File not found.");
+            string message = "Failed to load assembly. File not found.";
+            Logger.LogError(message);
+            Communication.ShowError(message);
             return;
         }
         Assembly assembly = Assembly.LoadFrom(assemblyPath);
@@ -102,7 +110,9 @@ public class AssemblyResolverComponentBase : ComponentBase
         string? assemblyName = assembly.GetName().Name;
         if (assemblyName is null)
         {
-            Composition.ShowWarning(Logger, "Failed to load assembly. Assembly doesn't have a name.");
+            string message = "Failed to load assembly. Assembly doesn't have a name.";
+            Logger.LogError(message);
+            Communication.ShowError(message);
             return;
         }
         _ = AssemblyResolver.TryRegister(assembly);

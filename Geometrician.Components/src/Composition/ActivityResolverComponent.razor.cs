@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Geometrician.Components.Shared;
 using Geometrician.Core.Configuration;
 using Geometrician.Core.Execution;
 using Microsoft.AspNetCore.Components;
@@ -27,6 +28,10 @@ public class ActivityResolverComponentBase : ComponentBase
     [Inject]
     private CompositionState Composition { get; set; } = null!;
 
+    /// <inheritdoc cref="CommunicationState"/>
+    [Inject]
+    private CommunicationState Communication { get; set; } = null!;
+
     /// <inheritdoc cref="IActivityFactory"/>
     [Inject]
     private IActivityFactory Factory { get; set; } = default!;
@@ -48,7 +53,9 @@ public class ActivityResolverComponentBase : ComponentBase
         Assembly? assembly = AssemblyResolver.ResolveByName(Composition.SelectedAssemblyKey);
         if (assembly is null)
         {
-            Composition.ShowError(Logger, "Failed to load assembly. Key not found: " + Composition.SelectedActivityKey);
+            string message = "Failed to load assembly. Key not found: " + Composition.SelectedAssemblyKey;
+            Logger.LogError(message);
+            Communication.ShowError(message);
             return;
         }
         ActivitySelectOptions = Factory.AllActivityKeysInAssembly(assembly).ToArray();

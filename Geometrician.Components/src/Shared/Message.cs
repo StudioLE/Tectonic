@@ -10,17 +10,17 @@ public class Message
     /// <summary>
     /// The severity of the message.
     /// </summary>
-    public LogLevel Level { get; set; }
+    public LogLevel Level { get;}
 
     /// <summary>
     /// An optional title for the message.
     /// </summary>
-    public string? Title { get; set; }
+    public string? Title { get;}
 
     /// <summary>
     /// The body of the message.
     /// </summary>
-    public string Body { get; set; }
+    public string Body { get; }
 
     /// <summary>
     /// <inheritdoc cref="Message"/>
