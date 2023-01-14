@@ -16,11 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Lineweights.Flex\src\Lineweights.Flex.csproj" />
-    <ProjectReference Include="..\src\Lineweights.Diagnostics.csproj" />
     <ProjectReference Include="..\..\Lineweights.Drawings\src\Lineweights.Drawings.csproj" />
-    <ProjectReference Include="..\..\Lineweights.IFC\src\Lineweights.IFC.csproj" />
-    <ProjectReference Include="..\..\Lineweights.PDF\src\Lineweights.PDF.csproj" />
-    <ProjectReference Include="..\..\Lineweights.SVG\src\Lineweights.SVG.csproj" />
   </ItemGroup>
 
   <ItemGroup>
