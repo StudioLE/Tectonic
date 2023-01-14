@@ -59,7 +59,7 @@ public static class Services
 
                 // Concrete services
 
-                services.AddTransient<AssetFactoryProvider>();
+                services.AddTransient<AssetFactoryResolver>();
                 services.AddTransient<VisualizationConfiguration>(_ => new VisualizationConfiguration()
                     .RegisterAssetFactory<Model, GlbAssetFactory>()
                     .RegisterAssetFactory<ExternalAsset, AssetFactory>()

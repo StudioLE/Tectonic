@@ -12,12 +12,12 @@ namespace Lineweights.Diagnostics.Visualization;
 
 /// <summary>
 /// Visualize a <see cref="Model"/> as local files.
-/// Use an <see cref="AssetFactoryProvider"/> to convert the <see cref="Model"/> to individual <see cref="IAsset"/>.
+/// Use an <see cref="AssetFactoryResolver"/> to convert the <see cref="Model"/> to individual <see cref="IAsset"/>.
 /// Save the assets to local file storage and then open them in the default programs of the operating system.
 /// </summary>
 public sealed class VisualizeAsFile : IVisualizationStrategy
 {
-    private readonly AssetFactoryProvider _provider;
+    private readonly AssetFactoryResolver _resolver;
     private readonly IStorageStrategy _storageStrategy = new FileStorageStrategy();
 
     /// <summary>
@@ -26,9 +26,9 @@ public sealed class VisualizeAsFile : IVisualizationStrategy
     public bool IsOpenEnabled { get; set; } = true;
 
     /// <inheritdoc cref="VisualizeAsFile"/>
-    public VisualizeAsFile(AssetFactoryProvider provider)
+    public VisualizeAsFile(AssetFactoryResolver resolver)
     {
-        _provider = provider;
+        _resolver = resolver;
     }
 
     /// <inheritdoc cref="VisualizeAsFile"/>
@@ -41,7 +41,7 @@ public sealed class VisualizeAsFile : IVisualizationStrategy
     /// <inheritdoc cref="VisualizeAsFile"/>
     public async Task Execute(VisualizeRequest request)
     {
-        IReadOnlyCollection<IAssetFactory<IAsset>> factories = _provider.GetFactoriesForObjectProperties(request);
+        IReadOnlyCollection<IAssetFactory<IAsset>> factories = _resolver.ResolveForObjectProperties(request);
 
         IEnumerable<Task<ExternalAsset?>> assets = factories
             .Select(async factory =>

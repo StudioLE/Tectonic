@@ -8,12 +8,12 @@ using StudioLE.Core.Results;
 
 namespace Geometrician.Core.Tests.Documents;
 
-internal sealed class AssetFactoryProviderTests
+internal sealed class AssetFactoryResolverTests
 {
     private readonly IServiceProvider _services;
     private readonly Model _model;
 
-    public AssetFactoryProviderTests()
+    public AssetFactoryResolverTests()
     {
         _services = Services.GetInstance();
         _model = new();
@@ -33,14 +33,14 @@ internal sealed class AssetFactoryProviderTests
     [TestCase(typeof(ExternalAsset), 1)]
     [TestCase(typeof(InternalAsset), 1)]
     [TestCase(typeof(Model), 3)]
-    public void AssetFactoryProvider_GetFactoriesForSourceType(Type type, int expected)
+    public void AssetFactoryResolver_GetFactoriesForSourceType(Type type, int expected)
     {
         // Arrange
-        AssetFactoryProvider provider = _services.GetRequiredService<AssetFactoryProvider>();
+        AssetFactoryResolver resolver = _services.GetRequiredService<AssetFactoryResolver>();
 
         // Act
-        IAssetFactory<IAsset>[] factories = provider
-            .GetFactoriesForSourceType(type)
+        IAssetFactory<IAsset>[] factories = resolver
+            .ResolveForSourceType(type)
             .ToArray();
 
         // Assert
@@ -48,15 +48,15 @@ internal sealed class AssetFactoryProviderTests
     }
 
     [Test]
-    public async Task AssetFactoryProvider_GetFactoriesForObjectProperties()
+    public async Task AssetFactoryResolver_GetFactoriesForObjectProperties()
     {
         // Arrange
         ExampleClass example = new(_model);
-        AssetFactoryProvider provider = _services.GetRequiredService<AssetFactoryProvider>();
+        AssetFactoryResolver resolver = _services.GetRequiredService<AssetFactoryResolver>();
 
         // Act
-        IAssetFactory<IAsset>[] factories = provider
-            .GetFactoriesForObjectProperties(example)
+        IAssetFactory<IAsset>[] factories = resolver
+            .ResolveForObjectProperties(example)
             .ToArray();
         foreach (IAssetFactory<IAsset> factory in factories)
             if(factory.Result is not Success)

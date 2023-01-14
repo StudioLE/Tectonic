@@ -8,13 +8,13 @@ namespace Geometrician.Components.Visualization;
 /// </summary>
 public class VisualizationState
 {
-    private readonly AssetFactoryProvider _provider;
+    private readonly AssetFactoryResolver _resolver;
     private readonly Collection<Outcome> _outcomes = new();
 
     /// <inheritdoc cref="VisualizationState"/>
-    public VisualizationState(AssetFactoryProvider provider)
+    public VisualizationState(AssetFactoryResolver resolver)
     {
-        _provider = provider;
+        _resolver = resolver;
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public class VisualizationState
     /// <param name="output">The output of the execution from which assets will be derived.</param>
     public void AddOutcome(Outcome outcome, object output)
     {
-        outcome.Assets = _provider.GetFactoriesForObjectProperties(output);
+        outcome.Assets = _resolver.ResolveForObjectProperties(output);
         _outcomes.Add(outcome);
         OutcomesChanged?.Invoke(this, EventArgs.Empty);
     }

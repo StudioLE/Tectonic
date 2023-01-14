@@ -34,7 +34,7 @@ builder.Services.AddTransient<ModelViewer>();
 builder.Services.AddScoped<CompositionState>();
 builder.Services.AddTransient<ObjectUrlStorage>();
 builder.Services.AddTransient<DisplayState>();
-builder.Services.AddTransient<AssetFactoryProvider>();
+builder.Services.AddTransient<AssetFactoryResolver>();
 builder.Services.AddTransient<ViewerComponentProvider>();
 builder.Services.AddTransient<AssemblyResolver>(_ => new AssemblyResolverBuilder()
     .Register(typeof(SheetSample).Assembly)
