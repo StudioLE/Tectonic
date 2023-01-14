@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Geometrician.Components\src\Geometrician.Components.csproj" />
-    <ProjectReference Include="..\..\Lineweights.Flex\samples\Lineweights.Flex.Samples.csproj" />
     <ProjectReference Include="..\..\Lineweights.IFC\src\Lineweights.IFC.csproj" />
     <ProjectReference Include="..\..\Lineweights.PDF\src\Lineweights.PDF.csproj" />
     <ProjectReference Include="..\..\Lineweights.SVG\src\Lineweights.SVG.csproj" />
