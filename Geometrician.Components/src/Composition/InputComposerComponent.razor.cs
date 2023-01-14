@@ -2,6 +2,7 @@
 using Geometrician.Components.Shared;
 using Geometrician.Components.Visualization;
 using Geometrician.Core;
+using Geometrician.Core.Configuration;
 using Geometrician.Core.Execution;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
@@ -21,9 +22,13 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     [Inject]
     private ILogger<ActivityResolverComponent> Logger { get; set; } = null!;
 
+    /// <inheritdoc cref="Geometrician.Core.Configuration.AssemblyResolver"/>
+    [Inject]
+    private AssemblyResolver AssemblyResolver { get; set; } = null!;
+
     /// <inheritdoc cref="CompositionState"/>
     [Inject]
-    private CompositionState Resolver { get; set; } = null!;
+    private CompositionState Composition { get; set; } = null!;
 
     /// <inheritdoc cref="DisplayState"/>
     [Inject]
@@ -60,18 +65,19 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Resolver.SelectedActivityKey} Assembly: {Resolver.SelectedActivityKey}");
-        if (!Resolver.TryGetAssemblyByKey(Resolver.SelectedAssemblyKey, out Assembly? assembly))
+        Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Composition.SelectedActivityKey} Assembly: {Composition.SelectedAssemblyKey}");
+        Assembly? assembly = AssemblyResolver.ResolveByName(Composition.SelectedAssemblyKey);
+        if (assembly is null)
         {
-            Resolver.SelectedAssemblyKey = string.Empty;
+            Composition.ShowError(Logger, "Failed to load assembly. Key not found: " + Composition.SelectedActivityKey);
             return;
         }
 
-        IResult<ActivityCommand> result = Factory.TryCreateByKey(assembly!, Resolver.SelectedActivityKey);
+        IResult<ActivityCommand> result = Factory.TryCreateByKey(assembly, Composition.SelectedActivityKey);
         if (result is not Success<ActivityCommand> success)
         {
-            Resolver.ShowError(Logger, "Failed to load activity. Method does not exist.");
-            Resolver.SelectedActivityKey = string.Empty;
+            Composition.ShowError(Logger, "Failed to load activity. Method does not exist.");
+            Composition.SelectedActivityKey = string.Empty;
             return;
         }
         _activity = success;
@@ -106,12 +112,12 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     /// </summary>
     private void BuildAndExecute()
     {
-        Resolver.Messages.Clear();
+        Composition.Messages.Clear();
         Logger.LogDebug($"{nameof(BuildAndExecute)} called.");
 
         if (_activity is null)
         {
-            Resolver.ShowError(Logger, "Failed to load activity. Method does not exist.");
+            Composition.ShowError(Logger, "Failed to load activity. Method does not exist.");
             return;
         }
 
@@ -128,12 +134,12 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         }
         catch (TargetInvocationException e)
         {
-            Resolver.ShowError(Logger, e.InnerException ?? e, "Execution failed");
+            Composition.ShowError(Logger, e.InnerException ?? e, "Execution failed");
             return;
         }
         catch (Exception e)
         {
-            Resolver.ShowError(Logger, e, "Execution failed");
+            Composition.ShowError(Logger, e, "Execution failed");
             return;
         }
         Logger.LogDebug("Execution completed.");
@@ -141,14 +147,14 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         IResult<Model> model = outputs.TryGetPropertyValue<Model>("Model");
         if (model is not Success<Model> successModel)
         {
-            Resolver.ShowWarning(Logger, "Activity output was not a model.");
+            Composition.ShowWarning(Logger, "Activity output was not a model.");
             return;
         }
 
         Outcome outcome = new()
         {
             Name = _activity.Name ?? string.Empty,
-            Description = $"Executed {Resolver.SelectedActivityKey} from {Resolver.SelectedAssemblyKey}."
+            Description = $"Executed {Composition.SelectedActivityKey} from {Composition.SelectedAssemblyKey}."
         };
 
         Visualization.AddOutcome(outcome, outputs);

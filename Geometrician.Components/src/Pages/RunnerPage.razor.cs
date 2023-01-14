@@ -46,12 +46,6 @@ public class RunnerPageBase : ComponentBase, IDisposable
     [Parameter]
     public string? ActivityKey { get; set; }
 
-    /// <summary>
-    /// The assemblies to populate the <see cref="AssemblyResolverComponent"/> with
-    /// </summary>
-    [Parameter]
-    public IReadOnlyCollection<Assembly> Assemblies { get; set; } = Array.Empty<Assembly>();
-
     /// <inheritdoc />
     protected override void OnInitialized()
     {
@@ -65,15 +59,6 @@ public class RunnerPageBase : ComponentBase, IDisposable
     {
         Resolver.SelectedAssemblyKey = AssemblyKey ?? string.Empty;
         Resolver.SelectedActivityKey = ActivityKey ?? string.Empty;
-        if (!Assemblies.Any())
-            Assemblies = new[]
-            {
-                typeof(SheetSample).Assembly,
-                typeof(AssetTypes).Assembly,
-                typeof(WallFlemishBond).Assembly
-            };
-        foreach (Assembly assembly in Assemblies)
-            Resolver.LoadedAssemblies.TryAdd(assembly.GetName().Name ?? "Unnamed", assembly);
     }
 
     private async void NotifyStateHasChanged(object? sender, EventArgs e)

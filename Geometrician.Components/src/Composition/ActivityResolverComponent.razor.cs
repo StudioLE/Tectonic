@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Geometrician.Core.Configuration;
 using Geometrician.Core.Execution;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
@@ -18,9 +19,13 @@ public class ActivityResolverComponentBase : ComponentBase
     [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
+    /// <inheritdoc cref="Geometrician.Core.Configuration.AssemblyResolver"/>
+    [Inject]
+    private AssemblyResolver AssemblyResolver { get; set; } = null!;
+
     /// <inheritdoc cref="CompositionState"/>
     [Inject]
-    private CompositionState Resolver { get; set; } = null!;
+    private CompositionState Composition { get; set; } = null!;
 
     /// <inheritdoc cref="IActivityFactory"/>
     [Inject]
@@ -39,10 +44,14 @@ public class ActivityResolverComponentBase : ComponentBase
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Resolver.SelectedActivityKey} Assembly: {Resolver.SelectedActivityKey}");
-        if (!Resolver.TryGetAssemblyByKey(Resolver.SelectedAssemblyKey, out Assembly? assembly))
+        Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Composition.SelectedActivityKey} Assembly: {Composition.SelectedAssemblyKey}");
+        Assembly? assembly = AssemblyResolver.ResolveByName(Composition.SelectedAssemblyKey);
+        if (assembly is null)
+        {
+            Composition.ShowError(Logger, "Failed to load assembly. Key not found: " + Composition.SelectedActivityKey);
             return;
-        ActivitySelectOptions = Factory.AllActivityKeysInAssembly(assembly!).ToArray();
+        }
+        ActivitySelectOptions = Factory.AllActivityKeysInAssembly(assembly).ToArray();
         if (ActivitySelectOptions.Any())
             ActivitySelectValue = ActivitySelectOptions.First();
     }
@@ -53,6 +62,6 @@ public class ActivityResolverComponentBase : ComponentBase
     protected void SetActivity()
     {
         Logger.LogDebug($"{nameof(SetActivity)} called with {ActivitySelectValue}.");
-        Navigation.NavigateTo($"/run/{Resolver.SelectedAssemblyKey}/{ActivitySelectValue}");
+        Navigation.NavigateTo($"/run/{Composition.SelectedAssemblyKey}/{ActivitySelectValue}");
     }
 }

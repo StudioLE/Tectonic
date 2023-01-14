@@ -10,23 +10,10 @@ namespace Geometrician.Components.Composition;
 /// </summary>
 public class CompositionState
 {
-    private readonly ILogger<CompositionState> _logger;
-
-    /// <inheritdoc cref="CompositionState"/>
-    public CompositionState(ILogger<CompositionState> logger)
-    {
-        _logger = logger;
-    }
-
     /// <summary>
     /// The messages to display in the UI.
     /// </summary>
     public ObservableCollection<Message> Messages { get; } = new();
-
-    /// <summary>
-    /// The assemblies available to load activities from.
-    /// </summary>
-    public IDictionary<string, Assembly> LoadedAssemblies { get; } = new Dictionary<string, Assembly>();
 
     /// <summary>
     /// The key of the currently selected assembly.
@@ -49,24 +36,6 @@ public class CompositionState
     /// Is the activity set?
     /// </summary>
     public bool IsActivitySet => IsAssemblySet && !string.IsNullOrEmpty(SelectedActivityKey);
-
-    /// <summary>
-    /// Get the assembly by key.
-    /// Log an error and show a warning message if the assembly does not exist.
-    /// </summary>
-    /// <param name="key">The assembly key.</param>
-    /// <param name="assembly">The assembly if successful, otherwise null.</param>
-    /// <returns>True if successful, otherwise false.</returns>
-    public bool TryGetAssemblyByKey(string key, out Assembly? assembly)
-    {
-        _logger.LogDebug($"{nameof(TryGetAssemblyByKey)} called with key {key}.");
-        if (!LoadedAssemblies.TryGetValue(key, out assembly))
-        {
-            ShowError(_logger, "Failed to load assembly. Key not found.");
-            return false;
-        }
-        return true;
-    }
 
     /// <summary>
     /// Log a warning and show it in the UI.
