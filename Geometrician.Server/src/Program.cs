@@ -5,14 +5,11 @@ using Geometrician.Components.Visualization;
 using Geometrician.Core.Assets;
 using Geometrician.Core.Configuration;
 using Geometrician.Core.Execution;
-using Geometrician.Core.Samples;
 using Geometrician.Core.Storage;
 using Geometrician.Core.Visualization;
 using Lineweights.Core.Assets;
 using Lineweights.Core.Storage;
 using Lineweights.Drawings;
-using Lineweights.Drawings.Samples;
-using Lineweights.Flex.Samples;
 using Lineweights.IFC;
 using Lineweights.PDF;
 using Lineweights.SVG;
@@ -33,6 +30,10 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.RequireInteraction = true;
 });
 
+// Inject Geometrician configuration
+builder.Services.Configure<ActivitiesOptions>(
+    builder.Configuration.GetSection(ActivitiesOptions.Section));
+
 // Inject Geometrician services
 builder.Services.AddSingleton<VisualizationState>();
 builder.Services.AddTransient<ModelViewer>();
@@ -40,11 +41,7 @@ builder.Services.AddScoped<CompositionState>();
 builder.Services.AddScoped<CommunicationState>();
 builder.Services.AddTransient<ObjectUrlStorage>();
 builder.Services.AddTransient<DisplayState>();
-builder.Services.AddTransient<AssemblyResolver>(_ => new AssemblyResolverBuilder()
-    .Register(typeof(SheetSample).Assembly)
-    .Register(typeof(AssetTypes).Assembly)
-    .Register(typeof(WallFlemishBond).Assembly)
-    .Build());
+builder.Services.AddTransient<AssemblyResolver>();
 builder.Services.AddTransient<AssetFactoryResolver>(services => new AssetFactoryResolverBuilder(services)
     .Register<Model, GlbAssetFactory>()
     .Register<ExternalAsset, AssetFactory>()
