@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Geometrician.Core.Assets;
 using Geometrician.Core.Configuration;
 using Lineweights.Core.Assets;
 using Lineweights.Diagnostics.Hosting;

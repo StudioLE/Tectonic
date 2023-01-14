@@ -1,5 +1,4 @@
-﻿using Geometrician.Core.Assets;
-using Geometrician.Core.Configuration;
+﻿using Geometrician.Core.Configuration;
 using Lineweights.Core.Assets;
 using Microsoft.AspNetCore.Components;
 

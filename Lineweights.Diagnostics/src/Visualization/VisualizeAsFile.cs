@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.IO;
-using Geometrician.Core.Assets;
 using Geometrician.Core.Configuration;
 using Geometrician.Core.Storage;
 using Geometrician.Core.Visualization;

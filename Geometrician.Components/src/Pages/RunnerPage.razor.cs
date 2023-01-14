@@ -1,11 +1,7 @@
 ﻿using System.Collections.Specialized;
-using System.Reflection;
 using Geometrician.Components.Composition;
 using Geometrician.Components.Shared;
 using Geometrician.Components.Visualization;
-using Geometrician.Core.Samples;
-using Lineweights.Drawings.Samples;
-using Lineweights.Flex.Samples;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
