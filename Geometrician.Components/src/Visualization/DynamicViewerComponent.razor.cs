@@ -1,4 +1,5 @@
 ﻿using Geometrician.Core.Assets;
+using Geometrician.Core.Configuration;
 using Lineweights.Core.Assets;
 using Microsoft.AspNetCore.Components;
 
@@ -9,9 +10,9 @@ namespace Geometrician.Components.Visualization;
 /// </summary>
 public class DynamicViewerComponentBase : ViewerComponentBase<IAsset>
 {
-    /// <inheritdoc cref="ViewerComponentProvider"/>
+    /// <inheritdoc cref="Geometrician.Core.Configuration.ViewerComponentResolver"/>
     [Inject]
-    private ViewerComponentProvider Provider { get; set; } = default!;
+    private ViewerComponentResolver Resolver { get; set; } = default!;
 
     /// <summary>
     /// The <see cref="Type"/> of the viewer <see cref="IComponent"/> to use.
@@ -27,8 +28,9 @@ public class DynamicViewerComponentBase : ViewerComponentBase<IAsset>
     protected override void OnInitialized()
     {
         ComponentParameters.Add("Factory", Factory);
-        if (Provider.TryGetComponentType(Factory.Asset.ContentType, out Type component))
-            ComponentType = component;
+        Type? componentType = Resolver.Resolve(Factory.Asset.ContentType);
+        if (componentType is not null)
+            ComponentType = componentType;
         else if (Factory.Asset.ContentType.StartsWith("text/"))
             ComponentType = typeof(CodeViewerComponent);
         else if (Factory.Asset.ContentType.StartsWith("image/"))

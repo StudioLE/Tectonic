@@ -34,7 +34,6 @@ builder.Services.AddTransient<ModelViewer>();
 builder.Services.AddScoped<CompositionState>();
 builder.Services.AddTransient<ObjectUrlStorage>();
 builder.Services.AddTransient<DisplayState>();
-builder.Services.AddTransient<ViewerComponentProvider>();
 builder.Services.AddTransient<AssemblyResolver>(_ => new AssemblyResolverBuilder()
     .Register(typeof(SheetSample).Assembly)
     .Register(typeof(AssetTypes).Assembly)
@@ -52,11 +51,13 @@ builder.Services.AddTransient<AssetFactoryResolver>(services => new AssetFactory
     .Register<Model, IfcAssetFactory>()
     .Register<Model, JsonAssetFactory>()
     .Build());
-builder.Services.AddTransient<VisualizationConfiguration>(_ => new VisualizationConfiguration()
-    .RegisterContentType("application/pdf", typeof(ObjectViewerComponent))
-    .RegisterContentType("model/gltf-binary", typeof(ThreeViewerComponent))
-    .RegisterContentType("text/csv", typeof(TableViewerComponent))
-    .RegisterContentType("text/plain", typeof(TextViewerComponent)));
+builder.Services.AddTransient<ViewerComponentResolver>(_ => new ViewerComponentResolverBuilder()
+    .Register("application/pdf", typeof(ObjectViewerComponent))
+    .Register("model/gltf-binary", typeof(ThreeViewerComponent))
+    .Register("text/csv", typeof(TableViewerComponent))
+    .Register("text/plain", typeof(TextViewerComponent))
+    .Build());
+builder.Services.AddTransient<VisualizationConfiguration>();
 builder.Services.AddTransient<GlbAssetFactory>();
 builder.Services.AddTransient<AssetFactory>();
 builder.Services.AddTransient<SvgAssetFactory<Sheet>>();

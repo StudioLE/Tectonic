@@ -17,13 +17,4 @@ public class VisualizationConfiguration
     /// The path of the visualize API endpoint.
     /// </summary>
     public const string VisualizeRoute = "visualize";
-
-    internal Dictionary<string, Type> ContentTypes { get; } = new();
-
-    public VisualizationConfiguration RegisterContentType(string contentType, Type component)
-    {
-        ContentTypes[contentType] = component;
-
-        return this;
-    }
 }
