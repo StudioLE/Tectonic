@@ -8,10 +8,10 @@ using StudioLE.Core.System;
 namespace Geometrician.Cli;
 
 /// <summary>
-/// Run an <see cref="ActivityCommand"/>.
+/// Run an <see cref="IActivity"/>.
 /// </summary>
 /// <remarks>
-/// The <see cref="ActivityCommand"/> is obtained using an <see cref="IActivityFactory"/>.
+/// The <see cref="IActivity"/> is obtained using an <see cref="IActivityFactory"/>.
 /// </remarks>
 public sealed class RunCommand
 {
@@ -55,9 +55,9 @@ public sealed class RunCommand
             return $"Failed: {e.Message}";
         }
 
-        IResult<ActivityCommand> result = _factory.TryCreateByKey(assembly, activity);
+        IResult<IActivity> result = _factory.TryCreateByKey(assembly, activity);
 
-        if (result is not Success<ActivityCommand> success)
+        if (result is not Success<IActivity> success)
             return "Failed: " + result.Errors.Join(". ");
 
         // TODO: This would make so much more sense as a workflow and we get the IVisualizeStrategy via DI.

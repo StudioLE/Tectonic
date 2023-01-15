@@ -16,7 +16,7 @@ namespace Geometrician.Components.Composition;
 /// </summary>
 public class InputComposerComponentBase : ComponentBase, IDisposable
 {
-    private ActivityCommand? _activity;
+    private IActivity? _activity;
 
     /// <inheritdoc cref="ILogger"/>
     [Inject]
@@ -80,8 +80,8 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
             return;
         }
 
-        IResult<ActivityCommand> result = Factory.TryCreateByKey(assembly, Composition.SelectedActivityKey);
-        if (result is not Success<ActivityCommand> success)
+        IResult<IActivity> result = Factory.TryCreateByKey(assembly, Composition.SelectedActivityKey);
+        if (result is not Success<IActivity> success)
         {
             string message = "Failed to load activity. Key not found: " + Composition.SelectedActivityKey;
             Logger.LogError(message);
@@ -89,7 +89,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
             Composition.SelectedActivityKey = string.Empty;
             return;
         }
-        _activity = success;
+        _activity = success.Value;
         InputPacks = _activity
             .Inputs
             .Select(x => new InputPackProxy(x))
@@ -117,7 +117,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     }
 
     /// <summary>
-    /// Build the <see cref="ActivityCommand"/>, execute it, and process the results.
+    /// Build the <see cref="IActivity"/>, execute it, and process the results.
     /// </summary>
     private void BuildAndExecute()
     {
@@ -169,7 +169,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
 
         Outcome outcome = new()
         {
-            Name = _activity.Name ?? string.Empty,
+            Name = _activity.Name,
             Description = $"Executed {Composition.SelectedActivityKey} from {Composition.SelectedAssemblyKey}."
         };
 

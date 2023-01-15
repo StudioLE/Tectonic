@@ -14,21 +14,13 @@ public sealed class StaticMethodActivityFactory : IActivityFactory
     }
 
     /// <inheritdoc />
-    public IResult<ActivityCommand> TryCreateByKey(Assembly assembly, string activityKey)
+    public IResult<IActivity> TryCreateByKey(Assembly assembly, string activityKey)
     {
         MethodInfo? method = GetActivityMethodByKey(assembly, activityKey);
         if (method is null)
-            return new Failure<ActivityCommand>("No activity in the assembly matched the key.");
-        object[] inputs = CreateParameterInstances(method);
-        Func<object[], object> invocation = CreateInvocation(method);
-        return new Success<ActivityCommand>(new()
-        {
-            Name = activityKey,
-            Key = activityKey,
-            Inputs = inputs,
-            Invocation = invocation,
-
-        });
+            return new Failure<IActivity>("No activity in the assembly matched the key.");
+        MethodActivity activity = new(null, method, activityKey);
+        return new Success<IActivity>(activity);
     }
 
     /// <summary>
@@ -44,17 +36,6 @@ public sealed class StaticMethodActivityFactory : IActivityFactory
         if (@namespace.StartsWith(assemblyPrefix))
             @namespace = @namespace.Remove(0, assemblyPrefix.Length + 1);
         return $"{@namespace}.{member.Name}";
-    }
-
-    /// <summary>
-    /// Get instances of the method parameters.
-    /// </summary>
-    internal static object[] CreateParameterInstances(MethodInfo method)
-    {
-        return method
-            .GetParameters()
-            .Select(x => Activator.CreateInstance(x.ParameterType))
-            .ToArray();
     }
 
     /// <summary>
@@ -81,11 +62,6 @@ public sealed class StaticMethodActivityFactory : IActivityFactory
     {
         IEnumerable<MethodInfo> methods = AllActivityMethodsInAssembly(assembly);
         return methods.FirstOrDefault(method => GetActivityKey(method) == activityKey);
-    }
-
-    private static Func<object[], object> CreateInvocation(MethodBase method)
-    {
-        return inputs => method.Invoke(null, inputs);
     }
 
     private static bool TypeFilter(Type type)

@@ -2,7 +2,6 @@
 using System.Xml;
 using System.Xml.Linq;
 using Geometrician.Core.Execution;
-using Lineweights.Diagnostics.Verification;
 using NUnit.Engine;
 using StudioLE.Core.Results;
 
@@ -25,24 +24,15 @@ public class NUnitActivityFactory : IActivityFactory, IDisposable
     }
 
     /// <inheritdoc />
-    public IResult<ActivityCommand> TryCreateByKey(Assembly assembly, string activityKey)
+    public IResult<IActivity> TryCreateByKey(Assembly assembly, string activityKey)
     {
-        object[] inputs = Array.Empty<object>();
         TestFilter filter = new($"<filter><test>{activityKey}</test></filter>");
         ITestRunner runner = GetTestRunner(assembly);
         string? result = AllActivityKeysInAssembly(runner, filter).FirstOrDefault();
         if(result is null)
-            return new Failure<ActivityCommand>("No activity in the assembly matched the key.");
-        Func<object[], object> invocation = CreateInvocation(runner, filter);
-        Action dispose = () => runner.Dispose();
-        return new Success<ActivityCommand>(new()
-        {
-            Name = activityKey,
-            Key = activityKey,
-            Inputs = inputs,
-            Invocation = invocation,
-            OnDispose = dispose
-        });
+            return new Failure<IActivity>("No activity in the assembly matched the key.");
+        NUnitActivity activity = new(null, runner, filter, activityKey);
+        return new Success<IActivity>(activity);
     }
 
     private static IEnumerable<string> AllActivityKeysInAssembly(ITestRunner runner, TestFilter filter)
@@ -61,27 +51,6 @@ public class NUnitActivityFactory : IActivityFactory, IDisposable
         TestPackage package = new(assembly.Location);
         // Get a runner for the test package
         return _engine.GetRunner(package);
-    }
-
-    private static Func<object[], object> CreateInvocation(ITestRunner runner, TestFilter filter)
-    {
-        return inputs =>
-        {
-            // Before invocation
-            bool wasVerifyEnabled = Verify.IsEnabled;
-            Verify.IsEnabled = false;
-            IsExecuting = true;
-
-            XmlNode? testResult = runner.Run(null, filter);
-
-            // After invocation
-            IsExecuting = false;
-            Verify.IsEnabled = wasVerifyEnabled;
-
-            object outputs = TestOutput ?? true;
-            TestOutput = null;
-            return outputs;
-        };
     }
 
     /// <inheritdoc />

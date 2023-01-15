@@ -12,11 +12,11 @@ namespace Geometrician.Core.Execution;
 public class WorkflowCommand
 {
     private readonly ILogger _logger;
-    private readonly ActivityCommand _activity;
+    private readonly IActivity _activity;
     private readonly IVisualizationStrategy _visualizationStrategy;
 
     /// <inheritdoc cref="WorkflowCommand"/>
-    public WorkflowCommand(ILogger logger, ActivityCommand activity, IVisualizationStrategy visualizationStrategy)
+    public WorkflowCommand(ILogger logger, IActivity activity, IVisualizationStrategy visualizationStrategy)
     {
         _logger = logger;
         _activity = activity;

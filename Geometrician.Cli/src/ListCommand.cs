@@ -7,10 +7,10 @@ using StudioLE.Core.System;
 namespace Geometrician.Cli;
 
 /// <summary>
-/// List all <see cref="ActivityCommand"/>.
+/// List all <see cref="IActivity"/>.
 /// </summary>
 /// <remarks>
-/// The <see cref="ActivityCommand"/>s are obtained using an <see cref="IActivityFactory"/>.
+/// The <see cref="IActivity"/>s are obtained using an <see cref="IActivityFactory"/>.
 /// </remarks>
 public sealed class ListCommand
 {
