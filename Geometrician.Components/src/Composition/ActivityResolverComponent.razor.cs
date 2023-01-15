@@ -32,9 +32,9 @@ public class ActivityResolverComponentBase : ComponentBase
     [Inject]
     private CommunicationState Communication { get; set; } = null!;
 
-    /// <inheritdoc cref="IActivityFactory"/>
+    /// <inheritdoc cref="IActivityResolver"/>
     [Inject]
-    private IActivityFactory Factory { get; set; } = default!;
+    private IActivityResolver Resolver { get; set; } = default!;
 
     /// <summary>
     /// Binding for the options of the assembly select element.
@@ -58,7 +58,7 @@ public class ActivityResolverComponentBase : ComponentBase
             Communication.ShowError(message);
             return;
         }
-        ActivitySelectOptions = Factory.AllActivityKeysInAssembly(assembly).ToArray();
+        ActivitySelectOptions = Resolver.AllActivityKeysInAssembly(assembly).ToArray();
         if (ActivitySelectOptions.Any())
             ActivitySelectValue = ActivitySelectOptions.First();
     }

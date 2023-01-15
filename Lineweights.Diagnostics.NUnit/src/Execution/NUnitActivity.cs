@@ -43,16 +43,16 @@ public sealed class NUnitActivity : IActivity
         // Before invocation
         bool wasVerifyEnabled = Verify.IsEnabled;
         Verify.IsEnabled = false;
-        NUnitActivityFactory.IsExecuting = true;
+        NUnitActivityResolver.IsExecuting = true;
 
         XmlNode? testResult = _runner.Run(null, _filter);
 
         // After invocation
-        NUnitActivityFactory.IsExecuting = false;
+        NUnitActivityResolver.IsExecuting = false;
         Verify.IsEnabled = wasVerifyEnabled;
 
-        object output = NUnitActivityFactory.TestOutput ?? true;
-        NUnitActivityFactory.TestOutput = null;
+        object output = NUnitActivityResolver.TestOutput ?? true;
+        NUnitActivityResolver.TestOutput = null;
         return output is Task<object> task
             ? task
             : Task.FromResult(output);

@@ -9,7 +9,7 @@ internal sealed class ServicesTests
 {
     [TestCase(typeof(VisualizationConfiguration))]
     [TestCase(typeof(IVisualizationStrategy))]
-    [TestCase(typeof(IActivityFactory))]
+    [TestCase(typeof(IActivityResolver))]
     [TestCase(typeof(IStorageStrategy))]
     public void Services_GetService(Type type)
     {

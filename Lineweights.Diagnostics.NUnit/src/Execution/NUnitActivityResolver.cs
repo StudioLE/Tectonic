@@ -7,8 +7,8 @@ using StudioLE.Core.Results;
 
 namespace Lineweights.Diagnostics.NUnit.Execution;
 
-/// <inheritdoc cref="IActivityFactory"/>
-public class NUnitActivityFactory : IActivityFactory, IDisposable
+/// <inheritdoc cref="IActivityResolver"/>
+public class NUnitActivityResolver : IActivityResolver, IDisposable
 {
     private readonly ITestEngine _engine = TestEngineActivator.CreateInstance();
 
@@ -24,7 +24,7 @@ public class NUnitActivityFactory : IActivityFactory, IDisposable
     }
 
     /// <inheritdoc />
-    public IResult<IActivity> TryCreateByKey(Assembly assembly, string activityKey)
+    public IResult<IActivity> Resolve(Assembly assembly, string activityKey)
     {
         TestFilter filter = new($"<filter><test>{activityKey}</test></filter>");
         ITestRunner runner = GetTestRunner(assembly);

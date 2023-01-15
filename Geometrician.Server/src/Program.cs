@@ -72,7 +72,7 @@ builder.Services.AddTransient<IfcAssetFactory>();
 builder.Services.AddTransient<JsonAssetFactory>();
 
 // Inject Lineweights services
-builder.Services.AddTransient<IActivityFactory, StaticMethodActivityFactory>();
+builder.Services.AddTransient<IActivityResolver, StaticMethodActivityResolver>();
 builder.Services.AddTransient<IStorageStrategy, BlobStorageStrategy>();
 
 // Build application

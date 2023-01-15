@@ -41,12 +41,12 @@ public class Visualize
     /// <inheritdoc cref="Visualize" />
     public void Queue(Model model, IReadOnlyCollection<IAsset>? assets = null)
     {
-        if (!NUnitActivityFactory.IsExecuting && !IsEnabled)
+        if (!NUnitActivityResolver.IsExecuting && !IsEnabled)
             return;
 
-        if (NUnitActivityFactory.IsExecuting)
+        if (NUnitActivityResolver.IsExecuting)
         {
-            NUnitActivityFactory.TestOutput = new
+            NUnitActivityResolver.TestOutput = new
             {
                 Model = model,
                 Results = TestContext.CurrentContext.Result
@@ -64,7 +64,7 @@ public class Visualize
     /// <inheritdoc cref="Visualize" />
     public async Task Execute()
     {
-        if (!NUnitActivityFactory.IsExecuting && !IsEnabled)
+        if (!NUnitActivityResolver.IsExecuting && !IsEnabled)
             return;
         await _strategy.Execute(_requests.ToArray());
     }

@@ -72,7 +72,7 @@ builder.Services.AddTransient<IfcAssetFactory>();
 builder.Services.AddTransient<JsonAssetFactory>();
 
 // Inject environment specific Geometrician services
-builder.Services.AddTransient<IActivityFactory, StaticMethodActivityFactory>();
+builder.Services.AddTransient<IActivityResolver, StaticMethodActivityResolver>();
 builder.Services.AddTransient<IStorageStrategy, ObjectUrlStorageStrategy>();
 
 // Inject Blazor WebAssembly services

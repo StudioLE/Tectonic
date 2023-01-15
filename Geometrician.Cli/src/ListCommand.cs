@@ -10,18 +10,18 @@ namespace Geometrician.Cli;
 /// List all <see cref="IActivity"/>.
 /// </summary>
 /// <remarks>
-/// The <see cref="IActivity"/>s are obtained using an <see cref="IActivityFactory"/>.
+/// The <see cref="IActivity"/>s are obtained using an <see cref="IActivityResolver"/>.
 /// </remarks>
 public sealed class ListCommand
 {
     private readonly ILogger<ListCommand> _logger;
-    private readonly IActivityFactory _factory;
+    private readonly IActivityResolver _resolver;
 
     /// <inheritdoc cref="ListCommand"/>
-    public ListCommand(ILogger<ListCommand> logger, IActivityFactory factory)
+    public ListCommand(ILogger<ListCommand> logger, IActivityResolver resolver)
     {
         _logger = logger;
-        _factory = factory;
+        _resolver = resolver;
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public sealed class ListCommand
     {
         _logger.LogDebug($"{nameof(Execute)} called.");
         _logger.LogDebug("Assembly: {$0}", assemblyPath);
-        _logger.LogDebug("IActivityFactory: {$0}", _factory.GetType().ToString());
+        _logger.LogDebug("IActivityResolver: {$0}", _resolver.GetType().ToString());
 
         assemblyPath = Path.GetFullPath(assemblyPath);
 
@@ -50,7 +50,7 @@ public sealed class ListCommand
             _logger.LogError(e, "Failed to load assembly.");
             return $"Failed: {e.Message}";
         }
-        IEnumerable<string> keys = _factory.AllActivityKeysInAssembly(assembly);
+        IEnumerable<string> keys = _resolver.AllActivityKeysInAssembly(assembly);
         return keys.Join();
     }
 }

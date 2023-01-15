@@ -54,7 +54,7 @@ public static class Services
 
                 // Abstract services
 
-                services.AddTransient<IActivityFactory, StaticMethodActivityFactory>();
+                services.AddTransient<IActivityResolver, StaticMethodActivityResolver>();
                 services.AddTransient<IStorageStrategy, FileStorageStrategy>();
                 services.AddSingleton<IVisualizationStrategy, VisualizeWithGeometricianServer>();
 
@@ -73,8 +73,8 @@ public static class Services
                 services.AddTransient<AssetFactory>();
                 services.AddTransient<CsvElementTypesAssetFactory>();
                 services.AddTransient<JsonAssetFactory>();
-                // IActivityFactory
-                services.AddTransient<StaticMethodActivityFactory>();
+                // IActivityResolver
+                services.AddTransient<StaticMethodActivityResolver>();
                 // IStorageStrategy
                 services.AddTransient<BlobStorageStrategy>();
                 services.AddTransient<FileStorageStrategy>();

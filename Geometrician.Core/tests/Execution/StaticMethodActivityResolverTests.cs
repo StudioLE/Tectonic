@@ -5,42 +5,42 @@ using StudioLE.Core.System;
 
 namespace Geometrician.Core.Tests.Execution;
 
-internal sealed class StaticMethodActivityFactoryTests
+internal sealed class StaticMethodActivityResolverTests
 {
     private const string AssemblyPath = "Lineweights.Flex.Samples.dll";
     private const string ActivityKey = "Flex2dSample.Execute";
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
 
     [Test]
-    public void StaticMethodActivityFactory_AllActivityMethodsInAssembly()
+    public void StaticMethodActivityResolver_AllActivityMethodsInAssembly()
     {
         // Arrange
         // Act
-        MethodInfo[] activities = StaticMethodActivityFactory.AllActivityMethodsInAssembly(_assembly).ToArray();
+        MethodInfo[] activities = StaticMethodActivityResolver.AllActivityMethodsInAssembly(_assembly).ToArray();
 
         // Assert
         Assert.That(activities.Count, Is.EqualTo(6), "Activity count");
     }
 
     [TestCase(ActivityKey)]
-    public void StaticMethodActivityFactory_GetActivityMethodByName(string activityKey)
+    public void StaticMethodActivityResolver_GetActivityMethodByName(string activityKey)
     {
         // Arrange
         // Act
-        MethodInfo? activity = StaticMethodActivityFactory.GetActivityMethodByKey(_assembly, activityKey);
+        MethodInfo? activity = StaticMethodActivityResolver.GetActivityMethodByKey(_assembly, activityKey);
 
         // Assert
         Assert.That(activity, Is.Not.Null);
     }
 
     [TestCase(ActivityKey)]
-    public void StaticMethodActivityFactory_TryCreateByKey(string activityKey)
+    public void StaticMethodActivityResolver_TryCreateByKey(string activityKey)
     {
         // Arrange
-        StaticMethodActivityFactory factory = new();
+        StaticMethodActivityResolver resolver = new();
 
         // Act
-        IResult<IActivity> result = factory.TryCreateByKey(_assembly, activityKey);
+        IResult<IActivity> result = resolver.Resolve(_assembly, activityKey);
         IActivity activity = Validate.OrThrow(result);
 
         // Assert

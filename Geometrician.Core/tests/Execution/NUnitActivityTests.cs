@@ -16,10 +16,10 @@ internal sealed class NUnitActivityTests
     public async Task NUnitActivity_Execute(string activityKey)
     {
         // Arrange
-        NUnitActivityFactory factory = new();
+        NUnitActivityResolver resolver = new();
 
         // Act
-        IResult<IActivity> result = factory.TryCreateByKey(_assembly, activityKey);
+        IResult<IActivity> result = resolver.Resolve(_assembly, activityKey);
         IActivity activity = Validate.OrThrow(result);
 
         // Act

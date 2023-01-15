@@ -7,7 +7,7 @@ namespace Geometrician.Core.Execution;
 /// A <see href="https://refactoring.guru/design-patterns/factory-method">factory</see> to
 /// create <see cref="IActivity"/>.
 /// </summary>
-public interface IActivityFactory
+public interface IActivityResolver
 {
     /// <summary>
     /// Get the keys of all activities in the assembly.
@@ -18,5 +18,5 @@ public interface IActivityFactory
     /// Create an <see cref="IActivity"/> by searching the assembly for an implementation
     /// that matches the key.
     /// </summary>
-    public IResult<IActivity> TryCreateByKey(Assembly assembly, string activityKey);
+    public IResult<IActivity> Resolve(Assembly assembly, string activityKey);
 }

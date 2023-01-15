@@ -15,8 +15,8 @@ internal sealed class MethodActivityTests
     public void MethodActivity_Inputs(string activityKey)
     {
         // Arrange
-        StaticMethodActivityFactory factory = new();
-        IResult<IActivity> result = factory.TryCreateByKey(_assembly, activityKey);
+        StaticMethodActivityResolver resolver = new();
+        IResult<IActivity> result = resolver.Resolve(_assembly, activityKey);
         IActivity activity = Validate.OrThrow(result);
 
         // Act
@@ -29,10 +29,10 @@ internal sealed class MethodActivityTests
     public async Task MethodActivity_Execute(string activityKey)
     {
         // Arrange
-        StaticMethodActivityFactory factory = new();
+        StaticMethodActivityResolver resolver = new();
 
         // Act
-        IResult<IActivity> result = factory.TryCreateByKey(_assembly, activityKey);
+        IResult<IActivity> result = resolver.Resolve(_assembly, activityKey);
         IActivity activity = Validate.OrThrow(result);
 
         // Act

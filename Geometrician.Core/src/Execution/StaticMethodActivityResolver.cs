@@ -3,8 +3,8 @@ using StudioLE.Core.Results;
 
 namespace Geometrician.Core.Execution;
 
-/// <inheritdoc cref="IActivityFactory"/>
-public sealed class StaticMethodActivityFactory : IActivityFactory
+/// <inheritdoc cref="IActivityResolver"/>
+public sealed class StaticMethodActivityResolver : IActivityResolver
 {
     /// <inheritdoc />
     public IEnumerable<string> AllActivityKeysInAssembly(Assembly assembly)
@@ -14,7 +14,7 @@ public sealed class StaticMethodActivityFactory : IActivityFactory
     }
 
     /// <inheritdoc />
-    public IResult<IActivity> TryCreateByKey(Assembly assembly, string activityKey)
+    public IResult<IActivity> Resolve(Assembly assembly, string activityKey)
     {
         MethodInfo? method = GetActivityMethodByKey(assembly, activityKey);
         if (method is null)

@@ -11,18 +11,18 @@ namespace Geometrician.Cli;
 /// Run an <see cref="IActivity"/>.
 /// </summary>
 /// <remarks>
-/// The <see cref="IActivity"/> is obtained using an <see cref="IActivityFactory"/>.
+/// The <see cref="IActivity"/> is obtained using an <see cref="IActivityResolver"/>.
 /// </remarks>
 public sealed class RunCommand
 {
     private readonly ILogger<RunCommand> _logger;
-    private readonly IActivityFactory _factory;
+    private readonly IActivityResolver _resolver;
 
     /// <inheritdoc cref="RunCommand"/>
-    public RunCommand(ILogger<RunCommand> logger, IActivityFactory factory)
+    public RunCommand(ILogger<RunCommand> logger, IActivityResolver resolver)
     {
         _logger = logger;
-        _factory = factory;
+        _resolver = resolver;
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public sealed class RunCommand
             return $"Failed: {e.Message}";
         }
 
-        IResult<IActivity> result = _factory.TryCreateByKey(assembly, activity);
+        IResult<IActivity> result = _resolver.Resolve(assembly, activity);
 
         if (result is not Success<IActivity> success)
             return "Failed: " + result.Errors.Join(". ");

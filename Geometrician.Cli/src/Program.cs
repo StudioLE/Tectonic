@@ -25,7 +25,7 @@ public static class Program
             services.AddLogging(loggingBuilder => loggingBuilder.SetMinimumLevel(LogLevel.Debug));
             services.AddScoped<ListCommand>();
             services.AddScoped<RunCommand>();
-            services.AddScoped<IActivityFactory, StaticMethodActivityFactory>();
+            services.AddScoped<IActivityResolver, StaticMethodActivityResolver>();
         });
 
         using IHost? host = builder.Build();

@@ -6,20 +6,20 @@ using StudioLE.Core.System;
 
 namespace Geometrician.Core.Tests.Execution;
 
-internal sealed class NUnitActivityFactoryTests
+internal sealed class NUnitActivityResolverTests
 {
     private const string AssemblyPath = "Lineweights.Core.Tests.dll";
     private const string ActivityKey = "Lineweights.Core.Tests.Geometry.CreateRuledSurfaceTests.CreateRuledSurface_AsLinesByCurves_QuarterHyperbolicParaboloid";
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
 
     [Test]
-    public async Task NUnitActivityFactory_AllActivityKeysInAssembly()
+    public async Task NUnitActivityResolver_AllActivityKeysInAssembly()
     {
         // Arrange
-        NUnitActivityFactory factory = new();
+        NUnitActivityResolver resolver = new();
 
         // Act
-        string[] activities = factory.AllActivityKeysInAssembly(_assembly).ToArray();
+        string[] activities = resolver.AllActivityKeysInAssembly(_assembly).ToArray();
 
         // Assert
         await Verify.String(activities.Join());
@@ -27,13 +27,13 @@ internal sealed class NUnitActivityFactoryTests
     }
 
     [TestCase(ActivityKey)]
-    public void NUnitActivityFactory_TryCreateByKey(string activityKey)
+    public void NUnitActivityResolver_TryCreateByKey(string activityKey)
     {
         // Arrange
-        NUnitActivityFactory factory = new();
+        NUnitActivityResolver resolver = new();
 
         // Act
-        IResult<IActivity> result = factory.TryCreateByKey(_assembly, activityKey);
+        IResult<IActivity> result = resolver.Resolve(_assembly, activityKey);
         IActivity activity = Validate.OrThrow(result);
 
         // Assert

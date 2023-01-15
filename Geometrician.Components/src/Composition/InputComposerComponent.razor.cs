@@ -42,9 +42,9 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     [Inject]
     private VisualizationState Visualization { get; set; } = default!;
 
-    /// <inheritdoc cref="IActivityFactory"/>
+    /// <inheritdoc cref="IActivityResolver"/>
     [Inject]
-    private IActivityFactory Factory { get; set; } = default!;
+    private IActivityResolver Resolver { get; set; } = default!;
 
     /// <summary>
     /// Proxies for each input pack for the activity.
@@ -80,7 +80,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
             return;
         }
 
-        IResult<IActivity> result = Factory.TryCreateByKey(assembly, Composition.SelectedActivityKey);
+        IResult<IActivity> result = Resolver.Resolve(assembly, Composition.SelectedActivityKey);
         if (result is not Success<IActivity> success)
         {
             string message = "Failed to load activity. Key not found: " + Composition.SelectedActivityKey;
