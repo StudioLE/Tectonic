@@ -4,7 +4,7 @@ using Geometrician.Core.Execution;
 using Microsoft.Extensions.Logging;
 using StudioLE.Core.System;
 
-namespace Geometrician;
+namespace Geometrician.Cli;
 
 /// <summary>
 /// List all <see cref="ActivityCommand"/>.

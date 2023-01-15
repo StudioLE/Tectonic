@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Reflection;
 using Geometrician.Core.Execution;
-using StudioLE.Core.Results;
 using Microsoft.Extensions.Logging;
+using StudioLE.Core.Results;
 using StudioLE.Core.System;
 
-namespace Geometrician;
+namespace Geometrician.Cli;
 
 /// <summary>
 /// Run an <see cref="ActivityCommand"/>.

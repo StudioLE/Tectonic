@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using static Towel.CommandLine;
 
-namespace Geometrician;
+namespace Geometrician.Cli;
 
 /// <summary>
 /// The entry point for the program.
