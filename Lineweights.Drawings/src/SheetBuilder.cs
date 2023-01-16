@@ -103,7 +103,7 @@ public sealed class SheetBuilder : IBuilder<Sheet>
         _sequenceBuilder.Wrapping = true;
         _sequenceBuilder.Body = instances;
         _viewArrangement.Container = content;
-        _viewArrangement.MainSequences = new [] { _sequenceBuilder };
+        _viewArrangement.MainSequences = new[] { _sequenceBuilder };
 
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = _viewArrangement.Build();
 

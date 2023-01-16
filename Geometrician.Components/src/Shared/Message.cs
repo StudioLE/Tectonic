@@ -10,12 +10,12 @@ public class Message
     /// <summary>
     /// The severity of the message.
     /// </summary>
-    public LogLevel Level { get;}
+    public LogLevel Level { get; }
 
     /// <summary>
     /// An optional title for the message.
     /// </summary>
-    public string? Title { get;}
+    public string? Title { get; }
 
     /// <summary>
     /// The body of the message.

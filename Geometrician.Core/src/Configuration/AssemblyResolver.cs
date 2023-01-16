@@ -43,7 +43,7 @@ public class AssemblyResolver
         foreach (string assemblyPath in options.Value.Assemblies)
         {
             string absolutePath = assemblyPath;
-            if(!IsAbsolutePath(absolutePath))
+            if (!IsAbsolutePath(absolutePath))
             {
                 string assemblyDir = AppDomain.CurrentDomain.BaseDirectory;
                 absolutePath = Path.Combine(assemblyDir, absolutePath);
@@ -65,7 +65,8 @@ public class AssemblyResolver
     /// </summary>
     /// <param name="assembly">The assembly to add.</param>
     /// <returns>True if the assembly was added, false if the key was already set.</returns>
-    public bool TryRegister(Assembly assembly) {
+    public bool TryRegister(Assembly assembly)
+    {
         string name = assembly.GetName().Name;
         if (_assemblies.ContainsKey(name))
             return false;
@@ -96,10 +97,10 @@ public class AssemblyResolver
 
     private static bool IsAbsolutePath(string path)
     {
-        #if NETSTANDARD2_1
+#if NETSTANDARD2_1
         return Path.IsPathFullyQualified(path)
-        #else
+#else
         return Path.IsPathRooted(path);
-        #endif
+#endif
     }
 }

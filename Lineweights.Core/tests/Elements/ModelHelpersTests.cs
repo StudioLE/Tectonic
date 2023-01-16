@@ -30,7 +30,7 @@ internal sealed class ModelHelpersTests
 
         int countBefore = model.Elements.Count;
         Console.WriteLine($"Before: {countBefore} elements");
-        foreach(Element element in model.Elements.Values)
+        foreach (Element element in model.Elements.Values)
             Console.WriteLine($"{element.Id} {element.GetType()}");
 
         // Act
@@ -38,7 +38,7 @@ internal sealed class ModelHelpersTests
 
         int countAfter = model.Elements.Count;
         Console.WriteLine($"After: {countAfter} elements");
-        foreach(Element element in model.Elements.Values)
+        foreach (Element element in model.Elements.Values)
             Console.WriteLine($"{element.Id} {element.GetType()}");
 
         // Assert
@@ -68,7 +68,7 @@ internal sealed class ModelHelpersTests
 
         int countBefore = model.Elements.Count;
         Console.WriteLine($"Before: {countBefore} elements");
-        foreach(Element element in model.Elements.Values)
+        foreach (Element element in model.Elements.Values)
             Console.WriteLine($"{element.Id} {element.GetType()}");
 
         // Act
@@ -76,7 +76,7 @@ internal sealed class ModelHelpersTests
 
         int countAfter = model.Elements.Count;
         Console.WriteLine($"After: {countAfter} elements");
-        foreach(Element element in model.Elements.Values)
+        foreach (Element element in model.Elements.Values)
             Console.WriteLine($"{element.Id} {element.GetType()}");
 
         // Assert

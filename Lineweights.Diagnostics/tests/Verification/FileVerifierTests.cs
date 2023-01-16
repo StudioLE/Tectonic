@@ -19,7 +19,7 @@ internal sealed class FileVerifierTests
 
         // Act
         IResult result = await verifier.Execute(file);
-        if(result.Errors.Any())
+        if (result.Errors.Any())
             Console.WriteLine(result.Errors.Join());
 
         // Assert
@@ -39,7 +39,7 @@ internal sealed class FileVerifierTests
 
         // Act
         IResult result = await verifier.Execute(file);
-        if(result.Errors.Any())
+        if (result.Errors.Any())
             Console.WriteLine(result.Errors.Join());
 
         // Assert

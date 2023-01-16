@@ -135,13 +135,13 @@ public class SequenceBuilder : ISequenceBuilder
         return output;
     }
 
-    private bool ValidateConstraints(IReadOnlyCollection<Element> sequence, object  context)
+    private bool ValidateConstraints(IReadOnlyCollection<Element> sequence, object context)
     {
         bool isValid = _constraints.All(constraint => constraint.Invoke(sequence, context));
         return isValid;
     }
 
-    private bool ValidateConditions(IReadOnlyCollection<Element> sequence, object  context)
+    private bool ValidateConditions(IReadOnlyCollection<Element> sequence, object context)
     {
 
         bool isValid = _conditions.All(condition => condition.Invoke(sequence, context));

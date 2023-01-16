@@ -23,7 +23,7 @@ public class ThreeViewerComponentBase : ViewerComponentBase<ExternalAsset>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
-        if(firstRender && Factory.Result is Success)
+        if (firstRender && Factory.Result is Success)
             await LoadGlb();
     }
 

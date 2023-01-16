@@ -20,7 +20,7 @@ internal sealed class JsonVerifierTests
         if (actual is null)
             throw new("Failed to de-serialize.");
         IResult result = await verifier.Execute(actual);
-        if(result.Errors.Any())
+        if (result.Errors.Any())
             Console.WriteLine(result.Errors.Join());
 
         // Assert
@@ -41,7 +41,7 @@ internal sealed class JsonVerifierTests
         if (actual is null)
             throw new("Failed to de-serialize.");
         IResult result = await verifier.Execute(actual);
-        if(result.Errors.Any())
+        if (result.Errors.Any())
             Console.WriteLine(result.Errors.Join());
 
         // Assert

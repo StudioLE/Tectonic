@@ -39,7 +39,7 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
         return Task.CompletedTask;
     }
 
-    protected override async Task<IResult> Compare(params KeyValuePair<string , FileInfo>[] files)
+    protected override async Task<IResult> Compare(params KeyValuePair<string, FileInfo>[] files)
     {
         bool areTextFiles = files.All(x => IsTextFile(x.Value));
         if (areTextFiles)
@@ -49,15 +49,15 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
             .Where(x => !x.Value.Exists)
             .Select(x => $"The {x.Key} file does not exist.")
             .ToArray();
-        if(errors.Any())
+        if (errors.Any())
             return new Failure(errors);
 
         errors = CheckValuesMatch(files, x => x.Length);
-        if(errors.Any())
+        if (errors.Any())
             return new Failure("File sizes are different", errors);
 
         errors = CheckValuesMatch(files, GetFileHash);
-        if(errors.Any())
+        if (errors.Any())
             return new Failure("File hashes are different", errors);
 
         return new Success();

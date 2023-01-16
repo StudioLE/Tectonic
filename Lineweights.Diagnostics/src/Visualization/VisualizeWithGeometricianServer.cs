@@ -35,7 +35,7 @@ public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
         // Task.WaitAll(tasks);
 
         IResult postResult = await TryPost(requests);
-        if(postResult is not Success)
+        if (postResult is not Success)
             Console.WriteLine(postResult.Errors.Prepend("Failed to post.").Join());
     }
 

@@ -10,7 +10,7 @@ public class DisplayState
     /// <summary>
     /// The value of a single gap between elements.
     /// </summary>
-    public int Gap { get; set; }  = 4;
+    public int Gap { get; set; } = 4;
 
     /// <summary>
     /// The multiplier to use against <see cref="Gap"/> to increase the distance.

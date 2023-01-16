@@ -29,7 +29,7 @@ internal sealed class NUnitActivityTests
         Assert.That(outputs, Is.Not.Null, "Outputs");
         IResult<Model?> model = outputs.TryGetPropertyValue<Model?>("Model");
         Assert.That(model is Success<Model?>, "Outputs has model");
-        if(model is Success<Model?> success)
+        if (model is Success<Model?> success)
             Assert.That(success?.Value?.Elements.Count, Is.EqualTo(25), "Outputs model count");
     }
 

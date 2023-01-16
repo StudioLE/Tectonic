@@ -16,7 +16,7 @@ public class ModelToCsvFile<TRow> : IConverter<Model, Task<IResult<Uri>>>
 {
     private readonly IStorageStrategy _storageStrategy;
     private readonly string _fileName;
-    private readonly Func<Model,IReadOnlyCollection<TRow>> _method;
+    private readonly Func<Model, IReadOnlyCollection<TRow>> _method;
 
     /// <inheritdoc cref="ModelToCsvFile{T}"/>
     public ModelToCsvFile(IStorageStrategy storageStrategy, string fileName, Func<Model, IReadOnlyCollection<TRow>> method)

@@ -16,7 +16,7 @@ internal sealed class StringVerifierTests
 
         // Act
         IResult result = await verifier.Execute(actual);
-        if(result.Errors.Any())
+        if (result.Errors.Any())
             Console.WriteLine(result.Errors.Join());
 
         // Assert
@@ -34,7 +34,7 @@ internal sealed class StringVerifierTests
 
         // Act
         IResult result = await verifier.Execute(actual);
-        if(result.Errors.Any())
+        if (result.Errors.Any())
             Console.WriteLine(result.Errors.Join());
 
         // Assert

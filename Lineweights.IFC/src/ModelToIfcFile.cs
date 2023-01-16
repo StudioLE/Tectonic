@@ -1,8 +1,8 @@
 ﻿using System.IO;
-using StudioLE.Core.Results;
 using Elements.Serialization.IFC;
 using Lineweights.Core.Assets;
 using Lineweights.Core.Storage;
+using StudioLE.Core.Results;
 
 namespace Lineweights.IFC;
 
@@ -49,7 +49,7 @@ public class ModelToIfcFile : IConverter<Model, Task<IResult<Uri>>>
         Stream stream = File.OpenRead(tempPath);
         IResult<Uri> result = await _storageStrategy.WriteAsync(_fileName, stream);
         if (!string.IsNullOrWhiteSpace(console))
-            result.Warnings = new [] { console };
+            result.Warnings = new[] { console };
         return result;
     }
 }

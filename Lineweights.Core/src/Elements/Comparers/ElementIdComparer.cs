@@ -18,6 +18,6 @@ public sealed class ElementIdComparer : IEqualityComparer<Element>
     /// <inheritdoc cref="ElementIdComparer"/>
     public int GetHashCode(Element obj)
     {
-        return obj.Id.GetHashCode();;
+        return obj.Id.GetHashCode();
     }
 }

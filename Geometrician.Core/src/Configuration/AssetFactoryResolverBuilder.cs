@@ -8,7 +8,7 @@ namespace Geometrician.Core.Configuration;
 public class AssetFactoryResolverBuilder : IBuilder<AssetFactoryResolver>
 {
     private readonly IServiceProvider _services;
-    private readonly Dictionary<Type,Type[]> _factories = new();
+    private readonly Dictionary<Type, Type[]> _factories = new();
     private readonly Dictionary<Type, int> _order = new();
 
     /// <inheritdoc cref="AssetFactoryResolverBuilder"/>

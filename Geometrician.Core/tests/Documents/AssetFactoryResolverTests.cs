@@ -59,7 +59,7 @@ internal sealed class AssetFactoryResolverTests
             .ResolveForObjectProperties(example)
             .ToArray();
         foreach (IAssetFactory<IAsset> factory in factories)
-            if(factory.Result is not Success)
+            if (factory.Result is not Success)
                 await factory.Execute();
 
         // Assert

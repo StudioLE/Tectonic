@@ -58,7 +58,7 @@ public sealed class MethodActivity : IActivity
     /// <inheritdoc />
     public object Clone()
     {
-         return new MethodActivity(_instance, _method, Key)
+        return new MethodActivity(_instance, _method, Key)
         {
             Name = Name,
             Description = Description

@@ -105,7 +105,7 @@ internal sealed class AssetFactoryTests
 
         // Assert
         Assert.That(factory.Asset, Is.Not.Null, "Asset.");
-        Assert.That(factory.Asset, Is.TypeOf<ExternalAsset>() , "Asset type.");
+        Assert.That(factory.Asset, Is.TypeOf<ExternalAsset>(), "Asset type.");
         Assert.That(factory.Asset.Location, Is.Not.Null, "Asset location");
         Assert.That(File.Exists(factory.Asset.Location!.AbsolutePath), "Asset file exists");
         Assert.That(factory.Asset.Location!.Segments.Last(), Does.EndWith(".csv"), "Asset file extension");
@@ -125,7 +125,7 @@ internal sealed class AssetFactoryTests
 
         // Assert
         Assert.That(factory.Asset, Is.Not.Null, "Asset.");
-        Assert.That(factory.Asset, Is.TypeOf<ExternalAsset>() , "Asset type.");
+        Assert.That(factory.Asset, Is.TypeOf<ExternalAsset>(), "Asset type.");
         Assert.That(factory.Asset.Location, Is.Not.Null, "Asset location");
         Assert.That(File.Exists(factory.Asset.Location!.AbsolutePath), "Asset file exists");
         Assert.That(factory.Asset.Location!.Segments.Last(), Does.EndWith(".glb"), "Asset file extension");
@@ -145,7 +145,7 @@ internal sealed class AssetFactoryTests
 
         // Assert
         Assert.That(factory.Asset, Is.Not.Null, "Asset.");
-        Assert.That(factory.Asset, Is.TypeOf<ExternalAsset>() , "Asset type.");
+        Assert.That(factory.Asset, Is.TypeOf<ExternalAsset>(), "Asset type.");
         Assert.That(factory.Asset.Location, Is.Not.Null, "Asset location");
         Assert.That(File.Exists(factory.Asset.Location!.AbsolutePath), "Asset file exists");
         Assert.That(factory.Asset.Location!.Segments.Last(), Does.EndWith(".ifc"), "Asset file extension");
@@ -165,7 +165,7 @@ internal sealed class AssetFactoryTests
 
         // Assert
         Assert.That(factory.Asset, Is.Not.Null, "Asset.");
-        Assert.That(factory.Asset, Is.TypeOf<InternalAsset>() , "Asset type.");
+        Assert.That(factory.Asset, Is.TypeOf<InternalAsset>(), "Asset type.");
         Assert.That(factory.Asset.Content, Is.Not.Empty, "Asset content");
     }
 
@@ -184,7 +184,7 @@ internal sealed class AssetFactoryTests
 
         // Assert
         Assert.That(factory.Asset, Is.Not.Null, "Asset.");
-        Assert.That(factory.Asset, Is.TypeOf<ExternalAsset>() , "Asset type.");
+        Assert.That(factory.Asset, Is.TypeOf<ExternalAsset>(), "Asset type.");
         Assert.That(factory.Asset.Location, Is.Not.Null, "Asset location");
         Assert.That(File.Exists(factory.Asset.Location!.AbsolutePath), "Asset file exists");
         Assert.That(factory.Asset.Location!.Segments.Last(), Does.EndWith(".pdf"), "Asset file extension");
@@ -205,7 +205,7 @@ internal sealed class AssetFactoryTests
 
         // Assert
         Assert.That(factory.Asset, Is.Not.Null, "Asset.");
-        Assert.That(factory.Asset, Is.TypeOf<ExternalAsset>() , "Asset type.");
+        Assert.That(factory.Asset, Is.TypeOf<ExternalAsset>(), "Asset type.");
         Assert.That(factory.Asset.Location, Is.Not.Null, "Asset location");
         Assert.That(File.Exists(factory.Asset.Location!.AbsolutePath), "Asset file exists");
         Assert.That(factory.Asset.Location!.Segments.Last(), Does.EndWith(".svg"), "Asset file extension");

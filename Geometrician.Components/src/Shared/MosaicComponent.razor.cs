@@ -33,7 +33,7 @@ public class MosaicComponentBase : TemplatedComponentBase
     protected override void OnParametersSet()
     {
         Classes.Add($"gap-{Display.GapMultiplier}");
-        if(Margin)
+        if (Margin)
             Classes.Add($"my-{Display.GapMultiplier * 2}");
         if (Padding)
         {

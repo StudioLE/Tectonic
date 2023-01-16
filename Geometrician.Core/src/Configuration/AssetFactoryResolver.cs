@@ -75,13 +75,13 @@ public class AssetFactoryResolver
         object sourceValue = property.GetValue(obj);
         if (sourceValue is null)
             return null;
-        IResult<object> result = factory.TryInvokeMethod("Setup", new []{ sourceValue });
+        IResult<object> result = factory.TryInvokeMethod("Setup", new[] { sourceValue });
         return factory;
     }
 
     private static IAssetFactory<IAsset> SetupFactory(IAssetFactory<IAsset> factory, object sourceValue)
     {
-        IResult<object> result = factory.TryInvokeMethod("Setup", new []{ sourceValue });
+        IResult<object> result = factory.TryInvokeMethod("Setup", new[] { sourceValue });
         return factory;
     }
 }

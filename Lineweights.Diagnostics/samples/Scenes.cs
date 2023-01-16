@@ -56,7 +56,7 @@ public static class Scenes
         using StreamReader reader = new(stream);
         string json = reader.ReadToEnd();
         Model model = Model.FromJson(json, out List<string> errors, true);
-        if(errors.Any())
+        if (errors.Any())
             Console.WriteLine(errors.Join());
         return model;
     }
@@ -67,14 +67,14 @@ public static class Scenes
     internal static FileInfo ToJson(Name name, IEnumerable<Element> elements)
     {
         throw new NotImplementedException();
-        #if false
+#if false
         FileInfo file = new(name + ".json");
         Model model = new();
         model.AddElements(elements);
         string json = model.ToJson(true);
         System.IO.File.WriteAllText(file.FullName, json);
         return file;
-        #endif
+#endif
     }
 
 }

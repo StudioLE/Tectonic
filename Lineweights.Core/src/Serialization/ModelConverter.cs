@@ -25,7 +25,7 @@ public class ModelConverter : JsonConverter<Model>
         JRaw? jRaw = JRaw.Create(reader);
         string json = jRaw.ToString();
         Model model = Model.FromJson(json, out List<string> errors, false);
-        if(errors.Any())
+        if (errors.Any())
             Console.WriteLine(errors.Join());
         return model;
     }

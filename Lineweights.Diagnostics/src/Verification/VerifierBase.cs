@@ -68,12 +68,12 @@ public abstract class VerifierBase<T>
     /// <summary>
     /// Compare the equality of the contents of <paramref name="files"/>.
     /// </summary>
-    protected virtual async Task<IResult> Compare(params KeyValuePair<string , FileInfo>[] files)
+    protected virtual async Task<IResult> Compare(params KeyValuePair<string, FileInfo>[] files)
     {
         string[] errors = files
             .Where(x => !x.Value.Exists)
             .Select(x => $"The {x.Key} file does not exist.").ToArray();
-        if(errors.Any())
+        if (errors.Any())
             return new Failure(errors);
 
         KeyValuePair<string, StreamReader>[] readers = files

@@ -61,7 +61,7 @@ public sealed class NUnitActivity : IActivity
     /// <inheritdoc />
     public object Clone()
     {
-         return new NUnitActivity(_instance, _runner, _filter, Key)
+        return new NUnitActivity(_instance, _runner, _filter, Key)
         {
             Name = Name,
             Description = Description

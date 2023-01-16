@@ -29,7 +29,7 @@ public class NUnitActivityResolver : IActivityResolver, IDisposable
         TestFilter filter = new($"<filter><test>{activityKey}</test></filter>");
         ITestRunner runner = GetTestRunner(assembly);
         string? result = AllActivityKeysInAssembly(runner, filter).FirstOrDefault();
-        if(result is null)
+        if (result is null)
             return new Failure<IActivity>("No activity in the assembly matched the key.");
         NUnitActivity activity = new(null, runner, filter, activityKey);
         return new Success<IActivity>(activity);

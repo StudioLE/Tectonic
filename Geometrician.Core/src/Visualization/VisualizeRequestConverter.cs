@@ -52,7 +52,7 @@ public class VisualizeRequestConverter : JsonConverter<VisualizeRequest>
         // Model
         string modelJson = jObject["Model"].ToString();
         Model model = Model.FromJson(modelJson, out List<string> errors, forceTypeReload);
-        if(errors.Any())
+        if (errors.Any())
             Console.WriteLine(errors.Join());
 
         // Assets

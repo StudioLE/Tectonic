@@ -44,7 +44,7 @@ public class Failure : IResult
     public Failure(string error, Exception exception)
     {
         Exception = exception;
-        Errors = new []{ error, exception.Message};
+        Errors = new[] { error, exception.Message };
     }
 }
 
@@ -92,6 +92,6 @@ public class Failure<T> : IResult<T>
     public Failure(string error, Exception exception)
     {
         Exception = exception;
-        Errors = new []{ error, exception.Message};
+        Errors = new[] { error, exception.Message };
     }
 }

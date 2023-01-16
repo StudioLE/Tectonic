@@ -53,7 +53,7 @@ public class TileComponentBase : TemplatedComponentBase
         if (!string.IsNullOrEmpty(Title) || !string.IsNullOrEmpty(SubTitle))
         {
             Styles["background"] = "var(--mud-palette-drawer-background)";
-            Styles[" writing-mode"] =  "sideways-lr";
+            Styles[" writing-mode"] = "sideways-lr";
         }
         SetSize();
         base.OnParametersSet();

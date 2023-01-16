@@ -34,7 +34,7 @@ public class DynamicViewerComponentBase : ViewerComponentBase<IAsset>
             ComponentType = typeof(CodeViewerComponent);
         else if (Factory.Asset.ContentType.StartsWith("image/"))
             ComponentType = typeof(ImageViewerComponent);
-        else if(Factory.Asset is ExternalAsset)
+        else if (Factory.Asset is ExternalAsset)
             ComponentType = typeof(UriViewerComponent);
         else
             ComponentType = typeof(CodeViewerComponent);

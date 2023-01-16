@@ -132,7 +132,7 @@ dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
 dotnet_style_prefer_inferred_tuple_names = true:warning
 dotnet_style_prefer_inferred_anonymous_type_member_names = true:warning
 dotnet_style_prefer_auto_properties = true:warning
-dotnet_style_prefer_conditional_expression_over_assignment = true:warning
+dotnet_style_prefer_conditional_expression_over_assignment = true:suggestion
 dotnet_style_prefer_conditional_expression_over_return = true:suggestion
 csharp_prefer_simple_default_expression = true:warning
 
@@ -188,7 +188,7 @@ csharp_space_between_square_brackets = false
 file_header_template = unset
 csharp_style_namespace_declarations = file_scoped:warning
 csharp_style_prefer_null_check_over_type_check = true:warning
-csharp_style_prefer_local_over_anonymous_function = true:warning
+csharp_style_prefer_local_over_anonymous_function = false:warning
 csharp_style_implicit_object_creation_when_type_is_apparent = true:warning
 csharp_style_prefer_tuple_swap = true:warning
 csharp_style_deconstructed_variable_declaration = true:warning
