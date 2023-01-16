@@ -33,7 +33,7 @@ internal sealed class SheetBuilderTests
             ViewDirection.Left,
             ViewDirection.Right,
             ViewDirection.Back,
-            ViewDirection.Front,
+            ViewDirection.Front
         };
 
         ViewBuilder viewBuilder = new ViewBuilder()

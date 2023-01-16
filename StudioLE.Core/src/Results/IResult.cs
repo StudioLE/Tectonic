@@ -7,6 +7,7 @@ public interface IResult
     public string[] Errors { get; }
 }
 
+// ReSharper disable once UnusedTypeParameter
 public interface IResult<out T>
 {
     public string[] Warnings { get; set; }

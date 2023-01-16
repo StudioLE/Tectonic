@@ -21,9 +21,9 @@ public sealed class ModelCurveComparer : IEqualityComparer<ModelCurve>
         // TODO: Handle comparison of Arcs etc.
         bool curvesMatch = first.Curve switch
         {
-            Line => new LineComparer().Equals((Line)first.Curve, (Line)second.Curve),
-            Polygon => new PolygonComparer().Equals((Polygon)first.Curve, (Polygon)second.Curve),
-            Polyline => new PolylineComparer().Equals((Polyline)first.Curve, (Polyline)second.Curve),
+            Line line => new LineComparer().Equals(line, (Line)second.Curve),
+            Polygon curve => new PolygonComparer().Equals(curve, (Polygon)second.Curve),
+            Polyline curve => new PolylineComparer().Equals(curve, (Polyline)second.Curve),
             _ => false
         };
 

@@ -22,7 +22,7 @@ internal sealed class SamplesTests
         };
 
         // Act
-        AssetTypes.Outputs outputs = Geometrician.Core.Samples.AssetTypes.Execute(inputs);
+        AssetTypes.Outputs outputs = Samples.AssetTypes.Execute(inputs);
 
         // Preview
         _model = outputs.Model;

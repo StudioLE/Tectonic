@@ -41,12 +41,12 @@ public class DisplayState
             Background = MudBlazor.Colors.Shades.White,
             BackgroundGrey = MudBlazor.Colors.BlueGrey.Lighten5,
             DrawerBackground = new(MudBlazor.Colors.BlueGrey.Lighten2),
-            DrawerText = new(MudBlazor.Colors.Shades.White),
+            DrawerText = new(MudBlazor.Colors.Shades.White)
         },
         PaletteDark = new PaletteDark
         {
             Primary = MudBlazor.Colors.DeepOrange.Accent2,
-            Secondary = MudBlazor.Colors.Indigo.Default,
+            Secondary = MudBlazor.Colors.Indigo.Default
             // DrawerBackground = new(MudBlazor.Colors.BlueGrey.Darken3),
             // DrawerText = new(MudBlazor.Colors.Shades.White),
         },

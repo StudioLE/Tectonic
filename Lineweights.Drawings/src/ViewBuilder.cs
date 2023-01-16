@@ -185,7 +185,7 @@ public sealed class ViewBuilder
                 Width = scopeWidth,
                 Height = scopeHeight,
                 Depth = scopeDepth,
-                Elements = elements.ToList(),
+                Elements = elements.ToList()
             },
             Bounds = viewBounds,
             Scale = _scale,

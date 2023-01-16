@@ -58,7 +58,7 @@ public static class FormattingHelpers
         {
             >= 1 => timeSpan.ToNaturalLanguage() + " until",
             <= -1 => timeSpan.ToNaturalLanguage() + " ago",
-            _ => "now",
+            _ => "now"
         };
     }
 }

@@ -7,7 +7,6 @@ public abstract class ExternalAssetFactoryBase<TSource> : IAssetFactory<TSource,
 {
     private TSource? _source;
 
-    /// <inheritdoc />
     protected abstract IConverter<TSource, Task<IResult<Uri>>> Converter { get; }
 
     /// <inheritdoc />
@@ -23,7 +22,6 @@ public abstract class ExternalAssetFactoryBase<TSource> : IAssetFactory<TSource,
         AfterSetup(source);
     }
 
-    /// <inheritdoc />
     protected virtual void AfterSetup(TSource source)
     {
     }

@@ -17,7 +17,7 @@ internal sealed class SplineTests
         new Vector3(5, 3.75),
         new Vector3(6, 0),
         new Vector3(7, 2.25),
-        new Vector3(8, 0.5),
+        new Vector3(8, 0.5)
     };
 
     internal static readonly Vector3 _startTangent = Vector3.XAxis.Negate() * 2;

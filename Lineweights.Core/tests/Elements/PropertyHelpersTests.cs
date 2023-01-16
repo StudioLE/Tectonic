@@ -149,12 +149,12 @@ internal sealed class PropertyHelpersTests
 
     private class ExampleClass
     {
-        public int Example { get; set; } = 1;
+        public int Example { get; } = 1;
     }
 
     private struct ExampleStruct
     {
-        public int Example { get; set; } = 1;
+        public int Example { get; } = 1;
 
         public ExampleStruct()
         {

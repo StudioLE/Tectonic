@@ -280,7 +280,7 @@ public sealed class Flex1d : FlexBase
             Justification.SpaceAround
                 or Justification.SpaceBetween
                 or Justification.SpaceEvenly => MainDimensionWithoutMinSpacing(components),
-            _ => throw new EnumSwitchException<Justification>("Failed to get remainder.", justification),
+            _ => throw new EnumSwitchException<Justification>("Failed to get remainder.", justification)
         };
         return TargetLength - total;
     }

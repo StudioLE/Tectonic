@@ -30,9 +30,7 @@ public static class Helpers
                 ? groupCenters.Average()
                 : null;
 
-            double distance = averageCenter is null
-                ? 0
-                : ((Vector3)averageCenter!).DistanceTo(center);
+            double distance = averageCenter?.DistanceTo(center) ?? 0;
             bool isWithinThreshold = distance <= threshold;
             if ((segment.IsFirst || segment.IsSameDirectionAsPrevious) && isWithinThreshold)
             {

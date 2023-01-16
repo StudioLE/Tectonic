@@ -21,14 +21,6 @@ public sealed class ErrorModel : PageModel
     /// </summary>
     public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
-    private readonly ILogger<ErrorModel> _logger;
-
-    /// <see cref="ErrorModel"/>
-    public ErrorModel(ILogger<ErrorModel> logger)
-    {
-        _logger = logger;
-    }
-
     /// <summary>
     /// On get.
     /// </summary>

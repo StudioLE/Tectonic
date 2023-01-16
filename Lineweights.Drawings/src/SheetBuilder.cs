@@ -76,7 +76,7 @@ public sealed class SheetBuilder : IBuilder<Sheet>
             Bounds = titleBounds,
             Margin = _titleMargin ?? new(),
             Padding = _titlePadding ?? new(),
-            Transform = titleTransform,
+            Transform = titleTransform
         };
     }
 
@@ -90,7 +90,7 @@ public sealed class SheetBuilder : IBuilder<Sheet>
             Bounds = contentBounds,
             Margin = _contentMargin ?? new(),
             Padding = _contentPadding ?? new(),
-            Transform = contentTransform,
+            Transform = contentTransform
         };
 
         if (_views is null)

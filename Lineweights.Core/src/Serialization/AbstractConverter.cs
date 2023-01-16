@@ -40,9 +40,9 @@ public class AbstractConverter : JsonConverter
     private class Proxy
     {
         [JsonConverter(typeof(TypeConverter))]
-        public Type? Type { get; set; }
+        public Type? Type { get; }
 
-        public JObject? Properties { get; set; }
+        public JObject? Properties { get; }
 
         public Proxy()
         {

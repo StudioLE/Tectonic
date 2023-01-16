@@ -18,7 +18,7 @@ public sealed class RoadBuilder
         Name = "Carriageway",
         Width = PathBuilder.DefaultWidth,
         Thickness = PathBuilder.DefaultThickness,
-        Material = MaterialByName("Yellow"),
+        Material = MaterialByName("Yellow")
     };
 
     /// <inheritdoc cref="PathBuilder"/>

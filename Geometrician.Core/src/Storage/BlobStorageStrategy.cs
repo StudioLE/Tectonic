@@ -24,7 +24,7 @@ public class BlobStorageStrategy : IStorageStrategy
             Delay = TimeSpan.Zero,
             MaxDelay = TimeSpan.Zero,
             Mode = RetryMode.Fixed
-        },
+        }
     };
     private readonly BlobContainerClient _container = new(BlobConnectionString, BlobContainer, _blobOptions);
 

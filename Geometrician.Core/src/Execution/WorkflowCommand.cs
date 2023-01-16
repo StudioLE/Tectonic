@@ -35,7 +35,7 @@ public class WorkflowCommand
         }
         VisualizeRequest request = new()
         {
-            Model = model,
+            Model = model
 
             // TODO: Implement these
             // Name = _activity.Name,

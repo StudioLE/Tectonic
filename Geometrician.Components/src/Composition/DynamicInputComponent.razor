@@ -26,14 +26,14 @@ else if (Input.Type == typeof(string))
     @bind-Value="ValueAsString"
     Validation="@(new Func<string, IEnumerable<string>>(ValidateAs))"/>
 }
-else if (typeof(Enum).IsAssignableFrom(@Input.Type))
+else if (typeof(Enum).IsAssignableFrom(Input.Type))
 {
   <MudSelect
     Label="@Input.Label"
     HelperText="@Input.HelperText"
     @bind-Value="ValueAsEnum"
     Validation="@(new Func<Enum, IEnumerable<string>>(ValidateAs))">
-    @foreach (Enum item in Enum.GetValues(@Input.Type))
+    @foreach (Enum item in Enum.GetValues(Input.Type))
     {
       <MudSelectItem Value="@item">@item</MudSelectItem>
     }

@@ -63,7 +63,7 @@ public class VisualizeRequestConverter : JsonConverter<VisualizeRequest>
         {
             // Asset = asset,
             Model = model,
-            Assemblies = assemblyPaths,
+            Assemblies = assemblyPaths
         };
     }
 }

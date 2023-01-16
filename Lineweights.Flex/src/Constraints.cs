@@ -18,7 +18,7 @@ public static class Constraints
 
     public static SequenceBuilder MaxCountConstraint(this SequenceBuilder @this, int maxCount)
     {
-        ISequenceBuilder.Constraint constraint = (sequence, context) => sequence.Count <= maxCount;
+        ISequenceBuilder.Constraint constraint = (sequence, _) => sequence.Count <= maxCount;
         @this.AddConstraint(constraint);
         return @this;
     }

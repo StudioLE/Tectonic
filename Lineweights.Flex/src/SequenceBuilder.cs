@@ -25,56 +25,48 @@ public class SequenceBuilder : ISequenceBuilder
 
     #region Builder methods
 
-    /// <inheritdoc/>
     public SequenceBuilder SetBody(params Element[] elements)
     {
         Body = elements;
         return this;
     }
 
-    /// <inheritdoc/>
     public SequenceBuilder Prepend(params Element[] elements)
     {
         _prepended = elements;
         return this;
     }
 
-    /// <inheritdoc/>
     public SequenceBuilder Append(params Element[] elements)
     {
         _appended = elements;
         return this;
     }
 
-    /// <inheritdoc/>
     public SequenceBuilder AddConstraint(params ISequenceBuilder.Constraint[] constraints)
     {
         _constraints.AddRange(constraints);
         return this;
     }
 
-    /// <inheritdoc/>
     public SequenceBuilder AddCondition(params ISequenceBuilder.Condition[] conditions)
     {
         _conditions.AddRange(conditions);
         return this;
     }
 
-    /// <inheritdoc/>
     public SequenceBuilder Overflow(bool overflow)
     {
         _overflow = overflow;
         return this;
     }
 
-    /// <inheritdoc/>
     public SequenceBuilder Context(object context)
     {
         _context = context;
         return this;
     }
 
-    /// <inheritdoc/>
     public SequenceBuilder Repetition(bool repetition)
     {
         _repetition = repetition;
