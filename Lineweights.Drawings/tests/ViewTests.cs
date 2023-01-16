@@ -7,9 +7,9 @@ namespace Lineweights.Drawings.Tests;
 internal sealed class ViewTests
 {
     private readonly Visualize _visualize = new();
-    private Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
+    private Model _model = new();
 
     [SetUp]
     public void Setup()

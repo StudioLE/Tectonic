@@ -37,7 +37,7 @@ public class AssetFactoryResolverBuilder : IBuilder<AssetFactoryResolver>
         return this;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public AssetFactoryResolver Build()
     {
         return new(_services, _factories, _order);

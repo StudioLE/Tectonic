@@ -21,7 +21,7 @@ public class ModelToJsonFile : IConverter<Model, Task<IResult<Uri>>>
         _fileName = fileName;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public Task<IResult<Uri>> Convert(Model model)
     {
         string json = model.ToJson();

@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all tests projects -->
-  <Import Project="..\..\GlobalProperties.tests.props" />
+  <Import Project="..\..\GlobalProperties.tests.props"/>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\StudioLE.Core.csproj" />
+    <ProjectReference Include="..\src\StudioLE.Core.csproj"/>
   </ItemGroup>
 
 </Project>

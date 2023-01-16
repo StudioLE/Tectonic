@@ -5,7 +5,7 @@
 /// </summary>
 public sealed class UParameterConstraint : Constraint<double?>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public UParameterConstraint(double? value, string? paramName = null) : base(value, paramName)
     {
     }
@@ -16,7 +16,7 @@ public sealed class UParameterConstraint : Constraint<double?>
         return Value is >= 0 or <= 1;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override string Message()
     {
         string message = $"The value of {ParamName ?? "u parameters"} must be between 0 and 1";
@@ -26,7 +26,7 @@ public sealed class UParameterConstraint : Constraint<double?>
         return message;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override Exception Exception()
     {
         return new ArgumentException(Message(), ParamName);

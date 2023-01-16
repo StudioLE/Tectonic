@@ -22,7 +22,7 @@ public class CanvasToPdfFile : IConverter<Canvas, Task<IResult<Uri>>>
         _fileName = fileName;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public Task<IResult<Uri>> Convert(Canvas canvas)
     {
         PdfDocument pdfDocument = canvas switch

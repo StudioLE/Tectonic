@@ -9,7 +9,7 @@ namespace StudioLE.Core.System;
 /// </summary>
 public static class AssemblyHelpers
 {
-    private static bool _areAllAssembliesLoaded = false;
+    private static bool _areAllAssembliesLoaded;
 
     /// <summary>
     /// Determine if the calling assembly is a DEBUG build.

@@ -6,23 +6,23 @@ namespace Lineweights.Diagnostics.Tests.Verification;
 
 internal sealed class MockVerifyContext : IVerifyContext
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string FileNamePrefix { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public DirectoryInfo Directory { get; }
-
-    /// <inheritdoc />
-    public void OnResult(IResult result, FileInfo receivedFile, FileInfo verifiedFile)
-    {
-        // if (AssemblyHelpers.IsDebugBuild())
-        //     DiffRunner.LaunchAsync(receivedFile.FullName, verifiedFile.FullName);
-    }
 
     public MockVerifyContext(string fileNamePrefix)
     {
         FileNamePrefix = fileNamePrefix;
         Directory = VerifyTests.Directory;
+    }
+
+    /// <inheritdoc/>
+    public void OnResult(IResult result, FileInfo receivedFile, FileInfo verifiedFile)
+    {
+        // if (AssemblyHelpers.IsDebugBuild())
+        //     DiffRunner.LaunchAsync(receivedFile.FullName, verifiedFile.FullName);
     }
 
     internal FileInfo GetSourceFile(string fileExtension)

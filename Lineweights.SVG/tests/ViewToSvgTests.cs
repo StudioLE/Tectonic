@@ -12,8 +12,8 @@ namespace Lineweights.SVG.Tests;
 internal sealed class ViewToSvgTests
 {
     private readonly Visualize _visualize = new();
-    private Model _model = new();
     private readonly ViewToSvg _converter = new();
+    private Model _model = new();
 
     [TestCase(ViewDirection.Back)]
     public async Task ViewToSvg_Wireframe_Brickwork(ViewDirection viewDirection)
@@ -48,6 +48,7 @@ internal sealed class ViewToSvgTests
         // Asset
         await VerifySvg(svgElement);
     }
+
     [TestCase(ViewDirection.Back)]
     public async Task ViewToSvg_Flat_Brickwork(ViewDirection viewDirection)
     {

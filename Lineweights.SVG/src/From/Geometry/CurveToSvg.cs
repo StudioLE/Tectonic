@@ -30,7 +30,7 @@ internal sealed class CurveToSvg : IConverter<Curve, SvgElement>
 /// </summary>
 internal sealed class CircleToSvg : IConverter<Circle, SvgElement>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     /// <remarks>
     /// <see href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/circle">SVG circle documentation</see>
     /// </remarks>

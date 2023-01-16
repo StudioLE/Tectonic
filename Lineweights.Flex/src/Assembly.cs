@@ -5,7 +5,7 @@
 /// </summary>
 internal sealed class Assembly : GeometricElement, IHasBounds
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public BBox3 Bounds { get; }
 
     /// <summary>

@@ -5,11 +5,10 @@ using StudioLE.Core.Results;
 
 namespace Lineweights.Diagnostics.Verification;
 
-
 /// <inheritdoc cref="VerifierBase{T}"/>
 public sealed class FileVerifier : VerifierBase<FileInfo>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public FileVerifier(IVerifyContext context, string fileExtension) : base(context, fileExtension)
     {
     }
@@ -32,7 +31,7 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
         return result;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override Task Write(FileInfo file, FileInfo value)
     {
         file = value;

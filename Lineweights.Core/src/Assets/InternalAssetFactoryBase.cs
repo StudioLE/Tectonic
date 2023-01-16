@@ -9,10 +9,10 @@ public abstract class InternalAssetFactoryBase<TSource> : IAssetFactory<TSource,
 
     protected abstract IConverter<TSource, Task<IResult<string>>> Converter { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public InternalAsset Asset { get; } = new();
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IResult Result { get; private set; } = new NotExecuted();
 
     public void Setup(TSource source)
@@ -25,7 +25,7 @@ public abstract class InternalAssetFactoryBase<TSource> : IAssetFactory<TSource,
     {
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public async Task Execute()
     {
         if (Converter is null)

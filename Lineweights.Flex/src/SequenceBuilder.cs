@@ -17,7 +17,7 @@ public class SequenceBuilder : ISequenceBuilder
     internal List<ISequenceBuilder.Condition> _conditions = new();
     internal bool _overflow;
     internal object? _context;
-    internal bool _repetition = false;
+    internal bool _repetition;
 
     public IReadOnlyCollection<Element> Body { get; set; } = Array.Empty<Element>();
 
@@ -135,7 +135,6 @@ public class SequenceBuilder : ISequenceBuilder
 
     private bool ValidateConditions(IReadOnlyCollection<Element> sequence, object context)
     {
-
         bool isValid = _conditions.All(condition => condition.Invoke(sequence, context));
         return isValid;
     }

@@ -5,14 +5,14 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all tests projects -->
-  <Import Project="..\..\GlobalProperties.tests.props" />
+  <Import Project="..\..\GlobalProperties.tests.props"/>
 
   <!-- Use consistent global usings across all tests projects -->
-  <Import Project="..\..\GlobalUsings.tests.props" />
+  <Import Project="..\..\GlobalUsings.tests.props"/>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Lineweights.Flex\src\Lineweights.Flex.csproj" />
-    <ProjectReference Include="..\src\Lineweights.SVG.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Flex\src\Lineweights.Flex.csproj"/>
+    <ProjectReference Include="..\src\Lineweights.SVG.csproj"/>
   </ItemGroup>
 
 </Project>

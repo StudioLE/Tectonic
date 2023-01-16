@@ -6,8 +6,6 @@ namespace Lineweights.Curves.Tests;
 
 internal sealed class SplineTests
 {
-    private readonly Visualize _visualize = new();
-    private Model _model = new();
     internal static readonly IReadOnlyCollection<Vector3> _points = new[]
     {
         new Vector3(1, 3.5),
@@ -22,6 +20,8 @@ internal sealed class SplineTests
 
     internal static readonly Vector3 _startTangent = Vector3.XAxis.Negate() * 2;
     internal static readonly Vector3 _endTangent = Vector3.XAxis * 2;
+    private readonly Visualize _visualize = new();
+    private Model _model = new();
 
     [SetUp]
     public void Setup()
@@ -329,7 +329,7 @@ internal sealed class SplineTests
         // Arrange
         Spline sourceSpline = new(_points)
         {
-            Interpolation = new Hermite()
+            Interpolation = new Hermite
             {
                 Tension = 4
             },

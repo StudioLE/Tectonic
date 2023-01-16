@@ -45,7 +45,7 @@ public class TileComponentBase : TemplatedComponentBase
     [Parameter]
     public string? SubTitle { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnParametersSet()
     {
         if (Padding)

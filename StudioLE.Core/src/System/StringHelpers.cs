@@ -1,5 +1,4 @@
-﻿
-namespace StudioLE.Core.System;
+﻿namespace StudioLE.Core.System;
 
 /// <summary>
 /// Methods to help with <see cref="string"/>.

@@ -16,6 +16,7 @@ public static class CreateBBox3
         Vector3 max = new(width * 0.5, length * 0.5, height * 0.5);
         return new(min, max);
     }
+
     /// <summary>
     /// Create a 2D BBox3 from a width and height.
     /// </summary>

@@ -19,7 +19,7 @@ public class ViewerComponentResolverBuilder : IBuilder<ViewerComponentResolver>
         return this;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public ViewerComponentResolver Build()
     {
         return new(_contentTypes);

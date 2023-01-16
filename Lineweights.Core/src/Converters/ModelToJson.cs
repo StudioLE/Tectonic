@@ -10,7 +10,7 @@ namespace Lineweights.Core.Converters;
 /// </summary>
 public class ModelToJson : IConverter<Model, Task<IResult<string>>>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public Task<IResult<string>> Convert(Model model)
     {
         string json = model.ToJson();

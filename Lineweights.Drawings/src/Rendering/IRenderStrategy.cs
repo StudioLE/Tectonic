@@ -11,7 +11,6 @@ public interface IRenderStrategy
     public ParallelQuery<GeometricElement> Render(ViewScope viewScope);
 }
 
-
 /// <summary>
 /// Render a <see cref="ViewScope"/> in place on <see cref="ViewScope.Plane"/>.
 /// </summary>

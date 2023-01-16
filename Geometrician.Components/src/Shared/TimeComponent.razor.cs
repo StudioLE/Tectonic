@@ -21,7 +21,7 @@ public class TimeComponentBase : ComponentBase, IDisposable
     [Parameter]
     public DateTime DateTime { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
@@ -41,7 +41,7 @@ public class TimeComponentBase : ComponentBase, IDisposable
         InvokeAsync(StateHasChanged);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public void Dispose()
     {
         Logger.LogDebug($"{nameof(Dispose)} called. DateTime: {DateTime}");

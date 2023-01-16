@@ -57,7 +57,7 @@ public class AssemblyResolverComponentBase : ComponentBase
     /// </summary>
     protected string AssemblySelectValue { get; set; } = string.Empty;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnInitialized()
     {
         AssemblySelectOptions = AssemblyResolver.GetAllNames().ToArray();

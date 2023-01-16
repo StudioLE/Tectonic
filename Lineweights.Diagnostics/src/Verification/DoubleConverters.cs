@@ -7,6 +7,9 @@ internal class DoubleConverter : JsonConverter
 {
     private readonly int _decimalPoints;
 
+    /// <inheritdoc/>
+    public override bool CanRead => false;
+
     public DoubleConverter(int decimalPoints)
     {
         _decimalPoints = decimalPoints;
@@ -29,9 +32,6 @@ internal class DoubleConverter : JsonConverter
             : rounded.ToString("G");
         writer.WriteRawValue(json);
     }
-
-    /// <inheritdoc/>
-    public override bool CanRead => false;
 
     /// <inheritdoc/>
     public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)

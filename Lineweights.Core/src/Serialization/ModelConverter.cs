@@ -6,14 +6,14 @@ namespace Lineweights.Core.Serialization;
 
 public class ModelConverter : JsonConverter<Model>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override void WriteJson(JsonWriter writer, Model model, JsonSerializer serializer)
     {
         string json = model.ToJson(true);
         writer.WriteRawValue(json);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override Model ReadJson(
         JsonReader reader,
         Type objectType,
@@ -24,7 +24,7 @@ public class ModelConverter : JsonConverter<Model>
         // TODO: Ensure assemblies are loaded.
         JRaw? jRaw = JRaw.Create(reader);
         string json = jRaw.ToString();
-        Model model = Model.FromJson(json, out List<string> errors, false);
+        Model model = Model.FromJson(json, out List<string> errors);
         if (errors.Any())
             Console.WriteLine(errors.Join());
         return model;

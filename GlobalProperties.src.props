@@ -16,7 +16,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable Condition="'$(OutputType)' != 'Library'">false</IsPackable>
     <IsPackable Condition="'$(OutputType)' == 'Library'">true</IsPackable>
-<!--    <GenerateDocumentationFile>true</GenerateDocumentationFile>-->
+    <!--    <GenerateDocumentationFile>true</GenerateDocumentationFile>-->
   </PropertyGroup>
 
   <ItemGroup>

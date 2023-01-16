@@ -46,7 +46,7 @@ public class ActivityResolverComponentBase : ComponentBase
     /// </summary>
     protected string ActivitySelectValue { get; set; } = string.Empty;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnInitialized()
     {
         Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Composition.SelectedActivityKey} Assembly: {Composition.SelectedAssemblyKey}");

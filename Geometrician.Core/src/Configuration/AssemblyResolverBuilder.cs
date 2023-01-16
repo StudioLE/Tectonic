@@ -21,7 +21,7 @@ public class AssemblyResolverBuilder : IBuilder<AssemblyResolver>
         return this;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public AssemblyResolver Build()
     {
         return new(_assemblies);

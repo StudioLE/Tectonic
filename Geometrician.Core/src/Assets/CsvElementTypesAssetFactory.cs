@@ -11,7 +11,7 @@ namespace Geometrician.Core.Assets;
 
 public class CsvElementTypesAssetFactory : ExternalAssetFactoryBase<Model>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override IConverter<Model, Task<IResult<Uri>>> Converter { get; }
 
     /// <inheritdoc cref="CsvElementTypesAssetFactory"/>
@@ -59,7 +59,7 @@ public class CsvElementTypesAssetFactory : ExternalAssetFactoryBase<Model>
         public int Count { get; set; }
 
         [Name("Geometric?")]
-        public bool IsGeometricElement { get; set; } = false;
+        public bool IsGeometricElement { get; set; }
 
         [Name("Representation")]
         public string Representations { get; set; } = string.Empty;

@@ -8,7 +8,7 @@ namespace Geometrician.Core.Assets;
 
 public class GlbAssetFactory : ExternalAssetFactoryBase<Model>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override IConverter<Model, Task<IResult<Uri>>> Converter { get; }
 
     /// <inheritdoc cref="GlbAssetFactory"/>

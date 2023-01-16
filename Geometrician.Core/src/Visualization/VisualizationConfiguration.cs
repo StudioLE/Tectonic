@@ -2,12 +2,6 @@
 
 public class VisualizationConfiguration
 {
-    public HttpClient HttpClient { get; } = new()
-    {
-        Timeout = TimeSpan.FromMilliseconds(200),
-        BaseAddress = new(BaseAddress)
-    };
-
     /// <summary>
     /// The path of the asset API endpoint.
     /// </summary>
@@ -17,4 +11,10 @@ public class VisualizationConfiguration
     /// The path of the visualize API endpoint.
     /// </summary>
     public const string VisualizeRoute = "visualize";
+
+    public HttpClient HttpClient { get; } = new()
+    {
+        Timeout = TimeSpan.FromMilliseconds(200),
+        BaseAddress = new(BaseAddress)
+    };
 }

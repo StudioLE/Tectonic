@@ -9,10 +9,10 @@ namespace Lineweights.Core.Assets;
 /// <inheritdoc cref="IAsset"/>
 public class InternalAsset : Element, IAsset, ICloneable
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Description { get; set; } = string.Empty;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string ContentType { get; set; } = string.Empty;
 
     /// <summary>
@@ -20,7 +20,7 @@ public class InternalAsset : Element, IAsset, ICloneable
     /// </summary>
     public string Content { get; set; } = string.Empty;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public object Clone()
     {
         return new InternalAsset

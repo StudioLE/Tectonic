@@ -15,16 +15,16 @@ public sealed class NUnitActivity : IActivity
     private readonly ITestRunner _runner;
     private readonly TestFilter _filter;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Key { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Name { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Description { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public object[] Inputs { get; } = Array.Empty<object>();
 
     public NUnitActivity(object? instance, ITestRunner runner, TestFilter filter, string key)
@@ -37,7 +37,7 @@ public sealed class NUnitActivity : IActivity
         Description = Key;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public Task<object> Execute()
     {
         // Before invocation
@@ -58,7 +58,7 @@ public sealed class NUnitActivity : IActivity
             : Task.FromResult(output);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public object Clone()
     {
         return new NUnitActivity(_instance, _runner, _filter, Key)
@@ -68,7 +68,7 @@ public sealed class NUnitActivity : IActivity
         };
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public void Dispose()
     {
     }

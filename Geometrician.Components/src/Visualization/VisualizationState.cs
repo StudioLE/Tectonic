@@ -11,16 +11,16 @@ public class VisualizationState
     private readonly AssetFactoryResolver _resolver;
     private readonly Collection<Outcome> _outcomes = new();
 
+    /// <summary>
+    /// The <see cref="Outcome"/> currently in state.
+    /// </summary>
+    public IReadOnlyCollection<Outcome> Outcomes => _outcomes;
+
     /// <inheritdoc cref="VisualizationState"/>
     public VisualizationState(AssetFactoryResolver resolver)
     {
         _resolver = resolver;
     }
-
-    /// <summary>
-    /// The <see cref="Outcome"/> currently in state.
-    /// </summary>
-    public IReadOnlyCollection<Outcome> Outcomes => _outcomes;
 
     /// <summary>
     /// An event handler which emits when <see cref="Outcomes"/> is changed.

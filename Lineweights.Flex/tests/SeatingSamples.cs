@@ -1,4 +1,5 @@
 using Lineweights.Diagnostics.NUnit.Visualization;
+using Lineweights.Flex.Samples;
 
 namespace Lineweights.Flex.Tests;
 
@@ -11,10 +12,10 @@ internal sealed class SeatingSamples
     public async Task Seating_1d_Linear()
     {
         // Arrange
-        Samples.Seating1dLinear.Inputs inputs = new();
+        Seating1dLinear.Inputs inputs = new();
 
         // Act
-        Samples.Seating1dLinear.Outputs outputs = Samples.Seating1dLinear.Execute(inputs);
+        Seating1dLinear.Outputs outputs = Seating1dLinear.Execute(inputs);
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);
@@ -28,10 +29,10 @@ internal sealed class SeatingSamples
     public async Task Seating_1d_Radial()
     {
         // Arrange
-        Samples.Seating1dRadial.Inputs inputs = new();
+        Seating1dRadial.Inputs inputs = new();
 
         // Act
-        Samples.Seating1dRadial.Outputs outputs = Samples.Seating1dRadial.Execute(inputs);
+        Seating1dRadial.Outputs outputs = Seating1dRadial.Execute(inputs);
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);
@@ -45,10 +46,10 @@ internal sealed class SeatingSamples
     public async Task Seating_2d_Alternating()
     {
         // Arrange
-        Samples.Seating2dAlternating.Inputs inputs = new();
+        Seating2dAlternating.Inputs inputs = new();
 
         // Act
-        Samples.Seating2dAlternating.Outputs outputs = Samples.Seating2dAlternating.Execute(inputs);
+        Seating2dAlternating.Outputs outputs = Seating2dAlternating.Execute(inputs);
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);

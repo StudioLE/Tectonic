@@ -17,7 +17,11 @@ internal sealed class Flex2dTests
         const double length = 1;
         const double height = 2;
         const double spacing = 0;
-        Container = new(width, length, height, spacing, "Container")
+        Container = new(width,
+            length,
+            height,
+            spacing,
+            "Container")
         {
             Material = MaterialByName("Gray")
         };
@@ -141,7 +145,6 @@ internal sealed class Flex2dTests
     [TestCase(Justification.SpaceBetween)]
     [TestCase(Justification.SpaceEvenly)]
     [TestCase(Justification.Start)]
-
     public async Task Flex2d_InvertedCrossAxis(Justification justification)
     {
         // Arrange

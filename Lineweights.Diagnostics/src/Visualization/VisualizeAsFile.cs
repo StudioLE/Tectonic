@@ -64,7 +64,6 @@ public sealed class VisualizeAsFile : IVisualizationStrategy
             });
 
 
-
         foreach (Task<ExternalAsset?> task in assets)
         {
             ExternalAsset? asset = await task;

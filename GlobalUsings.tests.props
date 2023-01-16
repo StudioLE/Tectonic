@@ -1,18 +1,18 @@
 ﻿<Project>
 
   <ItemGroup>
-    <Using Remove="System.IO" />
-    <Using Include="Elements" />
-    <Using Include="Elements.Geometry" />
-    <Using Include="Elements.Geometry.Solids" />
-    <Using Include="GeometryEx" />
-    <Using Include="NUnit.Framework" />
-    <Using Include="Lineweights.Core.Abstractions" />
-    <Using Include="Lineweights.Core.Constraints" />
-    <Using Include="Lineweights.Core.Elements" />
-    <Using Include="Lineweights.Core.Geometry" />
-    <Using Alias="Verify" Include="Lineweights.Diagnostics.Verification.Verify" />
-    <Using Static="true" Include="Lineweights.Core.Elements.MaterialHelpers" />
+    <Using Remove="System.IO"/>
+    <Using Include="Elements"/>
+    <Using Include="Elements.Geometry"/>
+    <Using Include="Elements.Geometry.Solids"/>
+    <Using Include="GeometryEx"/>
+    <Using Include="NUnit.Framework"/>
+    <Using Include="Lineweights.Core.Abstractions"/>
+    <Using Include="Lineweights.Core.Constraints"/>
+    <Using Include="Lineweights.Core.Elements"/>
+    <Using Include="Lineweights.Core.Geometry"/>
+    <Using Alias="Verify" Include="Lineweights.Diagnostics.Verification.Verify"/>
+    <Using Static="true" Include="Lineweights.Core.Elements.MaterialHelpers"/>
   </ItemGroup>
 
 </Project>

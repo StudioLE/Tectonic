@@ -8,7 +8,7 @@ namespace Lineweights.PDF.From.Elements;
 /// </summary>
 internal sealed class SheetToPdf : IConverter<Sheet, PdfSheet>
 {
-    /// <inheritdoc cref="SheetToPdf" />
+    /// <inheritdoc cref="SheetToPdf"/>
     public PdfSheet Convert(Sheet sheet)
     {
         return new(sheet);

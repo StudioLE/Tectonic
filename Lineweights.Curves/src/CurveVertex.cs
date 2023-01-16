@@ -36,13 +36,17 @@ internal sealed class CurveVertex
     /// The vector from <see cref="Previous"/> to <see cref="Current"/>.
     /// Or <see langword="null"/> if this is the first vertex.
     /// </summary>
-    public Vector3? VectorFromPrevious => IsFirst ? null : Current - Previous;
+    public Vector3? VectorFromPrevious => IsFirst
+        ? null
+        : Current - Previous;
 
     /// <summary>
     /// The vector from <see cref="Current"/> to <see cref="Next"/>.
     /// Or <see langword="null"/> if this is the last vertex.
     /// </summary>
-    public Vector3? VectorToNext => IsLast ? null : Next - Current;
+    public Vector3? VectorToNext => IsLast
+        ? null
+        : Next - Current;
 
     /// <summary>
     /// Determine if this is the first vertex.

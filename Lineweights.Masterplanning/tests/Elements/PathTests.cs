@@ -8,7 +8,6 @@ namespace Lineweights.Masterplanning.Tests.Elements;
 internal sealed class PathTests
 {
     private readonly Visualize _visualize = new();
-    private Model _model = new();
     //private readonly IReadOnlyCollection<Vector3> _points = new[]
     //{
     //    new Vector3(0, 0),
@@ -38,6 +37,7 @@ internal sealed class PathTests
 
     private readonly Vector3 _startTangent = Vector3.XAxis.Negate() * 2;
     private readonly Vector3 _endTangent = Vector3.XAxis * 2;
+    private Model _model = new();
 
     [SetUp]
     public void Setup()

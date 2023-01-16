@@ -8,7 +8,7 @@ namespace Lineweights.PDF.From.Elements;
 /// </summary>
 internal sealed class ViewToPdf : IConverter<View, PdfView>
 {
-    /// <inheritdoc cref="ViewToPdf" />
+    /// <inheritdoc cref="ViewToPdf"/>
     public PdfView Convert(View view)
     {
         return new(view);

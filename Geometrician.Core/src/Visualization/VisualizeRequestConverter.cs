@@ -7,7 +7,7 @@ namespace Geometrician.Core.Visualization;
 
 public class VisualizeRequestConverter : JsonConverter<VisualizeRequest>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override void WriteJson(JsonWriter writer, VisualizeRequest request, JsonSerializer serializer)
     {
         JObject jObject = new();
@@ -31,7 +31,7 @@ public class VisualizeRequestConverter : JsonConverter<VisualizeRequest>
         jObject.WriteTo(writer);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override VisualizeRequest ReadJson(
         JsonReader reader,
         Type objectType,

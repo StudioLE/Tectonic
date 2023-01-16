@@ -7,10 +7,10 @@ namespace Lineweights.Core.Assets;
 /// <inheritdoc cref="IAsset"/>
 public class ExternalAsset : Element, IAsset, ICloneable
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Description { get; set; } = string.Empty;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string ContentType { get; set; } = string.Empty;
 
     /// <summary>
@@ -18,7 +18,7 @@ public class ExternalAsset : Element, IAsset, ICloneable
     /// </summary>
     public Uri? Location { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public object Clone()
     {
         return new ExternalAsset

@@ -15,14 +15,14 @@ public sealed class AlmostConstraint : EqualConstraint
     /// </summary>
     public const double Epsilon = 1e-5;
 
-    /// <inheritdoc cref="AlmostConstraint" />
+    /// <inheritdoc cref="AlmostConstraint"/>
     public AlmostConstraint(double expected, double tolerance = Epsilon) : base(expected)
     {
         Within(tolerance);
     }
 
 
-    /// <inheritdoc cref="AlmostConstraint" />
+    /// <inheritdoc cref="AlmostConstraint"/>
     public static AlmostConstraint Almost(double expected, double tolerance = Epsilon)
     {
         return new(expected, tolerance);
@@ -37,7 +37,7 @@ public sealed class AlmostConstraint : EqualConstraint
 /// </remarks>
 public sealed class Is : global::NUnit.Framework.Is
 {
-    /// <inheritdoc cref="AlmostConstraint" />
+    /// <inheritdoc cref="AlmostConstraint"/>
     public static AlmostConstraint Almost(double expected, double tolerance = AlmostConstraint.Epsilon)
     {
         return new(expected, tolerance);
@@ -52,7 +52,7 @@ public sealed class Is : global::NUnit.Framework.Is
 /// </remarks>
 public static class AlmostConstraintExtensions
 {
-    /// <inheritdoc cref="AlmostConstraint" />
+    /// <inheritdoc cref="AlmostConstraint"/>
     public static AlmostConstraint Almost(this ConstraintExpression expression, double expected, double tolerance = AlmostConstraint.Epsilon)
     {
         AlmostConstraint constraint = new(expected, tolerance);

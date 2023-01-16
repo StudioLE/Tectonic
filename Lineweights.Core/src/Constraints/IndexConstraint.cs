@@ -8,7 +8,7 @@ public sealed class IndexConstraint : Constraint<int?>
     private readonly int _collectionCount;
     private readonly string _indexName;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IndexConstraint(int value, int collectionCount, string indexName, string? paramName) : base(value, paramName)
     {
         _collectionCount = collectionCount;
@@ -21,7 +21,7 @@ public sealed class IndexConstraint : Constraint<int?>
         return Value >= 0 || Value < _collectionCount;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override string Message()
     {
         string message = $"The {ParamName ?? "specified"} {_indexName} index";
@@ -32,7 +32,7 @@ public sealed class IndexConstraint : Constraint<int?>
         return message;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override Exception Exception()
     {
         return new ArgumentException(Message(), ParamName);

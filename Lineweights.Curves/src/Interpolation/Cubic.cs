@@ -22,6 +22,6 @@ public sealed class Cubic : IInterpolation
         double a2 = endVector - (double)previousVector;
         double a3 = startVector;
 
-        return (a0 * mu * mu2 + a1 * mu2 + a2 * mu + a3);
+        return a0 * mu * mu2 + a1 * mu2 + a2 * mu + a3;
     }
 }

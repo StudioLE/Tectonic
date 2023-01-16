@@ -2,10 +2,10 @@
 
 public class Success : IResult
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string[] Warnings { get; set; } = Array.Empty<string>();
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string[] Errors { get; } = Array.Empty<string>();
 }
 
@@ -13,10 +13,10 @@ public class Success<T> : IResult<T>
 {
     public T Value { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string[] Warnings { get; set; } = Array.Empty<string>();
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string[] Errors { get; } = Array.Empty<string>();
 
     public Success(T value)

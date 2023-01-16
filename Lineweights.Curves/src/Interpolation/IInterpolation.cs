@@ -1,7 +1,7 @@
 ﻿namespace Lineweights.Curves.Interpolation;
 
 /// <summary>
-/// Methods to interpolate a <see cref="Spline"/> ensuring that the curve passes through each of 
+/// Methods to interpolate a <see cref="Spline"/> ensuring that the curve passes through each of
 /// the <see cref="Spline.KeyVertices"/>.
 /// </summary>
 /// <remarks>

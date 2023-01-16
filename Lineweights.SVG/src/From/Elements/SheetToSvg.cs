@@ -7,7 +7,7 @@ namespace Lineweights.SVG.From.Elements;
 /// </summary>
 internal sealed class SheetToSvg : IConverter<Sheet, SvgElement>
 {
-    /// <inheritdoc cref="SheetToSvg" />
+    /// <inheritdoc cref="SheetToSvg"/>
     public SvgElement Convert(Sheet sheet)
     {
         SvgElement svgElement = new("svg");

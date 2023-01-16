@@ -4,13 +4,6 @@ namespace Lineweights.Core.Tests.Elements;
 
 internal sealed class ModelHelpersTests
 {
-
-    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
-    private class TestElement : Element
-    {
-        public IReadOnlyCollection<Material> Materials { get; set; } = Array.Empty<Material>();
-    }
-
     [Test]
     public void ModelHelpers_AddSubElements_OfElement()
     {
@@ -85,5 +78,11 @@ internal sealed class ModelHelpersTests
             Assert.That(countBefore, Is.EqualTo(1), "Count before.");
             Assert.That(countAfter, Is.EqualTo(4), "Count after.");
         });
+    }
+
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
+    private class TestElement : Element
+    {
+        public IReadOnlyCollection<Material> Materials { get; set; } = Array.Empty<Material>();
     }
 }

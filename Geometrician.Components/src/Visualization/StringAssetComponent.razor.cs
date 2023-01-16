@@ -46,7 +46,7 @@ public class StringAssetComponentBase : ViewerComponentBase<IAsset>
     /// </summary>
     protected IReadOnlyCollection<IReadOnlyCollection<string>> Table { get; private set; } = Array.Empty<IReadOnlyCollection<string>>();
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -57,7 +57,7 @@ public class StringAssetComponentBase : ViewerComponentBase<IAsset>
         }
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override async Task AfterExecution()
     {
         await LoadContent();
@@ -85,6 +85,7 @@ public class StringAssetComponentBase : ViewerComponentBase<IAsset>
                 break;
         }
     }
+
     private Task<string> GetContent(InternalAsset asset)
     {
         return Task.FromResult(asset.Content);
@@ -103,7 +104,6 @@ public class StringAssetComponentBase : ViewerComponentBase<IAsset>
             return string.Empty;
         }
         return await GetContent(asset.Location);
-
     }
 
     private async Task<string> GetContent(Uri uri)

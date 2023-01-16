@@ -6,7 +6,7 @@ namespace Lineweights.IFC;
 
 public class IfcAssetFactory : ExternalAssetFactoryBase<Model>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override IConverter<Model, Task<IResult<Uri>>> Converter { get; }
 
     /// <inheritdoc cref="IfcAssetFactory"/>

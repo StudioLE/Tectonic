@@ -56,8 +56,8 @@ public static class CreateCircle
 
     private static Vector3 CalculateCenter(double a, double b, double c)
     {
-        double x = (b / (2 * a)) * -1;
-        double y = (c / (2 * a)) * -1;
+        double x = b / (2 * a) * -1;
+        double y = c / (2 * a) * -1;
         return new(x, y);
     }
 

@@ -69,7 +69,7 @@ public class DynamicInputComponentBase : ComponentBase
         set => Input.SetValue(value);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnInitialized()
     {
         base.OnInitialized();

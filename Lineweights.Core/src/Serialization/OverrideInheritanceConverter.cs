@@ -20,14 +20,14 @@ public class OverrideInheritanceConverter : JsonConverter<Element>
         _serializer = JsonSerializer.Create(settings);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override void WriteJson(JsonWriter writer, Element value, JsonSerializer _)
     {
         JToken jToken = JToken.FromObject(value, _serializer);
         jToken.WriteTo(writer);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override Element ReadJson(
         JsonReader reader,
         Type objectType,
@@ -39,6 +39,5 @@ public class OverrideInheritanceConverter : JsonConverter<Element>
         if (obj is not Element element)
             throw new($"Failed to de-serialise {objectType}. De-serialised was not an Element.");
         return element;
-
     }
 }

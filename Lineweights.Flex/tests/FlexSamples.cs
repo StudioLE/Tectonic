@@ -1,4 +1,5 @@
 using Lineweights.Diagnostics.NUnit.Visualization;
+using Lineweights.Flex.Samples;
 
 namespace Lineweights.Flex.Tests;
 
@@ -11,14 +12,14 @@ internal sealed class FlexSamples
     public async Task Flex2d_Sample()
     {
         // Arrange
-        Samples.Flex2dSample.ContainerInputs containerInputs = new();
-        Samples.Flex2dSample.SequenceInputs firstSequenceInputs = new();
-        Samples.Flex2dSample.SequenceInputs secondSequenceInputs = new();
-        Samples.Flex2dSample.FlexInputs flexInputs = new();
-        Samples.Flex2dSample.DisplayInputs displayInputs = new();
+        Flex2dSample.ContainerInputs containerInputs = new();
+        Flex2dSample.SequenceInputs firstSequenceInputs = new();
+        Flex2dSample.SequenceInputs secondSequenceInputs = new();
+        Flex2dSample.FlexInputs flexInputs = new();
+        Flex2dSample.DisplayInputs displayInputs = new();
 
         // Act
-        Samples.Flex2dSample.Outputs outputs = Samples.Flex2dSample.Execute(
+        Flex2dSample.Outputs outputs = Flex2dSample.Execute(
             containerInputs,
             firstSequenceInputs,
             secondSequenceInputs,

@@ -23,7 +23,7 @@ public class ModelToGlbFile : IConverter<Model, Task<IResult<Uri>>>
         _fileName = fileName;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public async Task<IResult<Uri>> Convert(Model model)
     {
         string tempPath = Path.GetTempFileName();

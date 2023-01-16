@@ -19,12 +19,12 @@ public sealed class JsonVerifier : VerifierBase<object>
         new DoubleConverter(DecimalPlaces)
     };
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public JsonVerifier(IVerifyContext context) : base(context, ".json")
     {
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override Task Write(FileInfo file, object value)
     {
         JsonSerializerSettings settings = new()

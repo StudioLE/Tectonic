@@ -26,5 +26,4 @@ public class CompositionState
     /// Is the activity set?
     /// </summary>
     public bool IsActivitySet => IsAssemblySet && !string.IsNullOrEmpty(SelectedActivityKey);
-
 }

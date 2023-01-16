@@ -28,4 +28,3 @@ public interface IActivity : ICloneable, IDisposable
     /// <returns>The outputs of the activity execution.</returns>
     public Task<object> Execute();
 }
-

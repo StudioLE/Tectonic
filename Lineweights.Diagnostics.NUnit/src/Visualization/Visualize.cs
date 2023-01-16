@@ -25,20 +25,20 @@ public class Visualize
     /// </summary>
     public bool IsEnabled { get; set; } = AssemblyHelpers.IsDebugBuild();
 
-    /// <inheritdoc cref="Visualize" />
+    /// <inheritdoc cref="Visualize"/>
     public Visualize(IVisualizationStrategy strategy)
     {
         _strategy = strategy;
     }
 
-    /// <inheritdoc cref="Visualize" />
+    /// <inheritdoc cref="Visualize"/>
     public Visualize()
     {
         IServiceProvider services = Services.GetInstance();
         _strategy = services.GetRequiredService<IVisualizationStrategy>();
     }
 
-    /// <inheritdoc cref="Visualize" />
+    /// <inheritdoc cref="Visualize"/>
     public void Queue(Model model, IReadOnlyCollection<IAsset>? assets = null)
     {
         if (!NUnitActivityResolver.IsExecuting && !IsEnabled)
@@ -61,7 +61,7 @@ public class Visualize
         _requests.Add(request);
     }
 
-    /// <inheritdoc cref="Visualize" />
+    /// <inheritdoc cref="Visualize"/>
     public async Task Execute()
     {
         if (!NUnitActivityResolver.IsExecuting && !IsEnabled)

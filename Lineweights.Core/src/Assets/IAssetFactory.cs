@@ -54,6 +54,7 @@ public interface IAssetFactory<out TResult> where TResult : IAsset
     /// <returns>An awaitable <see cref="Task"/>.</returns>
     public Task Execute();
 }
+
 /// <summary>
 /// Create an <see cref="IAsset"/> of type <typeparamref name="TResult"/> from <typeparamref name="TSource"/>.
 /// </summary>
@@ -91,10 +92,9 @@ public interface IAssetFactory<in TSource, out TResult> : IAssetFactory<TResult>
 /// </remarks>
 public class NotExecuted : IResult
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string[] Warnings { get; set; } = Array.Empty<string>();
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string[] Errors { get; } = Array.Empty<string>();
 }
-

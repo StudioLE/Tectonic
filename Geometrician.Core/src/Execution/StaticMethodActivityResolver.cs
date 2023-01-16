@@ -6,14 +6,14 @@ namespace Geometrician.Core.Execution;
 /// <inheritdoc cref="IActivityResolver"/>
 public sealed class StaticMethodActivityResolver : IActivityResolver
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IEnumerable<string> AllActivityKeysInAssembly(Assembly assembly)
     {
         IEnumerable<MethodInfo> methods = AllActivityMethodsInAssembly(assembly);
         return methods.Select(GetActivityKey);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IResult<IActivity> Resolve(Assembly assembly, string activityKey)
     {
         MethodInfo? method = GetActivityMethodByKey(assembly, activityKey);

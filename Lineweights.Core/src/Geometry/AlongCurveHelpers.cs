@@ -35,12 +35,11 @@ public static class AlongCurveHelpers
     /// <inheritdoc cref="Arc.PointAt(double)"/>
     public static Vector3 UnboundPointAt(this Arc @this, double u)
     {
-
         double angle = @this.StartAngle + (@this.EndAngle - @this.StartAngle) * u;
         double theta = Units.DegreesToRadians(angle);
         double x = @this.Center.X + @this.Radius * Math.Cos(theta);
         double y = @this.Center.Y + @this.Radius * Math.Sin(theta);
-        return new Vector3(x, y);
+        return new(x, y);
     }
 
     /// <inheritdoc cref="Line.TransformAt(double)"/>

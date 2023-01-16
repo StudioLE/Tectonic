@@ -5,14 +5,14 @@ namespace Lineweights.Drawings.Rendering;
 /// <inheritdoc/>
 public sealed class WireframeRender : IRenderStrategy<ModelCurve>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public ParallelQuery<GeometricElement> Render(ViewScope viewScope)
     {
         return this.RenderAs(viewScope)
             .Select(x => x as GeometricElement);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IResult<ModelCurve> FromCurve(Plane plane, Curve curve, Transform transform, Material material)
     {
         Curve transformed = curve.Transformed(transform);

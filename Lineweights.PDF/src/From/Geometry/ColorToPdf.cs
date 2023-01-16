@@ -5,7 +5,7 @@ namespace Lineweights.PDF.From.Geometry;
 /// </summary>
 internal sealed class ColorToPdf : IConverter<Color, SKColor>
 {
-    /// <inheritdoc cref="ColorToPdf" />
+    /// <inheritdoc cref="ColorToPdf"/>
     public SKColor Convert(Color color)
     {
         byte r = UParameterToByte(color.Red);

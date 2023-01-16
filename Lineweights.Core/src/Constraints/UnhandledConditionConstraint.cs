@@ -7,7 +7,7 @@ public sealed class UnhandledConditionConstraint : Constraint<Func<bool>>
 {
     private readonly string _message;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public UnhandledConditionConstraint(Func<bool> condition, string message) : base(condition, null)
     {
         _message = message;
@@ -19,13 +19,13 @@ public sealed class UnhandledConditionConstraint : Constraint<Func<bool>>
         return Value();
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override string Message()
     {
         return _message;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override Exception Exception()
     {
         return new(Message());

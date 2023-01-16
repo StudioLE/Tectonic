@@ -10,16 +10,16 @@ public sealed class MethodActivity : IActivity
     private readonly object? _instance;
     private readonly MethodInfo _method;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Key { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Name { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Description { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public object[] Inputs { get; private set; } = Array.Empty<object>();
 
     /// <summary>
@@ -38,7 +38,7 @@ public sealed class MethodActivity : IActivity
         Reset();
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public Task<object> Execute()
     {
         object? output = _method.Invoke(_instance, Inputs);
@@ -55,7 +55,7 @@ public sealed class MethodActivity : IActivity
             .ToArray();
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public object Clone()
     {
         return new MethodActivity(_instance, _method, Key)
@@ -65,7 +65,7 @@ public sealed class MethodActivity : IActivity
         };
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public void Dispose()
     {
     }

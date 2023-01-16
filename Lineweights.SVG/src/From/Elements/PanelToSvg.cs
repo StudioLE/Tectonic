@@ -7,7 +7,7 @@ namespace Lineweights.SVG.From.Elements;
 /// </summary>
 internal sealed class PanelToSvg : IConverter<Panel, SvgElement>
 {
-    /// <inheritdoc cref="PanelToSvg" />
+    /// <inheritdoc cref="PanelToSvg"/>
     public SvgElement Convert(Panel element)
     {
         Polygon polygon = element.Perimeter.TransformedPolygon(element.Transform);

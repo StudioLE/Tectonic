@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all src projects -->
-  <Import Project="../../GlobalProperties.src.props" />
+  <Import Project="../../GlobalProperties.src.props"/>
 
   <ItemGroup>
-    <Using Remove="System.IO" />
+    <Using Remove="System.IO"/>
   </ItemGroup>
 
 </Project>

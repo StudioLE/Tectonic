@@ -24,6 +24,7 @@ public static class FileHelpers
             _ => null
         };
     }
+
     /// <summary>
     /// Get the appropriate content type of the file according to its extension.
     /// </summary>

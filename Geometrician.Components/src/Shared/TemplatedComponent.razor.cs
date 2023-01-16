@@ -40,7 +40,7 @@ public abstract class TemplatedComponentBase : ComponentBase
     /// </summary>
     protected string Style { get; private set; } = string.Empty;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnParametersSet()
     {
         if (AdditionalAttributes is not null)

@@ -6,25 +6,25 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all src projects -->
-  <Import Project="..\..\GlobalProperties.src.props" />
+  <Import Project="..\..\GlobalProperties.src.props"/>
 
   <!-- Use consistent global usings across all src projects -->
-  <Import Project="..\..\GlobalUsings.src.props" />
+  <Import Project="..\..\GlobalUsings.src.props"/>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Lineweights.Drawings.Benchmarks" />
-    <InternalsVisibleTo Include="Lineweights.Drawings.Samples" />
-    <InternalsVisibleTo Include="Lineweights.SVG.Tests" />
+    <InternalsVisibleTo Include="Lineweights.Drawings.Benchmarks"/>
+    <InternalsVisibleTo Include="Lineweights.Drawings.Samples"/>
+    <InternalsVisibleTo Include="Lineweights.SVG.Tests"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="System.Xml.Linq" />
-    <Using Include="StudioLE.Core.Conversion" />
+    <Using Include="System.Xml.Linq"/>
+    <Using Include="StudioLE.Core.Conversion"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Lineweights.Drawings\src\Lineweights.Drawings.csproj" />
-    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Drawings\src\Lineweights.Drawings.csproj"/>
+    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj"/>
   </ItemGroup>
 
 </Project>

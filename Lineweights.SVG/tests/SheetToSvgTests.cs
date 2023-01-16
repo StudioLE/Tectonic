@@ -13,10 +13,10 @@ namespace Lineweights.SVG.Tests;
 internal sealed class SheetToSvgTests
 {
     private readonly Visualize _visualize = new();
-    private Model _model = new();
     private readonly SheetToSvg _converter = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
+    private Model _model = new();
     private ISequenceBuilder _sequenceBuilder = default!;
     private IDistribution2dBuilder _defaultViewArrangement = default!;
 
@@ -104,6 +104,7 @@ internal sealed class SheetToSvgTests
         // Asset
         await VerifySvg(svgDocument);
     }
+
     [Test]
     public async Task SheetToSvg_Flat_Brickwork()
     {

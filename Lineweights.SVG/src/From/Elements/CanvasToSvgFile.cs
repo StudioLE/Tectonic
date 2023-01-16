@@ -16,14 +16,14 @@ public class CanvasToSvgFile : IConverter<Canvas, Task<IResult<Uri>>>
     private readonly IStorageStrategy _storageStrategy;
     private readonly string _fileName;
 
-    /// <inheritdoc cref="CanvasToSvgFile" />
+    /// <inheritdoc cref="CanvasToSvgFile"/>
     public CanvasToSvgFile(IStorageStrategy storageStrategy, string fileName)
     {
         _storageStrategy = storageStrategy;
         _fileName = fileName;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public Task<IResult<Uri>> Convert(Canvas canvas)
     {
         SvgElement svgElement = canvas switch

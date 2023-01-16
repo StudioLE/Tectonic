@@ -10,13 +10,13 @@ internal sealed class PanelToSkCanvas : IConverter<Panel, SKCanvas>
 {
     private readonly SKCanvas _skCanvas;
 
-    /// <inheritdoc cref="PanelToSkCanvas" />
+    /// <inheritdoc cref="PanelToSkCanvas"/>
     public PanelToSkCanvas(SKCanvas skCanvas)
     {
         _skCanvas = skCanvas;
     }
 
-    /// <inheritdoc cref="PanelToSkCanvas" />
+    /// <inheritdoc cref="PanelToSkCanvas"/>
     public SKCanvas Convert(Panel element)
     {
         Polygon polygon = element.Perimeter.TransformedPolygon(element.Transform);

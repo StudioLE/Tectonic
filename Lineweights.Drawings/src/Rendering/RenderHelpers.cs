@@ -8,8 +8,6 @@ namespace Lineweights.Drawings.Rendering;
 /// </summary>
 internal static class RenderHelpers
 {
-
-
     /// <inheritdoc cref="IRenderStrategy"/>
     internal static ParallelQuery<T> RenderAs<T>(this IRenderStrategy<T> @this, ViewScope viewScope) where T : GeometricElement
     {
@@ -43,7 +41,6 @@ internal static class RenderHelpers
                     .ToArray();
                 return new Polygon(vertices);
             });
-
     }
 
     internal static IEnumerable<Polygon> GetTrianglesAsPolygons(Mesh mesh)

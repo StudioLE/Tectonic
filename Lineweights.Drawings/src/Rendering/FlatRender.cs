@@ -5,7 +5,7 @@ namespace Lineweights.Drawings.Rendering;
 /// <inheritdoc/>
 public sealed class FlatRender : IRenderStrategy<Panel>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public ParallelQuery<GeometricElement> Render(ViewScope viewScope)
     {
         // TODO: ZIndex order disabled as results are unreliable.
@@ -19,7 +19,7 @@ public sealed class FlatRender : IRenderStrategy<Panel>
             .Select(x => x as GeometricElement);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IResult<Panel> FromCurve(Plane plane, Curve curve, Transform transform, Material material)
     {
         if (curve is not Polygon polygon)

@@ -26,7 +26,7 @@ public sealed class Path : Floor
         Transform transform = null!,
         Material material = null!,
         string name = null!
-        ) : base(
+    ) : base(
         CreateProfile(centerLine, width),
         thickness,
         transform,

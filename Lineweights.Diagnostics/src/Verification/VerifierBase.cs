@@ -72,7 +72,8 @@ public abstract class VerifierBase<T>
     {
         string[] errors = files
             .Where(x => !x.Value.Exists)
-            .Select(x => $"The {x.Key} file does not exist.").ToArray();
+            .Select(x => $"The {x.Key} file does not exist.")
+            .ToArray();
         if (errors.Any())
             return new Failure(errors);
 

@@ -8,7 +8,7 @@ public sealed class Flex1d : FlexBase
 {
     #region Fields
 
-    private bool _isBoundsSet = false;
+    private bool _isBoundsSet;
 
     /// <summary>
     /// The curve.
@@ -268,6 +268,7 @@ public sealed class Flex1d : FlexBase
     {
         return components.Sum(component => CO.Minus(_mainAxis.Dimension(component.Bounds)));
     }
+
     #endregion
 
     private double MainRemainder(Justification justification, Proxy[] components)
@@ -306,7 +307,7 @@ public sealed class Flex1d : FlexBase
             Justification.Start => 0,
             Justification.End => 0,
             Justification.Center => 0,
-            Justification.SpaceAround => (remainder / (count * 2)) * 2,
+            Justification.SpaceAround => remainder / (count * 2) * 2,
             Justification.SpaceBetween => remainder / (count - 1),
             Justification.SpaceEvenly => remainder / (count + 1),
             _ => throw new EnumSwitchException<Justification>("Failed to get spacing.", justification)

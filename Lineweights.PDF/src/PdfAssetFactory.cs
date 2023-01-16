@@ -8,7 +8,7 @@ namespace Lineweights.PDF;
 
 public class PdfAssetFactory<T> : ExternalAssetFactoryBase<T> where T : Canvas
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override IConverter<T, Task<IResult<Uri>>> Converter { get; }
 
     /// <inheritdoc cref="PdfAssetFactory{T}"/>
@@ -18,7 +18,7 @@ public class PdfAssetFactory<T> : ExternalAssetFactoryBase<T> where T : Canvas
         Asset.ContentType = "application/pdf";
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void AfterSetup(T source)
     {
         Asset.Name = source.Name;

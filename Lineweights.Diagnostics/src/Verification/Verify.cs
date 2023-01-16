@@ -160,8 +160,8 @@ public static class Verify
             .GetAssemblies()
             .SelectMany(x => x.GetTypes())
             .Where(x => typeof(IVerifyContext).IsAssignableFrom(x)
-                                 && x.IsClass
-                                 && !x.IsAbstract);
+                        && x.IsClass
+                        && !x.IsAbstract);
 
         Services.ConfigureServices = (_, services) =>
         {

@@ -56,9 +56,7 @@ internal sealed class StorageStrategyTests
         // Assert
         Assert.That(result is Success<Uri>, "Result is success.");
         if (result is Success<Uri> success)
-        {
             Assert.That(success.Value.IsFile, Is.False, "Uri is file");
-        }
         if (result.Errors.Any())
             foreach (string error in result.Errors)
                 Console.WriteLine(error);

@@ -66,14 +66,13 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     /// </summary>
     protected bool IsValid { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnInitialized()
     {
         Logger.LogDebug($"{nameof(OnInitialized)} called. Activity: {Composition.SelectedActivityKey} Assembly: {Composition.SelectedAssemblyKey}");
         Assembly? assembly = AssemblyResolver.ResolveByName(Composition.SelectedAssemblyKey);
         if (assembly is null)
         {
-
             string message = "Failed to load assembly. Key not found: " + Composition.SelectedAssemblyKey;
             Logger.LogError(message);
             Communication.ShowError(message);
@@ -176,7 +175,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         Visualization.AddOutcome(outcome, outputs);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public void Dispose()
     {
         _activity?.Dispose();

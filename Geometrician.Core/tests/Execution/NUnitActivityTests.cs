@@ -32,6 +32,4 @@ internal sealed class NUnitActivityTests
         if (model is Success<Model?> success)
             Assert.That(success?.Value?.Elements.Count, Is.EqualTo(25), "Outputs model count");
     }
-
-
 }

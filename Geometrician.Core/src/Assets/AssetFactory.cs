@@ -11,10 +11,10 @@ public class AssetFactory : IAssetFactory<IAsset, IAsset>
 {
     private readonly IStorageStrategy _storageStrategy;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IAsset Asset { get; private set; } = new InternalAsset();
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IResult Result { get; private set; } = new NotExecuted();
 
 
@@ -24,7 +24,7 @@ public class AssetFactory : IAssetFactory<IAsset, IAsset>
         _storageStrategy = storageStrategy;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public void Setup(IAsset source)
     {
         Asset = source;
@@ -42,7 +42,7 @@ public class AssetFactory : IAssetFactory<IAsset, IAsset>
             Result = new Success();
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public async Task Execute()
     {
         if (Asset is ExternalAsset asset)

@@ -6,29 +6,29 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all src projects -->
-  <Import Project="..\..\GlobalProperties.src.props" />
+  <Import Project="..\..\GlobalProperties.src.props"/>
 
   <!-- Use consistent global usings across all src projects -->
-  <Import Project="..\..\GlobalUsings.src.props" />
+  <Import Project="..\..\GlobalUsings.src.props"/>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
-    <InternalsVisibleTo Include="Geometrician.Components" />
-    <InternalsVisibleTo Include="Lineweights.Diagnostics.NUnit" />
+    <InternalsVisibleTo Include="$(AssemblyName).Tests"/>
+    <InternalsVisibleTo Include="Geometrician.Components"/>
+    <InternalsVisibleTo Include="Lineweights.Diagnostics.NUnit"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
-    <PackageReference Include="CsvHelper" Version="28.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0"/>
+    <PackageReference Include="CsvHelper" Version="28.0.1"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\StudioLE.Core\src\Workarounds\InitWorkaround.cs" Link="InitWorkaround.cs" />
+    <Compile Include="..\..\StudioLE.Core\src\Workarounds\InitWorkaround.cs" Link="InitWorkaround.cs"/>
   </ItemGroup>
 
 </Project>

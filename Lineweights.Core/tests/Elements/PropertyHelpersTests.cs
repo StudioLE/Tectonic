@@ -67,6 +67,7 @@ internal sealed class PropertyHelpersTests
             Assert.That(structValue is ExampleStruct, "Struct value type");
         });
     }
+
     [Test]
     public void PropertyHelpers_TryGetProperties_ByType()
     {
@@ -96,18 +97,14 @@ internal sealed class PropertyHelpersTests
             Assert.That(colorResult is Failure<IEnumerable<Color>>, "Color property is failure.");
             Assert.That(classResult is Success<IEnumerable<ExampleClass>>, "Class property is success");
             if (classResult is Success<IEnumerable<ExampleClass>> classSuccess)
-            {
                 Assert.That(classSuccess.Value.Count(), Is.EqualTo(2), "Class value");
-                // IEnumerable<ExampleClass> classImplicit = classSuccess;
-                // Assert.That(classImplicit, Is.EqualTo(1), "Class implicit value");
-            }
+            // IEnumerable<ExampleClass> classImplicit = classSuccess;
+            // Assert.That(classImplicit, Is.EqualTo(1), "Class implicit value");
             Assert.That(structResult is Success<IEnumerable<ExampleStruct>>, "Struct property is success");
             if (structResult is Success<IEnumerable<ExampleStruct>> structSuccess)
-            {
                 Assert.That(structSuccess.Value.Count(), Is.EqualTo(2), "Struct value");
-                // IEnumerable<ExampleStruct> structImplicit = structSuccess;
-                // Assert.That(structImplicit, Is.EqualTo(1), "Struct implicit value");
-            }
+            // IEnumerable<ExampleStruct> structImplicit = structSuccess;
+            // Assert.That(structImplicit, Is.EqualTo(1), "Struct implicit value");
         });
     }
 
@@ -160,5 +157,4 @@ internal sealed class PropertyHelpersTests
         {
         }
     }
-
 }

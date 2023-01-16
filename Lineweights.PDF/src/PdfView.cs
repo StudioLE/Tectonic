@@ -16,7 +16,7 @@ public sealed class PdfView : PdfDocument
         _view = view;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void ComposeLayers(LayersDescriptor layers)
     {
         layers

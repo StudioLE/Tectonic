@@ -1,8 +1,7 @@
 ﻿@using Geometrician.Components.Pages
-
 <Router
   AppAssembly="@typeof(App).Assembly"
-  AdditionalAssemblies="@(new []{ typeof(IndexPageBase).Assembly })">
+  AdditionalAssemblies="@(new[]{ typeof(IndexPageBase).Assembly })">
   <Found Context="routeData">
     <RouteView RouteData="@routeData"/>
     <FocusOnNavigate RouteData="@routeData" Selector="h1"/>

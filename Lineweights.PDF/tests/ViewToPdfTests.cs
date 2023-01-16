@@ -50,6 +50,7 @@ internal sealed class ViewToPdfTests
         // Assert
         await VerifyPdf(pdfDocument);
     }
+
     [TestCase(ViewDirection.Back)]
     public async Task ViewToPdf_Fill_Brickwork(ViewDirection viewDirection)
     {

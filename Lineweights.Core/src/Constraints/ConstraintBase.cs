@@ -5,13 +5,6 @@
 /// </summary>
 public abstract class Constraint<TValue>
 {
-    /// <inheritdoc cref="Constraint{TValue}"/>
-    protected Constraint(TValue value, string? paramName)
-    {
-        Value = value;
-        ParamName = paramName;
-    }
-
     /// <summary>
     /// The value to be test..
     /// </summary>
@@ -21,6 +14,13 @@ public abstract class Constraint<TValue>
     /// The param name of the value.
     /// </summary>
     public string? ParamName { get; set; }
+
+    /// <inheritdoc cref="Constraint{TValue}"/>
+    protected Constraint(TValue value, string? paramName)
+    {
+        Value = value;
+        ParamName = paramName;
+    }
 
     /// <summary>
     /// Determine if <see cref="Value"/> is valid.

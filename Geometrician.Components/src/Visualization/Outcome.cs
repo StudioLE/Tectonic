@@ -8,16 +8,16 @@ namespace Geometrician.Components.Visualization;
 /// </summary>
 public class Outcome : IAsset
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Name { get; set; } = string.Empty;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Description { get; set; } = string.Empty;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string ContentType { get; set; } = string.Empty;
 
     /// <summary>

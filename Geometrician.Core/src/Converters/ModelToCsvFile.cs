@@ -26,7 +26,7 @@ public class ModelToCsvFile<TRow> : IConverter<Model, Task<IResult<Uri>>>
         _method = method;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public async Task<IResult<Uri>> Convert(Model model)
     {
         IReadOnlyCollection<TRow> table = _method.Invoke(model);

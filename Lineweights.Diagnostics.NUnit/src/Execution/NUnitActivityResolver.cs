@@ -16,14 +16,14 @@ public class NUnitActivityResolver : IActivityResolver, IDisposable
 
     internal static object? TestOutput { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IEnumerable<string> AllActivityKeysInAssembly(Assembly assembly)
     {
         using ITestRunner runner = GetTestRunner(assembly);
         return AllActivityKeysInAssembly(runner, TestFilter.Empty);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IResult<IActivity> Resolve(Assembly assembly, string activityKey)
     {
         TestFilter filter = new($"<filter><test>{activityKey}</test></filter>");
@@ -53,7 +53,7 @@ public class NUnitActivityResolver : IActivityResolver, IDisposable
         return _engine.GetRunner(package);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public void Dispose()
     {
         _engine.Dispose();

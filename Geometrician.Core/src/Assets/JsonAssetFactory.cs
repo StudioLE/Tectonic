@@ -7,7 +7,7 @@ namespace Geometrician.Core.Assets;
 
 public class JsonAssetFactory : InternalAssetFactoryBase<Model>
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override IConverter<Model, Task<IResult<string>>> Converter { get; } = new ModelToJson();
 
     /// <inheritdoc cref="JsonAssetFactory"/>

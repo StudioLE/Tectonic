@@ -31,7 +31,6 @@ public static class ElementBoundsHelpers
 
 
 #if false
-
     /// <summary>
     /// Get the bounds of an <see cref="ElementInstance"/>.
     /// </summary>

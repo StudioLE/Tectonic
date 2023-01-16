@@ -19,7 +19,7 @@ public class ThreeViewerComponentBase : ViewerComponentBase<ExternalAsset>
     [Inject]
     private ModelViewer Three { get; set; } = default!;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -27,7 +27,7 @@ public class ThreeViewerComponentBase : ViewerComponentBase<ExternalAsset>
             await LoadGlb();
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override async Task AfterExecution()
     {
         await InvokeAsync(StateHasChanged);

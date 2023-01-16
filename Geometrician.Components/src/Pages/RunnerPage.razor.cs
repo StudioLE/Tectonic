@@ -41,14 +41,14 @@ public class RunnerPageBase : ComponentBase, IDisposable
     [Parameter]
     public string? ActivityKey { get; set; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnInitialized()
     {
         Logger.LogDebug($"{nameof(OnInitialized)}() called. Assembly: {AssemblyKey ?? "[null]"}; Activity: {ActivityKey ?? "[null]"};");
         Visualization.OutcomesChanged += NotifyStateHasChanged;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnParametersSet()
     {
         Resolver.SelectedAssemblyKey = AssemblyKey ?? string.Empty;
@@ -60,7 +60,7 @@ public class RunnerPageBase : ComponentBase, IDisposable
         await InvokeAsync(StateHasChanged);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public void Dispose()
     {
         Visualization.OutcomesChanged -= NotifyStateHasChanged;

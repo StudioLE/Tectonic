@@ -23,7 +23,7 @@ public class DynamicViewerComponentBase : ViewerComponentBase<IAsset>
     /// </summary>
     protected Dictionary<string, object> ComponentParameters { get; } = new();
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnInitialized()
     {
         ComponentParameters.Add("Factory", Factory);

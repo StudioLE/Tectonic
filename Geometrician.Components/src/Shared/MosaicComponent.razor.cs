@@ -29,7 +29,7 @@ public class MosaicComponentBase : TemplatedComponentBase
     [Parameter]
     public bool Background { get; set; } = true;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnParametersSet()
     {
         Classes.Add($"gap-{Display.GapMultiplier}");

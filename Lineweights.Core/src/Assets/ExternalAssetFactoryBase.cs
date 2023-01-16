@@ -9,13 +9,13 @@ public abstract class ExternalAssetFactoryBase<TSource> : IAssetFactory<TSource,
 
     protected abstract IConverter<TSource, Task<IResult<Uri>>> Converter { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public ExternalAsset Asset { get; } = new();
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IResult Result { get; private set; } = new NotExecuted();
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public void Setup(TSource source)
     {
         _source = source;
@@ -26,7 +26,7 @@ public abstract class ExternalAssetFactoryBase<TSource> : IAssetFactory<TSource,
     {
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public async Task Execute()
     {
         if (Converter is null)

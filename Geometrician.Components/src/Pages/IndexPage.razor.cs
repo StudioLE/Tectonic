@@ -16,7 +16,7 @@ public class IndexPageBase : ComponentBase
     [Inject]
     private NavigationManager Navigation { get; set; } = default!;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     protected override void OnInitialized()
     {
         Logger.LogDebug($"{nameof(OnInitialized)}() called.");

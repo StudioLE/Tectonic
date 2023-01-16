@@ -31,6 +31,5 @@ public static class CreateArc
             .Average(polyline.End)
             .ClosestPointOn(polyline);
         return ByThreePoints(polyline.Start, polyline.End, pointOnArc);
-
     }
 }
