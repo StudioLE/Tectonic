@@ -14,7 +14,7 @@ internal sealed class HelpersTests
     public async Task Helpers_CombineSegmentsToArcs_Polyline(double angleThreshold)
     {
         // Arrange
-        var polyline = new Polyline(
+        Polyline polyline = new(
             new Vector3(0, 0),
             new Vector3(0, 3),
             new Vector3(2, 5),
@@ -37,7 +37,7 @@ internal sealed class HelpersTests
     public async Task Helpers_CombineSegmentsToArcs_Spline(double angleThreshold)
     {
         // Arrange
-        var spline = new Spline(SplineTests._points)
+        Spline spline = new(SplineTests._points)
         {
             Interpolation = new Cubic(),
             StartTangent = SplineTests._startTangent,
@@ -64,7 +64,7 @@ internal sealed class HelpersTests
     public async Task Helpers_CombineSegmentsToArcs_Spline_PreserveKeyVertices(double angleThreshold)
     {
         // Arrange
-        var spline = new Spline(SplineTests._points)
+        Spline spline = new(SplineTests._points)
         {
             Interpolation = new Cubic(),
             StartTangent = SplineTests._startTangent,

@@ -19,7 +19,7 @@ public class FileStorageStrategy : IStorageStrategy
             string absolutePath = Path.Combine(_directory, fileName);
             if (File.Exists(absolutePath))
                 return new Failure<Uri>("Failed to write to file storage. The file already exists.");
-            using var fileStream = new FileStream(absolutePath, FileMode.Create, FileAccess.Write);
+            using FileStream fileStream = new(absolutePath, FileMode.Create, FileAccess.Write);
             await stream.CopyToAsync(fileStream);
             stream.Close();
             stream.Dispose();

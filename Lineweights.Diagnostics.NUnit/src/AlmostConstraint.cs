@@ -55,7 +55,7 @@ public static class AlmostConstraintExtensions
     /// <inheritdoc cref="AlmostConstraint" />
     public static AlmostConstraint Almost(this ConstraintExpression expression, double expected, double tolerance = AlmostConstraint.Epsilon)
     {
-        var constraint = new AlmostConstraint(expected, tolerance);
+        AlmostConstraint constraint = new(expected, tolerance);
         expression.Append(constraint);
         return constraint;
     }

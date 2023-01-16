@@ -10,11 +10,11 @@ internal sealed class ViewToSvg : IConverter<View, SvgElement>
     /// <inheritdoc cref="ViewToSvg"/>
     public SvgElement Convert(View view)
     {
-        var svgElement = new SvgElement("svg");
+        SvgElement svgElement = new("svg");
         svgElement.RemoveAttributes();
         svgElement.Add(SvgHelpers.ViewBoxAttribute(view));
 
-        var converter = new ElementToSvg();
+        ElementToSvg converter = new();
         ParallelQuery<SvgElement> childElements = view
             .Render()
             .Select(converter.Convert);

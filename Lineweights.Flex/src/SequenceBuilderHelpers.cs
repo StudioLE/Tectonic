@@ -35,7 +35,7 @@ internal static class SequenceBuilderHelpers
         if (!@this.Wrapping)
             return new[] { @this };
         IReadOnlyCollection<IReadOnlyCollection<Element>> sequences = @this.BuildWithWrapping();
-        var builders = sequences
+        SequenceBuilder[] builders = sequences
             .Select(sequence =>
             {
                 SequenceBuilder builder = new()

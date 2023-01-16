@@ -54,7 +54,7 @@ public static class BBox3Helpers
     /// </summary>
     public static Extrude ToExtrude(this BBox3 @this)
     {
-        var rectangle = new Polygon(
+        Polygon rectangle = new(
             @this.PointAt(0, 0, 0),
             @this.PointAt(0, 1, 0),
             @this.PointAt(1, 1, 0),
@@ -68,7 +68,7 @@ public static class BBox3Helpers
     /// </summary>
     public static Mass ToMass(this BBox3 @this, Transform? context = null, Material? material = null)
     {
-        var rectangle = new Polygon(
+        Polygon rectangle = new(
             @this.PointAt(0, 0, 0),
             @this.PointAt(0, 1, 0),
             @this.PointAt(1, 1, 0),

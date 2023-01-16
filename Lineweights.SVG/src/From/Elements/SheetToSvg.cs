@@ -14,7 +14,7 @@ internal sealed class SheetToSvg : IConverter<Sheet, SvgElement>
         svgElement.RemoveAttributes();
         svgElement.Add(SvgHelpers.ViewBoxAttribute(sheet));
 
-        var converter = new ElementToSvg();
+        ElementToSvg converter = new();
         ParallelQuery<SvgElement> childElements = sheet
             .Render()
             .AsParallel()

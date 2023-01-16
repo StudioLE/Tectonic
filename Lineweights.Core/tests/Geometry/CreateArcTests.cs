@@ -13,11 +13,11 @@ internal sealed class CreateArcTests
     public async Task Create_Arc_By3Points(double x1, double y1, double x2, double y2, double x3, double y3)
     {
         // Arrange
-        var start = new Vector3(x1, y1);
-        var end = new Vector3(x2, y2);
-        var pointOnArc = new Vector3(x3, y3);
-        var ab = new ModelCurve(new Line(start, pointOnArc), MaterialByName("Red"));
-        var bc = new ModelCurve(new Line(pointOnArc, end), MaterialByName("Blue"));
+        Vector3 start = new(x1, y1);
+        Vector3 end = new(x2, y2);
+        Vector3 pointOnArc = new(x3, y3);
+        ModelCurve ab = new(new Line(start, pointOnArc), MaterialByName("Red"));
+        ModelCurve bc = new(new Line(pointOnArc, end), MaterialByName("Blue"));
 
         // Act
         Arc arc = CreateArc.ByThreePoints(start, end, pointOnArc);
@@ -44,14 +44,14 @@ internal sealed class CreateArcTests
         double x3, double y3)
     {
         // Arrange
-        var vertices = new[]
+        Vector3[] vertices = new[]
         {
             new Vector3(x0, y0),
             new Vector3(x1, y1),
             new Vector3(x2, y2),
             new Vector3(x3, y3)
         };
-        var polyline = new Polyline(vertices);
+        Polyline polyline = new(vertices);
 
         // Act
         Arc arc = CreateArc.ByPolyline(polyline);

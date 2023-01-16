@@ -87,7 +87,7 @@ public sealed class ViewScope : Element
     /// </summary>
     public Box ToBox()
     {
-        var transform = new Transform(Vector3.Origin, RightDirection, UpDirection, FacingDirection);
+        Transform transform = new(Vector3.Origin, RightDirection, UpDirection, FacingDirection);
         // TODO: Use actual dimensions rather than scaling...
         Vector3 scale = RightDirection * Width
                         + UpDirection * Height

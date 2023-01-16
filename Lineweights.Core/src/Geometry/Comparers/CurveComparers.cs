@@ -19,7 +19,7 @@ public sealed class PolylineComparer : IEqualityComparer<Polyline>
     /// <inheritdoc cref="Polyline"/>
     public int GetHashCode(Polyline obj)
     {
-        var comparer = new Vector3Comparer();
+        Vector3Comparer comparer = new();
         HashCode hashCode = new();
         foreach (Vector3 vertex in obj.Vertices)
             hashCode.Add(comparer.GetHashCode(vertex));
@@ -46,7 +46,7 @@ public sealed class PolygonComparer : IEqualityComparer<Polygon>
     /// <inheritdoc cref="Polygon"/>
     public int GetHashCode(Polygon obj)
     {
-        var comparer = new Vector3Comparer();
+        Vector3Comparer comparer = new();
         HashCode hashCode = new();
         foreach (Vector3 vertex in obj.Vertices)
             hashCode.Add(comparer.GetHashCode(vertex));

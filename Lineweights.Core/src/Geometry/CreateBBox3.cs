@@ -12,8 +12,8 @@ public static class CreateBBox3
     /// </summary>
     public static BBox3 ByLengths(double width, double length, double height)
     {
-        var min = new Vector3(width * 0.5 * -1, length * 0.5 * -1, height * 0.5 * -1);
-        var max = new Vector3(width * 0.5, length * 0.5, height * 0.5);
+        Vector3 min = new(width * 0.5 * -1, length * 0.5 * -1, height * 0.5 * -1);
+        Vector3 max = new(width * 0.5, length * 0.5, height * 0.5);
         return new(min, max);
     }
     /// <summary>

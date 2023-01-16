@@ -13,11 +13,11 @@ internal sealed class CreateCircleTests
     public async Task Create_Circle(double x1, double y1, double x2, double y2, double x3, double y3)
     {
         // Arrange
-        var start = new Vector3(x1, y1);
-        var end = new Vector3(x2, y2);
-        var pointOnCircle = new Vector3(x3, y3);
-        var ab = new ModelCurve(new Line(start, pointOnCircle), MaterialByName("Red"));
-        var bc = new ModelCurve(new Line(pointOnCircle, end), MaterialByName("Blue"));
+        Vector3 start = new(x1, y1);
+        Vector3 end = new(x2, y2);
+        Vector3 pointOnCircle = new(x3, y3);
+        ModelCurve ab = new(new Line(start, pointOnCircle), MaterialByName("Red"));
+        ModelCurve bc = new(new Line(pointOnCircle, end), MaterialByName("Blue"));
 
         // Act
         Circle circle = CreateCircle.ByThreePoints(start, end, pointOnCircle);

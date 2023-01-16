@@ -54,7 +54,7 @@ public sealed class View : Canvas
     public ParallelQuery<GeometricElement> Render()
     {
         ParallelQuery<GeometricElement> elementsInPlace = RenderInPlace();
-        var translation = new Transform(Scope.Origin.Negate());
+        Transform translation = new(Scope.Origin.Negate());
         Transform rotation = TransformHelpers.RotationBetween(Scope.Orientation);
         return elementsInPlace
             .Select(element =>

@@ -60,7 +60,7 @@ public static class GuidHelpers
     /// <returns>The GUID, if the string could be converted; otherwise, null.</returns>
     public static Guid? TryFromLowerNoDashString(string value)
     {
-        return !TryParse(value, out var guid) || value != guid.ToLowerNoDashString() ? default(Guid?) : guid;
+        return !TryParse(value, out Guid guid) || value != guid.ToLowerNoDashString() ? default(Guid?) : guid;
     }
 
     /// <summary>
@@ -119,17 +119,17 @@ public static class GuidHelpers
             throw new ArgumentOutOfRangeException(nameof(version), "version must be either 3 or 5.");
 
         // convert the namespace UUID to network order (step 3)
-        var namespaceBytes = namespaceId.ToByteArray();
+        byte[] namespaceBytes = namespaceId.ToByteArray();
         SwapByteOrder(namespaceBytes);
 
         // compute the hash of the namespace ID concatenated with the name (step 4)
-        var data = namespaceBytes.Concat(nameBytes).ToArray();
+        byte[] data = namespaceBytes.Concat(nameBytes).ToArray();
         byte[] hash;
-        using (var algorithm = version == 3 ? (HashAlgorithm)MD5.Create() : SHA1.Create())
+        using (HashAlgorithm algorithm = version == 3 ? MD5.Create() : SHA1.Create())
             hash = algorithm.ComputeHash(data);
 
         // most bytes from the hash are copied straight to the bytes of the new GUID (steps 5-7, 9, 11-12)
-        var newGuid = new byte[16];
+        byte[] newGuid = new byte[16];
         Array.Copy(hash, 0, newGuid, 0, 16);
 
         // set the four most significant bits (bits 12 through 15) of the time_hi_and_version field to the appropriate 4-bit version number from Section 4.1.3 (step 8)

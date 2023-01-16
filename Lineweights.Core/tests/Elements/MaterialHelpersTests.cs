@@ -13,8 +13,8 @@ internal sealed class MaterialHelpersTests
     public void MaterialHelpers_MaterialByName(string hexOrName, string expectedId)
     {
         // Arrange
-        var box1 = new Box(new(0, 0, 0), new Vector3(1, 1, 1));
-        var box2 = new Box(new(0, 2, 0), new Vector3(1, 3, 1));
+        Box box1 = new(new(0, 0, 0), new Vector3(1, 1, 1));
+        Box box2 = new(new(0, 2, 0), new Vector3(1, 3, 1));
 
         // Act
         Material material1 = MaterialByName(hexOrName);

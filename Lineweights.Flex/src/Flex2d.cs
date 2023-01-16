@@ -271,7 +271,7 @@ public class Flex2d : FlexBase, IDistribution2dBuilder
         Vector3 normalMax = builder._normalAxis * containerNormalSize * 0.5;
         Vector3 crossMin = builder._crossAxis * crossSize * 0.5 * -1;
         Vector3 crossMax = builder._crossAxis * crossSize * 0.5;
-        var vertices = new[]
+        Vector3[] vertices = new[]
         {
             mainMin,
             mainMax,

@@ -91,7 +91,7 @@ public sealed class FileVerifier : VerifierBase<FileInfo>
                 return new KeyValuePair<TKey, TCompare>(x.Key, result);
             })
             .ToArray();
-        var comparer = new KeyValuePairValueComparer<TKey, TCompare>();
+        KeyValuePairValueComparer<TKey, TCompare> comparer = new();
         bool areDifferent = hashes.Distinct(comparer).Skip(1).Any();
         return areDifferent
             ? hashes.Select(x => $"{x.Key}: {x.Value}").ToArray()

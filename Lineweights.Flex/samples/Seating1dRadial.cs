@@ -54,7 +54,7 @@ public static class Seating1dRadial
 
         // Rotate the seats
         Transform rotation = new(Vector3.Origin, inputs.Rotation);
-        var rotatedComponents = components.Select(instance => instance
+        IEnumerable<ElementInstance> rotatedComponents = components.Select(instance => instance
             .BaseDefinition
             .CreateInstance(
                 rotation.Concatenated(instance.Transform),

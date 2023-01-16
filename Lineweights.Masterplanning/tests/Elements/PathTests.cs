@@ -60,7 +60,7 @@ internal sealed class PathTests
     {
         // Arrange
         const double width = 0.1;
-        var centerSpline = new Spline(_points)
+        Spline centerSpline = new(_points)
         {
             Interpolation = new Cubic(),
             FrameType = FrameType.RoadLike,
@@ -70,7 +70,7 @@ internal sealed class PathTests
         centerSpline.UpdateRepresentation();
 
         // Act
-        var path = new Path(centerSpline, width, 0.005);
+        Path path = new(centerSpline, width, 0.005);
 
         // Preview
         _model.AddElements(new ModelCurve(centerSpline, MaterialByName("Red")));

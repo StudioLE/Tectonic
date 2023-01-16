@@ -184,7 +184,7 @@ public sealed class Spline : Polyline, ICloneable
             Vector3 nextVertex = u <= 1 - Epsilon
                 ? PointAt(u + Epsilon)
                 : EndTangent + PointAt(1);
-            var plane = new Plane(vertex, previousVertex, nextVertex);
+            Plane plane = new(vertex, previousVertex, nextVertex);
             z = plane.Normal;
         }
 
@@ -202,11 +202,11 @@ public sealed class Spline : Polyline, ICloneable
             case FrameType.Frenet:
                 return new(PointAt(u), NormalAt(u), TangentAt(u).Negate());
             case FrameType.RoadLike:
-                var z = TangentAt(u).Negate();
+                Vector3 z = TangentAt(u).Negate();
                 // If Z is parallel to the Z axis, the other vectors will
                 // have zero length. We use the -Y axis in that case.
-                var up = z.IsParallelTo(Vector3.ZAxis) ? Vector3.YAxis.Negate() : Vector3.ZAxis;
-                var x = up.Cross(z);
+                Vector3 up = z.IsParallelTo(Vector3.ZAxis) ? Vector3.YAxis.Negate() : Vector3.ZAxis;
+                Vector3 x = up.Cross(z);
                 return new(PointAt(u), x, z);
             default:
                 throw new EnumSwitchException<FrameType>($"{nameof(Spline)}.{nameof(TransformAt)} failed.", FrameType);
@@ -297,7 +297,7 @@ public sealed class Spline : Polyline, ICloneable
                         && x.Item3 is not null)
             .ToArray();
 
-        var newSpline = (Spline)Clone();
+        Spline newSpline = (Spline)Clone();
 
         // TODO: Move this to a "RemoveSegmentWhere method"
         newSpline.KeyVertices = KeyVertices
@@ -307,7 +307,7 @@ public sealed class Spline : Polyline, ICloneable
                     return vertex;
                 // If vertex is the end of the first segment of an intersection
                 // Then replace it with the intersection result.
-                var intersectionsOnSegment = intersections
+                (int? StartIndex, int? EndIndex, Vector3? Intersection)[] intersectionsOnSegment = intersections
                     .Where(x => i == x.StartIndex + 1)
                     .ToArray();
                 if (intersectionsOnSegment.Any())
@@ -330,7 +330,7 @@ public sealed class Spline : Polyline, ICloneable
     /// </summary>
     public Spline RemoveShortSegments(double tolerance = Epsilon)
     {
-        var newSpline = (Spline)Clone();
+        Spline newSpline = (Spline)Clone();
         newSpline.KeyVertices = KeyVertices
             .Where((start, i) =>
             {

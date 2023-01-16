@@ -104,7 +104,7 @@ internal class NUnitVerifyContext : IVerifyContext
         if (methodParameters.Length != parameterValues.Length)
             throw new($"The number of passed in parameters ({parameterValues.Length}) must match the number of parameters for the method ({methodParameters.Length}).");
 
-        var dictionary = new Dictionary<string, object?>();
+        Dictionary<string, object?> dictionary = new();
         for (int index = 0; index < methodParameters.Length; index++)
         {
             ParameterInfo parameter = methodParameters[index];
@@ -119,7 +119,7 @@ internal class NUnitVerifyContext : IVerifyContext
     /// <see href="https://github.com/VerifyTests/Verify/blob/16.7.0/src/Verify/Naming/ParameterBuilder.cs"/>
     private static string ConcatParameterDictionary(Dictionary<string, object?> dictionary)
     {
-        var builder = new StringBuilder();
+        StringBuilder builder = new();
         foreach (KeyValuePair<string, object?> pair in dictionary)
             builder.Append($"{pair.Key}={pair.Value}_");
         builder.Length -= 1;

@@ -35,7 +35,7 @@ internal sealed class CanvasToSkCanvas : IConverter<Canvas, SKCanvas>
             _ => throw new TypeSwitchException<Canvas>("Failed to convert to pdf.", canvas)
         };
 
-        var converter = new ElementToSkCanvas(_skCanvas);
+        ElementToSkCanvas converter = new(_skCanvas);
         foreach (GeometricElement element in geometry)
             converter.Convert(element);
 

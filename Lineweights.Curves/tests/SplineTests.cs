@@ -44,7 +44,7 @@ internal sealed class SplineTests
     {
         // Arrange
         // Act
-        var spline = new Spline(_points, new Linear());
+        Spline spline = new(_points, new Linear());
         spline.UpdateRepresentation();
 
         // Preview
@@ -59,7 +59,7 @@ internal sealed class SplineTests
     {
         // Arrange
         // Act
-        var spline = new Spline(_points)
+        Spline spline = new(_points)
         {
             Interpolation = new Cosine()
         };
@@ -77,7 +77,7 @@ internal sealed class SplineTests
     {
         // Arrange
         // Act
-        var spline = new Spline(_points)
+        Spline spline = new(_points)
         {
             Interpolation = new Cubic(),
             StartTangent = _startTangent,
@@ -97,7 +97,7 @@ internal sealed class SplineTests
     {
         // Arrange
         // Act
-        var spline = new Spline(_points)
+        Spline spline = new(_points)
         {
             Interpolation = new CatmullRom(),
             StartTangent = _startTangent,
@@ -117,7 +117,7 @@ internal sealed class SplineTests
     {
         // Arrange
         // Act
-        var spline = new Spline(_points)
+        Spline spline = new(_points)
         {
             Interpolation = new Hermite(),
             StartTangent = _startTangent,
@@ -137,23 +137,23 @@ internal sealed class SplineTests
     {
         // Arrange
         // Act
-        var linearSpline = new Spline(_points, new Linear());
+        Spline linearSpline = new(_points, new Linear());
         linearSpline.UpdateRepresentation();
-        var cosineSpline = new Spline(_points, new Cosine());
+        Spline cosineSpline = new(_points, new Cosine());
         cosineSpline.UpdateRepresentation();
-        var cubicSpline = new Spline(_points, new Cubic())
+        Spline cubicSpline = new(_points, new Cubic())
         {
             StartTangent = _startTangent,
             EndTangent = _endTangent
         };
         cubicSpline.UpdateRepresentation();
-        var catmullRomSpline = new Spline(_points, new CatmullRom())
+        Spline catmullRomSpline = new(_points, new CatmullRom())
         {
             StartTangent = _startTangent,
             EndTangent = _endTangent
         };
         catmullRomSpline.UpdateRepresentation();
-        var hermiteSpline = new Spline(_points, new Hermite())
+        Spline hermiteSpline = new(_points, new Hermite())
         {
             StartTangent = _startTangent,
             EndTangent = _endTangent
@@ -175,8 +175,8 @@ internal sealed class SplineTests
     public async Task Spline_RenderVertices()
     {
         // Arrange
-        var linearSpline = new Spline(_points);
-        var cubicSpline = new Spline(_points, new Cubic());
+        Spline linearSpline = new(_points);
+        Spline cubicSpline = new(_points, new Cubic());
 
         // Act
         IReadOnlyCollection<Vector3> linearVertices = linearSpline.Vertices.ToList();
@@ -195,7 +195,7 @@ internal sealed class SplineTests
     public async Task Spline_TransformAt(FrameType frameType)
     {
         // Arrange
-        var spline = new Spline(_points)
+        Spline spline = new(_points)
         {
             Interpolation = new Cubic(),
             StartTangent = _startTangent,
@@ -203,7 +203,7 @@ internal sealed class SplineTests
             FrameType = frameType
         };
         spline.UpdateRepresentation();
-        var bezier = new Bezier(_points.Select(x => x + Vector3.XAxis * -8).ToList(), frameType);
+        Bezier bezier = new(_points.Select(x => x + Vector3.XAxis * -8).ToList(), frameType);
 
         // Act
         IReadOnlyCollection<Transform> splineTransforms = Enumerable
@@ -230,7 +230,7 @@ internal sealed class SplineTests
     public async Task Spline_NormalAt_TangentAt(FrameType frameType)
     {
         // Arrange
-        var spline = new Spline(_points)
+        Spline spline = new(_points)
         {
             Interpolation = new Cubic(),
             StartTangent = _startTangent,
@@ -238,7 +238,7 @@ internal sealed class SplineTests
             FrameType = frameType
         };
         spline.UpdateRepresentation();
-        var bezier = new Bezier(_points.Select(x => x + Vector3.XAxis * -8).ToList(), frameType);
+        Bezier bezier = new(_points.Select(x => x + Vector3.XAxis * -8).ToList(), frameType);
         IReadOnlyCollection<double> uValues = Enumerable
             .Range(0, spline.SampleCount + 1)
             .Select(i => (double)i / spline.SampleCount)
@@ -270,7 +270,7 @@ internal sealed class SplineTests
     {
         // Arrange
         const double distance = 0.1;
-        var spline = new Spline(_points)
+        Spline spline = new(_points)
         {
             Interpolation = new Cubic(),
             StartTangent = _startTangent,
@@ -298,7 +298,7 @@ internal sealed class SplineTests
     {
         // Arrange
         const double distance = 0.2;
-        var spline = new Spline(_points)
+        Spline spline = new(_points)
         {
             Interpolation = new Cubic(),
             StartTangent = _startTangent,
@@ -327,7 +327,7 @@ internal sealed class SplineTests
     public void Spline_Serialization()
     {
         // Arrange
-        var sourceSpline = new Spline(_points)
+        Spline sourceSpline = new(_points)
         {
             Interpolation = new Hermite()
             {

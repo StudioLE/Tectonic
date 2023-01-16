@@ -44,7 +44,7 @@ internal sealed class MasterplanBuilderTests
     public async Task MasterplanBuilder_Build()
     {
         // Arrange
-        var centerSpline = new Spline(_points)
+        Spline centerSpline = new(_points)
         {
             Interpolation = new Cubic(),
             FrameType = FrameType.RoadLike,
@@ -52,7 +52,7 @@ internal sealed class MasterplanBuilderTests
             EndTangent = _endTangent
         };
         centerSpline.UpdateRepresentation();
-        var builder = new MasterplanBuilder
+        MasterplanBuilder builder = new()
         {
             MajorSplines = new[]
             {

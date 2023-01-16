@@ -36,10 +36,10 @@ public static class AlongCurveHelpers
     public static Vector3 UnboundPointAt(this Arc @this, double u)
     {
 
-        var angle = @this.StartAngle + (@this.EndAngle - @this.StartAngle) * u;
-        var theta = Units.DegreesToRadians(angle);
-        var x = @this.Center.X + @this.Radius * Math.Cos(theta);
-        var y = @this.Center.Y + @this.Radius * Math.Sin(theta);
+        double angle = @this.StartAngle + (@this.EndAngle - @this.StartAngle) * u;
+        double theta = Units.DegreesToRadians(angle);
+        double x = @this.Center.X + @this.Radius * Math.Cos(theta);
+        double y = @this.Center.Y + @this.Radius * Math.Sin(theta);
         return new Vector3(x, y);
     }
 
@@ -52,9 +52,9 @@ public static class AlongCurveHelpers
     /// <inheritdoc cref="Arc.TransformAt(double)"/>
     public static Transform UnboundTransformAt(this Arc @this, double u)
     {
-        var p = @this.UnboundPointAt(u);
-        var x = (p - @this.Center).Unitized();
-        var y = Vector3.ZAxis;
+        Vector3 p = @this.UnboundPointAt(u);
+        Vector3 x = (p - @this.Center).Unitized();
+        Vector3 y = Vector3.ZAxis;
         return new(p, x, x.Cross(y));
     }
 }
