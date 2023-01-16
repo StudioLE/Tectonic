@@ -1,7 +1,7 @@
 ﻿namespace Lineweights.Core.Elements.Comparers;
 
 /// <summary>
-/// Compare the <typeparam name="TValue"/>.
+/// Compare the <typeparamref name="TValue"/>.
 /// </summary>
 public sealed class KeyValuePairValueComparer<TKey, TValue> : IEqualityComparer<KeyValuePair<TKey, TValue>>
 {

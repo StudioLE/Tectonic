@@ -46,10 +46,10 @@ internal sealed class CreateArcTests
         // Arrange
         Vector3[] vertices =
         {
-            new Vector3(x0, y0),
-            new Vector3(x1, y1),
-            new Vector3(x2, y2),
-            new Vector3(x3, y3)
+            new(x0, y0),
+            new(x1, y1),
+            new(x2, y2),
+            new(x3, y3)
         };
         Polyline polyline = new(vertices);
 
