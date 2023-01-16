@@ -28,13 +28,13 @@ internal sealed class CurveSegment
     /// <summary>
     /// The vertex at the start of the previous segment.
     /// Or <see langword="null"/> if this is the first segment.
-    /// .</summary>
+    /// </summary>
     public Vector3? PreviousVertex { get; }
 
     /// <summary>
     /// The vertex at the end of the next segment.
     /// Or <see langword="null"/> if this is the last segment.
-    /// .</summary>
+    /// </summary>
     public Vector3? NextVertex { get; }
 
     /// <summary>
@@ -82,9 +82,11 @@ internal sealed class CurveSegment
     /// <summary>
     /// Determine if <see cref="SignedAngleFromPrevious"/> and <see cref="SignedAngleToNext"/> are in the same direction.
     /// </summary>
-    public bool IsSameDirectionAsPrevious => (SignedAngleFromPrevious is not null && SignedAngleToNext is not null)
-                                             && (SignedAngleFromPrevious <= 0 && SignedAngleToNext <= 0
-                                                 || SignedAngleFromPrevious >= 0 && SignedAngleToNext >= 0);
+    public bool IsSameDirectionAsPrevious => SignedAngleFromPrevious is not null
+                                             && SignedAngleToNext is not null
+                                             && ((SignedAngleFromPrevious <= 0 && SignedAngleToNext <= 0)
+                                                 || (SignedAngleFromPrevious >= 0 && SignedAngleToNext >= 0));
+
     /// <inheritdoc cref="CurveSegment"/>
     public CurveSegment(Polyline polyline, int index)
     {

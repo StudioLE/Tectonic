@@ -7,7 +7,7 @@ namespace Lineweights.PDF.From.Geometry;
 /// </summary>
 internal sealed class CurveToPdf : IConverter<Curve, SKPath>
 {
-    /// <inheritdoc cref="CurveToPdf" />
+    /// <inheritdoc cref="CurveToPdf"/>
     public SKPath Convert(Curve curve)
     {
         return curve switch
@@ -27,7 +27,7 @@ internal sealed class CurveToPdf : IConverter<Curve, SKPath>
 /// </summary>
 internal sealed class LineToPdf : IConverter<Line, SKPath>
 {
-    /// <inheritdoc cref="LineToPdf" />
+    /// <inheritdoc cref="LineToPdf"/>
     public SKPath Convert(Line line)
     {
         Vector3ToPdf converter = new();
@@ -42,7 +42,7 @@ internal sealed class LineToPdf : IConverter<Line, SKPath>
 /// </summary>
 internal sealed class PolylineToPdf : IConverter<Polyline, SKPath>
 {
-    /// <inheritdoc cref="PolylineToPdf" />
+    /// <inheritdoc cref="PolylineToPdf"/>
     public SKPath Convert(Polyline polyline)
     {
         Vector3ToPdf converter = new();

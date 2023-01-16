@@ -7,6 +7,16 @@ internal class Brick : GeometricElement
 {
     public BBox3 Bounds { get; }
 
+    public static Brick Stretcher => new(.215, .1025, .065, .01, "Stretcher");
+
+    public static Brick Header => new(.1025, .215, .065, .01, "Header");
+
+    public static Brick Half => new(.1025, .1075, .065, .01, "Half");
+
+    public static Brick Soldier => new(.065, .1025, .215, .01, "Soldier");
+
+    public static Brick Sailor => new(.1025, .065, .215, .01, "Sailor");
+
     public Brick(BBox3 bounds)
     {
         Bounds = bounds;
@@ -33,14 +43,4 @@ internal class Brick : GeometricElement
     {
         Representation = new(Bounds.ToExtrude());
     }
-
-    public static Brick Stretcher => new(.215, .1025, .065, .01, "Stretcher");
-
-    public static Brick Header => new(.1025, .215, .065, .01, "Header");
-
-    public static Brick Half => new(.1025, .1075, .065, .01, "Half");
-
-    public static Brick Soldier => new(.065, .1025, .215, .01, "Soldier");
-
-    public static Brick Sailor => new(.1025, .065, .215, .01, "Sailor");
 }

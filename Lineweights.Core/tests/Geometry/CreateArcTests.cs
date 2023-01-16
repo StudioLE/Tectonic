@@ -44,7 +44,7 @@ internal sealed class CreateArcTests
         double x3, double y3)
     {
         // Arrange
-        Vector3[] vertices = new[]
+        Vector3[] vertices =
         {
             new Vector3(x0, y0),
             new Vector3(x1, y1),

@@ -23,11 +23,8 @@ public static class CollectionExtensions
             element = @this.ElementAt(index);
             return true;
         }
-        else
-        {
-            element = default;
-            return false;
-        }
+        element = default;
+        return false;
     }
 
     /// <summary>
