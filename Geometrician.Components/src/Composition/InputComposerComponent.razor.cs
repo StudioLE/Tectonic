@@ -157,16 +157,6 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         }
         Logger.LogDebug("Execution completed.");
 
-        // TODO: Is this necessary? Can't we just pass the whole object to Outcome?
-        IResult<Model> model = outputs.TryGetPropertyValue<Model>("Model");
-        if (model is not Success<Model> successModel)
-        {
-            string message = "Activity output was not a model.";
-            Logger.LogWarning(message);
-            Communication.ShowWarning(message);
-            return;
-        }
-
         Outcome outcome = new()
         {
             Name = _activity.Name,
