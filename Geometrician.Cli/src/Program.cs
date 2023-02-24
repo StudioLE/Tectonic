@@ -54,10 +54,10 @@ public static class Program
     /// <param name="inputs">The path to a the inputs as a json file.</param>
     [Command]
     // ReSharper disable once InconsistentNaming
-    public static void run(string assembly, string activity, string inputs = "")
+    public static async Task run(string assembly, string activity, string inputs = "")
     {
         RunCommand command = _services.GetRequiredService<RunCommand>();
-        string output = command.Execute(assembly, activity, inputs);
+        string output = await command.Execute(assembly, activity, inputs);
         Console.WriteLine(output);
     }
 }

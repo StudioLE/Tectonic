@@ -32,7 +32,7 @@ public sealed class RunCommand
     /// <param name="activity">The key of the activity.</param>
     /// <param name="inputsPath">The path to a the inputs as a json file.</param>
     /// <returns>A message describing the status.</returns>
-    public string Execute(string assemblyPath, string activity, string inputsPath)
+    public async Task<string> Execute(string assemblyPath, string activity, string inputsPath)
     {
         _logger.LogDebug($"{nameof(Execute)} called.");
         _logger.LogDebug("Assembly: {$0}", assemblyPath);
@@ -61,7 +61,7 @@ public sealed class RunCommand
             return "Failed: " + result.Errors.Join(". ");
 
         // TODO: This would make so much more sense as a workflow and we get the IVisualizeStrategy via DI.
-        object outputs = success.Value.Execute();
+        object outputs = await success.Value.Execute();
 
         return "Execution complete..";
     }

@@ -47,9 +47,9 @@ public class WorkflowCommand
     /// <summary>
     /// Execute the workflow command.
     /// </summary>
-    public void Execute()
+    public async Task Execute()
     {
-        object outputs = _activity.Execute();
+        object outputs = await _activity.Execute();
         OnResult(outputs);
     }
 }

@@ -107,7 +107,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         if (IsValid)
         {
             Logger.LogDebug("Validation passed.");
-            BuildAndExecute();
+            await BuildAndExecute();
         }
         else
             Logger.LogDebug("Validation failed.");
@@ -118,7 +118,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     /// <summary>
     /// Build the <see cref="IActivity"/>, execute it, and process the results.
     /// </summary>
-    private void BuildAndExecute()
+    private async Task BuildAndExecute()
     {
         Logger.LogDebug($"{nameof(BuildAndExecute)} called.");
 
@@ -139,7 +139,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         // TODO: Add spinner during execution.
         try
         {
-            outputs = _activity.Execute();
+            outputs = await _activity.Execute();
         }
         catch (TargetInvocationException e)
         {
@@ -157,6 +157,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         }
         Logger.LogDebug("Execution completed.");
 
+        // TODO: Is this necessary? Can't we just pass the whole object to Outcome?
         IResult<Model> model = outputs.TryGetPropertyValue<Model>("Model");
         if (model is not Success<Model> successModel)
         {
