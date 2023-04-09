@@ -1,10 +1,14 @@
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Diagnostics.Samples;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Drawings.Tests;
 
 internal sealed class ViewBuilderTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
@@ -48,7 +52,7 @@ internal sealed class ViewBuilderTests
         //Model.AddElements(view.ToBox().ToModelCurves(MaterialByName("Orange")));
 
         // Assert
-        await Verify.Geometry(view.Scope.ToBox());
+        await _verify.Geometry(view.Scope.ToBox());
     }
 
     [TearDown]

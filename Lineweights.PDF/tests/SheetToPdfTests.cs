@@ -8,11 +8,14 @@ using Lineweights.Drawings.Rendering;
 using Lineweights.Flex;
 using Lineweights.PDF.From.Elements;
 using QuestPDF.Fluent;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.PDF.Tests;
 
 internal sealed class SheetToPdfTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
@@ -191,7 +194,7 @@ internal sealed class SheetToPdfTests
         pdfDocument.Metadata.ModifiedDate = DateTime.UnixEpoch;
         FileInfo file = TestHelpers.FileByTestContext("pdf");
         pdfDocument.GeneratePdf(file.FullName);
-        await Verify.File(file);
+        await _verify.File(file);
         Preview(file);
     }
 

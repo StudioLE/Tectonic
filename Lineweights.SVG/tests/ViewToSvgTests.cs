@@ -6,11 +6,14 @@ using Lineweights.Diagnostics.Samples;
 using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.SVG.From.Elements;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.SVG.Tests;
 
 internal sealed class ViewToSvgTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private readonly ViewToSvg _converter = new();
     private Model _model = new();
@@ -91,7 +94,7 @@ internal sealed class ViewToSvgTests
         svgDocument.Add(svgElement);
         FileInfo file = TestHelpers.FileByTestContext("svg");
         svgDocument.Save(file.FullName);
-        await Verify.File(file);
+        await _verify.File(file);
         Preview(file);
     }
 

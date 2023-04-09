@@ -11,7 +11,7 @@ internal sealed class Assembly : GeometricElement, IHasBounds
     /// <summary>
     /// The components in the assembly.
     /// </summary>
-    public IReadOnlyCollection<ElementInstance> Components { get; init; }
+    public IReadOnlyCollection<ElementInstance> Components { get; set; }
 
     /// <inheritdoc cref="Assembly"/>
     public Assembly(IReadOnlyCollection<ElementInstance> components)

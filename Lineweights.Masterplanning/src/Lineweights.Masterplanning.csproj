@@ -12,10 +12,6 @@
   <Import Project="..\..\GlobalUsings.src.props"/>
 
   <ItemGroup>
-    <Compile Include="..\..\StudioLE.Core\src\Workarounds\InitWorkaround.cs" Link="InitWorkaround.cs"/>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj"/>
     <ProjectReference Include="..\..\Lineweights.Curves\src\Lineweights.Curves.csproj"/>
   </ItemGroup>

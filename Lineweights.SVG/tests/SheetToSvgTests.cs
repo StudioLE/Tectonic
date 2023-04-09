@@ -7,11 +7,14 @@ using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.Flex;
 using Lineweights.SVG.From.Elements;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.SVG.Tests;
 
 internal sealed class SheetToSvgTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private readonly SheetToSvg _converter = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
@@ -189,7 +192,7 @@ internal sealed class SheetToSvgTests
     {
         FileInfo file = TestHelpers.FileByTestContext("svg");
         svgDocument.Save(file.FullName);
-        await Verify.File(file);
+        await _verify.File(file);
         Preview(file);
     }
 

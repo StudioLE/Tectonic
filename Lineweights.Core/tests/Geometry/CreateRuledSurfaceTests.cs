@@ -1,9 +1,13 @@
-﻿using Lineweights.Diagnostics.NUnit.Visualization;
+﻿using Lineweights.Diagnostics;
+using Lineweights.Diagnostics.NUnit.Visualization;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Core.Tests.Geometry;
 
 internal sealed class CreateRuledSurfaceTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
 
@@ -28,7 +32,7 @@ internal sealed class CreateRuledSurfaceTests
         _model.AddElements(lines.Select(_ => new ModelCurve(_)));
 
         // Assert
-        await Verify.Geometry(lines);
+        await _verify.Geometry(lines);
     }
 
     [TestCase(1, 1, 1)]
@@ -45,7 +49,7 @@ internal sealed class CreateRuledSurfaceTests
         _model.AddElements(lines.Select(_ => new ModelCurve(_)));
 
         // Assert
-        await Verify.Geometry(lines);
+        await _verify.Geometry(lines);
     }
 
     [Test]
@@ -75,7 +79,7 @@ internal sealed class CreateRuledSurfaceTests
         _model.AddElements(lines.Select(_ => new ModelCurve(_)));
 
         // Assert
-        await Verify.Geometry(lines);
+        await _verify.Geometry(lines);
     }
 
     [TearDown]

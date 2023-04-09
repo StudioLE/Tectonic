@@ -1,10 +1,14 @@
 using Lineweights.Curves.Interpolation;
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Visualization;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Curves.Tests;
 
 internal sealed class HelpersTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
 
@@ -28,7 +32,7 @@ internal sealed class HelpersTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
 
         // Assert
-        await Verify.Geometry(arcs);
+        await _verify.Geometry(arcs);
     }
 
     [TestCase(0.1)]
@@ -55,7 +59,7 @@ internal sealed class HelpersTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
 
         // Assert
-        await Verify.Geometry(arcs);
+        await _verify.Geometry(arcs);
     }
 
     [TestCase(0.1)]
@@ -82,7 +86,7 @@ internal sealed class HelpersTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(arcs, "Red", "Blue"));
 
         // Assert
-        await Verify.Geometry(arcs);
+        await _verify.Geometry(arcs);
     }
 
     [TearDown]

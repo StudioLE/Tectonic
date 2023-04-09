@@ -1,11 +1,15 @@
 ﻿using Geometrician.Core.Visualization;
 using Lineweights.Diagnostics.Samples;
 using Newtonsoft.Json;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Diagnostics.Tests.Visualization;
 
 internal sealed class VisualizeRequestTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
+
     [TestCase(Scenes.Name.GeometricElements)]
     [TestCase(Scenes.Name.Brickwork)]
     public async Task VisualizeRequest_Serialize(Scenes.Name name)
@@ -20,13 +24,13 @@ internal sealed class VisualizeRequestTests
 
         // Act
         string json = JsonConvert.SerializeObject(request, converter);
-        // await Verify.String(json);
+        // await _verify.String(json);
         VisualizeRequest? deserialised = JsonConvert.DeserializeObject<VisualizeRequest>(json, converter);
         string json2 = JsonConvert.SerializeObject(deserialised, converter);
 
         // Assert
-        await Verify.String(json, json2);
+        await _verify.String(json, json2);
         Assert.That(deserialised, Is.Not.Null, "Not null");
-        await Verify.ByElementIds(model, deserialised!.Model);
+        await _verify.ByElementIds(model, deserialised!.Model);
     }
 }

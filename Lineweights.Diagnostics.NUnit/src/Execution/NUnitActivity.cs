@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Xml;
 using Geometrician.Core.Execution;
-using Lineweights.Diagnostics.Verification;
 using NUnit.Engine;
+using StudioLE.Verify;
 
 namespace Lineweights.Diagnostics.NUnit.Execution;
 

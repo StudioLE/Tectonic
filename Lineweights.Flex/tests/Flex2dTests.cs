@@ -1,9 +1,13 @@
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Visualization;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Flex.Tests;
 
 internal sealed class Flex2dTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
     private Brick Container { get; }
@@ -179,7 +183,7 @@ internal sealed class Flex2dTests
         _model.AddBounds(components.SelectMany(x => x));
 
         // Assert
-        await Verify.ElementsByBounds(components.SelectMany(x => x).ToArray());
+        await _verify.ElementsByBounds(components.SelectMany(x => x).ToArray());
     }
 
     [TearDown]

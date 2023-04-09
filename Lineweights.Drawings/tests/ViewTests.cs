@@ -1,11 +1,15 @@
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Diagnostics.Samples;
 using Lineweights.Drawings.Rendering;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Drawings.Tests;
 
 internal sealed class ViewTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
@@ -35,7 +39,7 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await _verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(ViewDirection.Back)]
@@ -56,7 +60,7 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await _verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(ViewDirection.Back)]
@@ -77,7 +81,7 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await _verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(ViewDirection.Back)]
@@ -99,7 +103,7 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await _verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(ViewDirection.Back)]
@@ -121,7 +125,7 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await _verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(ViewDirection.Back)]
@@ -144,7 +148,7 @@ internal sealed class ViewTests
         _model.AddElements(view.Scope.Border);
 
         // Assert
-        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await _verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TearDown]

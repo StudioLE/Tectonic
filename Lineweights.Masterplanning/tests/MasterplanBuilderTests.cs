@@ -1,12 +1,16 @@
 ﻿using Lineweights.Curves;
 using Lineweights.Curves.Interpolation;
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Masterplanning.Elements;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Masterplanning.Tests;
 
 internal sealed class MasterplanBuilderTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private readonly IReadOnlyCollection<Vector3> _points = new[]
     {
@@ -68,7 +72,7 @@ internal sealed class MasterplanBuilderTests
         _model.AddElements(results);
 
         // Assert
-        await Verify.ElementsByBounds(results);
+        await _verify.ElementsByBounds(results);
     }
 
     [TearDown]

@@ -3,11 +3,16 @@ using Lineweights.Core.Assets;
 using Lineweights.Core.Serialization;
 using Lineweights.Diagnostics.NUnit.Verification;
 using Newtonsoft.Json;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
+
 
 namespace Geometrician.Core.Tests;
 
 internal sealed class SerializationTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
+
     [Test]
     public void Serialization_InternalAsset()
     {
@@ -32,7 +37,7 @@ internal sealed class SerializationTests
         // Assert
         Assert.Multiple(async () =>
         {
-            await Verify.String(json, json2);
+            await _verify.String(json, json2);
             Assert.That(deserialised, Is.Not.Null, "Not null");
             Assert.That(deserialised?.Id, Is.EqualTo(asset.Id), "Id");
             Assert.That(deserialised?.ContentType, Is.EqualTo(asset.ContentType), "ContentType");
@@ -64,7 +69,7 @@ internal sealed class SerializationTests
         // Assert
         Assert.Multiple(async () =>
         {
-            await Verify.String(json, json2);
+            await _verify.String(json, json2);
             Assert.That(deserialised, Is.Not.Null, "Not null");
             Assert.That(deserialised?.Id, Is.EqualTo(asset.Id), "Id");
             Assert.That(deserialised?.ContentType, Is.EqualTo(asset.ContentType), "ContentType");

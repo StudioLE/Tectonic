@@ -1,11 +1,15 @@
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Diagnostics.Samples;
 using Lineweights.Flex;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Drawings.Tests;
 
 internal sealed class SheetBuilderTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private readonly IReadOnlyCollection<ElementInstance> _brickwork = Scenes.Brickwork();
     private readonly IReadOnlyCollection<GeometricElement> _geometry = Scenes.GeometricElements();
@@ -67,7 +71,7 @@ internal sealed class SheetBuilderTests
         _model.AddElements(geometry);
 
         // Assert
-        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await _verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TestCase(Justification.Start)]
@@ -116,7 +120,7 @@ internal sealed class SheetBuilderTests
         _model.AddElements(geometry);
 
         // Assert
-        await Verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
+        await _verify.ModelCurvesByCurve(geometry.OfType<ModelCurve>());
     }
 
     [TearDown]

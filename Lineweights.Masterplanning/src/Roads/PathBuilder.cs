@@ -20,24 +20,24 @@ public sealed class PathBuilder
     public const double DefaultThickness = 0.005;
 
     /// <inheritdoc cref="Element.Name"/>
-    public string Name { get; init; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     /// <inheritdoc cref="Path.CenterLine"/>
     public Spline? CenterSpline { get; set; }
 
     /// <inheritdoc cref="Distribution.AxialCreation"/>
-    internal AxialCreation AxialCreation { get; init; } = new();
+    internal AxialCreation AxialCreation { get; set; } = new();
 
     /// <inheritdoc cref="Path.Width"/>
-    public double Width { get; init; } = DefaultWidth;
+    public double Width { get; set; } = DefaultWidth;
 
     /// <summary>
     /// The thickness of the <see cref="Path"/>.
     /// </summary>
-    public double Thickness { get; init; } = DefaultThickness;
+    public double Thickness { get; set; } = DefaultThickness;
 
     /// <inheritdoc cref="GeometricElement.Material"/>
-    public Material Material { get; init; } = BuiltInMaterials.Default;
+    public Material Material { get; set; } = BuiltInMaterials.Default;
 
     /// <inheritdoc cref="PathBuilder"/>
     public IReadOnlyCollection<Path> Build()

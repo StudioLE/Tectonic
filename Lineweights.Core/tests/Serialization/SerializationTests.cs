@@ -1,12 +1,17 @@
 ﻿using System.IO;
 using Lineweights.Core.Serialization;
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.Samples;
 using Newtonsoft.Json;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Core.Tests.Serialization;
 
 internal sealed class SerializationTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
+
     [Test]
     public async Task Serialization_FileInfoConverter()
     {
@@ -20,7 +25,7 @@ internal sealed class SerializationTests
         string json2 = JsonConvert.SerializeObject(expected, converter);
 
         // Assert
-        await Verify.String(json, json2);
+        await _verify.String(json, json2);
         Assert.That(deserialised, Is.Not.Null, "Not null");
         Assert.That(deserialised?.FullName, Is.EqualTo(expected.FullName), "FullName");
     }
@@ -38,7 +43,7 @@ internal sealed class SerializationTests
         string json2 = JsonConvert.SerializeObject(deserialised, converter);
 
         // Assert
-        await Verify.String(json, json2);
+        await _verify.String(json, json2);
         Assert.That(deserialised, Is.Not.Null, "Not null");
         Assert.That(deserialised?.FullName, Is.EqualTo(expected.FullName), "FullName");
         Assert.That(deserialised?.AssemblyQualifiedName, Is.EqualTo(expected.AssemblyQualifiedName), "AssemblyQualifiedName");
@@ -54,13 +59,15 @@ internal sealed class SerializationTests
 
         // Act
         string json = JsonConvert.SerializeObject(model, converter);
-        // await Verify.String(json);
+        // await _verify.String(json);
         Model? deserialised = JsonConvert.DeserializeObject<Model>(json, converter);
+        if(deserialised is null)
+            throw new("Failed to deserialize.");
         string json2 = JsonConvert.SerializeObject(deserialised, converter);
 
         // Assert
-        await Verify.String(json, json2);
+        await _verify.String(json, json2);
         Assert.That(deserialised, Is.Not.Null, "Not null");
-        await Verify.ByElementIds(model, deserialised);
+        await _verify.ByElementIds(model, deserialised);
     }
 }

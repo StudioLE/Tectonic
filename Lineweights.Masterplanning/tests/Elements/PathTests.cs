@@ -1,12 +1,16 @@
 using Lineweights.Curves;
 using Lineweights.Curves.Interpolation;
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Masterplanning.Elements;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Masterplanning.Tests.Elements;
 
 internal sealed class PathTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     //private readonly IReadOnlyCollection<Vector3> _points = new[]
     //{
@@ -77,7 +81,7 @@ internal sealed class PathTests
         _model.AddElements(path);
 
         // Assert
-        await Verify.ElementsByBounds(new[] { path });
+        await _verify.ElementsByBounds(new[] { path });
     }
 
     [TearDown]

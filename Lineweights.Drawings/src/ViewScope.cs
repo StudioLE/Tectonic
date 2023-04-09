@@ -8,42 +8,42 @@ public sealed class ViewScope : Element
     /// <summary>
     /// The center of the view scope plane.
     /// </summary>
-    public Vector3 Origin { get; init; }
+    public Vector3 Origin { get; set; }
 
     /// <summary>
     /// The direction to the right of the view scope.
     /// </summary>
-    public Vector3 RightDirection { get; init; }
+    public Vector3 RightDirection { get; set; }
 
     /// <summary>
     /// The direction to the top of the view scope.
     /// </summary>
-    public Vector3 UpDirection { get; init; }
+    public Vector3 UpDirection { get; set; }
 
     /// <summary>
     /// The direction away from the the viewer.
     /// </summary>
-    public Vector3 FacingDirection { get; init; }
+    public Vector3 FacingDirection { get; set; }
 
     /// <summary>
     /// The width of the view scope.
     /// </summary>
-    public double Width { get; init; }
+    public double Width { get; set; }
 
     /// <summary>
     /// The height of the view scope.
     /// </summary>
-    public double Height { get; init; }
+    public double Height { get; set; }
 
     /// <summary>
     /// The depth of the view scope.
     /// </summary>
-    public double Depth { get; init; }
+    public double Depth { get; set; }
 
     /// <summary>
     /// The elements in the view scope.
     /// </summary>
-    public IList<Element> Elements { get; init; } = Array.Empty<Element>();
+    public IList<Element> Elements { get; set; } = Array.Empty<Element>();
 
     /// <summary>
     /// The plane of the view scope.

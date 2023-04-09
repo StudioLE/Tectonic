@@ -1,9 +1,13 @@
-﻿using Lineweights.Diagnostics.NUnit.Visualization;
+﻿using Lineweights.Diagnostics;
+using Lineweights.Diagnostics.NUnit.Visualization;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Core.Tests.Geometry;
 
 internal sealed class CreateArcTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
 
@@ -33,7 +37,7 @@ internal sealed class CreateArcTests
             Assert.That(end.IsPointOn(arc, threshold: threshold), Is.True);
             Assert.That(pointOnArc.IsPointOn(arc, threshold: threshold), Is.True);
         });
-        await Verify.Geometry(arc);
+        await _verify.Geometry(arc);
     }
 
     [TestCase(3, 2, 2, 4, 3, 6, 7, 8)]
@@ -68,7 +72,7 @@ internal sealed class CreateArcTests
             //Assert.That(vertices[2].IsPointOn(arc, threshold), Is.True);
             Assert.That(vertices[3].IsPointOn(arc, threshold: threshold), Is.True);
         });
-        await Verify.Geometry(arc);
+        await _verify.Geometry(arc);
     }
 
     [TearDown]

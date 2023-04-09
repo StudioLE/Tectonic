@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\StudioLE.Core\src\Workarounds\InitWorkaround.cs" Link="InitWorkaround.cs"/>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="morelinq" Version="3.3.2"/>
   </ItemGroup>
 

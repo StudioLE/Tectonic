@@ -7,11 +7,14 @@ using Lineweights.Drawings;
 using Lineweights.Drawings.Rendering;
 using Lineweights.PDF.From.Elements;
 using QuestPDF.Fluent;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.PDF.Tests;
 
 internal sealed class ViewToPdfTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
 
@@ -95,7 +98,7 @@ internal sealed class ViewToPdfTests
         pdfDocument.Metadata.ModifiedDate = DateTime.UnixEpoch;
         FileInfo file = TestHelpers.FileByTestContext("pdf");
         pdfDocument.GeneratePdf(file.FullName);
-        await Verify.File(file);
+        await _verify.File(file);
         Preview(file);
     }
 

@@ -82,6 +82,14 @@ jobs:
           npm install
           npm run build
 
+      - name: Add GitHub Packages as a NuGet source
+        run: >
+          dotnet nuget add source
+          --username StudioLE
+          --password ${{ secrets.GITHUB_TOKEN }}
+          --store-password-in-clear-text
+          --name github "https://nuget.pkg.github.com/StudioLE/index.json"
+
       - name: Restore NuGet Dependencies
         run: >
           dotnet restore

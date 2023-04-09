@@ -1,9 +1,13 @@
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Visualization;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Flex.Tests;
 
 internal sealed class Flex1dTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
     private Line Line { get; }
@@ -175,7 +179,7 @@ internal sealed class Flex1dTests
         _model.AddElements(CreateModelArrows.ByLine(line, Colors.Black));
 
         // Assert
-        await Verify.ElementsByBounds(components);
+        await _verify.ElementsByBounds(components);
     }
 
     [TestCase(Alignment.Center)]
@@ -208,7 +212,7 @@ internal sealed class Flex1dTests
         _model.AddBounds(components);
 
         // Assert
-        await Verify.ElementsByBounds(components);
+        await _verify.ElementsByBounds(components);
     }
 
     [TestCase(Justification.Center)]
@@ -238,7 +242,7 @@ internal sealed class Flex1dTests
         _model.AddElements(new ModelCurve(Arc, MaterialByName("Black")));
 
         // Assert
-        await Verify.ElementsByBounds(components);
+        await _verify.ElementsByBounds(components);
     }
 
     private async Task ExecuteTest(Flex1d builder)
@@ -252,7 +256,7 @@ internal sealed class Flex1dTests
         _model.AddElements(CreateModelArrows.ByLine(Line, Colors.Black));
 
         // Assert
-        await Verify.ElementsByBounds(components);
+        await _verify.ElementsByBounds(components);
     }
 
     [TearDown]

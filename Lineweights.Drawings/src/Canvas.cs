@@ -11,7 +11,7 @@ public abstract class Canvas : GeometricElement, IHasBounds
     /// <summary>
     /// The 2d untransformed bounds of the canvas.
     /// </summary>
-    public BBox3 Bounds { get; init; }
+    public BBox3 Bounds { get; set; }
 
     /// <summary>
     /// The padding between the content of the canvas and the border of the canvas.
@@ -20,7 +20,7 @@ public abstract class Canvas : GeometricElement, IHasBounds
     /// Follows the
     /// <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model">css box model</see>.
     /// </remarks>
-    public Spacing Padding { get; init; }
+    public Spacing Padding { get; set; }
 
     /// <summary>
     /// The margin between the border of the canvas and other items.
@@ -29,7 +29,7 @@ public abstract class Canvas : GeometricElement, IHasBounds
     /// Follows the
     /// <see href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model">css box model</see>.
     /// </remarks>
-    public Spacing Margin { get; init; }
+    public Spacing Margin { get; set; }
 
     /// <summary>
     /// The width of the canvas in the X axis.

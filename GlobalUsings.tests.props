@@ -11,7 +11,6 @@
     <Using Include="Lineweights.Core.Constraints"/>
     <Using Include="Lineweights.Core.Elements"/>
     <Using Include="Lineweights.Core.Geometry"/>
-    <Using Alias="Verify" Include="Lineweights.Diagnostics.Verification.Verify"/>
     <Using Static="true" Include="Lineweights.Core.Elements.MaterialHelpers"/>
   </ItemGroup>
 

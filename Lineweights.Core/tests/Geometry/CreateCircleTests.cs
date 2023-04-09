@@ -1,9 +1,13 @@
-﻿using Lineweights.Diagnostics.NUnit.Visualization;
+﻿using Lineweights.Diagnostics;
+using Lineweights.Diagnostics.NUnit.Visualization;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Core.Tests.Geometry;
 
 internal sealed class CreateCircleTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
 
@@ -26,7 +30,7 @@ internal sealed class CreateCircleTests
         _model.AddElements(ab, bc, new ModelCurve(circle, MaterialByName("Orange")));
 
         // Assert
-        await Verify.Geometry(circle);
+        await _verify.Geometry(circle);
     }
 
     [TearDown]

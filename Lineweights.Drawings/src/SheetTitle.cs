@@ -10,17 +10,17 @@ public struct TextField
     /// <summary>
     /// The index used to order <see cref="TextField"/> in the <see cref="SheetTitle"/>.
     /// </summary>
-    public int Order { get; init; }
+    public int Order { get; set; }
 
     /// <summary>
     /// The title used as a key.
     /// </summary>
-    public string Title { get; init; }
+    public string Title { get; set; }
 
     /// <summary>
     /// The content.
     /// </summary>
-    public string Content { get; init; }
+    public string Content { get; set; }
 }
 
 /// <summary>

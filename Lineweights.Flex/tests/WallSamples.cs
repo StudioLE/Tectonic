@@ -1,10 +1,14 @@
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Flex.Samples;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Flex.Tests;
 
 internal sealed class WallSamples
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
 
@@ -22,7 +26,7 @@ internal sealed class WallSamples
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
-        await Verify.ElementsByBounds(components);
+        await _verify.ElementsByBounds(components);
     }
 
     [Test]
@@ -39,7 +43,7 @@ internal sealed class WallSamples
 
         // Assert
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
-        await Verify.ElementsByBounds(components);
+        await _verify.ElementsByBounds(components);
     }
 
     [TearDown]

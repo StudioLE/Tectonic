@@ -1,8 +1,9 @@
 ﻿using System.IO;
 using DiffEngine;
-using Lineweights.Diagnostics.Verification;
 using Newtonsoft.Json.Linq;
 using StudioLE.Core.System;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Diagnostics.NUnit.Verification;
 
@@ -30,6 +31,7 @@ public static class VerifyHelpers
 
     public static void SerializationAsModel<TElement>(TElement expectedElement) where TElement : Element
     {
+        Verify verify = new(new NUnitVerifyContext());
         Model expectedModel = new();
         // TODO: Sub elements MUST be added before the element.
         expectedModel.AddSubElements(expectedElement);
@@ -53,10 +55,10 @@ public static class VerifyHelpers
             DiffRunner.MaxInstancesToLaunch(2);
 
             // Verify element names
-            await Verify.ByElementIds(expectedModel, actualModel);
+            await verify.ByElementIds(expectedModel, actualModel);
 
             // Verify json
-            await Verify.String(json, json2);
+            await verify.String(json, json2);
             Assert.That(actualModel.Elements.Count, Is.EqualTo(expectedModel.Elements.Count), "Element count.");
             Assert.That(errors, Is.Empty, "Serialization errors.");
             TElement deserializedElement = expectedModel

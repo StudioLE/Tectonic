@@ -6,30 +6,31 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all src projects -->
-  <Import Project="..\..\GlobalProperties.src.props"/>
+  <Import Project="..\..\GlobalProperties.src.props" />
 
   <!-- Use consistent global usings across all src projects -->
-  <Import Project="..\..\GlobalUsings.src.props"/>
+  <Import Project="..\..\GlobalUsings.src.props" />
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Lineweights.Diagnostics.Tests"/>
+    <InternalsVisibleTo Include="Lineweights.Diagnostics.Tests" />
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="NUnit.Framework"/>
+    <Using Include="NUnit.Framework" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DiffEngine" Version="9.0.6"/>
-    <PackageReference Include="Hypar.Elements.Serialization.IFC" Version="1.0.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.4"/>
-    <PackageReference Include="NUnit" Version="3.13.3"/>
-    <PackageReference Include="NUnit.Engine" Version="3.15.2"/>
+    <PackageReference Include="DiffEngine" Version="9.0.6" />
+    <PackageReference Include="Hypar.Elements.Serialization.IFC" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.4" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit.Engine" Version="3.15.2" />
+    <PackageReference Include="StudioLE.Verify.NUnit" Version="0.1.0-develop.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj"/>
-    <ProjectReference Include="..\..\Lineweights.Diagnostics\src\Lineweights.Diagnostics.csproj"/>
+    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj" />
+    <ProjectReference Include="..\..\Lineweights.Diagnostics\src\Lineweights.Diagnostics.csproj" />
   </ItemGroup>
 
 </Project>

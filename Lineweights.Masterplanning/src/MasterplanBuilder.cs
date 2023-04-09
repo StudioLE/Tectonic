@@ -22,12 +22,12 @@ public sealed class MasterplanBuilder
     /// <summary>
     /// The builder for the major roads.
     /// </summary>
-    public RoadBuilder MajorRoadBuilder { get; init; } = new();
+    public RoadBuilder MajorRoadBuilder { get; set; } = new();
 
     /// <summary>
     /// The builder for the minor roads.
     /// </summary>
-    public RoadBuilder MinorRoadBuilder { get; init; } = new();
+    public RoadBuilder MinorRoadBuilder { get; set; } = new();
 
     /// <inheritdoc cref="MasterplanBuilder"/>
     public IReadOnlyCollection<Path> Build()

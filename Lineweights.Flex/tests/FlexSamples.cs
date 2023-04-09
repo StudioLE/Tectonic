@@ -1,10 +1,14 @@
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Flex.Samples;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Flex.Tests;
 
 internal sealed class FlexSamples
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
 
@@ -33,7 +37,7 @@ internal sealed class FlexSamples
         Assert.That(outputs, Is.Not.Null, "Outputs");
         Assert.That(outputs.Model.Elements.Count, Is.EqualTo(526), "Outputs model count");
         IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
-        await Verify.ElementsByBounds(components);
+        await _verify.ElementsByBounds(components);
     }
 
     [TearDown]

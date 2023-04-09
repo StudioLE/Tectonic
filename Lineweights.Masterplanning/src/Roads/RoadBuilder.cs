@@ -13,7 +13,7 @@ public sealed class RoadBuilder
     public IReadOnlyCollection<Spline> CenterSplines { get; set; } = Array.Empty<Spline>();
 
     /// <inheritdoc cref="PathBuilder"/>
-    public PathBuilder CarriagewayBuilder { get; init; } = new()
+    public PathBuilder CarriagewayBuilder { get; set; } = new()
     {
         Name = "Carriageway",
         Width = PathBuilder.DefaultWidth,
@@ -22,7 +22,7 @@ public sealed class RoadBuilder
     };
 
     /// <inheritdoc cref="PathBuilder"/>
-    public PathBuilder FootwayBuilder { get; init; } = new()
+    public PathBuilder FootwayBuilder { get; set; } = new()
     {
         Name = "Footway",
         AxialCreation = new BothOffsetAxialCreation

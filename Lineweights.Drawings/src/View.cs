@@ -13,12 +13,12 @@ public sealed class View : Canvas
     /// <summary>
     /// The scope of the view.
     /// </summary>
-    public ViewScope Scope { get; init; } = new();
+    public ViewScope Scope { get; set; } = new();
 
     /// <summary>
     /// The scale the view is rendered at.
     /// </summary>
-    public double Scale { get; init; }
+    public double Scale { get; set; }
 
     /// <summary>
     /// Should the border be rendered?
@@ -29,7 +29,7 @@ public sealed class View : Canvas
     /// The <see cref="IRenderStrategy"/> used to render the view.
     /// </summary>
     [JsonConverter(typeof(AbstractConverter))]
-    public IRenderStrategy RenderStrategy { get; init; } = new WireframeRender();
+    public IRenderStrategy RenderStrategy { get; set; } = new WireframeRender();
 
     /// <inheritdoc cref="View"/>
     internal View()

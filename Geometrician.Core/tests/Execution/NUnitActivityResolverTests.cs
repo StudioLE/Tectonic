@@ -3,11 +3,14 @@ using Geometrician.Core.Execution;
 using Lineweights.Diagnostics.NUnit.Execution;
 using StudioLE.Core.Results;
 using StudioLE.Core.System;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Geometrician.Core.Tests.Execution;
 
 internal sealed class NUnitActivityResolverTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private const string AssemblyPath = "Lineweights.Core.Tests.dll";
     private const string ActivityKey = "Lineweights.Core.Tests.Geometry.CreateRuledSurfaceTests.CreateRuledSurface_AsLinesByCurves_QuarterHyperbolicParaboloid";
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
@@ -22,7 +25,7 @@ internal sealed class NUnitActivityResolverTests
         string[] activities = resolver.AllActivityKeysInAssembly(_assembly).ToArray();
 
         // Assert
-        await Verify.String(activities.Join());
+        await _verify.String(activities.Join());
         Assert.That(activities.Count, Is.EqualTo(26), "Activity count");
     }
 

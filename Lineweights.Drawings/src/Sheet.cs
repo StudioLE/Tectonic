@@ -9,10 +9,10 @@
 public sealed class Sheet : Canvas
 {
     /// <inheritdoc cref="SheetTitle"/>
-    public SheetTitle Title { get; init; } = new();
+    public SheetTitle Title { get; set; } = new();
 
     /// <inheritdoc cref="SheetContent"/>
-    public SheetContent Content { get; init; } = new();
+    public SheetContent Content { get; set; } = new();
 
     /// <inheritdoc cref="Sheet"/>
     internal Sheet()

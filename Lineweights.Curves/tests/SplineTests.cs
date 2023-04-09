@@ -1,11 +1,15 @@
 using Lineweights.Curves.Interpolation;
+using Lineweights.Diagnostics;
 using Lineweights.Diagnostics.NUnit.Verification;
 using Lineweights.Diagnostics.NUnit.Visualization;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Curves.Tests;
 
 internal sealed class SplineTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     internal static readonly IReadOnlyCollection<Vector3> _points = new[]
     {
         new Vector3(1, 3.5),
@@ -51,7 +55,7 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
-        await Verify.Geometry(spline);
+        await _verify.Geometry(spline);
     }
 
     [Test]
@@ -69,7 +73,7 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
-        await Verify.Geometry(spline);
+        await _verify.Geometry(spline);
     }
 
     [Test]
@@ -89,7 +93,7 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
-        await Verify.Geometry(spline);
+        await _verify.Geometry(spline);
     }
 
     [Test]
@@ -109,7 +113,7 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
-        await Verify.Geometry(spline);
+        await _verify.Geometry(spline);
     }
 
     [Test]
@@ -129,7 +133,7 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(spline, MaterialByName("Red")));
 
         // Assert
-        await Verify.Geometry(spline);
+        await _verify.Geometry(spline);
     }
 
     [Test]
@@ -168,7 +172,7 @@ internal sealed class SplineTests
         _model.AddElements(new ModelCurve(hermiteSpline, MaterialByName("Blue")));
 
         // Assert
-        await Verify.Geometry(linearSpline, cosineSpline, cubicSpline, catmullRomSpline, hermiteSpline);
+        await _verify.Geometry(linearSpline, cosineSpline, cubicSpline, catmullRomSpline, hermiteSpline);
     }
 
     [Test]
@@ -187,7 +191,7 @@ internal sealed class SplineTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(cubicVertices, "Orange", "Green"));
 
         // Assert
-        await Verify.Geometry(linearVertices, cubicVertices);
+        await _verify.Geometry(linearVertices, cubicVertices);
     }
 
     [TestCase(FrameType.Frenet)]
@@ -222,7 +226,7 @@ internal sealed class SplineTests
         _model.AddElements(bezierTransforms.Select(x => CreateModelArrows.ByTransform(x, 0.1)));
 
         // Assert
-        await Verify.Geometry(splineTransforms, bezierTransforms);
+        await _verify.Geometry(splineTransforms, bezierTransforms);
     }
 
     [TestCase(FrameType.Frenet)]
@@ -261,7 +265,7 @@ internal sealed class SplineTests
         _model.AddElements(bezierResults.Select(x => CreateModelArrows.ByVectors(x.Point, x.Normal, 0.1, Colors.Red)));
 
         // Assert
-        await Verify.Geometry(splineResults, bezierResults);
+        await _verify.Geometry(splineResults, bezierResults);
     }
 
     [TestCase(FrameType.Frenet)]
@@ -289,7 +293,7 @@ internal sealed class SplineTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(farSpline.Vertices.ToList(), "Orange", "Green"));
 
         // Assert
-        await Verify.Geometry(nearSpline, farSpline);
+        await _verify.Geometry(nearSpline, farSpline);
     }
 
     [TestCase(FrameType.RoadLike)]
@@ -320,7 +324,7 @@ internal sealed class SplineTests
         _model.AddElements(CreateModelCurve.WithAlternatingMaterials(farSpline.Vertices.ToList(), "Orange", "Green"));
 
         // Assert
-        await Verify.Geometry(nearSpline, farSpline);
+        await _verify.Geometry(nearSpline, farSpline);
     }
 
     [Test]

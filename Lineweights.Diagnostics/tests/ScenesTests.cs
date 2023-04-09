@@ -1,10 +1,13 @@
 ﻿using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Diagnostics.Samples;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Diagnostics.Tests;
 
 internal sealed class ScenesTests
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
 
@@ -19,7 +22,7 @@ internal sealed class ScenesTests
         _model.AddElements(geometry);
 
         // Assert
-        await Verify.ElementsByBounds(geometry);
+        await _verify.ElementsByBounds(geometry);
     }
 
     [Test]
@@ -33,7 +36,7 @@ internal sealed class ScenesTests
         _model.AddElements(geometry);
 
         // Assert
-        await Verify.ElementsByBounds(geometry);
+        await _verify.ElementsByBounds(geometry);
     }
 
     [TearDown]

@@ -1,10 +1,13 @@
 ﻿using Lineweights.Diagnostics.NUnit.Visualization;
 using Lineweights.Drawings.Samples;
+using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
 namespace Lineweights.Drawings.Tests.Samples;
 
 internal sealed class SheetSampleTest
 {
+    private readonly Verify _verify = new(new NUnitVerifyContext());
     private readonly Visualize _visualize = new();
     private Model _model = new();
 
@@ -24,7 +27,7 @@ internal sealed class SheetSampleTest
 
         // Assert
         // IEnumerable<ElementInstance> components = outputs.Model.AllElementsOfType<ElementInstance>();
-        // await Verify.ElementsByBounds(components);
+        // await _verify.ElementsByBounds(components);
     }
 
     [TearDown]

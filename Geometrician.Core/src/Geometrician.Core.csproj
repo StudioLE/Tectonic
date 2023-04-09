@@ -27,8 +27,4 @@
     <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\StudioLE.Core\src\Workarounds\InitWorkaround.cs" Link="InitWorkaround.cs"/>
-  </ItemGroup>
-
 </Project>
