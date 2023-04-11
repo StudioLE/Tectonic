@@ -8,7 +8,7 @@ The application can run client-side directly in the browser using [Blazor WebAss
 
 *→ [Production (main branch)](https://geometrician.io/)*
 
-*→ [Staging (develop branch)](https://next.geometrician.io/)*
+*→ [Staging (alpha branch)](https://next.geometrician.io/)*
 
 ## Geometrician
 
