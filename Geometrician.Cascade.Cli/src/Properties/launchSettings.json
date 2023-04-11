@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "Help": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "commandLineArgs": "help run"
+    },
+    "List": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "commandLineArgs": "list --assembly Geometrician.Flex.Samples.dll"
+    },
+    "Run": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "commandLineArgs": "run --assembly Geometrician.Flex.Samples.dll --activity Flex2dSample.Execute"
+    }
+  }
+}

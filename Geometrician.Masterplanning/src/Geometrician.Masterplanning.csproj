@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Automate the creation of residential capacity studies and masterplans.</Description>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all src projects -->
+  <Import Project="..\..\GlobalProperties.src.props"/>
+
+  <!-- Use consistent global usings across all src projects -->
+  <Import Project="..\..\GlobalUsings.src.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Curves\src\Geometrician.Curves.csproj"/>
+  </ItemGroup>
+
+</Project>

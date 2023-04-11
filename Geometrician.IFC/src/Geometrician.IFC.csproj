@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Convert elements to IFC representatons.</Description>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all src projects -->
+  <Import Project="..\..\GlobalProperties.src.props"/>
+
+  <!-- Use consistent global usings across all src projects -->
+  <Import Project="..\..\GlobalUsings.src.props"/>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Geometrician.Drawings.Benchmarks"/>
+    <InternalsVisibleTo Include="Geometrician.PDF.Tests"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="StudioLE.Core.Conversion"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hypar.Elements.Serialization.IFC" Version="1.0.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj"/>
+  </ItemGroup>
+
+</Project>

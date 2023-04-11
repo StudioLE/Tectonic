@@ -1,6 +1,6 @@
-﻿## Geometrician
+﻿## Geometrician.Cascade
 
-Geometrician is an application to execute and visualise the results of geometric workflows using Hypar's Elements library.
+Geometrician.Cascade is an application to execute and visualise the results of geometric workflows using Hypar's Elements library.
 
 The application can run client-side directly in the browser using [Blazor WebAssembly](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-server), or as a [Blazor Server](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-server). Soon it will also be available as a [Blazor Hybrid](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-hybrid) app using either .NET MAUI or WPF, and via a command line interface.
 
@@ -10,9 +10,9 @@ The application can run client-side directly in the browser using [Blazor WebAss
 
 *→ [Staging (develop branch)](https://next.geometrician.io/)*
 
-## Lineweights
+## Geometrician
 
-Lineweights is a collection of modular libraries for automating architecture, engineering, and construction (AEC) workflows.
+Geometrician is a collection of modular libraries for automating architecture, engineering, and construction (AEC) workflows.
 
 *The components are written in C# using Hypar's Elements library. They are designed to be cross-platform for use in standard industry software and cloud platforms such as Hypar, Dynamo, Revit, Grasshopper, and Rhino.*
 
@@ -20,13 +20,13 @@ Lineweights is a collection of modular libraries for automating architecture, en
 
 ## Documentation
 
-*→ [Documentation](https://docs.lineweights.io/latest/index.html)*
+*→ [Documentation](https://docs.geometrician.io/latest/index.html)*
 
 ## License
 
-Geometrician and Lineweights are dual-licensed under open and closed source licenses.
+Geometrician are dual-licensed under open and closed source licenses.
 
-Copyright © Laurence Elsdon 2022
+Copyright © Laurence Elsdon 2023
 
 ### Open Source
 
@@ -36,7 +36,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-→ [GNU Affero General Public License](https://github.com/StudioLE/Lineweights/tree/main/COPYING.md)
+→ [GNU Affero General Public License](https://github.com/StudioLE/Geometrician/tree/main/COPYING.md)
 
 ### Proprietary
 

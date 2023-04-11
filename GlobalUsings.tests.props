@@ -7,11 +7,11 @@
     <Using Include="Elements.Geometry.Solids"/>
     <Using Include="GeometryEx"/>
     <Using Include="NUnit.Framework"/>
-    <Using Include="Lineweights.Core.Abstractions"/>
-    <Using Include="Lineweights.Core.Constraints"/>
-    <Using Include="Lineweights.Core.Elements"/>
-    <Using Include="Lineweights.Core.Geometry"/>
-    <Using Static="true" Include="Lineweights.Core.Elements.MaterialHelpers"/>
+    <Using Include="Geometrician.Core.Abstractions"/>
+    <Using Include="Geometrician.Core.Constraints"/>
+    <Using Include="Geometrician.Core.Elements"/>
+    <Using Include="Geometrician.Core.Geometry"/>
+    <Using Static="true" Include="Geometrician.Core.Elements.MaterialHelpers"/>
   </ItemGroup>
 
 </Project>

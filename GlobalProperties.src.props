@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <Authors>StudioLE</Authors>
-    <Copyright>Copyright © Laurence Elsdon 2022</Copyright>
-    <PackageProjectUrl>https://lineweights.io</PackageProjectUrl>
+    <Copyright>Copyright © Laurence Elsdon 2023</Copyright>
+    <PackageProjectUrl>https://geometrician.io</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>hypar elements element geometric geometry aec architecture engineering construction building bim lineweights lineweight drawing drawings sheet</PackageTags>
-    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageTags>hypar elements element geometric geometry aec architecture engineering construction building bim lineweights lineweight drawing drawings sheet geometrician</PackageTags>
+    <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 

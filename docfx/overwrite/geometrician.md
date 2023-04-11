@@ -18,36 +18,36 @@ The application is can run client-side directly in the browser using [Blazor Web
 
 ---
 
-📇 **Geometrician.Core**
+📇 **Geometrician.Workflows**
 
 ![](https://img.shields.io/badge/status-alpha-informational)
 
 The core [Razor components](https://docs.microsoft.com/en-us/aspnet/core/blazor/components/class-libraries?view=aspnetcore-6.0&tabs=visual-studio) for the Blazor application implementations.
 
-*→ [Documentation](https://docs.lineweights.io/latest/App/Geometrician.Core.html)*
-/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.Core/src)*
+*→ [Documentation](https://docs.lineweights.io/latest/App/Geometrician.Workflows.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.Workflows/src)*
 
 ---
 
-🖧 **Geometrician.Server**
+🖧 **Geometrician.Cascade.Server**
 
 ![](https://img.shields.io/badge/status-alpha-informational)
 
 The [Blazor Server](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-server) application.
 
-*→ [Documentation](https://docs.lineweights.io/latest/App/Geometrician.Server.html)*
-/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.Server/src)*
+*→ [Documentation](https://docs.lineweights.io/latest/App/Geometrician.Cascade.Server.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.Cascade.Server/src)*
 
 ---
 
-🪟 **Geometrician.WebAssembly**
+🪟 **Geometrician.Cascade.WebAssembly**
 
 ![](https://img.shields.io/badge/status-alpha-informational)
 
 The [Blazor WebAssembly](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-server) application.
 
 *→ [Documentation](https://docs.lineweights.io/latest/Core/Lineweights.WebAssembly.html)*
-/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.WebAssembly/src)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.Cascade.WebAssembly/src)*
 /  *[Live (main)](https://geometrician.io/)*
 /  *[Live (develop)](https://next.geometrician.io/)*
 

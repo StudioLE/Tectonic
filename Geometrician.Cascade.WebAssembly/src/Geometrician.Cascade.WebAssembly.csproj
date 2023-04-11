@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Description>A [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) client application to visualise the results of Elements logic.</Description>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all src projects -->
+  <Import Project="..\..\GlobalProperties.src.props"/>
+
+  <!-- Use consistent global usings across all src projects -->
+  <Import Project="..\..\GlobalUsings.src.props"/>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.8"/>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.8" PrivateAssets="all"/>
+    <PackageReference Include="SkiaSharp.Views.Blazor" Version="2.88.3"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Geometrician.Cascade.Components\src\Geometrician.Cascade.Components.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Workflows\samples\Geometrician.Workflows.Samples.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Drawings\samples\Geometrician.Drawings.Samples.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Flex\samples\Geometrician.Flex.Samples.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.IFC\src\Geometrician.IFC.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.PDF\src\Geometrician.PDF.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.SVG\src\Geometrician.SVG.csproj"/>
+  </ItemGroup>
+
+</Project>

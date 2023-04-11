@@ -9,14 +9,14 @@ Libraries containing generic code reused across Lineweights.
 
 ---
 
-🧰 **Lineweights.Core**
+🧰 **Geometrician.Core**
 
 ![](https://img.shields.io/badge/status-alpha-informational)
 
 Generic extension and helper methods for the Elements library.
 
-*→ [Documentation](https://docs.lineweights.io/latest/Core/Lineweights.Core.html)*
-/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.Core/src)*
+*→ [Documentation](https://docs.lineweights.io/latest/Core/Geometrician.Core.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.Core/src)*
 
 ---
 

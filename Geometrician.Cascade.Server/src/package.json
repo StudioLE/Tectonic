@@ -1,0 +1,13 @@
+{
+  "name": "Geometrician.Cascade.Server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "azurite": "node node_modules/azurite/dist/src/blob/main.js -l .azurite"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "azurite": "^3.20.1"
+  }
+}

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all tests projects -->
+  <Import Project="..\..\GlobalProperties.src.props"/>
+
+
+  <ItemGroup>
+    <Using Remove="System.IO"/>
+    <Using Include="Elements"/>
+    <Using Include="Geometrician.Core.Abstractions"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.1"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Geometrician.Diagnostics\samples\Geometrician.Diagnostics.Samples.csproj"/>
+    <ProjectReference Include="..\src\Geometrician.Drawings.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Flex\src\Geometrician.Flex.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.PDF\src\Geometrician.PDF.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.SVG\src\Geometrician.SVG.csproj"/>
+  </ItemGroup>
+
+</Project>

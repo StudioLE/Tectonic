@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Lineweights.Diagnostics\samples\Lineweights.Diagnostics.Samples.csproj"/>
-    <ProjectReference Include="..\..\Lineweights.Diagnostics.NUnit\src\Lineweights.Diagnostics.NUnit.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Diagnostics\samples\Geometrician.Diagnostics.Samples.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Diagnostics.NUnit\src\Geometrician.Diagnostics.NUnit.csproj"/>
   </ItemGroup>
 
 </Project>

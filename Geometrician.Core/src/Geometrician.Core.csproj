@@ -2,29 +2,27 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>Visualise and verify the results of Elements logic.</Description>
+    <Description>Generic extension and helper methods for the Elements library.</Description>
   </PropertyGroup>
 
   <!-- Use consistent properties across all src projects -->
-  <Import Project="..\..\GlobalProperties.src.props"/>
+  <Import Project="..\..\GlobalProperties.src.props" />
 
   <!-- Use consistent global usings across all src projects -->
-  <Import Project="..\..\GlobalUsings.src.props"/>
+  <Import Project="..\..\GlobalUsings.src.props" />
 
   <ItemGroup>
-    <InternalsVisibleTo Include="$(AssemblyName).Tests"/>
-    <InternalsVisibleTo Include="Geometrician.Components"/>
-    <InternalsVisibleTo Include="Lineweights.Diagnostics.NUnit"/>
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0"/>
-    <PackageReference Include="CsvHelper" Version="28.0.1"/>
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1"/>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Lineweights.Core\src\Lineweights.Core.csproj"/>
+    <PackageReference Include="GeometryEx" Version="8.2.0" />
+    <PackageReference Include="Hypar.Elements" Version="1.0.0">
+      <IncludeAssets>all</IncludeAssets>
+      <ExcludeAssets>contentFiles</ExcludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
+    <PackageReference Include="StudioLE.Core" Version="0.3.0-develop.2" />
   </ItemGroup>
 
 </Project>

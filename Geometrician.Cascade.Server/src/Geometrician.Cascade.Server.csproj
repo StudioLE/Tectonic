@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Description>A [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) client application to visualise the results of Elements logic.</Description>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all src projects -->
+  <Import Project="..\..\GlobalProperties.src.props"/>
+
+  <!-- Use consistent global usings across all src projects -->
+  <Import Project="..\..\GlobalUsings.src.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Geometrician.Cascade.Components\src\Geometrician.Cascade.Components.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.IFC\src\Geometrician.IFC.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.PDF\src\Geometrician.PDF.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.SVG\src\Geometrician.SVG.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Include="Scripts\*.js"/>
+    <Watch Include="Scripts\*.ts"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\dist\bundle.css"/>
+    <_ContentIncludedByDefault Remove="wwwroot\dist\bundle.js"/>
+  </ItemGroup>
+</Project>

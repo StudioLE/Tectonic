@@ -9,7 +9,7 @@ Libraries that distribute or layout geometric elements.
 
 ---
 
-📐 **Lineweights.Flex**
+📐 **Geometrician.Flex**
 
 ![](https://img.shields.io/badge/status-alpha-informational)
 
@@ -17,8 +17,8 @@ Arrange, position, align, place, repeat, array, and distribute geometric element
 
 *Typical distribution tools only work with elements of uniform size but this library follows the concepts of [Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox) allowing complete flexibility to arrange elements of any size together.*
 
-*→ [Documentation](https://docs.lineweights.io/latest/Distribution/Lineweights.Flex.html)*
-/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.Flex/src)*
-/ *[Samples](https://github.com/StudioLE/Lineweights/tree/main/Lineweights.Flex/samples)*
+*→ [Documentation](https://docs.lineweights.io/latest/Distribution/Geometrician.Flex.html)*
+/  *[Source](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.Flex/src)*
+/ *[Samples](https://github.com/StudioLE/Lineweights/tree/main/Geometrician.Flex/samples)*
 
 ---

@@ -3,27 +3,27 @@
     {
       "src": [
         {
-          "src": "../Geometrician.Components/src",
+          "src": "../Geometrician.Cascade.Components/src",
           "files": [
-            "bin/Release/**/Geometrician.Components.dll"
+            "bin/Release/**/Geometrician.Cascade.Components.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         },
         {
-          "src": "../Geometrician.Server/src",
+          "src": "../Geometrician.Cascade.Server/src",
           "files": [
-            "bin/Release/**/Geometrician.Server.dll"
+            "bin/Release/**/Geometrician.Cascade.Server.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         },
         {
-          "src": "../Geometrician.WebAssembly/src",
+          "src": "../Geometrician.Cascade.WebAssembly/src",
           "files": [
-            "bin/Release/**/Geometrician.WebAssembly.dll"
+            "bin/Release/**/Geometrician.Cascade.WebAssembly.dll"
           ],
           "exclude": [
             "**/obj/**"
@@ -37,9 +37,9 @@
     {
       "src": [
         {
-          "src": "../Lineweights.Core/src",
+          "src": "../Geometrician.Core/src",
           "files": [
-            "bin/Release/**/Lineweights.Core.dll"
+            "bin/Release/**/Geometrician.Core.dll"
           ],
           "exclude": [
             "**/obj/**"
@@ -62,18 +62,18 @@
     {
       "src": [
         {
-          "src": "../Lineweights.Flex/src",
+          "src": "../Geometrician.Flex/src",
           "files": [
-            "bin/Release/**/Lineweights.Flex.dll"
+            "bin/Release/**/Geometrician.Flex.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         },
         {
-          "src": "../Lineweights.Flex/samples",
+          "src": "../Geometrician.Flex/samples",
           "files": [
-            "bin/Release/**/Lineweights.Flex.Samples.dll"
+            "bin/Release/**/Geometrician.Flex.Samples.dll"
           ],
           "exclude": [
             "**/obj/**"
@@ -87,27 +87,27 @@
     {
       "src": [
         {
-          "src": "../Lineweights.Drawings/src",
+          "src": "../Geometrician.Drawings/src",
           "files": [
-            "bin/Release/**/Lineweights.Drawings.dll"
+            "bin/Release/**/Geometrician.Drawings.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         },
         {
-          "src": "../Lineweights.PDF/src",
+          "src": "../Geometrician.PDF/src",
           "files": [
-            "bin/Release/**/Lineweights.PDF.dll"
+            "bin/Release/**/Geometrician.PDF.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         },
         {
-          "src": "../Lineweights.SVG/src",
+          "src": "../Geometrician.SVG/src",
           "files": [
-            "bin/Release/**/Lineweights.SVG.dll"
+            "bin/Release/**/Geometrician.SVG.dll"
           ],
           "exclude": [
             "**/obj/**"
@@ -121,18 +121,18 @@
     {
       "src": [
         {
-          "src": "../Lineweights.Curves/src",
+          "src": "../Geometrician.Curves/src",
           "files": [
-            "bin/Release/**/Lineweights.Curves.dll"
+            "bin/Release/**/Geometrician.Curves.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         },
         {
-          "src": "../Lineweights.Masterplanning/src",
+          "src": "../Geometrician.Masterplanning/src",
           "files": [
-            "bin/Release/**/Lineweights.Masterplanning.dll"
+            "bin/Release/**/Geometrician.Masterplanning.dll"
           ],
           "exclude": [
             "**/obj/**"
@@ -146,27 +146,27 @@
     {
       "src": [
         {
-          "src": "../Lineweights.Diagnostics/src",
+          "src": "../Geometrician.Diagnostics/src",
           "files": [
-            "bin/Release/**/Lineweights.Diagnostics.dll"
+            "bin/Release/**/Geometrician.Diagnostics.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         },
         {
-          "src": "../Lineweights.Diagnostics.NUnit/src",
+          "src": "../Geometrician.Diagnostics.NUnit/src",
           "files": [
-            "bin/Release/**/Lineweights.Diagnostics.NUnit.dll"
+            "bin/Release/**/Geometrician.Diagnostics.NUnit.dll"
           ],
           "exclude": [
             "**/obj/**"
           ]
         },
         {
-          "src": "../Lineweights.Diagnostics/samples",
+          "src": "../Geometrician.Diagnostics/samples",
           "files": [
-            "bin/Release/**/Lineweights.Diagnostics.Samples.dll"
+            "bin/Release/**/Geometrician.Diagnostics.Samples.dll"
           ],
           "exclude": [
             "**/obj/**"
@@ -216,11 +216,11 @@
       "https://xref.docs.microsoft.com/query?uid={uid}"
     ],
     "globalMetadata": {
-      "_appTitle": "Geometrician and Lineweights",
-      "_appName": "Geometrician and Lineweights",
+      "_appTitle": "Geometrician",
+      "_appName": "Geometrician",
       "_appFaviconPath": "",
       "_appLogoPath": "",
-      "_appFooter": "Geometrician and Lineweights",
+      "_appFooter": "Geometrician",
       "_copyrightFooter": "© Laurence Elsdon. All rights reserved.",
       "_enableSearch": false,
       "_disableSideFilter": true,

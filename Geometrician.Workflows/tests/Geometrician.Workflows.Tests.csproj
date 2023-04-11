@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all tests projects -->
+  <Import Project="..\..\GlobalProperties.tests.props"/>
+
+  <!-- Use consistent global usings across all tests projects -->
+  <Import Project="..\..\GlobalUsings.tests.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Geometrician.Core\tests\Geometrician.Core.Tests.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Flex\samples\Geometrician.Flex.Samples.csproj"/>
+    <ProjectReference Include="..\samples\Geometrician.Workflows.Samples.csproj"/>
+    <ProjectReference Include="..\src\Geometrician.Workflows.csproj"/>
+  </ItemGroup>
+
+</Project>
