@@ -47,6 +47,8 @@ jobs:
   publish-docs:
     name: Publish Docs
     if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/alpha", "refs/heads/beta"]'), github.ref) }}
+    needs:
+      - analysis
     uses: ./.github/workflows/04-publish-docs.yml
     with:
       solution: Geometrician.sln
