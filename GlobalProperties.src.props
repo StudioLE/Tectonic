@@ -17,6 +17,7 @@
     <IsPackable Condition="'$(OutputType)' != 'Library'">false</IsPackable>
     <IsPackable Condition="'$(OutputType)' == 'Library'">true</IsPackable>
     <!--    <GenerateDocumentationFile>true</GenerateDocumentationFile>-->
+    <GeometricianNuGetVersion>0.2.0</GeometricianNuGetVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -13,6 +13,7 @@ internal sealed class NUnitActivityTests
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
 
     [TestCase(ActivityKey)]
+    [Explicit("Requires Geometrician.Core.Tests.dll")]
     public async Task NUnitActivity_Execute(string activityKey)
     {
         // Arrange

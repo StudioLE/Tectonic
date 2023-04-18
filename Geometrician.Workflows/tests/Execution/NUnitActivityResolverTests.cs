@@ -16,6 +16,7 @@ internal sealed class NUnitActivityResolverTests
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
 
     [Test]
+    [Explicit("Requires Geometrician.Core.Tests.dll")]
     public async Task NUnitActivityResolver_AllActivityKeysInAssembly()
     {
         // Arrange
@@ -30,6 +31,7 @@ internal sealed class NUnitActivityResolverTests
     }
 
     [TestCase(ActivityKey)]
+    [Explicit("Requires Geometrician.Core.Tests.dll")]
     public void NUnitActivityResolver_TryCreateByKey(string activityKey)
     {
         // Arrange
