@@ -25,6 +25,7 @@ jobs:
 
   build-and-test-windows:
     name: Windows
+    if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/alpha", "refs/heads/beta"]'), github.ref) }}
     needs: analysis
     uses: ./.github/workflows/02-build-and-test.yml
     with:
