@@ -1,8 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-  </PropertyGroup>
-
   <!-- Use consistent properties across all projects -->
   <Import Project="..\..\Global.props"/>
 
@@ -11,10 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Geometrician.Core.csproj"/>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Verify\"/>
   </ItemGroup>
 
 </Project>
