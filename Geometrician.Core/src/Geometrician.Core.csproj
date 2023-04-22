@@ -8,17 +8,17 @@
   <Import Project="..\..\Global.props"/>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+    <InternalsVisibleTo Include="$(AssemblyName).Tests"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GeometryEx" Version="8.2.0" />
+    <PackageReference Include="GeometryEx" Version="8.2.0"/>
     <PackageReference Include="Hypar.Elements" Version="1.0.0">
       <IncludeAssets>all</IncludeAssets>
       <ExcludeAssets>contentFiles</ExcludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
-    <PackageReference Include="StudioLE.Core" Version="0.3.0-develop.2" />
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1"/>
+    <PackageReference Include="StudioLE.Core" Version="0.3.0-develop.2"/>
   </ItemGroup>
 
 </Project>

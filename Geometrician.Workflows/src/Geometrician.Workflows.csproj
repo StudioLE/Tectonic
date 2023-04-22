@@ -8,27 +8,27 @@
   <Import Project="..\..\Global.props"/>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
-    <InternalsVisibleTo Include="Geometrician.Cascade.Components" />
-    <InternalsVisibleTo Include="Geometrician.Diagnostics.NUnit" />
+    <InternalsVisibleTo Include="$(AssemblyName).Tests"/>
+    <InternalsVisibleTo Include="Geometrician.Cascade.Components"/>
+    <InternalsVisibleTo Include="Geometrician.Diagnostics.NUnit"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
-    <PackageReference Include="CsvHelper" Version="28.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0"/>
+    <PackageReference Include="CsvHelper" Version="28.0.1"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1"/>
   </ItemGroup>
 
   <ItemGroup Condition="'$(SolutionName)' == 'Geometrician.Cascade'">
-    <PackageReference Include="Geometrician.Core" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.Core" Version="$(GeometricianNuGetVersion)"/>
   </ItemGroup>
 
   <ItemGroup Condition="'$(SolutionName)' != 'Geometrician.Cascade'">
-    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Workflows\" />
+    <Folder Include="Workflows\"/>
   </ItemGroup>
 
 </Project>
