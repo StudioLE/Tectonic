@@ -1,8 +1,8 @@
-﻿using Geometrician.Workflows.Samples;
-using Geometrician.Core.Assets;
+﻿using Geometrician.Core.Assets;
 using Geometrician.Diagnostics.NUnit.Visualization;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Drawings;
+using Geometrician.Workflows.Samples;
 using NUnit.Framework;
 
 namespace Geometrician.Workflows.Tests;

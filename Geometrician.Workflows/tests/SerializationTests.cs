@@ -7,7 +7,6 @@ using NUnit.Framework;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 
-
 namespace Geometrician.Workflows.Tests;
 
 internal sealed class SerializationTests

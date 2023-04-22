@@ -1,8 +1,8 @@
-using Geometrician.Workflows.Visualization;
 using Geometrician.Diagnostics.Hosting;
 using Geometrician.Diagnostics.NUnit.Visualization;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Diagnostics.Visualization;
+using Geometrician.Workflows.Visualization;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 

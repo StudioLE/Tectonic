@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using Geometrician.Workflows.Assets;
-using Geometrician.Workflows.Storage;
 using Geometrician.Core.Assets;
 using Geometrician.Core.Storage;
 using Geometrician.Diagnostics.Samples;
@@ -8,6 +6,8 @@ using Geometrician.Drawings;
 using Geometrician.IFC;
 using Geometrician.PDF;
 using Geometrician.SVG;
+using Geometrician.Workflows.Assets;
+using Geometrician.Workflows.Storage;
 using NUnit.Framework;
 using StudioLE.Core.Results;
 

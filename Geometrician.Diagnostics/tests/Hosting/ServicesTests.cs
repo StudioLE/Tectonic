@@ -1,7 +1,7 @@
-using Geometrician.Workflows.Execution;
-using Geometrician.Workflows.Visualization;
 using Geometrician.Core.Storage;
 using Geometrician.Diagnostics.Hosting;
+using Geometrician.Workflows.Execution;
+using Geometrician.Workflows.Visualization;
 using NUnit.Framework;
 
 namespace Geometrician.Diagnostics.Tests.Hosting;

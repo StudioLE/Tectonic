@@ -1,5 +1,5 @@
-﻿using Geometrician.Workflows.Visualization;
-using Geometrician.Diagnostics.Samples;
+﻿using Geometrician.Diagnostics.Samples;
+using Geometrician.Workflows.Visualization;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using StudioLE.Verify;

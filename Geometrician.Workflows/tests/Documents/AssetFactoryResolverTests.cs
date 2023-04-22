@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Geometrician.Workflows.Configuration;
 using Geometrician.Core.Assets;
 using Geometrician.Diagnostics.Hosting;
 using Geometrician.Diagnostics.Samples;
+using Geometrician.Workflows.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using StudioLE.Core.Results;
