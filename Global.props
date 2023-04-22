@@ -1,0 +1,71 @@
+﻿<Project>
+
+  <PropertyGroup>
+    <Authors>StudioLE</Authors>
+    <Copyright>Copyright © Laurence Elsdon 2023</Copyright>
+    <PackageProjectUrl>https://geometrician.io</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>hypar elements element geometric geometry aec architecture engineering construction building bim lineweights lineweight drawing drawings sheet geometrician</PackageTags>
+    <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GeometricianNuGetVersion>0.2.0</GeometricianNuGetVersion>
+    <!--    <GenerateDocumentationFile>true</GenerateDocumentationFile>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\" Visible="false"/>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <IsExecutable>false</IsExecutable>
+    <IsTestLibrary>false</IsTestLibrary>
+    <IsLibrary>false</IsLibrary>
+    <IsExecutable Condition="'$(OutputType)' == 'Exe'">true</IsExecutable>
+    <IsTestLibrary Condition="'$(OutputType)' == 'Library' AND $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestLibrary>
+    <IsLibrary Condition="'$(OutputType)' == 'Library' AND ! $(MSBuildProjectName.EndsWith('.Tests'))">true</IsLibrary>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsExecutable)">
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsTestLibrary)">
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(IsTestLibrary)">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0"/>
+    <PackageReference Include="NUnit" Version="3.13.3"/>
+    <PackageReference Include="NUnit3TestAdapter" Version="4.4.2"/>
+    <PackageReference Include="coverlet.collector" Version="3.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="$(IsTestLibrary) AND '$(SolutionName)' == 'Geometrician.Cascade'">
+    <PackageReference Include="Geometrician.Diagnostics.Samples" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.Diagnostics.NUnit" Version="$(GeometricianNuGetVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(IsTestLibrary) AND '$(SolutionName)' != 'Geometrician.Cascade'">
+    <ProjectReference Include="..\..\Geometrician.Diagnostics\samples\Geometrician.Diagnostics.Samples.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Diagnostics.NUnit\src\Geometrician.Diagnostics.NUnit.csproj"/>
+  </ItemGroup>
+
+  <PropertyGroup Condition="$(IsLibrary)">
+    <TargetFramework Condition="'$(TargetFramework)' == ''">netstandard2.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(IsLibrary)">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+  </ItemGroup>
+
+</Project>

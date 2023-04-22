@@ -5,8 +5,8 @@
     <Description>Curve interpolation and spline geometry for the Elements library.</Description>
   </PropertyGroup>
 
-  <!-- Use consistent properties across all src projects -->
-  <Import Project="..\..\GlobalProperties.src.props"/>
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props"/>
 
   <!-- Use consistent global usings across all src projects -->
   <Import Project="..\..\GlobalUsings.src.props"/>

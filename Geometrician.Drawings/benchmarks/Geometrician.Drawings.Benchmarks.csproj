@@ -5,8 +5,8 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <!-- Use consistent properties across all tests projects -->
-  <Import Project="..\..\GlobalProperties.src.props"/>
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props"/>
 
 
   <ItemGroup>
