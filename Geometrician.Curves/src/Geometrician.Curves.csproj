@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Curve interpolation and spline geometry for the Elements library.</Description>
   </PropertyGroup>
 

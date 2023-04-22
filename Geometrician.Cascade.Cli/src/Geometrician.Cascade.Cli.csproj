@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
     <Description>Visualise and verify the results of Elements logic.</Description>
     <OutputType>Exe</OutputType>
   </PropertyGroup>

@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Arrange, position, align, place, repeat, array, and distribute geometric elements of different sizes inside a cuboid container *(for example a building, room, or car park)* or along a curve *(e.g. a road, train track, or linear structure)*.</Description>
   </PropertyGroup>
 

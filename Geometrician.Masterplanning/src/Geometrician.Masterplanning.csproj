@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Automate the creation of residential capacity studies and masterplans.</Description>
   </PropertyGroup>
 
