@@ -12,11 +12,15 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(SolutionName)' == 'Geometrician.Cascade'">
+    <PackageReference Include="Geometrician.Diagnostics.Samples" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.Diagnostics.NUnit" Version="$(GeometricianNuGetVersion)" />
     <PackageReference Include="Geometrician.Flex.Samples" Version="$(GeometricianNuGetVersion)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SolutionName)' != 'Geometrician.Cascade'">
     <ProjectReference Include="..\..\Geometrician.Core\tests\Geometrician.Core.Tests.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Diagnostics\samples\Geometrician.Diagnostics.Samples.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Diagnostics.NUnit\src\Geometrician.Diagnostics.NUnit.csproj"/>
     <ProjectReference Include="..\..\Geometrician.Flex\samples\Geometrician.Flex.Samples.csproj"/>
   </ItemGroup>
 
