@@ -8,9 +8,6 @@
   <!-- Use consistent properties across all projects -->
   <Import Project="..\..\Global.props"/>
 
-  <!-- Use consistent global usings across all src projects -->
-  <Import Project="..\..\GlobalUsings.src.props"/>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.8"/>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.8" PrivateAssets="all"/>

@@ -1,4 +1,5 @@
-﻿using StudioLE.Core.Results;
+﻿using NUnit.Framework;
+using StudioLE.Core.Results;
 
 namespace Geometrician.Core.Tests.Elements;
 

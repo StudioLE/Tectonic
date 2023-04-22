@@ -1,6 +1,7 @@
 using Geometrician.Diagnostics.NUnit.Verification;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Flex;
+using NUnit.Framework;
 
 namespace Geometrician.Drawings.Tests;
 

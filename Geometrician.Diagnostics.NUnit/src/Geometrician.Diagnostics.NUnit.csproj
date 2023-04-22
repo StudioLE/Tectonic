@@ -7,9 +7,6 @@
   <!-- Use consistent properties across all projects -->
   <Import Project="..\..\Global.props"/>
 
-  <!-- Use consistent global usings across all src projects -->
-  <Import Project="..\..\GlobalUsings.src.props" />
-
   <ItemGroup>
     <InternalsVisibleTo Include="Geometrician.Diagnostics.Tests" />
   </ItemGroup>

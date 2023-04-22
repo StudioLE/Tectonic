@@ -7,6 +7,7 @@ using Geometrician.Drawings;
 using Geometrician.Drawings.Rendering;
 using Geometrician.Flex;
 using Geometrician.PDF.From.Elements;
+using NUnit.Framework;
 using QuestPDF.Fluent;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;

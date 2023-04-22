@@ -22,6 +22,19 @@
     <None Include="../../README.md" Pack="true" PackagePath="\" Visible="false"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Remove="System.IO"/>
+    <Using Include="Elements"/>
+    <Using Include="Elements.Geometry"/>
+    <Using Include="Elements.Geometry.Solids"/>
+    <Using Include="GeometryEx"/>
+    <Using Include="Geometrician.Core.Abstractions"/>
+    <Using Include="Geometrician.Core.Constraints"/>
+    <Using Include="Geometrician.Core.Elements"/>
+    <Using Include="Geometrician.Core.Geometry"/>
+    <Using Static="true" Include="Geometrician.Core.Elements.MaterialHelpers"/>
+  </ItemGroup>
+
   <PropertyGroup>
     <IsExecutable>false</IsExecutable>
     <IsTestLibrary>false</IsTestLibrary>

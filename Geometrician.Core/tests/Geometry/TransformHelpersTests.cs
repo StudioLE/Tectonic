@@ -1,4 +1,5 @@
 ﻿using Geometrician.Diagnostics.NUnit.Visualization;
+using NUnit.Framework;
 
 namespace Geometrician.Core.Tests.Geometry;
 

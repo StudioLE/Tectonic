@@ -7,6 +7,7 @@ using Geometrician.Drawings;
 using Geometrician.Drawings.Rendering;
 using Geometrician.Flex;
 using Geometrician.SVG.From.Elements;
+using NUnit.Framework;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 

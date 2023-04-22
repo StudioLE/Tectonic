@@ -4,6 +4,7 @@ using Geometrician.Core.Assets;
 using Geometrician.Diagnostics.Hosting;
 using Geometrician.Diagnostics.Samples;
 using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
 using StudioLE.Core.Results;
 
 namespace Geometrician.Workflows.Tests.Documents;

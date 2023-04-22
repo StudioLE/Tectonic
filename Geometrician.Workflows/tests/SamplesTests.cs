@@ -3,6 +3,7 @@ using Geometrician.Core.Assets;
 using Geometrician.Diagnostics.NUnit.Visualization;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Drawings;
+using NUnit.Framework;
 
 namespace Geometrician.Workflows.Tests;
 

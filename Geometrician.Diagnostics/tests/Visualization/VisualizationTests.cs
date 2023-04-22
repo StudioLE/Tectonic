@@ -4,6 +4,7 @@ using Geometrician.Diagnostics.NUnit.Visualization;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Diagnostics.Visualization;
 using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
 
 namespace Geometrician.Diagnostics.Tests.Visualization;
 

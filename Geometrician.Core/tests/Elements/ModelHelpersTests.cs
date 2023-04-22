@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using NUnit.Framework;
 
 namespace Geometrician.Core.Tests.Elements;
 

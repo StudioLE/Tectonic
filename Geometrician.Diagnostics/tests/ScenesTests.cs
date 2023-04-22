@@ -1,5 +1,6 @@
 ﻿using Geometrician.Diagnostics.NUnit.Visualization;
 using Geometrician.Diagnostics.Samples;
+using NUnit.Framework;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 

@@ -1,6 +1,7 @@
 using Geometrician.Curves.Interpolation;
 using Geometrician.Diagnostics;
 using Geometrician.Diagnostics.NUnit.Visualization;
+using NUnit.Framework;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 

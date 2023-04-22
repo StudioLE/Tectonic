@@ -8,6 +8,7 @@ using Geometrician.Drawings;
 using Geometrician.IFC;
 using Geometrician.PDF;
 using Geometrician.SVG;
+using NUnit.Framework;
 using StudioLE.Core.Results;
 
 namespace Geometrician.Workflows.Tests.Documents;

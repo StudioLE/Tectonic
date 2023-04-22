@@ -3,6 +3,7 @@ using Geometrician.Core.Assets;
 using Geometrician.Core.Serialization;
 using Geometrician.Diagnostics.NUnit.Verification;
 using Newtonsoft.Json;
+using NUnit.Framework;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 
