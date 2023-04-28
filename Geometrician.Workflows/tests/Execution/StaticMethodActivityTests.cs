@@ -6,14 +6,14 @@ using StudioLE.Core.System;
 
 namespace Geometrician.Workflows.Tests.Execution;
 
-internal sealed class MethodActivityTests
+internal sealed class StaticMethodActivityTests
 {
     private const string AssemblyPath = "Geometrician.Flex.Samples.dll";
     private const string ActivityKey = "Flex2dSample.Execute";
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
 
     [TestCase(ActivityKey)]
-    public void MethodActivity_Inputs(string activityKey)
+    public void StaticMethodActivity_Inputs(string activityKey)
     {
         // Arrange
         StaticMethodActivityResolver resolver = new();
@@ -27,7 +27,7 @@ internal sealed class MethodActivityTests
     }
 
     [TestCase(ActivityKey)]
-    public async Task MethodActivity_Execute(string activityKey)
+    public async Task StaticMethodActivity_Execute(string activityKey)
     {
         // Arrange
         StaticMethodActivityResolver resolver = new();
