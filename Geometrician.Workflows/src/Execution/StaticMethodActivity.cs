@@ -5,7 +5,7 @@ namespace Geometrician.Workflows.Execution;
 /// <summary>
 /// An <see cref="IActivity"/> based on a static <see cref="MethodInfo"/> in an <see cref="Assembly"/>.
 /// </summary>
-public sealed class MethodActivity : IActivity
+public sealed class StaticMethodActivity : IActivity
 {
     private readonly object? _instance;
     private readonly MethodInfo _method;
@@ -23,12 +23,12 @@ public sealed class MethodActivity : IActivity
     public object[] Inputs { get; private set; } = Array.Empty<object>();
 
     /// <summary>
-    /// Construct a <see cref="MethodActivity"/> from <see cref="method"/>.
+    /// Construct a <see cref="StaticMethodActivity"/> from <see cref="method"/>.
     /// </summary>
     /// <param name="instance">The instance the method belongs to. For static methods this should be null.</param>
     /// <param name="method">The method to be executed by the activity.</param>
     /// <param name="key">The unique key identifying the activity.</param>
-    public MethodActivity(object? instance, MethodInfo method, string key)
+    public StaticMethodActivity(object? instance, MethodInfo method, string key)
     {
         _instance = instance;
         _method = method;
@@ -58,7 +58,7 @@ public sealed class MethodActivity : IActivity
     /// <inheritdoc/>
     public object Clone()
     {
-        return new MethodActivity(_instance, _method, Key)
+        return new StaticMethodActivity(_instance, _method, Key)
         {
             Name = Name,
             Description = Description

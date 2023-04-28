@@ -19,7 +19,7 @@ public sealed class StaticMethodActivityResolver : IActivityResolver
         MethodInfo? method = GetActivityMethodByKey(assembly, activityKey);
         if (method is null)
             return new Failure<IActivity>("No activity in the assembly matched the key.");
-        MethodActivity activity = new(null, method, activityKey);
+        StaticMethodActivity activity = new(null, method, activityKey);
         return new Success<IActivity>(activity);
     }
 
