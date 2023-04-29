@@ -5,14 +5,14 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all projects -->
-  <Import Project="..\..\Global.props"/>
+  <Import Project="..\..\Global.props" />
 
   <ItemGroup>
-    <PackageReference Include="morelinq" Version="3.3.2"/>
+    <PackageReference Include="morelinq" Version="3.3.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj" />
   </ItemGroup>
 
 </Project>

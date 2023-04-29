@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all projects -->
-  <Import Project="..\..\Global.props"/>
+  <Import Project="..\..\Global.props" />
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj"/>
-    <ProjectReference Include="..\..\Geometrician.Curves\src\Geometrician.Curves.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Curves\src\Geometrician.Curves.csproj" />
   </ItemGroup>
 
 </Project>

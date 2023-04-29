@@ -5,22 +5,22 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all projects -->
-  <Import Project="..\..\Global.props"/>
+  <Import Project="..\..\Global.props" />
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Geometrician.Drawings.Benchmarks"/>
-    <InternalsVisibleTo Include="Geometrician.Drawings.Samples"/>
-    <InternalsVisibleTo Include="Geometrician.SVG.Tests"/>
+    <InternalsVisibleTo Include="Geometrician.Drawings.Benchmarks" />
+    <InternalsVisibleTo Include="Geometrician.Drawings.Samples" />
+    <InternalsVisibleTo Include="Geometrician.SVG.Tests" />
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="System.Xml.Linq"/>
-    <Using Include="StudioLE.Core.Conversion"/>
+    <Using Include="System.Xml.Linq" />
+    <Using Include="StudioLE.Core.Conversion" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geometrician.Drawings\src\Geometrician.Drawings.csproj"/>
-    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Drawings\src\Geometrician.Drawings.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <!-- Use consistent properties across all projects -->
-  <Import Project="..\..\Global.props"/>
+  <Import Project="..\..\Global.props" />
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Geometrician.Flex.csproj"/>
+    <ProjectReference Include="..\src\Geometrician.Flex.csproj" />
   </ItemGroup>
 
 </Project>

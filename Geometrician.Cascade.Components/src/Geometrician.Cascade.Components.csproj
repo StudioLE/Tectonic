@@ -6,23 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <SupportedPlatform Include="browser"/>
+    <SupportedPlatform Include="browser" />
   </ItemGroup>
 
   <!-- Use consistent properties across all projects -->
-  <Import Project="..\..\Global.props"/>
+  <Import Project="..\..\Global.props" />
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.11"/>
-    <PackageReference Include="MudBlazor" Version="6.1.6"/>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.11" />
+    <PackageReference Include="MudBlazor" Version="6.1.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geometrician.Workflows\src\Geometrician.Workflows.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Workflows\src\Geometrician.Workflows.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Watch Include="wwwroot\*.js"/>
-    <Watch Include="wwwroot\*.css"/>
+    <Watch Include="wwwroot\*.js" />
+    <Watch Include="wwwroot\*.css" />
   </ItemGroup>
 </Project>

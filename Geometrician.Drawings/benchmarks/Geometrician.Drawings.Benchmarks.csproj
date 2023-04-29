@@ -5,25 +5,25 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all projects -->
-  <Import Project="..\..\Global.props"/>
+  <Import Project="..\..\Global.props" />
 
 
   <ItemGroup>
-    <Using Remove="System.IO"/>
-    <Using Include="Elements"/>
-    <Using Include="Geometrician.Core.Abstractions"/>
+    <Using Remove="System.IO" />
+    <Using Include="Elements" />
+    <Using Include="Geometrician.Core.Abstractions" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.1"/>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geometrician.Diagnostics\samples\Geometrician.Diagnostics.Samples.csproj"/>
-    <ProjectReference Include="..\src\Geometrician.Drawings.csproj"/>
-    <ProjectReference Include="..\..\Geometrician.Flex\src\Geometrician.Flex.csproj"/>
-    <ProjectReference Include="..\..\Geometrician.PDF\src\Geometrician.PDF.csproj"/>
-    <ProjectReference Include="..\..\Geometrician.SVG\src\Geometrician.SVG.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Diagnostics\samples\Geometrician.Diagnostics.Samples.csproj" />
+    <ProjectReference Include="..\src\Geometrician.Drawings.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Flex\src\Geometrician.Flex.csproj" />
+    <ProjectReference Include="..\..\Geometrician.PDF\src\Geometrician.PDF.csproj" />
+    <ProjectReference Include="..\..\Geometrician.SVG\src\Geometrician.SVG.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,14 +6,14 @@
   </PropertyGroup>
 
   <!-- Use consistent properties across all projects -->
-  <Import Project="..\..\Global.props"/>
+  <Import Project="..\..\Global.props" />
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geometrician.Workflows\src\Geometrician.Workflows.csproj"/>
+    <ProjectReference Include="..\..\Geometrician.Workflows\src\Geometrician.Workflows.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Towel" Version="1.0.40"/>
+    <PackageReference Include="Towel" Version="1.0.40" />
   </ItemGroup>
 
 </Project>
