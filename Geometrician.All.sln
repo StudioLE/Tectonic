@@ -87,6 +87,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioLE.Workflows.NUnit.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioLE.Workflows.NUnit.Samples", "StudioLE.Workflows.NUnit\samples\StudioLE.Workflows.NUnit.Samples.csproj", "{A4BFB264-6BE8-432D-A089-E298438EF6C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.Cascade.Extensions", "Geometrician.Cascade.Extensions\src\Geometrician.Cascade.Extensions.csproj", "{C8DC487C-951B-49B1-9379-F5CB8306C27D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -233,6 +235,10 @@ Global
 		{A4BFB264-6BE8-432D-A089-E298438EF6C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4BFB264-6BE8-432D-A089-E298438EF6C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4BFB264-6BE8-432D-A089-E298438EF6C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8DC487C-951B-49B1-9379-F5CB8306C27D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8DC487C-951B-49B1-9379-F5CB8306C27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8DC487C-951B-49B1-9379-F5CB8306C27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8DC487C-951B-49B1-9379-F5CB8306C27D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -273,6 +279,7 @@ Global
 		{6A63A498-0B29-43EE-9762-FDF91FCD3595} = {A7782F32-4179-40B9-B5D6-95051EA9D26D}
 		{0CF1F27E-6746-4713-856E-767FB84EC30B} = {A7782F32-4179-40B9-B5D6-95051EA9D26D}
 		{A4BFB264-6BE8-432D-A089-E298438EF6C6} = {A7782F32-4179-40B9-B5D6-95051EA9D26D}
+		{C8DC487C-951B-49B1-9379-F5CB8306C27D} = {1BC91E56-935C-40B0-A013-49CBD3511C2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB249DC8-BB8F-4BD8-A5D6-2206C1BC3442}
