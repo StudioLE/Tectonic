@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Visualise and verify the results of Elements logic in NUnit tests.</Description>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props" />
+
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DiffEngine" Version="9.0.6" />
+    <PackageReference Include="Hypar.Elements.Serialization.IFC" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.4" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit.Engine" Version="3.15.2" />
+    <PackageReference Include="StudioLE.Verify.NUnit" Version="0.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Cascade.Workflows\src\Cascade.Workflows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Remove="System.IO" />
+    <Using Remove="Elements" />
+    <Using Remove="Elements.Geometry" />
+    <Using Remove="Elements.Geometry.Solids" />
+    <Using Remove="GeometryEx" />
+    <Using Remove="Geometrician.Core.Abstractions" />
+    <Using Remove="Geometrician.Core.Constraints" />
+    <Using Remove="Geometrician.Core.Elements" />
+    <Using Remove="Geometrician.Core.Geometry" />
+    <Using Static="true" Remove="Geometrician.Core.Elements.MaterialHelpers" />
+  </ItemGroup>
+
+</Project>

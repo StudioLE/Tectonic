@@ -1,6 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using StudioLE.Workflows.Abstractions;
+using Cascade.Workflows.Abstractions;
 
 namespace Geometrician.Flex.Samples;
 

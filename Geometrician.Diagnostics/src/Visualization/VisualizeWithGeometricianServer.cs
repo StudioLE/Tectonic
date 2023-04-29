@@ -1,5 +1,5 @@
 using System.Text;
-using Geometrician.Workflows.Visualization;
+using Cascade.Assets.Visualization;
 using Newtonsoft.Json;
 using StudioLE.Core.Results;
 using StudioLE.Core.System;
@@ -7,7 +7,7 @@ using StudioLE.Core.System;
 namespace Geometrician.Diagnostics.Visualization;
 
 /// <summary>
-/// Visualize a <see cref="Model"/> in <c>Geometrician.Cascade.Server</c>.
+/// Visualize a <see cref="Model"/> in <c>Cascade.Server</c>.
 /// </summary>
 public sealed class VisualizeWithGeometricianServer : IVisualizationStrategy
 {

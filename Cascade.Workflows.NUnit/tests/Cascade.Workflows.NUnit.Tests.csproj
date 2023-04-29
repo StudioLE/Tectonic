@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Cascade.Workflows.NUnit.csproj" />
+    <ProjectReference Include="..\samples\Cascade.Workflows.NUnit.Samples.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
+    <PackageReference Include="coverlet.collector" Version="3.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StudioLE.Verify.NUnit" Version="0.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Remove="System.IO" />
+    <Using Remove="Elements" />
+    <Using Remove="Elements.Geometry" />
+    <Using Remove="Elements.Geometry.Solids" />
+    <Using Remove="GeometryEx" />
+    <Using Remove="Geometrician.Core.Abstractions" />
+    <Using Remove="Geometrician.Core.Constraints" />
+    <Using Remove="Geometrician.Core.Elements" />
+    <Using Remove="Geometrician.Core.Geometry" />
+    <Using Static="true" Remove="Geometrician.Core.Elements.MaterialHelpers" />
+  </ItemGroup>
+
+</Project>

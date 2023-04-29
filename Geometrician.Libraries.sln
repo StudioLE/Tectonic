@@ -49,11 +49,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.IFC", "Geometr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.Drawings.Samples", "Geometrician.Drawings\samples\Geometrician.Drawings.Samples.csproj", "{8D61A1B4-068E-415B-B0A1-02FB46923919}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.Workflows.Samples", "Geometrician.Workflows\samples\Geometrician.Workflows.Samples.csproj", "{984FECA5-7DB2-468C-B4B3-EA64720DC978}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Assets.Samples", "Cascade.Assets\samples\Cascade.Assets.Samples.csproj", "{984FECA5-7DB2-468C-B4B3-EA64720DC978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.Workflows", "Geometrician.Workflows\src\Geometrician.Workflows.csproj", "{B12EDA7E-CC80-4B4E-93AD-66DEEE0434FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Assets", "Cascade.Assets\src\Cascade.Assets.csproj", "{B12EDA7E-CC80-4B4E-93AD-66DEEE0434FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.Workflows.Tests", "Geometrician.Workflows\tests\Geometrician.Workflows.Tests.csproj", "{9995C744-A3EC-4149-B7EC-75226AB358F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Assets.Tests", "Cascade.Assets\tests\Cascade.Assets.Tests.csproj", "{9995C744-A3EC-4149-B7EC-75226AB358F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.Diagnostics", "Geometrician.Diagnostics\src\Geometrician.Diagnostics.csproj", "{BBE73CDF-44B4-48B5-867F-89BF39A0AF4C}"
 EndProject
@@ -65,17 +65,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometrician.Diagnostics.NU
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{D6DA2538-7FED-411F-8A32-206D20EEF375}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioLE.Workflows.Samples", "StudioLE.Workflows\samples\StudioLE.Workflows.Samples.csproj", "{A3441BB2-1DB9-42D5-A548-C1CDF4768921}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Workflows.Samples", "Cascade.Workflows\samples\Cascade.Workflows.Samples.csproj", "{A3441BB2-1DB9-42D5-A548-C1CDF4768921}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioLE.Workflows", "StudioLE.Workflows\src\StudioLE.Workflows.csproj", "{C81DC0B8-FDF9-4AC8-A108-6C5019FE149B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Workflows", "Cascade.Workflows\src\Cascade.Workflows.csproj", "{C81DC0B8-FDF9-4AC8-A108-6C5019FE149B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioLE.Workflows.Tests", "StudioLE.Workflows\tests\StudioLE.Workflows.Tests.csproj", "{7685847C-ABDF-40AC-BDAD-FE159E3D4E49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Workflows.Tests", "Cascade.Workflows\tests\Cascade.Workflows.Tests.csproj", "{7685847C-ABDF-40AC-BDAD-FE159E3D4E49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioLE.Workflows.NUnit.Samples", "StudioLE.Workflows.NUnit\samples\StudioLE.Workflows.NUnit.Samples.csproj", "{15CC6FD2-D2DA-40B0-8568-B31DA316E8AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Workflows.NUnit.Samples", "Cascade.Workflows.NUnit\samples\Cascade.Workflows.NUnit.Samples.csproj", "{15CC6FD2-D2DA-40B0-8568-B31DA316E8AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioLE.Workflows.NUnit", "StudioLE.Workflows.NUnit\src\StudioLE.Workflows.NUnit.csproj", "{4E10A876-A3CD-4FD3-9704-9F00E709581D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Workflows.NUnit", "Cascade.Workflows.NUnit\src\Cascade.Workflows.NUnit.csproj", "{4E10A876-A3CD-4FD3-9704-9F00E709581D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioLE.Workflows.NUnit.Tests", "StudioLE.Workflows.NUnit\tests\StudioLE.Workflows.NUnit.Tests.csproj", "{0DFAFED8-DD21-4ED8-877F-56CB3BED7F6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Workflows.NUnit.Tests", "Cascade.Workflows.NUnit\tests\Cascade.Workflows.NUnit.Tests.csproj", "{0DFAFED8-DD21-4ED8-877F-56CB3BED7F6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{130F93FB-4497-476C-BDC6-18FE09D45687}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -234,15 +236,15 @@ Global
 		{A0C9B3FD-E4EF-4CC5-942A-37D8F6A2C89F} = {1DA041CF-77AA-4489-A353-99206FC09556}
 		{34BC15B7-E6F9-4ADE-BD9B-E7A4667447C7} = {1DA041CF-77AA-4489-A353-99206FC09556}
 		{59A1DFFE-52CD-43B7-A27C-36970F82F076} = {1DA041CF-77AA-4489-A353-99206FC09556}
-		{B12EDA7E-CC80-4B4E-93AD-66DEEE0434FD} = {D6DA2538-7FED-411F-8A32-206D20EEF375}
-		{984FECA5-7DB2-468C-B4B3-EA64720DC978} = {D6DA2538-7FED-411F-8A32-206D20EEF375}
-		{9995C744-A3EC-4149-B7EC-75226AB358F8} = {D6DA2538-7FED-411F-8A32-206D20EEF375}
 		{A3441BB2-1DB9-42D5-A548-C1CDF4768921} = {D6DA2538-7FED-411F-8A32-206D20EEF375}
 		{C81DC0B8-FDF9-4AC8-A108-6C5019FE149B} = {D6DA2538-7FED-411F-8A32-206D20EEF375}
 		{7685847C-ABDF-40AC-BDAD-FE159E3D4E49} = {D6DA2538-7FED-411F-8A32-206D20EEF375}
 		{15CC6FD2-D2DA-40B0-8568-B31DA316E8AF} = {D6DA2538-7FED-411F-8A32-206D20EEF375}
 		{4E10A876-A3CD-4FD3-9704-9F00E709581D} = {D6DA2538-7FED-411F-8A32-206D20EEF375}
 		{0DFAFED8-DD21-4ED8-877F-56CB3BED7F6A} = {D6DA2538-7FED-411F-8A32-206D20EEF375}
+		{B12EDA7E-CC80-4B4E-93AD-66DEEE0434FD} = {130F93FB-4497-476C-BDC6-18FE09D45687}
+		{984FECA5-7DB2-468C-B4B3-EA64720DC978} = {130F93FB-4497-476C-BDC6-18FE09D45687}
+		{9995C744-A3EC-4149-B7EC-75226AB358F8} = {130F93FB-4497-476C-BDC6-18FE09D45687}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB249DC8-BB8F-4BD8-A5D6-2206C1BC3442}

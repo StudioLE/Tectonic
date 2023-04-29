@@ -1,8 +1,8 @@
 using Geometrician.Core.Storage;
-using Geometrician.Workflows.Visualization;
+using Cascade.Assets.Visualization;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
-using StudioLE.Workflows.Abstractions;
+using Cascade.Workflows.Abstractions;
 
 namespace Geometrician.Diagnostics.Tests.Visualization;
 

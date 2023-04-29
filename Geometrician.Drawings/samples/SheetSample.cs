@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Geometrician.Core.Assets;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Flex;
-using StudioLE.Workflows.Abstractions;
+using Cascade.Workflows.Abstractions;
 
 namespace Geometrician.Drawings.Samples;
 

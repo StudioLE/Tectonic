@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props" />
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Geometrician.Core.Tests" />
+    <InternalsVisibleTo Include="Geometrician.Drawings.Benchmarks" />
+    <InternalsVisibleTo Include="Geometrician.Drawings.Samples" />
+    <InternalsVisibleTo Include="Geometrician.Drawings.Tests" />
+    <InternalsVisibleTo Include="Geometrician.PDF.Tests" />
+    <InternalsVisibleTo Include="Geometrician.SVG.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Cascade.Assets.csproj" />
+    <ProjectReference Include="..\..\Cascade.Workflows\src\Cascade.Workflows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SolutionName)' == 'Cascade'">
+    <PackageReference Include="Geometrician.Diagnostics.Samples" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.Drawings" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.Drawings.Samples" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.Flex" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.Flex.Samples" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.IFC" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.PDF" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.SVG" Version="$(GeometricianNuGetVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SolutionName)' != 'Cascade'">
+    <ProjectReference Include="..\..\Geometrician.Diagnostics\samples\Geometrician.Diagnostics.Samples.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Drawings\samples\Geometrician.Drawings.Samples.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Drawings\src\Geometrician.Drawings.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Flex\src\Geometrician.Flex.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Flex\samples\Geometrician.Flex.Samples.csproj" />
+    <ProjectReference Include="..\..\Geometrician.IFC\src\Geometrician.IFC.csproj" />
+    <ProjectReference Include="..\..\Geometrician.PDF\src\Geometrician.PDF.csproj" />
+    <ProjectReference Include="..\..\Geometrician.SVG\src\Geometrician.SVG.csproj" />
+  </ItemGroup>
+
+</Project>

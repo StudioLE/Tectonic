@@ -63,7 +63,7 @@ jobs:
       - analysis
     uses: ./.github/workflows/05-build-webassembly-app.yml
     with:
-      solution: Geometrician.Cascade.WebAssembly/src/Geometrician.Cascade.WebAssembly.csproj
+      solution: Cascade.WebAssembly/src/Cascade.WebAssembly.csproj
       version: ${{ needs.analysis.outputs.version }}
     secrets: inherit
 

@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
-    <InternalsVisibleTo Include="Geometrician.Cascade.Components" />
+    <InternalsVisibleTo Include="Cascade.Components" />
     <InternalsVisibleTo Include="Geometrician.Diagnostics.NUnit" />
   </ItemGroup>
 
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geometrician.Workflows\src\Geometrician.Workflows.csproj" />
+    <ProjectReference Include="..\..\Cascade.Assets\src\Cascade.Assets.csproj" />
     <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj" />
   </ItemGroup>
 

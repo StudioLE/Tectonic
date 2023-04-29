@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Description>A [Blazor](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) client application to visualise the results of Elements logic.</Description>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Cascade.Extensions\src\Cascade.Extensions.csproj" />
+    <ProjectReference Include="..\..\Cascade.Assets\samples\Cascade.Assets.Samples.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SolutionName)' == 'Cascade'">
+    <PackageReference Include="Geometrician.Drawings.Samples" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.Flex.Samples" Version="$(GeometricianNuGetVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SolutionName)' != 'Cascade'">
+    <ProjectReference Include="..\..\Geometrician.Drawings\samples\Geometrician.Drawings.Samples.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Flex\samples\Geometrician.Flex.Samples.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Include="Scripts\*.js" />
+    <Watch Include="Scripts\*.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\dist\bundle.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\dist\bundle.js" />
+  </ItemGroup>
+</Project>

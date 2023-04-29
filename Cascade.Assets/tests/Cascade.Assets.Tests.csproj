@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\samples\Cascade.Assets.Samples.csproj" />
+    <ProjectReference Include="..\src\Cascade.Assets.csproj" />
+    <ProjectReference Include="..\..\Cascade.Workflows\src\Cascade.Workflows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SolutionName)' == 'Cascade'">
+    <PackageReference Include="Geometrician.Diagnostics.Samples" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.Diagnostics.NUnit" Version="$(GeometricianNuGetVersion)" />
+    <PackageReference Include="Geometrician.Flex.Samples" Version="$(GeometricianNuGetVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SolutionName)' != 'Cascade'">
+    <ProjectReference Include="..\..\Geometrician.Core\tests\Geometrician.Core.Tests.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Diagnostics\samples\Geometrician.Diagnostics.Samples.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Diagnostics.NUnit\src\Geometrician.Diagnostics.NUnit.csproj" />
+    <ProjectReference Include="..\..\Geometrician.Flex\samples\Geometrician.Flex.Samples.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0"/>
+    <PackageReference Include="NUnit" Version="3.13.3"/>
+    <PackageReference Include="NUnit3TestAdapter" Version="4.4.2"/>
+    <PackageReference Include="coverlet.collector" Version="3.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

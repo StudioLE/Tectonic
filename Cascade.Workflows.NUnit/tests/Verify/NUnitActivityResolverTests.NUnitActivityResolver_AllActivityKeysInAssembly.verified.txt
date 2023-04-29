@@ -1,0 +1,4 @@
+﻿Cascade.Workflows.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test
+Cascade.Workflows.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test_Async
+Cascade.Workflows.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test_Verify
+Cascade.Workflows.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_TestCase("actual","expected")

@@ -1,4 +1,0 @@
-﻿StudioLE.Workflows.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test
-StudioLE.Workflows.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test_Async
-StudioLE.Workflows.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test_Verify
-StudioLE.Workflows.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_TestCase("actual","expected")

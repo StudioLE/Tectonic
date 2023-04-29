@@ -1,15 +1,15 @@
 ﻿using Geometrician.Core.Assets;
 using Geometrician.Core.Storage;
 using Geometrician.Diagnostics.Visualization;
-using Geometrician.Workflows.Assets;
-using Geometrician.Workflows.Configuration;
-using Geometrician.Workflows.Storage;
-using Geometrician.Workflows.Visualization;
+using Cascade.Assets.Factories;
+using Cascade.Assets.Configuration;
+using Cascade.Assets.Storage;
+using Cascade.Assets.Visualization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using StudioLE.Workflows.Abstractions;
-using StudioLE.Workflows.StaticMethodActivities;
+using Cascade.Workflows.Abstractions;
+using Cascade.Workflows.StaticMethodActivities;
 
 namespace Geometrician.Diagnostics.Tests.Visualization;
 
