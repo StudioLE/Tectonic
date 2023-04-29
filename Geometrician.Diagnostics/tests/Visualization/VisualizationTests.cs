@@ -49,6 +49,8 @@ internal sealed class VisualizationTests
         object service = services.GetRequiredService(type);
         if (service is not IVisualizationStrategy strategy)
             throw new($"The service is not an {nameof(IVisualizationStrategy)}");
+        if(service is VisualizeAsFile visualizeAsFile)
+            visualizeAsFile.IsOpenEnabled = false;
 
 
         // Act
