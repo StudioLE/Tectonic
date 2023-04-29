@@ -10,11 +10,13 @@ using Geometrician.PDF;
 using Geometrician.SVG;
 using Geometrician.Workflows.Assets;
 using Geometrician.Workflows.Configuration;
-using Geometrician.Workflows.Execution;
 using Geometrician.Workflows.Storage;
 using Geometrician.Workflows.Visualization;
 using MudBlazor;
 using MudBlazor.Services;
+using StudioLE.Workflows;
+using StudioLE.Workflows.Abstractions;
+using StudioLE.Workflows.Providers;
 
 // Create Builder
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -72,7 +74,7 @@ builder.Services.AddTransient<IfcAssetFactory>();
 builder.Services.AddTransient<JsonAssetFactory>();
 
 // Inject Lineweights services
-builder.Services.AddTransient<IActivityResolver, StaticMethodActivityResolver>();
+builder.Services.AddTransient<IActivityResolver, ActivityResolver>();
 builder.Services.AddTransient<IStorageStrategy, BlobStorageStrategy>();
 
 // Build application

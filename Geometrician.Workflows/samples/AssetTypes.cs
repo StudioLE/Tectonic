@@ -1,12 +1,16 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using Geometrician.Core.Assets;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Drawings;
+using StudioLE.Workflows.Abstractions;
 
 namespace Geometrician.Workflows.Samples;
 
-public static class AssetTypes
+[DisplayName(nameof(AssetTypes))]
+[Description(nameof(AssetTypes))]
+public class AssetTypes : IActivity<AssetTypes.Inputs, AssetTypes.Outputs>
 {
     public sealed class Inputs
     {
@@ -48,7 +52,7 @@ public static class AssetTypes
         public InternalAsset? InternalAsset { get; set; }
     }
 
-    public static Outputs Execute(Inputs inputs)
+    public Task<Outputs> Execute(Inputs inputs)
     {
         Outputs outputs = new()
         {
@@ -106,6 +110,6 @@ public static class AssetTypes
         if (inputs.ThrowAnException)
             throw new("This exception is thrown intentionally to test exception handling.");
 
-        return outputs;
+        return Task.FromResult(outputs);
     }
 }

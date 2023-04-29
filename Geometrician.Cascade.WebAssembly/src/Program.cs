@@ -13,12 +13,14 @@ using Geometrician.PDF;
 using Geometrician.SVG;
 using Geometrician.Workflows.Assets;
 using Geometrician.Workflows.Configuration;
-using Geometrician.Workflows.Execution;
 using Geometrician.Workflows.Samples;
 using Geometrician.Workflows.Visualization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
+using StudioLE.Workflows;
+using StudioLE.Workflows.Abstractions;
+using StudioLE.Workflows.Providers;
 
 // Create Builder
 WebAssemblyHostBuilder builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -72,7 +74,7 @@ builder.Services.AddTransient<IfcAssetFactory>();
 builder.Services.AddTransient<JsonAssetFactory>();
 
 // Inject environment specific Geometrician services
-builder.Services.AddTransient<IActivityResolver, StaticMethodActivityResolver>();
+builder.Services.AddTransient<IActivityResolver, ActivityResolver>();
 builder.Services.AddTransient<IStorageStrategy, ObjectUrlStorageStrategy>();
 
 // Inject Blazor WebAssembly services

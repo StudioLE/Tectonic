@@ -1,10 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Geometrician.Flex.Samples.Elements;
+using StudioLE.Workflows.Abstractions;
 
 namespace Geometrician.Flex.Samples;
 
-public static class Seating1dLinear
+[DisplayName(nameof(Seating1dLinear))]
+[Description(nameof(Seating1dLinear))]
+public class Seating1dLinear : IActivity<Seating1dLinear.Inputs,Seating1dLinear.Outputs>
 {
+
     public class Inputs
     {
         [Required]
@@ -17,7 +22,7 @@ public static class Seating1dLinear
         public Model Model { get; set; } = new();
     }
 
-    public static Outputs Execute(Inputs inputs)
+    public Task<Outputs> Execute(Inputs inputs)
     {
         Line line = new(Vector3.Origin, Vector3.XAxis, inputs.LineLength);
         ElementInstance seat = new Seat("Seat").CreateInstance();
@@ -45,6 +50,6 @@ public static class Seating1dLinear
         outputs.Model.AddElements(components);
 
         // TODO: Seats are unexpectedly hovering above ground. Possibly an origin issue?
-        return outputs;
+        return Task.FromResult(outputs);
     }
 }

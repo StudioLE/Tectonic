@@ -1,8 +1,12 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using StudioLE.Workflows.Abstractions;
 
 namespace Geometrician.Flex.Samples;
 
-public static class WallStretcherBond
+[DisplayName(nameof(WallStretcherBond))]
+[Description(nameof(WallStretcherBond))]
+public class WallStretcherBond : IActivity<WallStretcherBond.Inputs, WallStretcherBond.Outputs>
 {
     public class Inputs
     {
@@ -24,7 +28,7 @@ public static class WallStretcherBond
         public Model Model { get; set; } = new();
     }
 
-    public static Outputs Execute(Inputs inputs)
+    public Task<Outputs> Execute(Inputs inputs)
     {
         Line line = new(Vector3.Origin, Vector3.XAxis, inputs.WallLength);
         StandardWall wall = new(line, inputs.WallDepth, inputs.WallHeight);
@@ -71,6 +75,6 @@ public static class WallStretcherBond
         Scenes.ToJson(Scenes.Name.Brickwork, componentsFlattened);
 #endif
 
-        return outputs;
+        return Task.FromResult(outputs);
     }
 }

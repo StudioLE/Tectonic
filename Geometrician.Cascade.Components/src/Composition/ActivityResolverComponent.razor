@@ -3,15 +3,22 @@
 <MudForm Style="width: inherit;">
   <MosaicComponent Padding="false" Margin="false">
     <TileComponent XScale="1.5" YScale="1">
-      <MudSelect
-        Label="Activity"
-        HelperText="Activity"
-        @bind-Value="ActivitySelectValue">
-        @foreach (string activity in ActivitySelectOptions)
-        {
-          <MudSelectItem Value="@activity">@activity</MudSelectItem>
-        }
-      </MudSelect>
+      @if(ActivitySelectOptions.Any())
+      {
+        <MudSelect
+          Label="Activity"
+          HelperText="Activity"
+          @bind-Value="ActivitySelectValue">
+          @foreach (string activity in ActivitySelectOptions)
+          {
+            <MudSelectItem Value="@activity">@activity</MudSelectItem>
+          }
+        </MudSelect>
+      }
+      else
+      {
+        <span>No activities were found</span>
+      }
     </TileComponent>
 
     <TileComponent XScale="0.25" YScale="0.5" Padding="false">

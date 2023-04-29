@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Reflection;
-using Geometrician.Workflows.Execution;
 using Microsoft.Extensions.Logging;
 using StudioLE.Core.Results;
 using StudioLE.Core.System;
+using StudioLE.Workflows.Abstractions;
 
 namespace Geometrician.Cascade.Cli;
 
@@ -61,8 +61,8 @@ public sealed class RunCommand
             return "Failed: " + result.Errors.Join(". ");
 
         // TODO: This would make so much more sense as a workflow and we get the IVisualizeStrategy via DI.
-        object outputs = await success.Value.Execute();
-
+        object outputs = await success.Value.Execute(null!);
+        Console.WriteLine(outputs);
         return "Execution complete..";
     }
 }

@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Visualise and verify the results of Elements logic.</Description>
+  </PropertyGroup>
+
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props" />
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
+    <PackageReference Include="CsvHelper" Version="28.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="StudioLE.Core" Version="0.4.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Using Remove="System.IO" />
+    <Using Remove="Elements" />
+    <Using Remove="Elements.Geometry" />
+    <Using Remove="Elements.Geometry.Solids" />
+    <Using Remove="GeometryEx" />
+    <Using Remove="Geometrician.Core.Abstractions" />
+    <Using Remove="Geometrician.Core.Constraints" />
+    <Using Remove="Geometrician.Core.Elements" />
+    <Using Remove="Geometrician.Core.Geometry" />
+    <Using Static="true" Remove="Geometrician.Core.Elements.MaterialHelpers" />    
+  </ItemGroup>
+
+</Project>

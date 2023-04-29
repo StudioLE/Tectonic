@@ -1,10 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
 using Geometrician.Core.Assets;
-using Geometrician.Diagnostics.Hosting;
-using Geometrician.Diagnostics.NUnit.Execution;
+using Geometrician.Diagnostics.Visualization;
 using Geometrician.Workflows.Visualization;
-using Microsoft.Extensions.DependencyInjection;
 using StudioLE.Core.System;
 
 namespace Geometrician.Diagnostics.NUnit.Visualization;
@@ -34,25 +32,15 @@ public class Visualize
     /// <inheritdoc cref="Visualize"/>
     public Visualize()
     {
-        IServiceProvider services = Services.GetInstance();
-        _strategy = services.GetRequiredService<IVisualizationStrategy>();
+        VisualizationConfiguration configuration = new();
+        _strategy = new VisualizeWithGeometricianServer(configuration);
     }
 
     /// <inheritdoc cref="Visualize"/>
     public void Queue(Model model, IReadOnlyCollection<IAsset>? assets = null)
     {
-        if (!NUnitActivityResolver.IsExecuting && !IsEnabled)
+        if (!IsEnabled)
             return;
-
-        if (NUnitActivityResolver.IsExecuting)
-        {
-            NUnitActivityResolver.TestOutput = new
-            {
-                Model = model,
-                Results = TestContext.CurrentContext.Result
-            };
-            return;
-        }
 
         VisualizeRequest request = new()
         {
@@ -64,7 +52,7 @@ public class Visualize
     /// <inheritdoc cref="Visualize"/>
     public async Task Execute()
     {
-        if (!NUnitActivityResolver.IsExecuting && !IsEnabled)
+        if (!IsEnabled)
             return;
         await _strategy.Execute(_requests.ToArray());
     }

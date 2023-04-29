@@ -1,10 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using StudioLE.Core.Exceptions;
+using StudioLE.Workflows.Abstractions;
 
 namespace Geometrician.Flex.Samples;
 
-public static class Flex2dSample
+[DisplayName(nameof(Flex2dSample))]
+[Description(nameof(Flex2dSample))]
+public class Flex2dSample : IActivity<Flex2dSample.Inputs, Flex2dSample.Outputs>
 {
+    public class Inputs
+    {
+        public ContainerInputs Container { get; set; } = new();
+        public SequenceInputs FirstSequence { get; set; } = new();
+        public SequenceInputs SecondSequence { get; set; } = new();
+        public FlexInputs Flex { get; set; } = new();
+        public DisplayInputs Display { get; set; } = new();
+    }
+
     public class ContainerInputs
     {
         [Required]
@@ -22,18 +35,18 @@ public static class Flex2dSample
 
     public class SequenceInputs
     {
-        [Required]
-        public int MaxCount { get; set; } = 20;
-
-        [Required]
-        public SequenceType Type { get; set; } = SequenceType.StretcherSoldier;
-
         public enum SequenceType
         {
             StretcherSoldier,
             SoldierStretcher,
             StretcherHeader
         }
+
+        [Required]
+        public int MaxCount { get; set; } = 20;
+
+        [Required]
+        public SequenceType Type { get; set; } = SequenceType.StretcherSoldier;
     }
 
     public class FlexInputs
@@ -61,7 +74,6 @@ public static class Flex2dSample
 
         [Required]
         public bool ShowComponents { get; set; } = true;
-
     }
 
     public class Outputs
@@ -69,27 +81,22 @@ public static class Flex2dSample
         public Model Model { get; set; } = new();
     }
 
-    public static Outputs Execute(
-        ContainerInputs containerInputs,
-        SequenceInputs firstSequenceInputs,
-        SequenceInputs secondSequenceInputs,
-        FlexInputs flexInputs,
-        DisplayInputs displayInputs)
+    public Task<Outputs> Execute(Inputs inputs)
     {
-        Brick container = new(containerInputs.Width, containerInputs.Length, containerInputs.Height, containerInputs.Spacing, "Container")
+        Brick container = new(inputs.Container.Width, inputs.Container.Length, inputs.Container.Height, inputs.Container.Spacing, "Container")
         {
             Material = MaterialByName("Gray")
         };
 
-        SequenceBuilder firstSequence = GetSequenceByInputs(firstSequenceInputs);
-        SequenceBuilder secondSequence = GetSequenceByInputs(secondSequenceInputs);
+        SequenceBuilder firstSequence = GetSequenceByInputs(inputs.FirstSequence);
+        SequenceBuilder secondSequence = GetSequenceByInputs(inputs.SecondSequence);
 
         Flex2d builder = new Flex2d()
-            .MainJustification(flexInputs.MainJustification)
-            .CrossJustification(flexInputs.CrossJustification)
-            .CrossAlignment(flexInputs.CrossAlignment)
-            .NormalAlignment(flexInputs.NormalAlignment)
-            .NormalSettingOut(flexInputs.NormalSettingOut)
+            .MainJustification(inputs.Flex.MainJustification)
+            .CrossJustification(inputs.Flex.CrossJustification)
+            .CrossAlignment(inputs.Flex.CrossAlignment)
+            .NormalAlignment(inputs.Flex.NormalAlignment)
+            .NormalSettingOut(inputs.Flex.NormalSettingOut)
             .SetMainSequence(firstSequence, secondSequence)
             .SetContainer(container);
 
@@ -97,20 +104,20 @@ public static class Flex2dSample
 
         IReadOnlyCollection<IReadOnlyCollection<ElementInstance>> components = builder.Build();
 
-        if (displayInputs.ShowAssemblies)
+        if (inputs.Display.ShowAssemblies)
             foreach (ElementInstance instance in builder.Assemblies)
             {
                 outputs.Model.AddBounds(instance, MaterialByName("Aqua"));
                 outputs.Model.AddBounds(instance.BaseDefinition, MaterialByName("Orange"));
             }
 
-        if (displayInputs.ShowComponents)
+        if (inputs.Display.ShowComponents)
         {
             outputs.Model.AddElements(components.SelectMany(x => x));
             outputs.Model.AddBounds(components.SelectMany(x => x));
         }
 
-        return outputs;
+        return Task.FromResult(outputs);
     }
 
     private static SequenceBuilder GetSequenceByInputs(SequenceInputs inputs)

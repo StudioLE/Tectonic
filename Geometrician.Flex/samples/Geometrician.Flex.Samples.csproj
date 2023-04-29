@@ -4,6 +4,7 @@
   <Import Project="..\..\Global.props" />
 
   <ItemGroup>
+    <ProjectReference Include="..\..\StudioLE.Workflows\src\StudioLE.Workflows.csproj" />
     <ProjectReference Include="..\src\Geometrician.Flex.csproj" />
   </ItemGroup>
 

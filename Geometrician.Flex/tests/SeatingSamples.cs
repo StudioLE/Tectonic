@@ -20,7 +20,7 @@ internal sealed class SeatingSamples
         Seating1dLinear.Inputs inputs = new();
 
         // Act
-        Seating1dLinear.Outputs outputs = Seating1dLinear.Execute(inputs);
+        Seating1dLinear.Outputs outputs = await new Seating1dLinear().Execute(inputs);
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);
@@ -37,7 +37,7 @@ internal sealed class SeatingSamples
         Seating1dRadial.Inputs inputs = new();
 
         // Act
-        Seating1dRadial.Outputs outputs = Seating1dRadial.Execute(inputs);
+        Seating1dRadial.Outputs outputs = await new Seating1dRadial().Execute(inputs);
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);
@@ -54,7 +54,7 @@ internal sealed class SeatingSamples
         Seating2dAlternating.Inputs inputs = new();
 
         // Act
-        Seating2dAlternating.Outputs outputs = Seating2dAlternating.Execute(inputs);
+        Seating2dAlternating.Outputs outputs = await new Seating2dAlternating().Execute(inputs);
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);

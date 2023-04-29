@@ -9,11 +9,25 @@
   <Import Project="..\..\Global.props" />
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geometrician.Workflows\src\Geometrician.Workflows.csproj" />
+    <ProjectReference Include="..\..\StudioLE.Workflows\samples\StudioLE.Workflows.Samples.csproj" />
+    <ProjectReference Include="..\..\StudioLE.Workflows\src\StudioLE.Workflows.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Towel" Version="1.0.40" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Remove="System.IO" />
+    <Using Remove="Elements" />
+    <Using Remove="Elements.Geometry" />
+    <Using Remove="Elements.Geometry.Solids" />
+    <Using Remove="GeometryEx" />
+    <Using Remove="Geometrician.Core.Abstractions" />
+    <Using Remove="Geometrician.Core.Constraints" />
+    <Using Remove="Geometrician.Core.Elements" />
+    <Using Remove="Geometrician.Core.Geometry" />
+    <Using Static="true" Remove="Geometrician.Core.Elements.MaterialHelpers" />
   </ItemGroup>
 
 </Project>

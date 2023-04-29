@@ -13,7 +13,7 @@ internal sealed class SamplesTests
     private Model _model = new();
 
     [Test]
-    public void AssetTypes([Values] Scenes.Name name, [Values] bool includeAssetsInModel)
+    public async Task AssetTypes([Values] Scenes.Name name, [Values] bool includeAssetsInModel)
     {
         // Arrange
         AssetTypes.Inputs inputs = new()
@@ -23,7 +23,7 @@ internal sealed class SamplesTests
         };
 
         // Act
-        AssetTypes.Outputs outputs = Samples.AssetTypes.Execute(inputs);
+        AssetTypes.Outputs outputs = await new AssetTypes().Execute(inputs);
 
         // Preview
         _model = outputs.Model;

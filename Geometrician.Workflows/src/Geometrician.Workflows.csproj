@@ -27,8 +27,4 @@
     <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Workflows\" />
-  </ItemGroup>
-
 </Project>

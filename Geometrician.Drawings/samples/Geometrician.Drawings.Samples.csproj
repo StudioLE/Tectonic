@@ -6,6 +6,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Geometrician.Diagnostics\samples\Geometrician.Diagnostics.Samples.csproj" />
     <ProjectReference Include="..\..\Geometrician.Flex\src\Geometrician.Flex.csproj" />
+    <ProjectReference Include="..\..\StudioLE.Workflows\src\StudioLE.Workflows.csproj" />
     <ProjectReference Include="..\src\Geometrician.Drawings.csproj" />
     <ProjectReference Include="..\..\Geometrician.PDF\src\Geometrician.PDF.csproj" />
     <ProjectReference Include="..\..\Geometrician.SVG\src\Geometrician.SVG.csproj" />

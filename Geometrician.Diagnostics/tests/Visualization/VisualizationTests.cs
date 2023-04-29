@@ -1,21 +1,24 @@
-using Geometrician.Diagnostics.Hosting;
 using Geometrician.Diagnostics.NUnit.Visualization;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Diagnostics.Visualization;
 using Geometrician.Workflows.Visualization;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
 namespace Geometrician.Diagnostics.Tests.Visualization;
 
 internal sealed class VisualizationTests
 {
-    private readonly IServiceProvider _services;
+    private readonly IHost _host;
     private readonly Model _model;
 
     public VisualizationTests()
     {
-        _services = Services.GetInstance();
+        _host = Host
+            .CreateDefaultBuilder()
+            .AddVisualizationServices()
+            .Build();
         _model = new();
         _model.AddElements(Scenes.Brickwork());
     }
@@ -24,7 +27,7 @@ internal sealed class VisualizationTests
     public async Task VisualizeAsFile_by_DI()
     {
         // Arrange
-        VisualizeAsFile strategy = _services.GetRequiredService<VisualizeAsFile>();
+        VisualizeAsFile strategy = _host.Services.GetRequiredService<VisualizeAsFile>();
         strategy.IsOpenEnabled = false;
         VisualizeRequest request = new()
         {
@@ -45,13 +48,11 @@ internal sealed class VisualizationTests
     public async Task Visualize(Type type)
     {
         // Arrange
-        IServiceProvider services = Services.GetInstance();
-        object service = services.GetRequiredService(type);
+        object service = _host.Services.GetRequiredService(type);
         if (service is not IVisualizationStrategy strategy)
             throw new($"The service is not an {nameof(IVisualizationStrategy)}");
         if(service is VisualizeAsFile visualizeAsFile)
             visualizeAsFile.IsOpenEnabled = false;
-
 
         // Act
         Visualize visualize = new(strategy);
@@ -68,7 +69,7 @@ internal sealed class VisualizationTests
     public async Task VisualizeWithGeometricianServer_by_DI()
     {
         // Arrange
-        VisualizeWithGeometricianServer strategy = _services.GetRequiredService<VisualizeWithGeometricianServer>();
+        VisualizeWithGeometricianServer strategy = _host.Services.GetRequiredService<VisualizeWithGeometricianServer>();
         VisualizeRequest request = new()
         {
             Model = _model

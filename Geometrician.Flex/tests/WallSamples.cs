@@ -20,7 +20,7 @@ internal sealed class WallSamples
         WallStretcherBond.Inputs inputs = new();
 
         // Act
-        WallStretcherBond.Outputs outputs = WallStretcherBond.Execute(inputs);
+        WallStretcherBond.Outputs outputs = await new WallStretcherBond().Execute(inputs);
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);
@@ -37,7 +37,7 @@ internal sealed class WallSamples
         WallFlemishBond.Inputs inputs = new();
 
         // Act
-        WallFlemishBond.Outputs outputs = WallFlemishBond.Execute(inputs);
+        WallFlemishBond.Outputs outputs = await new WallFlemishBond().Execute(inputs);
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);

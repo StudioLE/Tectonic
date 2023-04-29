@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Geometrician.Core.Assets;
-using Geometrician.Diagnostics.Hosting;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Workflows.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 using StudioLE.Core.Results;
 
@@ -11,12 +11,15 @@ namespace Geometrician.Workflows.Tests.Documents;
 
 internal sealed class AssetFactoryResolverTests
 {
-    private readonly IServiceProvider _services;
+    private readonly IHost _host;
     private readonly Model _model;
 
     public AssetFactoryResolverTests()
     {
-        _services = Services.GetInstance();
+        _host = Host
+            .CreateDefaultBuilder()
+            .AddAssetFactoryServices()
+            .Build();
         _model = new();
         _model.AddElements(Scenes.GeometricElements());
         ExternalAsset externalAsset = new()
@@ -37,7 +40,7 @@ internal sealed class AssetFactoryResolverTests
     public void AssetFactoryResolver_GetFactoriesForSourceType(Type type, int expected)
     {
         // Arrange
-        AssetFactoryResolver resolver = _services.GetRequiredService<AssetFactoryResolver>();
+        AssetFactoryResolver resolver = _host.Services.GetRequiredService<AssetFactoryResolver>();
 
         // Act
         IAssetFactory<IAsset>[] factories = resolver
@@ -53,7 +56,7 @@ internal sealed class AssetFactoryResolverTests
     {
         // Arrange
         ExampleClass example = new(_model);
-        AssetFactoryResolver resolver = _services.GetRequiredService<AssetFactoryResolver>();
+        AssetFactoryResolver resolver = _host.Services.GetRequiredService<AssetFactoryResolver>();
 
         // Act
         IAssetFactory<IAsset>[] factories = resolver

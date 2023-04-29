@@ -17,19 +17,10 @@ internal sealed class FlexSamples
     public async Task Flex2d_Sample()
     {
         // Arrange
-        Flex2dSample.ContainerInputs containerInputs = new();
-        Flex2dSample.SequenceInputs firstSequenceInputs = new();
-        Flex2dSample.SequenceInputs secondSequenceInputs = new();
-        Flex2dSample.FlexInputs flexInputs = new();
-        Flex2dSample.DisplayInputs displayInputs = new();
+        Flex2dSample.Inputs inputs = new();
 
         // Act
-        Flex2dSample.Outputs outputs = Flex2dSample.Execute(
-            containerInputs,
-            firstSequenceInputs,
-            secondSequenceInputs,
-            flexInputs,
-            displayInputs);
+        Flex2dSample.Outputs outputs = await new Flex2dSample().Execute(inputs);
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);

@@ -17,12 +17,13 @@
     <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
     <PackageReference Include="CsvHelper" Version="28.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-    <PackageReference Include="StudioLE.Verify" Version="0.1.0-develop.1" />
+    <PackageReference Include="StudioLE.Verify" Version="0.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Geometrician.Workflows\src\Geometrician.Workflows.csproj" />
     <ProjectReference Include="..\..\Geometrician.Core\src\Geometrician.Core.csproj" />
+    <ProjectReference Include="..\..\StudioLE.Workflows\src\StudioLE.Workflows.csproj" />
   </ItemGroup>
 
 </Project>

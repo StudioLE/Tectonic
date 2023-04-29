@@ -13,15 +13,13 @@ internal sealed class SheetSampleTest
     private Model _model = new();
 
     [Test]
-    public void SheetSample_Execute()
+    public async Task SheetSample_Execute()
     {
         // Arrange
-        SheetSample.ViewInputs viewInputs = new();
-        SheetSample.SheetInputs sheetInputs = new();
-        SheetSample.ArrangementInputs arrangementInputs = new();
+        SheetSample.Inputs inputs = new();
 
         // Act
-        SheetSample.Outputs outputs = SheetSample.Execute(viewInputs, sheetInputs, arrangementInputs);
+        SheetSample.Outputs outputs = await new SheetSample().Execute(inputs);
 
         // Preview
         _model.AddElements(outputs.Model.Elements.Values);

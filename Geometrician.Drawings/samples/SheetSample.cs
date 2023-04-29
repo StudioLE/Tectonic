@@ -1,12 +1,23 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Geometrician.Core.Assets;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Flex;
+using StudioLE.Workflows.Abstractions;
 
 namespace Geometrician.Drawings.Samples;
 
-public static class SheetSample
+[DisplayName(nameof(SheetSample))]
+[Description(nameof(SheetSample))]
+public class SheetSample : IActivity<SheetSample.Inputs, SheetSample.Outputs>
 {
+    public class Inputs
+    {
+        public ViewInputs View { get; set; } = new();
+        public SheetInputs Sheet { get; set; } = new();
+        public ArrangementInputs Arrangement { get; set; } = new();
+    }
+
 
     public class ViewInputs
     {
@@ -53,7 +64,7 @@ public static class SheetSample
         public List<IAsset> Assets { get; } = new();
     }
 
-    public static Outputs Execute(ViewInputs viewInputs, SheetInputs sheetInputs, ArrangementInputs arrangementInputs)
+    public Task<Outputs> Execute(Inputs inputs)
     {
         ViewDirection[] viewDirections =
         {
@@ -68,8 +79,8 @@ public static class SheetSample
         Model model = Scenes.FromJson(Scenes.Name.Brickwork);
 
         ViewBuilder viewBuilder = new ViewBuilder()
-            .ScopePadding(viewInputs.Padding, viewInputs.Padding, viewInputs.Padding)
-            .Scale(1d / viewInputs.Scale)
+            .ScopePadding(inputs.View.Padding, inputs.View.Padding, inputs.View.Padding)
+            .Scale(1d / inputs.View.Scale)
             .ElementsInView(model.Elements.Values.ToArray());
 
         View[] views = viewDirections
@@ -82,13 +93,13 @@ public static class SheetSample
         DefaultViewArrangement viewArrangement = new();
 
         viewArrangement
-            .MainJustification(arrangementInputs.MainJustification)
-            .CrossJustification(arrangementInputs.CrossJustification)
-            .CrossAlignment(arrangementInputs.CrossAlignment);
+            .MainJustification(inputs.Arrangement.MainJustification)
+            .CrossJustification(inputs.Arrangement.CrossJustification)
+            .CrossAlignment(inputs.Arrangement.CrossAlignment);
 
         IBuilder<Sheet> builder = new SheetBuilder(sequenceBuilder, viewArrangement)
-            .SheetSize(sheetInputs.Width, sheetInputs.Height)
-            .VerticalTitleArea(sheetInputs.Title)
+            .SheetSize(inputs.Sheet.Width, inputs.Sheet.Height)
+            .VerticalTitleArea(inputs.Sheet.Title)
             .Views(views);
         Sheet sheet = builder.Build();
 
@@ -97,6 +108,6 @@ public static class SheetSample
         outputs.Model.AddSubElements(sheet);
         outputs.Model.AddElements(sheet);
 
-        return outputs;
+        return Task.FromResult(outputs);
     }
 }

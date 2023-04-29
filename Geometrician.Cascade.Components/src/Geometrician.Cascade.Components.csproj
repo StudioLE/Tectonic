@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Geometrician.Workflows\src\Geometrician.Workflows.csproj" />
+    <ProjectReference Include="..\..\StudioLE.Workflows\src\StudioLE.Workflows.csproj" />
   </ItemGroup>
 
   <ItemGroup>

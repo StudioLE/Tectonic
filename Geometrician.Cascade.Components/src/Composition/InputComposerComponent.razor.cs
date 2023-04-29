@@ -1,19 +1,19 @@
 ﻿using System.Reflection;
 using Geometrician.Cascade.Components.Shared;
 using Geometrician.Cascade.Components.Visualization;
-using Geometrician.Workflows.Configuration;
-using Geometrician.Workflows.Execution;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
 using StudioLE.Core.Results;
+using StudioLE.Workflows.Abstractions;
+using StudioLE.Workflows.Providers;
 
 namespace Geometrician.Cascade.Components.Composition;
 
 /// <summary>
 /// A <see cref="IComponent"/> to set inputs for an activity.
 /// </summary>
-public class InputComposerComponentBase : ComponentBase, IDisposable
+public class InputComposerComponentBase : ComponentBase
 {
     private IActivity? _activity;
 
@@ -21,7 +21,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     [Inject]
     private ILogger<ActivityResolverComponent> Logger { get; set; } = null!;
 
-    /// <inheritdoc cref="Geometrician.Workflows.Configuration.AssemblyResolver"/>
+    /// <inheritdoc cref="StudioLE.Workflows.Providers.AssemblyResolver"/>
     [Inject]
     private AssemblyResolver AssemblyResolver { get; set; } = null!;
 
@@ -44,6 +44,11 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
     /// <inheritdoc cref="IActivityResolver"/>
     [Inject]
     private IActivityResolver Resolver { get; set; } = default!;
+
+    /// <summary>
+    /// Proxies for each input pack for the activity.
+    /// </summary>
+    protected object Input { get; private set; } = default!;
 
     /// <summary>
     /// Proxies for each input pack for the activity.
@@ -88,10 +93,21 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
             return;
         }
         _activity = success.Value;
-        InputPacks = _activity
-            .Inputs
-            .Select(x => new InputPackProxy(x))
-            .ToArray();
+
+        // TODO: This should be replace with ObjectTree logic!
+        Type inputType = _activity.GetInputType();
+        Input = Activator.CreateInstance(inputType) ?? throw new("Failed to create input pack");
+        PropertyInfo[] properties = inputType.GetProperties();
+        bool isInputPack = properties.All(property => property.PropertyType.IsClass);
+        InputPacks = isInputPack
+            ? properties
+                .Select(property =>
+                {
+                    object inputPack = property.GetValue(Input) ?? throw new("Failed to get value of input pack.");
+                    return new InputPackProxy(inputPack);
+                })
+                .ToArray()
+            : new[] { new InputPackProxy(Input) };
     }
 
     /// <summary>
@@ -138,7 +154,7 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
         // TODO: Add spinner during execution.
         try
         {
-            outputs = await _activity.Execute();
+            outputs = await _activity.Execute(Input);
         }
         catch (TargetInvocationException e)
         {
@@ -158,16 +174,10 @@ public class InputComposerComponentBase : ComponentBase, IDisposable
 
         Outcome outcome = new()
         {
-            Name = _activity.Name,
+            Name = _activity.GetName(),
             Description = $"Executed {Composition.SelectedActivityKey} from {Composition.SelectedAssemblyKey}."
         };
 
         Visualization.AddOutcome(outcome, outputs);
-    }
-
-    /// <inheritdoc/>
-    public void Dispose()
-    {
-        _activity?.Dispose();
     }
 }

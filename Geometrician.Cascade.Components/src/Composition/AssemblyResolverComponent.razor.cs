@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Reflection;
 using Geometrician.Cascade.Components.Shared;
-using Geometrician.Workflows.Configuration;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using StudioLE.Workflows.Providers;
 
 namespace Geometrician.Cascade.Components.Composition;
 
@@ -16,7 +16,7 @@ public class AssemblyResolverComponentBase : ComponentBase
     [Inject]
     private ILogger<AssemblyResolverComponent> Logger { get; set; } = null!;
 
-    /// <inheritdoc cref="Geometrician.Workflows.Configuration.AssemblyResolver"/>
+    /// <inheritdoc cref="StudioLE.Workflows.Providers.AssemblyResolver"/>
     [Inject]
     private AssemblyResolver AssemblyResolver { get; set; } = null!;
 

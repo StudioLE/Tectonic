@@ -1,10 +1,15 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Geometrician.Flex.Samples.Elements;
+using StudioLE.Workflows.Abstractions;
 
 namespace Geometrician.Flex.Samples;
 
-public static class Seating1dRadial
+[DisplayName(nameof(Seating1dRadial))]
+[Description(nameof(Seating1dRadial))]
+public class Seating1dRadial : IActivity<Seating1dRadial.Inputs, Seating1dRadial.Outputs>
 {
+
     public class Inputs
     {
         [Required]
@@ -29,7 +34,7 @@ public static class Seating1dRadial
         public Model Model { get; set; } = new();
     }
 
-    public static Outputs Execute(Inputs inputs)
+    public Task<Outputs> Execute(Inputs inputs)
     {
         Arc arc = new(inputs.ArcRadius, inputs.ArcStartAngle, inputs.ArcEndAngle);
         ElementInstance seat = new Seat("Seat").CreateInstance();
@@ -68,6 +73,6 @@ public static class Seating1dRadial
         Outputs outputs = new();
         outputs.Model.AddElements(arc, MaterialByName("Gray"));
         outputs.Model.AddElements(rotatedComponents);
-        return outputs;
+        return Task.FromResult(outputs);
     }
 }

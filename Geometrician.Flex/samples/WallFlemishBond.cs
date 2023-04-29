@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using StudioLE.Workflows.Abstractions;
 
 namespace Geometrician.Flex.Samples;
 
-public static class WallFlemishBond
+[DisplayName(nameof(WallFlemishBond))]
+[Description(nameof(WallFlemishBond))]
+public class WallFlemishBond : IActivity<WallFlemishBond.Inputs, WallFlemishBond.Outputs>
 {
     public class Inputs
     {
@@ -24,7 +28,7 @@ public static class WallFlemishBond
         public Model Model { get; set; } = new();
     }
 
-    public static Outputs Execute(Inputs inputs)
+    public Task<Outputs> Execute(Inputs inputs)
     {
         Line line = new(Vector3.Origin, Vector3.XAxis, inputs.WallLength);
         StandardWall wall = new(line, inputs.WallDepth, inputs.WallHeight);
@@ -63,6 +67,6 @@ public static class WallFlemishBond
         outputs.Model.AddBounds(wall, MaterialByName("Gray"));
         outputs.Model.AddElements(componentsFlattened);
         outputs.Model.AddBounds(componentsFlattened);
-        return outputs;
+        return Task.FromResult(outputs);
     }
 }

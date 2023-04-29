@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using Geometrician.Cascade.Components.Shared;
-using Geometrician.Workflows.Configuration;
-using Geometrician.Workflows.Execution;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using StudioLE.Workflows.Abstractions;
+using StudioLE.Workflows.Providers;
 
 namespace Geometrician.Cascade.Components.Composition;
 
@@ -20,7 +20,7 @@ public class ActivityResolverComponentBase : ComponentBase
     [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
-    /// <inheritdoc cref="Geometrician.Workflows.Configuration.AssemblyResolver"/>
+    /// <inheritdoc cref="StudioLE.Workflows.Providers.AssemblyResolver"/>
     [Inject]
     private AssemblyResolver AssemblyResolver { get; set; } = null!;
 
