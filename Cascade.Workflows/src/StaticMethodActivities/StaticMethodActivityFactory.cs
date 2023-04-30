@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Cascade.Workflows.Abstractions;
 
 namespace Cascade.Workflows.StaticMethodActivities;
 

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using StudioLE.Core.Results;
 
-namespace Cascade.Workflows.Abstractions;
+namespace Cascade.Workflows;
 
 /// <summary>
 /// A <see href="https://refactoring.guru/design-patterns/factory-method">factory</see> to

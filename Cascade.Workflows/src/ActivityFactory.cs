@@ -1,6 +1,4 @@
-﻿using Cascade.Workflows.Abstractions;
-
-namespace Cascade.Workflows;
+﻿namespace Cascade.Workflows;
 
 public static class ActivityFactory
 {

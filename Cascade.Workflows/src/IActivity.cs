@@ -1,4 +1,4 @@
-﻿namespace Cascade.Workflows.Abstractions;
+﻿namespace Cascade.Workflows;
 
 public interface IActivity
 {

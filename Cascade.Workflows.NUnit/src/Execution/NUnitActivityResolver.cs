@@ -3,7 +3,6 @@ using System.Xml;
 using System.Xml.Linq;
 using NUnit.Engine;
 using StudioLE.Core.Results;
-using Cascade.Workflows.Abstractions;
 
 namespace Cascade.Workflows.NUnit.Execution;
 

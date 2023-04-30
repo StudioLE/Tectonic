@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 
-namespace Cascade.Workflows.Abstractions;
+namespace Cascade.Workflows;
 
 public static class ActivityHelpers
 {

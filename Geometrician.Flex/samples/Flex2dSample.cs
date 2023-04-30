@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Cascade.Workflows;
 using StudioLE.Core.Exceptions;
-using Cascade.Workflows.Abstractions;
 
 namespace Geometrician.Flex.Samples;
 

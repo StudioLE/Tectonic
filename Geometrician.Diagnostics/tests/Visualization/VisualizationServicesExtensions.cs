@@ -5,10 +5,10 @@ using Cascade.Assets.Factories;
 using Cascade.Assets.Configuration;
 using Cascade.Assets.Storage;
 using Cascade.Assets.Visualization;
+using Cascade.Workflows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Cascade.Workflows.Abstractions;
 using Cascade.Workflows.StaticMethodActivities;
 
 namespace Geometrician.Diagnostics.Tests.Visualization;

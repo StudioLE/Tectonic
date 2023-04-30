@@ -2,7 +2,6 @@ using System.Reflection;
 using NUnit.Framework;
 using StudioLE.Core.Results;
 using StudioLE.Core.System;
-using Cascade.Workflows.Abstractions;
 using Cascade.Workflows.NUnit.Execution;
 
 namespace Cascade.Workflows.NUnit.Tests.Execution;

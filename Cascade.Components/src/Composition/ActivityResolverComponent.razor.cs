@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using Cascade.Components.Shared;
+using Cascade.Workflows;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using Cascade.Workflows.Abstractions;
 using Cascade.Workflows.Providers;
 
 namespace Cascade.Components.Composition;

@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Cascade.Workflows;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Cascade.Workflows.Abstractions;
 using Cascade.Workflows.StaticMethodActivities;
 using static Towel.CommandLine;
 
