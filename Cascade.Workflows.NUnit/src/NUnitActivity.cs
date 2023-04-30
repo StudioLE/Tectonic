@@ -3,7 +3,7 @@ using System.Xml;
 using NUnit.Engine;
 using StudioLE.Verify;
 
-namespace Cascade.Workflows.NUnit.Execution;
+namespace Cascade.Workflows.NUnit;
 
 /// <summary>
 /// An <see cref="IActivity"/> based on a static <see cref="MethodInfo"/> in an <see cref="Assembly"/>.

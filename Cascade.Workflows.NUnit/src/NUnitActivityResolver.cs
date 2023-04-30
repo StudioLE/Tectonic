@@ -4,7 +4,7 @@ using System.Xml.Linq;
 using NUnit.Engine;
 using StudioLE.Core.Results;
 
-namespace Cascade.Workflows.NUnit.Execution;
+namespace Cascade.Workflows.NUnit;
 
 /// <inheritdoc cref="IActivityResolver"/>
 public class NUnitActivityResolver : IActivityResolver, IDisposable
