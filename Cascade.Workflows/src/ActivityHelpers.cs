@@ -34,7 +34,7 @@ public static class ActivityHelpers
             return metadata.Name;
         Type type = activity.GetType();
         DisplayNameAttribute? attribute = type.GetCustomAttribute<DisplayNameAttribute>();
-        return attribute.DisplayName;
+        return attribute?.DisplayName ?? type.Name;
     }
 
     public static string GetDescription(this IActivity activity)
@@ -43,7 +43,7 @@ public static class ActivityHelpers
             return metadata.Description;
         Type type = activity.GetType();
         DescriptionAttribute? attribute = type.GetCustomAttribute<DescriptionAttribute>();
-        return attribute.Description;
+        return attribute?.Description ?? string.Empty;
     }
 
     public static Type GetInputType(this IActivity activity)
