@@ -2,10 +2,10 @@ using System.Reflection;
 using NUnit.Framework;
 using StudioLE.Core.Results;
 using StudioLE.Core.System;
-using StudioLE.Verify.NUnit;
 using StudioLE.Verify;
+using StudioLE.Verify.NUnit;
 
-namespace Cascade.Workflows.NUnit.Tests.Execution;
+namespace Cascade.Workflows.NUnit.Tests;
 
 internal sealed class NUnitActivityResolverTests
 {

@@ -3,7 +3,7 @@ using NUnit.Framework;
 using StudioLE.Core.Results;
 using StudioLE.Core.System;
 
-namespace Cascade.Workflows.NUnit.Tests.Execution;
+namespace Cascade.Workflows.NUnit.Tests;
 
 internal sealed class NUnitActivityTests
 {
