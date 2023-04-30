@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
+using Cascade.Workflows.StaticMethodActivities;
 using NUnit.Framework;
 using StudioLE.Core.Results;
 using StudioLE.Core.System;
-using Cascade.Workflows.StaticMethodActivities;
 
-namespace Cascade.Workflows.Tests.Execution;
+namespace Cascade.Workflows.Tests.StaticMethodActivities;
 
 internal sealed class StaticMethodActivityTests
 {
