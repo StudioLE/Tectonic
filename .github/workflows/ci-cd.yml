@@ -16,7 +16,7 @@ jobs:
   build-and-test-ubuntu:
     name: Ubuntu
     needs: analysis
-    uses: StudioLE/Actions/.github/workflows/02-build-and-test.yml@wip/2023/05/feat-packages-token
+    uses: StudioLE/Actions/.github/workflows/02-build-and-test.yml@main
     with:
       solution: ""
       os: ubuntu-latest
@@ -28,7 +28,7 @@ jobs:
     name: Windows
     if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/alpha", "refs/heads/beta"]'), github.ref) }}
     needs: analysis
-    uses: StudioLE/Actions/.github/workflows/02-build-and-test.yml@wip/2023/05/feat-packages-token
+    uses: StudioLE/Actions/.github/workflows/02-build-and-test.yml@main
     with:
       solution: ""
       os: windows-latest
