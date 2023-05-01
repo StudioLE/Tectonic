@@ -24,17 +24,4 @@
     <ProjectReference Include="..\..\Cascade.Workflows\src\Cascade.Workflows.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Using Remove="System.IO" />
-    <Using Remove="Elements" />
-    <Using Remove="Elements.Geometry" />
-    <Using Remove="Elements.Geometry.Solids" />
-    <Using Remove="GeometryEx" />
-    <Using Remove="Geometrician.Core.Abstractions" />
-    <Using Remove="Geometrician.Core.Constraints" />
-    <Using Remove="Geometrician.Core.Elements" />
-    <Using Remove="Geometrician.Core.Geometry" />
-    <Using Static="true" Remove="Geometrician.Core.Elements.MaterialHelpers" />
-  </ItemGroup>
-
 </Project>

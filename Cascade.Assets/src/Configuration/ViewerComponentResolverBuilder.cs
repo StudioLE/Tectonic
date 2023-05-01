@@ -1,4 +1,6 @@
-﻿namespace Cascade.Assets.Configuration;
+﻿using Geometrician.Core.Abstractions;
+
+namespace Cascade.Assets.Configuration;
 
 /// <summary>
 /// Build an <see cref="ViewerComponentResolver"/>.

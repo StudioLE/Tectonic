@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using Cascade.Workflows;
+using Elements;
 using Geometrician.Core.Assets;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Drawings;

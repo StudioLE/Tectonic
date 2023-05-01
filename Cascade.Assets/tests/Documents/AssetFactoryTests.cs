@@ -8,6 +8,7 @@ using Geometrician.PDF;
 using Geometrician.SVG;
 using Cascade.Assets.Factories;
 using Cascade.Assets.Storage;
+using Elements;
 using NUnit.Framework;
 using StudioLE.Core.Results;
 
