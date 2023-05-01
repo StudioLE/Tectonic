@@ -10,29 +10,31 @@ jobs:
 
   analysis:
     name: Analysis
-    uses: ./.github/workflows/01-analysis.yml
+    uses: StudioLE/Actions/.github/workflows/01-analysis.yml@main
     secrets: inherit
 
   build-and-test-ubuntu:
     name: Ubuntu
     needs: analysis
-    uses: ./.github/workflows/02-build-and-test.yml
+    uses: StudioLE/Actions/.github/workflows/02-build-and-test.yml@wip/2023/05/feat-packages-token
     with:
-      solution: Geometrician.Libraries.sln
+      solution: ""
       os: ubuntu-latest
       version: ${{ needs.analysis.outputs.version }}
-    secrets: inherit
+    secrets:
+      PACKAGES_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
 
   build-and-test-windows:
     name: Windows
     if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/alpha", "refs/heads/beta"]'), github.ref) }}
     needs: analysis
-    uses: ./.github/workflows/02-build-and-test.yml
+    uses: StudioLE/Actions/.github/workflows/02-build-and-test.yml@wip/2023/05/feat-packages-token
     with:
-      solution: Geometrician.Libraries.sln
+      solution: ""
       os: windows-latest
       version: ${{ needs.analysis.outputs.version }}
-    secrets: inherit
+    secrets:
+      PACKAGES_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
 
   publish-nuget:
     name: Publish NuGet
@@ -40,41 +42,7 @@ jobs:
     needs:
       - analysis
       - build-and-test-ubuntu
-    uses: ./.github/workflows/03-publish-nuget.yml
-    with:
-      version: ${{ needs.analysis.outputs.version }}
-    secrets: inherit
-
-  publish-docs:
-    name: Publish Docs
-    if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/alpha", "refs/heads/beta"]'), github.ref) }}
-    needs:
-      - analysis
-    uses: ./.github/workflows/04-publish-docs.yml
-    with:
-      solution: Geometrician.Libraries.sln
-      version: ${{ needs.analysis.outputs.version }}
-    secrets: inherit
-
-  build-app:
-    name: Build WebAssembly App
-    if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/alpha", "refs/heads/beta"]'), github.ref) }}
-    needs:
-      - analysis
-    uses: ./.github/workflows/05-build-webassembly-app.yml
-    with:
-      solution: Cascade.WebAssembly/src/Cascade.WebAssembly.csproj
-      version: ${{ needs.analysis.outputs.version }}
-    secrets: inherit
-
-  publish-app:
-    name: Publish WebAssembly App
-    if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/alpha", "refs/heads/beta"]'), github.ref) }}
-    needs:
-      - analysis
-      - build-and-test-ubuntu
-      - build-app
-    uses: ./.github/workflows/06-publish-webassembly-app.yml
+    uses: StudioLE/Actions/.github/workflows/03-publish-nuget.yml@main
     with:
       version: ${{ needs.analysis.outputs.version }}
     secrets: inherit

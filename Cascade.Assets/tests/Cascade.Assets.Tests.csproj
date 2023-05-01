@@ -9,17 +9,10 @@
     <ProjectReference Include="..\..\Cascade.Workflows\src\Cascade.Workflows.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(SolutionName)' == 'Cascade'">
-    <PackageReference Include="Geometrician.Diagnostics.Samples" Version="$(GeometricianNuGetVersion)" />
-    <PackageReference Include="Geometrician.Diagnostics.NUnit" Version="$(GeometricianNuGetVersion)" />
-    <PackageReference Include="Geometrician.Flex.Samples" Version="$(GeometricianNuGetVersion)" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(SolutionName)' != 'Cascade'">
-    <ProjectReference Include="..\..\Geometrician.Core\tests\Geometrician.Core.Tests.csproj" />
-    <ProjectReference Include="..\..\Geometrician.Diagnostics\samples\Geometrician.Diagnostics.Samples.csproj" />
-    <ProjectReference Include="..\..\Geometrician.Diagnostics.NUnit\src\Geometrician.Diagnostics.NUnit.csproj" />
-    <ProjectReference Include="..\..\Geometrician.Flex\samples\Geometrician.Flex.Samples.csproj" />
+  <ItemGroup>
+    <PackageReference Include="Geometrician.Diagnostics.Samples" Version="0.3.0" />
+    <PackageReference Include="Geometrician.Diagnostics.NUnit" Version="0.3.0" />
+    <PackageReference Include="Geometrician.Flex.Samples" Version="0.3.0" />
   </ItemGroup>
 
   <ItemGroup>
