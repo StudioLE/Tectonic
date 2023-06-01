@@ -18,14 +18,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Geometrician.Diagnostics.Samples" Version="0.3.0" />
-    <PackageReference Include="Geometrician.Drawings" Version="0.3.0" />
-    <PackageReference Include="Geometrician.Drawings.Samples" Version="0.3.0" />
-    <PackageReference Include="Geometrician.Flex" Version="0.3.0" />
-    <PackageReference Include="Geometrician.Flex.Samples" Version="0.3.0" />
-    <PackageReference Include="Geometrician.IFC" Version="0.3.0" />
-    <PackageReference Include="Geometrician.PDF" Version="0.3.0" />
-    <PackageReference Include="Geometrician.SVG" Version="0.3.0" />
+    <PackageReference Include="Geometrician.Diagnostics.Samples" Version="0.4.0-alpha.1" />
+    <PackageReference Include="Geometrician.Drawings" Version="0.4.0-alpha.1" />
+    <PackageReference Include="Geometrician.Drawings.Samples" Version="0.4.0-alpha.1" />
+    <PackageReference Include="Geometrician.Flex" Version="0.4.0-alpha.1" />
+    <PackageReference Include="Geometrician.Flex.Samples" Version="0.4.0-alpha.1" />
+    <PackageReference Include="Geometrician.IFC" Version="0.4.0-alpha.1" />
+    <PackageReference Include="Geometrician.PDF" Version="0.4.0-alpha.1" />
+    <PackageReference Include="Geometrician.SVG" Version="0.4.0-alpha.1" />
   </ItemGroup>
 
 </Project>

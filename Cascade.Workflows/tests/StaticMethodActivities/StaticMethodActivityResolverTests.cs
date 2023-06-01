@@ -10,7 +10,7 @@ namespace Cascade.Workflows.Tests.StaticMethodActivities;
 
 internal sealed class StaticMethodActivityResolverTests
 {
-    private readonly Verify _verify = new(new NUnitVerifyContext());
+    private readonly IVerify _verify = new NUnitVerify();
     private const string AssemblyPath = "Cascade.Workflows.Samples.dll";
     private const string ActivityKey = "StaticMethodActivityExample.Execute";
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);

@@ -6,7 +6,7 @@ namespace Cascade.Workflows.NUnit.Samples;
 
 internal sealed class NUnitTestSamples
 {
-    private readonly Verify _verify = new(new NUnitVerifyContext());
+    private readonly IVerify _verify = new NUnitVerify();
 
     [Test]
     public void NUnitTestSamples_Test()

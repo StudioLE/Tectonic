@@ -9,7 +9,7 @@ namespace Cascade.Workflows.NUnit.Tests;
 
 internal sealed class NUnitActivityResolverTests
 {
-    private readonly Verify _verify = new(new NUnitVerifyContext());
+    private readonly IVerify _verify = new NUnitVerify();
     private const string AssemblyPath = "Cascade.Workflows.NUnit.Samples.dll";
     private const string ActivityKey = "Cascade.Workflows.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test_Verify";
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);

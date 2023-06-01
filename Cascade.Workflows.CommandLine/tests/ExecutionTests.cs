@@ -6,13 +6,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 
 namespace Cascade.Workflows.CommandLine.Tests;
 
 internal sealed class ExecutionTests
 {
-    private readonly StudioLE.Verify.Verify _verify = new(new NUnitVerifyContext());
+    private readonly IVerify _verify = new NUnitVerify();
     private readonly TestLogger _logger = TestLogger.GetInstance();
     private RedirectConsoleToLogger _console = null!;
     private RootCommand _command = null!;

@@ -35,15 +35,15 @@ public sealed class NUnitActivity : IActivity<object, object>, IActivityMetadata
     public Task<object> Execute(object input)
     {
         // Before invocation
-        bool wasVerifyEnabled = Verify.IsEnabled;
-        Verify.IsEnabled = false;
+        // bool wasVerifyEnabled = Verify.IsEnabled;
+        // Verify.IsEnabled = false;
         NUnitActivityResolver.IsExecuting = true;
 
         XmlNode? testResult = _runner.Run(null, _filter);
 
         // After invocation
         NUnitActivityResolver.IsExecuting = false;
-        Verify.IsEnabled = wasVerifyEnabled;
+        // Verify.IsEnabled = wasVerifyEnabled;
 
         // TODO: NUnitActivityResolver.TestOutput has been intentionally disabled as it's too complex. Investigate an alternative.
         object output = NUnitActivityResolver.TestOutput ?? true;

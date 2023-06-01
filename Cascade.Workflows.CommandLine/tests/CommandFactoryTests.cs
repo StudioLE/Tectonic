@@ -3,6 +3,7 @@ using Cascade.Workflows.CommandLine.Tests.Resources;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
+using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 
 namespace Cascade.Workflows.CommandLine.Tests;
@@ -12,7 +13,7 @@ internal sealed class CommandFactoryTests
     internal const int ExpectedArgumentsCount = 0;
     internal const int ExpectedOptionsCount = 6;
     internal const int ExpectedChildrenCount = ExpectedArgumentsCount + ExpectedOptionsCount;
-    private readonly StudioLE.Verify.Verify _verify = new(new NUnitVerifyContext());
+    private readonly IVerify _verify = new NUnitVerify();
 
     [Test]
     public async Task CommandFactory_Build()

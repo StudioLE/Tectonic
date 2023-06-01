@@ -2,13 +2,14 @@ using Cascade.Workflows.CommandLine.Composition;
 using Cascade.Workflows.CommandLine.Tests.Resources;
 using NUnit.Framework;
 using StudioLE.Core.System;
+using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 
 namespace Cascade.Workflows.CommandLine.Tests.Composition;
 
 internal sealed class ObjectTreeTests
 {
-    private readonly StudioLE.Verify.Verify _verify = new(new NUnitVerifyContext());
+    private readonly IVerify _verify = new NUnitVerify();
 
     [Test]
     public async Task ObjectTree_FlattenProperties()
