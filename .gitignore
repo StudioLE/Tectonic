@@ -3,10 +3,9 @@
 .env
 .secrets
 *.patch
-*.received.json
-*.received.svg
 *.received.txt
-**/Verify/BC*.html
+**/tests/**/Verify/*.received.*
+**/tests/**/Verify/BC*.html
 .idea/
 
 ## Ignore Visual Studio temporary files, build results, and

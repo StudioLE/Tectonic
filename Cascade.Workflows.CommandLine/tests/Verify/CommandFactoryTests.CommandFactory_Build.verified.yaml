@@ -1,0 +1,25 @@
+﻿- Description: StringValue
+  Type: String
+  Aliases:
+  - --stringvalue
+- Description: IntegerValue
+  Type: Int32
+  Aliases:
+  - --integervalue
+- Description: DoubleValue
+  Type: Double
+  Aliases:
+  - --doublevalue
+- Description: StringValue
+  Type: String
+  Aliases:
+  - --nested.stringvalue
+  - --nested
+- Description: IntegerValue
+  Type: Int32
+  Aliases:
+  - --nested.integervalue
+- Description: DoubleValue
+  Type: Double
+  Aliases:
+  - --nested.doublevalue

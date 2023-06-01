@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
+using StudioLE.Verify.Yaml;
 
 namespace Cascade.Workflows.CommandLine.Tests;
 
