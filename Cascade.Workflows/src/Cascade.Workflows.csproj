@@ -18,4 +18,8 @@
     <PackageReference Include="StudioLE.Core" Version="0.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Cascade.Workflows.Abstractions\src\Cascade.Workflows.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

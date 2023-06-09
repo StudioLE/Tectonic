@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Workflows.CommandLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Workflows.CommandLine.Tests", "Cascade.Workflows.CommandLine\tests\Cascade.Workflows.CommandLine.Tests.csproj", "{0207A260-8246-487C-B273-8709B28D4AA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cascade.Workflows.Abstractions", "Cascade.Workflows.Abstractions\src\Cascade.Workflows.Abstractions.csproj", "{9536F203-8018-467D-AF33-D91CB0764E01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,10 @@ Global
 		{0207A260-8246-487C-B273-8709B28D4AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0207A260-8246-487C-B273-8709B28D4AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0207A260-8246-487C-B273-8709B28D4AA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9536F203-8018-467D-AF33-D91CB0764E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9536F203-8018-467D-AF33-D91CB0764E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9536F203-8018-467D-AF33-D91CB0764E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9536F203-8018-467D-AF33-D91CB0764E01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +112,7 @@ Global
 		{B0CD8915-E1EA-40FE-A90E-A8BEB4B0345C} = {127097FD-CEAD-4F2A-9F70-67C815E77D45}
 		{75A0C080-CD54-4969-823E-F4750FE0E19A} = {127097FD-CEAD-4F2A-9F70-67C815E77D45}
 		{0207A260-8246-487C-B273-8709B28D4AA0} = {127097FD-CEAD-4F2A-9F70-67C815E77D45}
+		{9536F203-8018-467D-AF33-D91CB0764E01} = {4A99F8F6-100E-4F1A-945C-D7A6E7F54461}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB249DC8-BB8F-4BD8-A5D6-2206C1BC3442}
