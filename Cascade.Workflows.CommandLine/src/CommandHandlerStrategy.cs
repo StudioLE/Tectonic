@@ -6,7 +6,7 @@ using StudioLE.Core.Patterns;
 
 namespace Cascade.Workflows.CommandLine;
 
-public interface ICommandHandlerStrategy : IStrategy<CommandFactory, Action<InvocationContext>>
+public interface ICommandHandlerStrategy : IStrategy<CommandFactory, Func<InvocationContext, Task>>
 {
 }
 
@@ -19,15 +19,15 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
         _isParsableStrategy = isParsableStrategy;
     }
 
-    public Action<InvocationContext> Execute(CommandFactory commandFactory)
+    public Func<InvocationContext, Task> Execute(CommandFactory commandFactory)
     {
         if (commandFactory.InputTree is null)
             throw new("Expected input tree to be set.");
-        return context =>
+        return async context =>
         {
             SetInputTreeValueFromOptions(context.BindingContext, commandFactory);
             object input = commandFactory.InputTree.Instance;
-            commandFactory.Activity.Execute(input);
+            await commandFactory.Activity.Execute(input);
         };
     }
 

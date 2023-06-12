@@ -32,7 +32,7 @@ public class CommandFactory : IFactory<IActivity, Command>
         Command command = new(commandName, description);
         foreach (KeyValuePair<string, Option> pair in Options)
             command.AddOption(pair.Value);
-        Action<InvocationContext> handler = _handlerStrategy.Execute(this);
+        Func<InvocationContext, Task> handler = _handlerStrategy.Execute(this);
         command.SetHandler(handler);
         return command;
     }
