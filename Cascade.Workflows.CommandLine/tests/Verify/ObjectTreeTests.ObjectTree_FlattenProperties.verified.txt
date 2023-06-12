@@ -1,7 +1,9 @@
 ﻿StringValue: System.String
 IntegerValue: System.Int32
 DoubleValue: System.Double
+BooleanValue: System.Boolean
 Nested: Cascade.Workflows.CommandLine.Tests.Resources.ExampleNestedClass
 Nested.StringValue: System.String
 Nested.IntegerValue: System.Int32
 Nested.DoubleValue: System.Double
+Nested.BooleanValue: System.Boolean

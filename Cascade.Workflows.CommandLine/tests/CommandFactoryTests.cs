@@ -12,7 +12,7 @@ namespace Cascade.Workflows.CommandLine.Tests;
 internal sealed class CommandFactoryTests
 {
     internal const int ExpectedArgumentsCount = 0;
-    internal const int ExpectedOptionsCount = 6;
+    internal const int ExpectedOptionsCount = 8;
     internal const int ExpectedChildrenCount = ExpectedArgumentsCount + ExpectedOptionsCount;
     private readonly IVerify _verify = new NUnitVerify();
 

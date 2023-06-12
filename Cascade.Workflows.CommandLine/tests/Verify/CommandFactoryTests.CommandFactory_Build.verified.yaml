@@ -10,6 +10,10 @@
   Type: Double
   Aliases:
   - --doublevalue
+- Description: BooleanValue
+  Type: Boolean
+  Aliases:
+  - --booleanvalue
 - Description: StringValue
   Type: String
   Aliases:
@@ -23,3 +27,7 @@
   Type: Double
   Aliases:
   - --nested.doublevalue
+- Description: BooleanValue
+  Type: Boolean
+  Aliases:
+  - --nested.booleanvalue

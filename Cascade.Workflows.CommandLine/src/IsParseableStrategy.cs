@@ -13,7 +13,8 @@ public class IsParseableStrategy : IIsParseableStrategy
         typeof(string),
         typeof(int),
         typeof(double),
-        typeof(Enum)
+        typeof(Enum),
+        typeof(bool)
     };
 
     public IsParseableStrategy()

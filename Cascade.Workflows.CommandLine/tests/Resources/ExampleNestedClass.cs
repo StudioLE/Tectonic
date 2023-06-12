@@ -14,4 +14,7 @@ public class ExampleNestedClass
     [Required]
     [Range(0,1)]
     public double DoubleValue { get; set; }
+
+    [Required]
+    public bool BooleanValue { get; set; }
 }

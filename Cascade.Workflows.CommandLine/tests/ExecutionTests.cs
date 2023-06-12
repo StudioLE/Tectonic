@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using StudioLE.Core.System;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 
@@ -24,6 +25,7 @@ internal sealed class ExecutionTests
         _console = new(_logger);
         IHost host = Host
             .CreateDefaultBuilder()
+            .ConfigureLogging(logging => logging.AddTestLogger())
             .ConfigureServices(services => services
                 .AddCommandBuilderServices()
                 .AddTransient<ExampleActivity>())
@@ -182,5 +184,53 @@ internal sealed class ExecutionTests
             Assert.That(exitCode, Is.EqualTo(0), "Exit code");
             Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
         });
+    }
+
+    [Test]
+    public async Task ExecutionTests_Options_BooleanValue_NotSet()
+    {
+        // Arrange
+        string[] arguments =
+        {
+            "exampleactivity"
+        };
+
+        // Act
+        int exitCode = _command.Invoke(arguments, _console);
+
+        // Assert
+        _console.Flush();
+        Assert.Multiple(() =>
+        {
+            Assert.That(exitCode, Is.EqualTo(0), "Exit code");
+            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
+        });
+        string output = _logger.Logs.Where(x => x.LogLevel == LogLevel.Information).Select(x => x.Message).Join();
+        await _verify.String(output);
+    }
+
+    [Test]
+    public async Task ExecutionTests_Options_BooleanValue_Set()
+    {
+        // Arrange
+        string[] arguments =
+        {
+            "exampleactivity",
+            "--booleanvalue",
+            "--nested.booleanvalue"
+        };
+
+        // Act
+        int exitCode = _command.Invoke(arguments, _console);
+
+        // Assert
+        _console.Flush();
+        Assert.Multiple(() =>
+        {
+            Assert.That(exitCode, Is.EqualTo(0), "Exit code");
+            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
+        });
+        string output = _logger.Logs.Where(x => x.LogLevel == LogLevel.Information).Select(x => x.Message).Join();
+        await _verify.String(output);
     }
 }
