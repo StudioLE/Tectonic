@@ -2,6 +2,7 @@ using System.CommandLine;
 using System.CommandLine.Binding;
 using System.CommandLine.Invocation;
 using Cascade.Workflows.CommandLine.Composition;
+using Microsoft.Extensions.Logging;
 using StudioLE.Core.Patterns;
 
 namespace Cascade.Workflows.CommandLine;
@@ -12,10 +13,12 @@ public interface ICommandHandlerStrategy : IStrategy<CommandFactory, Func<Invoca
 
 public class CommandHandlerStrategy : ICommandHandlerStrategy
 {
+    private readonly ILogger<CommandHandlerStrategy> _logger;
     private readonly IIsParseableStrategy _isParsableStrategy;
 
-    public CommandHandlerStrategy(IIsParseableStrategy isParsableStrategy)
+    public CommandHandlerStrategy(ILogger<CommandHandlerStrategy> logger, IIsParseableStrategy isParsableStrategy)
     {
+        _logger = logger;
         _isParsableStrategy = isParsableStrategy;
     }
 
@@ -27,7 +30,15 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
         {
             SetInputTreeValueFromOptions(context.BindingContext, commandFactory);
             object input = commandFactory.InputTree.Instance;
-            await commandFactory.Activity.Execute(input);
+            try
+            {
+                await commandFactory.Activity.Execute(input);
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical(e, "An unhandled exception was thrown by the activity.");
+                context.ExitCode = 1;
+            }
         };
     }
 
