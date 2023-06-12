@@ -1,8 +1,6 @@
 using Cascade.Workflows.CommandLine.Utils.Logging.TestLogger;
 using StudioLE.Core.System;
 using StudioLE.Verify;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace Cascade.Workflows.CommandLine.Tests;
 

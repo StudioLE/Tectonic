@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Xml;
 using NUnit.Engine;
-using StudioLE.Verify;
 
 namespace Cascade.Workflows.NUnit;
 
@@ -13,13 +12,13 @@ public sealed class NUnitActivity : IActivity<object, object>, IActivityMetadata
     private readonly ITestRunner _runner;
     private readonly TestFilter _filter;
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Key { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Name { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public string Description { get; }
 
     public NUnitActivity(ITestRunner runner, TestFilter filter, string key)
