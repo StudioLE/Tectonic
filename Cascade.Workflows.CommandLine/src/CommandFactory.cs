@@ -10,14 +10,17 @@ public class CommandFactory : IFactory<IActivity, Command>
     private readonly ICommandOptionsStrategy _optionsStrategy;
     private readonly ICommandHandlerStrategy _handlerStrategy;
 
+    public CommandContext Context { get; }
+
     public IActivity Activity { get; private set; } = null!;
 
     public ObjectTree? InputTree { get; private set; }
 
     public IReadOnlyDictionary<string, Option> Options { get; private set; } = new Dictionary<string, Option>();
 
-    public CommandFactory(ICommandOptionsStrategy optionsStrategy, ICommandHandlerStrategy handlerStrategy)
+    public CommandFactory(ICommandOptionsStrategy optionsStrategy, ICommandHandlerStrategy handlerStrategy, CommandContext context)
     {
+        Context = context;
         _optionsStrategy = optionsStrategy;
         _handlerStrategy = handlerStrategy;
     }

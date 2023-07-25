@@ -39,6 +39,7 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
                 _logger.LogCritical(e, "An unhandled exception was thrown by the activity.");
                 context.ExitCode = 1;
             }
+            context.ExitCode = commandFactory.Context.ExitCode;
         };
     }
 

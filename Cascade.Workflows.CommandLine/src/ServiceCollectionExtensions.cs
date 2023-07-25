@@ -7,6 +7,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddCommandBuilderServices(this IServiceCollection services)
     {
         return services
+            .AddScoped<CommandContext>()
             .AddTransient<CommandBuilder>()
             .AddTransient<CommandFactory>()
             .AddTransient<IIsParseableStrategy, IsParseableStrategy>()

@@ -28,13 +28,15 @@ internal sealed class ExecutionTests
             .ConfigureLogging(logging => logging.AddTestLogger())
             .ConfigureServices(services => services
                 .AddCommandBuilderServices()
-                .AddTransient<ExampleActivity>())
+                .AddTransient<ExampleActivity>()
+                .AddTransient<ExampleErrorActivity>())
             .Build();
         CommandBuilder builder = host
             .Services
             .GetRequiredService<CommandBuilder>();
         _command = builder
             .Register<ExampleActivity>()
+            .Register<ExampleErrorActivity>()
             .Build();
         _command.Name = "RootCommand";
         _logger.Clear();
@@ -232,5 +234,26 @@ internal sealed class ExecutionTests
         });
         string output = _logger.Logs.Where(x => x.LogLevel == LogLevel.Information).Select(x => x.Message).Join();
         await _verify.String(output);
+    }
+
+    [Test]
+    public void ExecutionTests_Command_ExitCode()
+    {
+        // Arrange
+        string[] arguments =
+        {
+            "exampleerroractivity"
+        };
+
+        // Act
+        int exitCode = _command.Invoke(arguments, _console);
+
+        // Assert
+        _console.Flush();
+        Assert.Multiple(() =>
+        {
+            Assert.That(exitCode, Is.EqualTo(99), "Exit code");
+            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
+        });
     }
 }
