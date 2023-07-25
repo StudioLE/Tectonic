@@ -33,13 +33,13 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
             try
             {
                 await commandFactory.Activity.Execute(input);
+                context.ExitCode = commandFactory.Context.ExitCode;
             }
             catch (Exception e)
             {
                 _logger.LogCritical(e, "An unhandled exception was thrown by the activity.");
                 context.ExitCode = 1;
             }
-            context.ExitCode = commandFactory.Context.ExitCode;
         };
     }
 

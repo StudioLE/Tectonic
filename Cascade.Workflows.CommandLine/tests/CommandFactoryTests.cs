@@ -22,14 +22,9 @@ internal sealed class CommandFactoryTests
         // Arrange
         IHost host = Host
             .CreateDefaultBuilder()
-            .ConfigureServices(services =>
-            {
-                services.AddTransient<ExampleActivity>();
-                services.AddTransient<CommandFactory>();
-                services.AddTransient<IIsParseableStrategy, IsParseableStrategy>();
-                services.AddTransient<ICommandOptionsStrategy, CommandOptionsStrategy>();
-                services.AddTransient<ICommandHandlerStrategy, CommandHandlerStrategy>();
-            })
+            .ConfigureServices(services => services
+                .AddCommandBuilderServices()
+                .AddTransient<ExampleActivity>())
             .Build();
         CommandFactory factory = host.Services.GetRequiredService<CommandFactory>();
         IActivity activity = host.Services.GetRequiredService<ExampleActivity>();
