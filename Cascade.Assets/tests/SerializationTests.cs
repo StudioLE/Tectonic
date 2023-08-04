@@ -30,17 +30,17 @@ internal sealed class SerializationTests
 
         // Act
         string json = JsonConvert.SerializeObject(asset, settings);
-        InternalAsset? deserialised = JsonConvert.DeserializeObject<InternalAsset>(json, settings);
-        string json2 = JsonConvert.SerializeObject(deserialised, settings);
+        InternalAsset? deserialized = JsonConvert.DeserializeObject<InternalAsset>(json, settings);
+        string json2 = JsonConvert.SerializeObject(deserialized, settings);
 
         // Assert
         Assert.Multiple(async () =>
         {
             await _verify.String(json, json2);
-            Assert.That(deserialised, Is.Not.Null, "Not null");
-            Assert.That(deserialised?.Id, Is.EqualTo(asset.Id), "Id");
-            Assert.That(deserialised?.ContentType, Is.EqualTo(asset.ContentType), "ContentType");
-            Assert.That(deserialised?.Content, Is.EqualTo(asset.Content), "Content");
+            Assert.That(deserialized, Is.Not.Null, "Not null");
+            Assert.That(deserialized?.Id, Is.EqualTo(asset.Id), "Id");
+            Assert.That(deserialized?.ContentType, Is.EqualTo(asset.ContentType), "ContentType");
+            Assert.That(deserialized?.Content, Is.EqualTo(asset.Content), "Content");
         });
     }
 
@@ -62,17 +62,17 @@ internal sealed class SerializationTests
 
         // Act
         string json = JsonConvert.SerializeObject(asset, settings);
-        ExternalAsset? deserialised = JsonConvert.DeserializeObject<ExternalAsset>(json, settings);
-        string json2 = JsonConvert.SerializeObject(deserialised, settings);
+        ExternalAsset? deserialized = JsonConvert.DeserializeObject<ExternalAsset>(json, settings);
+        string json2 = JsonConvert.SerializeObject(deserialized, settings);
 
         // Assert
         Assert.Multiple(async () =>
         {
             await _verify.String(json, json2);
-            Assert.That(deserialised, Is.Not.Null, "Not null");
-            Assert.That(deserialised?.Id, Is.EqualTo(asset.Id), "Id");
-            Assert.That(deserialised?.ContentType, Is.EqualTo(asset.ContentType), "ContentType");
-            Assert.That(deserialised?.Location, Is.EqualTo(asset.Location), "Location");
+            Assert.That(deserialized, Is.Not.Null, "Not null");
+            Assert.That(deserialized?.Id, Is.EqualTo(asset.Id), "Id");
+            Assert.That(deserialized?.ContentType, Is.EqualTo(asset.ContentType), "ContentType");
+            Assert.That(deserialized?.Location, Is.EqualTo(asset.Location), "Location");
         });
     }
 

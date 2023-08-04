@@ -1,4 +1,5 @@
 using System.CommandLine;
+using System.Diagnostics.CodeAnalysis;
 using Cascade.Workflows.CommandLine.Logging;
 using Cascade.Workflows.CommandLine.Tests.Resources;
 using Cascade.Workflows.CommandLine.Utils.Logging.TestLogger;
@@ -12,6 +13,7 @@ using StudioLE.Verify.NUnit;
 
 namespace Cascade.Workflows.CommandLine.Tests;
 
+[SuppressMessage("ReSharper", "StringLiteralTypo")]
 internal sealed class ExecutionTests
 {
     private readonly IVerify _verify = new NUnitVerify();
