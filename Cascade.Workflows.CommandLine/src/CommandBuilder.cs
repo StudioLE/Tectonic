@@ -4,14 +4,16 @@ using StudioLE.Core.Patterns;
 
 namespace Cascade.Workflows.CommandLine;
 
-public class CommandBuilder : IBuilder<RootCommand>
+public class CommandBuilder : IBuilder<RootCommand>, IDisposable
 {
+    private readonly IServiceScope _scope;
     private readonly IServiceProvider _services;
     private readonly List<KeyValuePair<string[], IActivity>> _activities = new();
 
     public CommandBuilder(IServiceProvider services)
     {
-        _services = services;
+        _scope = services.CreateScope();
+        _services = _scope.ServiceProvider;
     }
 
     public CommandBuilder Register<TActivity>(params string[] command) where TActivity : IActivity
@@ -48,5 +50,11 @@ public class CommandBuilder : IBuilder<RootCommand>
     {
         CommandFactory factory = _services.GetRequiredService<CommandFactory>();
         return factory.Create(activity);
+    }
+
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        _scope.Dispose();
     }
 }

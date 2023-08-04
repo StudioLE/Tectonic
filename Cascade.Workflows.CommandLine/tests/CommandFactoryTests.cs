@@ -26,6 +26,7 @@ internal sealed class CommandFactoryTests
                 .AddCommandBuilderServices()
                 .AddTransient<ExampleActivity>())
             .Build();
+
         CommandFactory factory = host.Services.GetRequiredService<CommandFactory>();
         IActivity activity = host.Services.GetRequiredService<ExampleActivity>();
 
