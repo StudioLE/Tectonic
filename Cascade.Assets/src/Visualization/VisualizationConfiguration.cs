@@ -2,6 +2,8 @@
 
 public class VisualizationConfiguration
 {
+    // TODO: This should be set via configuration file
+
     /// <summary>
     /// The path of the asset API endpoint.
     /// </summary>
@@ -11,6 +13,11 @@ public class VisualizationConfiguration
     /// The path of the visualize API endpoint.
     /// </summary>
     public const string VisualizeRoute = "visualize";
+
+    /// <summary>
+    /// The path of the storage API endpoint.
+    /// </summary>
+    public const string StorageRoute = "storage";
 
     public HttpClient HttpClient { get; } = new()
     {
