@@ -14,8 +14,8 @@
   <ItemGroup>
     <PackageReference Include="DiffEngine" Version="11.4.0" />
     <PackageReference Include="Hypar.Elements.Serialization.IFC" Version="1.6.0" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.5" />
-    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.13" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
     <PackageReference Include="NUnit.Engine" Version="3.16.3" />
     <PackageReference Include="StudioLE.Verify.NUnit" Version="0.3.0" />
   </ItemGroup>

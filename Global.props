@@ -35,11 +35,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsExecutable)">
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsTestLibrary)">
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsLibrary)">
