@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Cascade.Assets.Visualization;
 using Elements;
 using Geometrician.Core.Assets;

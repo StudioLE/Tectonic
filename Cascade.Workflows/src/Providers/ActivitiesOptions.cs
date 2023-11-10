@@ -1,4 +1,4 @@
-﻿namespace Cascade.Workflows.Providers;
+namespace Cascade.Workflows.Providers;
 
 /// <summary>
 /// Configuration options for activities.

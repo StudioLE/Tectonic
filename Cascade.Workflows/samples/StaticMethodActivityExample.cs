@@ -1,4 +1,4 @@
-﻿using Cascade.Workflows.Samples.Resources;
+using Cascade.Workflows.Samples.Resources;
 
 namespace Cascade.Workflows.Samples;
 

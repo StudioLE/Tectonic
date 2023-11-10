@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using StudioLE.Core.Results;
 
 namespace Cascade.Workflows.StaticMethodActivities;

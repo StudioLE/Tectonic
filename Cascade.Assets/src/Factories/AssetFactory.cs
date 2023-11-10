@@ -1,4 +1,4 @@
-﻿using Geometrician.Core.Assets;
+using Geometrician.Core.Assets;
 using Geometrician.Core.Storage;
 using StudioLE.Core.Results;
 

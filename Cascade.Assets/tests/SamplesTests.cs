@@ -1,4 +1,4 @@
-﻿using Cascade.Assets.Samples;
+using Cascade.Assets.Samples;
 using Elements;
 using Geometrician.Core.Assets;
 using Geometrician.Diagnostics.NUnit.Visualization;

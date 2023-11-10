@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Cascade.Assets.Converters;
 using CsvHelper.Configuration.Attributes;
 using Elements;

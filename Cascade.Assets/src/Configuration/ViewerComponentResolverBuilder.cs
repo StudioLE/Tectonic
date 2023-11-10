@@ -1,4 +1,4 @@
-﻿using Geometrician.Core.Abstractions;
+using Geometrician.Core.Abstractions;
 
 namespace Cascade.Assets.Configuration;
 

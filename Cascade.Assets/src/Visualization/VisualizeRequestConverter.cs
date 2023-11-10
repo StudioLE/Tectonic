@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Elements;
 using Geometrician.Core.Elements;
 using Newtonsoft.Json;

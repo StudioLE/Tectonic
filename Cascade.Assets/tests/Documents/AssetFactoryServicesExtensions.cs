@@ -1,4 +1,4 @@
-﻿using Cascade.Assets.Configuration;
+using Cascade.Assets.Configuration;
 using Cascade.Assets.Factories;
 using Cascade.Assets.Storage;
 using Elements;

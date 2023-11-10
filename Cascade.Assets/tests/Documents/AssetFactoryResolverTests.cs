@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Cascade.Assets.Configuration;
 using Elements;
 using Geometrician.Core.Assets;

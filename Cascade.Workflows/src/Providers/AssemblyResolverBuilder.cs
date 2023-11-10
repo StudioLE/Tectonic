@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using StudioLE.Core.Patterns;
 
 namespace Cascade.Workflows.Providers;

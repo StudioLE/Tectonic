@@ -1,4 +1,4 @@
-﻿namespace Cascade.Assets.Visualization;
+namespace Cascade.Assets.Visualization;
 
 public class VisualizationConfiguration
 {

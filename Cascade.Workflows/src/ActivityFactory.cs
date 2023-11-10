@@ -1,4 +1,4 @@
-﻿namespace Cascade.Workflows;
+namespace Cascade.Workflows;
 
 public static class ActivityFactory
 {

@@ -1,4 +1,4 @@
-﻿using Elements;
+using Elements;
 using Geometrician.Core.Assets;
 using Geometrician.Core.Converters;
 using StudioLE.Core.Conversion;

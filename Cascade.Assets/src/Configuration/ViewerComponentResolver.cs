@@ -1,4 +1,4 @@
-﻿namespace Cascade.Assets.Configuration;
+namespace Cascade.Assets.Configuration;
 
 /// <summary>
 /// A registry of viewer component types to be resolved by content type.

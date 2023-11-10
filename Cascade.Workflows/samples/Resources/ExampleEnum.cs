@@ -1,4 +1,4 @@
-﻿namespace Cascade.Workflows.Samples.Resources;
+namespace Cascade.Workflows.Samples.Resources;
 
 public enum ExampleEnum
 {

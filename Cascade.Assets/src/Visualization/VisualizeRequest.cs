@@ -1,4 +1,4 @@
-﻿using Elements;
+using Elements;
 using Newtonsoft.Json;
 
 namespace Cascade.Assets.Visualization;
