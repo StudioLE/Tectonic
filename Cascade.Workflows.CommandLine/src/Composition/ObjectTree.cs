@@ -13,7 +13,7 @@ public class ObjectTree : ObjectTreeBase
     {
         Instance = Activator.CreateInstance(type) ?? throw new("Failed to create ObjectTree instance. Type does not have a parameterless constructor.");
         Type? underlyingType = Nullable.GetUnderlyingType(type);
-        if(underlyingType is not null)
+        if (underlyingType is not null)
             type = underlyingType;
         SetProperties(type, this);
     }

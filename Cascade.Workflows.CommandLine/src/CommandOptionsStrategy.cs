@@ -49,13 +49,13 @@ public class CommandOptionsStrategy : ICommandOptionsStrategy
         {
             tree.FullKey.ToLongOption()
         };
-        if(!_optionAliases.Contains(tree.Key.ToLongOption()))
+        if (!_optionAliases.Contains(tree.Key.ToLongOption()))
             aliases.Add(tree.Key.ToLongOption());
         if (tree.Parent is ObjectTreeProperty parent)
         {
-            if(!_optionAliases.Contains(parent.FullKey.ToLongOption()))
+            if (!_optionAliases.Contains(parent.FullKey.ToLongOption()))
                 aliases.Add(parent.FullKey.ToLongOption());
-            if(!_optionAliases.Contains(parent.Key.ToLongOption()))
+            if (!_optionAliases.Contains(parent.Key.ToLongOption()))
                 aliases.Add(parent.Key.ToLongOption());
         }
         return aliases;

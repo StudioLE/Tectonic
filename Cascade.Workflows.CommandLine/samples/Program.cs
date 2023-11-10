@@ -32,7 +32,7 @@ internal static class Program
                     break;
                 }
                 IReadOnlyCollection<string> errors = property.ValidateValue();
-                if(!errors.Any())
+                if (!errors.Any())
                     break;
                 if (attemptCount > 0)
                     Console.WriteLine("Please try again.");

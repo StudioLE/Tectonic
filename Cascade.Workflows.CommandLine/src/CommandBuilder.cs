@@ -30,7 +30,7 @@ public class CommandBuilder : IBuilder<RootCommand>, IDisposable
         foreach (KeyValuePair<string[], IActivity> pair in _activities)
         {
             Command command = CreateCommand(pair.Value);
-            if(pair.Key.Any())
+            if (pair.Key.Any())
                 command.Name = pair.Key.Last();
             Command parentCommand = GetParentCommand(root, pair.Key);
             parentCommand.AddCommand(command);

@@ -21,7 +21,7 @@ public static class ActivityHelpers
     public static Task<object> Execute(this IActivity activity, object input)
     {
         MethodInfo method = GetExecuteMethodOrThrow(activity);
-        object[] parameters =  { input };
+        object[] parameters = { input };
         object? result = method.Invoke(activity, parameters);
         return result is Task task
             ? task.Cast<object>()
