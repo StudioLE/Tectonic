@@ -1,3 +1,4 @@
+using System.IO;
 using System.Reflection;
 using Elements;
 using Geometrician.Core.Elements;
@@ -46,9 +47,38 @@ public class VisualizeRequestConverter : JsonConverter<VisualizeRequest>
         // Assemblies
         string[] assemblyPaths = jObject["Assemblies"].Values<string>().ToArray();
         // TODO: BEWARE THIS IS INSECURE
+        // https://learn.microsoft.com/en-us/dotnet/framework/deployment/best-practices-for-assembly-loading
         foreach (string path in assemblyPaths)
-            // TODO: Use assembly hash and only load if not already loaded
-            Assembly.LoadFrom(path);
+        {
+            Assembly[] loadedAssemblies = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .ToArray();
+            AssemblyName[] referencedAssemblies = loadedAssemblies
+                .SelectMany(x => x.GetReferencedAssemblies())
+                .Distinct()
+                .ToArray();
+            string[] loadedAssemblyNames = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Select(x => x.GetName().Name)
+                .ToArray();
+            string[] referencedAssemblyNames = referencedAssemblies
+                .Select(x => x.Name)
+                .ToArray();
+            string fileName = Path.GetFileName(path);
+            if (fileName.EndsWith(".dll"))
+                fileName = fileName.Substring(0, fileName.Length - 4);
+            if (loadedAssemblyNames.Contains(fileName) || referencedAssemblyNames.Contains(fileName))
+                continue;
+            // TODO: Use assembly hash
+            try
+            {
+                Assembly.LoadFrom(path);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
         bool forceTypeReload = true;
 
         // Model
