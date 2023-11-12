@@ -34,7 +34,7 @@ internal sealed class VisualizeRequestConverterTests
                         "Elements": {}
                       },
                       "Assemblies": [
-                          "/e/Repos/Elements/Cascade/Cascade.Server/tests/bin/Debug/net7.0/Geometrician.Drawings.dll"
+                          "Geometrician.Drawings.dll"
                         ]
                       }
                       """;
