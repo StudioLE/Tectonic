@@ -1,6 +1,5 @@
 using Cascade.Assets.Configuration;
 using Cascade.Assets.Factories;
-using Cascade.Assets.Storage;
 using Elements;
 using Geometrician.Assets;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,6 +1,5 @@
 using System.IO;
 using Cascade.Assets.Factories;
-using Cascade.Assets.Storage;
 using Elements;
 using Geometrician.Assets;
 using Geometrician.Assets.Abstractions;

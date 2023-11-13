@@ -15,6 +15,7 @@
     <PackageReference Include="Geometrician.Extensions.Verify" Version="0.6.0" />
     <PackageReference Include="Geometrician.Visualization.CascadeServer" Version="0.6.0" />
     <PackageReference Include="StudioLE.Verify.NUnit" Version="0.5.0" />
+    <PackageReference Include="StudioLE.Storage.Blob" Version="0.8.0" />
   </ItemGroup>
 
   <ItemGroup>
