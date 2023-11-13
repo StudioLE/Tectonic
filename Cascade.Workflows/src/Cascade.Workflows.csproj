@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StudioLE.Patterns.Abstractions" Version="0.7.0" />
-    <PackageReference Include="StudioLE.Results" Version="0.7.0" />
+    <PackageReference Include="StudioLE.Patterns.Abstractions" Version="0.8.0" />
+    <PackageReference Include="StudioLE.Results" Version="0.8.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
