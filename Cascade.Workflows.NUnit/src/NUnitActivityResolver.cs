@@ -2,7 +2,7 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 using NUnit.Engine;
-using StudioLE.Core.Results;
+using StudioLE.Results;
 
 namespace Cascade.Workflows.NUnit;
 

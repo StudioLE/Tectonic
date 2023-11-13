@@ -1,8 +1,8 @@
 using Elements;
-using Geometrician.Core.Assets;
-using Geometrician.Core.Converters;
-using StudioLE.Core.Conversion;
-using StudioLE.Core.Results;
+using Geometrician.Assets;
+using Geometrician.Serialization.Json;
+using StudioLE.Patterns;
+using StudioLE.Results;
 
 namespace Cascade.Assets.Factories;
 

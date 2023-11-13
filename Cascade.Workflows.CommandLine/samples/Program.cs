@@ -1,7 +1,7 @@
 using Cascade.Workflows.CommandLine.Composition;
 using Cascade.Workflows.CommandLine.Tests.Resources;
 using StudioLE.Core.Conversion;
-using StudioLE.Core.System;
+using StudioLE.Extensions.System;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 

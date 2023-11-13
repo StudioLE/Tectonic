@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using StudioLE.Core.Exceptions;
+using StudioLE.Extensions.System.Exceptions;
 
 namespace Cascade.Workflows.CommandLine.Composition;
 

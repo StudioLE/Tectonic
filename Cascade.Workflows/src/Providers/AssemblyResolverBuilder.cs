@@ -1,5 +1,5 @@
 using System.Reflection;
-using StudioLE.Core.Patterns;
+using StudioLE.Patterns;
 
 namespace Cascade.Workflows.Providers;
 

@@ -1,7 +1,7 @@
 using System.Reflection;
 using Cascade.Workflows.StaticMethodActivities;
 using NUnit.Framework;
-using StudioLE.Core.Results;
+using StudioLE.Results;
 using StudioLE.Core.System;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;

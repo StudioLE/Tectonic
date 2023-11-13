@@ -2,16 +2,14 @@ using System.Globalization;
 using System.IO;
 using CsvHelper;
 using Elements;
-using Geometrician.Core.Assets;
-using Geometrician.Core.Storage;
-using StudioLE.Core.Conversion;
-using StudioLE.Core.Results;
+using StudioLE.Patterns;
+using StudioLE.Results;
+using StudioLE.Storage;
 
 namespace Cascade.Assets.Converters;
 
 /// <summary>
-/// Convert a <see cref="Model"/> to a CSV file
-/// referenced as <see cref="IAsset"/>.
+/// Convert a <see cref="Model"/> to a CSV file.
 /// </summary>
 public class ModelToCsvFile<TRow> : IConverter<Model, Task<IResult<Uri>>>
 {

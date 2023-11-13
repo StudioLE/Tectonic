@@ -2,11 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using Cascade.Assets.Converters;
 using CsvHelper.Configuration.Attributes;
 using Elements;
-using Geometrician.Core.Assets;
-using Geometrician.Core.Storage;
-using StudioLE.Core.Conversion;
-using StudioLE.Core.Results;
-using StudioLE.Core.System;
+using Geometrician.Assets;
+using StudioLE.Results;
+using StudioLE.Extensions.System;
+using StudioLE.Patterns;
+using StudioLE.Storage;
 
 namespace Cascade.Assets.Factories;
 

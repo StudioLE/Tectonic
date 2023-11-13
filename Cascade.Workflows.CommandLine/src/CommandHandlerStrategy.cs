@@ -3,7 +3,7 @@ using System.CommandLine.Binding;
 using System.CommandLine.Invocation;
 using Cascade.Workflows.CommandLine.Composition;
 using Microsoft.Extensions.Logging;
-using StudioLE.Core.Patterns;
+using StudioLE.Patterns;
 
 namespace Cascade.Workflows.CommandLine;
 

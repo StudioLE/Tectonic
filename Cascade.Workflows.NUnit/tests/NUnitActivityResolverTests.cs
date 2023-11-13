@@ -1,6 +1,6 @@
 using System.Reflection;
 using NUnit.Framework;
-using StudioLE.Core.Results;
+using StudioLE.Results;
 using StudioLE.Core.System;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;

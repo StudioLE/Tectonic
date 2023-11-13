@@ -1,6 +1,6 @@
 using System.CommandLine.IO;
 using Microsoft.Extensions.Logging;
-using StudioLE.Core.System;
+using StudioLE.Extensions.System;
 
 namespace Cascade.Workflows.CommandLine.Logging;
 

@@ -2,9 +2,9 @@ using System.IO;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Geometrician.Core.Storage;
-using StudioLE.Core.Results;
-using StudioLE.Core.System.IO;
+using StudioLE.Results;
+using StudioLE.Extensions.System.IO;
+using StudioLE.Storage;
 
 namespace Cascade.Assets.Storage;
 

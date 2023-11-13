@@ -16,11 +16,14 @@
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.19.0" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="Geometrician.Assets" Version="0.6.0" />
+    <PackageReference Include="Geometrician.Serialization.Json" Version="0.6.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="StudioLE.Storage.Abstractions" Version="0.7.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Geometrician.Core" Version="0.5.0" />
+    <PackageReference Include="Geometrician.Core" Version="0.6.0" />
   </ItemGroup>
 
 </Project>

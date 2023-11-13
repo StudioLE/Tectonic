@@ -1,4 +1,4 @@
-using Geometrician.Core.Abstractions;
+using StudioLE.Patterns;
 
 namespace Cascade.Assets.Configuration;
 

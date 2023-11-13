@@ -1,9 +1,9 @@
 using System.IO;
 using Cascade.Assets.Storage;
-using Geometrician.Core.Storage;
 using NUnit.Framework;
-using StudioLE.Core.Results;
-using StudioLE.Core.System;
+using StudioLE.Results;
+using StudioLE.Extensions.System;
+using StudioLE.Storage;
 
 namespace Cascade.Assets.Tests.Documents;
 

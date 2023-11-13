@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging;
-using StudioLE.Core.Exceptions;
+using StudioLE.Extensions.System.Exceptions;
 
 namespace Cascade.Workflows.CommandLine.Utils.Logging.ColorConsoleLogger;
 

@@ -2,8 +2,8 @@ using System.CommandLine;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using Cascade.Workflows.CommandLine.Composition;
-using StudioLE.Core.Patterns;
-using StudioLE.Core.System;
+using StudioLE.Extensions.System;
+using StudioLE.Patterns;
 
 namespace Cascade.Workflows.CommandLine;
 

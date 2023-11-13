@@ -1,6 +1,7 @@
-using Geometrician.Core.Assets;
-using Geometrician.Core.Storage;
-using StudioLE.Core.Results;
+using Geometrician.Assets;
+using Geometrician.Assets.Abstractions;
+using StudioLE.Results;
+using StudioLE.Storage;
 
 namespace Cascade.Assets.Factories;
 

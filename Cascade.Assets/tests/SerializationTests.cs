@@ -1,10 +1,11 @@
 using Elements.Serialization.JSON;
-using Geometrician.Core.Assets;
-using Geometrician.Core.Serialization;
+using Geometrician.Assets;
+using Geometrician.Serialization.Json;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
+using VerifyHelpers = Geometrician.Diagnostics.NUnit.VerifyHelpers;
 
 namespace Cascade.Assets.Tests;
 
@@ -90,7 +91,7 @@ internal sealed class SerializationTests
 
         // Act
         // Assert
-        Geometrician.Diagnostics.NUnit.Verification.VerifyHelpers.SerializationAsModel(asset);
+       VerifyHelpers.SerializationAsModel(asset);
     }
 
     [Test]
@@ -107,6 +108,6 @@ internal sealed class SerializationTests
 
         // Act
         // Assert
-        Geometrician.Diagnostics.NUnit.Verification.VerifyHelpers.SerializationAsModel(asset);
+        VerifyHelpers.SerializationAsModel(asset);
     }
 }

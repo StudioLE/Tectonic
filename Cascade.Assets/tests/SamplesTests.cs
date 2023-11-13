@@ -1,9 +1,9 @@
 using Cascade.Assets.Samples;
 using Elements;
-using Geometrician.Core.Assets;
-using Geometrician.Diagnostics.NUnit.Visualization;
+using Geometrician.Assets;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Drawings;
+using Geometrician.Visualization.CascadeServer;
 using NUnit.Framework;
 
 namespace Cascade.Assets.Tests;

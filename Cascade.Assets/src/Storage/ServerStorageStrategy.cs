@@ -1,7 +1,6 @@
 using System.IO;
-using Cascade.Assets.Visualization;
-using Geometrician.Core.Storage;
-using StudioLE.Core.Results;
+using StudioLE.Results;
+using StudioLE.Storage;
 
 namespace Cascade.Assets.Storage;
 
@@ -32,4 +31,18 @@ public class ServerStorageStrategy : IStorageStrategy
             return new Failure<Uri>("Failed to write to file storage.", e);
         }
     }
+
+    private static class VisualizationConfiguration
+    {
+        /// <summary>
+        /// The path of the asset API endpoint.
+        /// </summary>
+        public const string BaseAddress = "http://localhost:3000";
+
+        /// <summary>
+        /// The path of the storage API endpoint.
+        /// </summary>
+        public const string StorageRoute = "storage";
+    }
+
 }

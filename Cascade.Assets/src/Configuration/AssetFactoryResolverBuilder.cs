@@ -1,5 +1,5 @@
-using Geometrician.Core.Abstractions;
-using Geometrician.Core.Assets;
+using Geometrician.Assets.Abstractions;
+using StudioLE.Patterns;
 
 namespace Cascade.Assets.Configuration;
 

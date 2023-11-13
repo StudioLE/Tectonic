@@ -2,15 +2,16 @@ using System.IO;
 using Cascade.Assets.Factories;
 using Cascade.Assets.Storage;
 using Elements;
-using Geometrician.Core.Assets;
-using Geometrician.Core.Storage;
+using Geometrician.Assets;
+using Geometrician.Assets.Abstractions;
 using Geometrician.Diagnostics.Samples;
 using Geometrician.Drawings;
 using Geometrician.IFC;
 using Geometrician.PDF;
 using Geometrician.SVG;
 using NUnit.Framework;
-using StudioLE.Core.Results;
+using StudioLE.Results;
+using StudioLE.Storage;
 
 namespace Cascade.Assets.Tests.Documents;
 

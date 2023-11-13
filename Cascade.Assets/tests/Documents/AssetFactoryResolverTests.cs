@@ -1,12 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using Cascade.Assets.Configuration;
 using Elements;
-using Geometrician.Core.Assets;
+using Geometrician.Assets;
+using Geometrician.Assets.Abstractions;
 using Geometrician.Diagnostics.Samples;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
-using StudioLE.Core.Results;
+using StudioLE.Results;
 
 namespace Cascade.Assets.Tests.Documents;
 

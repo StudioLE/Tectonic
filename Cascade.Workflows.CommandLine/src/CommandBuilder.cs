@@ -1,6 +1,6 @@
 using System.CommandLine;
 using Microsoft.Extensions.DependencyInjection;
-using StudioLE.Core.Patterns;
+using StudioLE.Patterns;
 
 namespace Cascade.Workflows.CommandLine;
 
