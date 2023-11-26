@@ -35,11 +35,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsExecutable)">
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsTestLibrary)">
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsLibrary)">
@@ -48,7 +48,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$(IsLibrary)">
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>
