@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
-using StudioLE.Core.System;
+using StudioLE.Extensions.System;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 

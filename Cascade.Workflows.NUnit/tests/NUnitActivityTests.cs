@@ -1,7 +1,7 @@
 using System.Reflection;
 using NUnit.Framework;
 using StudioLE.Results;
-using StudioLE.Core.System;
+using StudioLE.Extensions.System.Reflection;
 
 namespace Cascade.Workflows.NUnit.Tests;
 

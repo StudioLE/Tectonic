@@ -1,5 +1,5 @@
 using Cascade.Workflows.CommandLine.Utils.Logging.TestLogger;
-using StudioLE.Core.System;
+using StudioLE.Extensions.System;
 using StudioLE.Verify;
 
 namespace Cascade.Workflows.CommandLine.Tests;

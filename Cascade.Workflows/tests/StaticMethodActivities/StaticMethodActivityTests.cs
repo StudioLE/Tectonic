@@ -2,7 +2,8 @@ using System.Reflection;
 using Cascade.Workflows.StaticMethodActivities;
 using NUnit.Framework;
 using StudioLE.Results;
-using StudioLE.Core.System;
+using StudioLE.Extensions.System;
+using StudioLE.Extensions.System.Reflection;
 
 namespace Cascade.Workflows.Tests.StaticMethodActivities;
 

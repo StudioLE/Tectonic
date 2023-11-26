@@ -1,7 +1,7 @@
 using Cascade.Workflows.CommandLine.Composition;
 using Cascade.Workflows.CommandLine.Tests.Resources;
 using NUnit.Framework;
-using StudioLE.Core.System;
+using StudioLE.Extensions.System;
 using StudioLE.Verify;
 using StudioLE.Verify.NUnit;
 
