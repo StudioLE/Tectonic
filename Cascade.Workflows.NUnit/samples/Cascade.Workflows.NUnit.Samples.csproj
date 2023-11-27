@@ -2,7 +2,7 @@
 
   <!-- Use consistent properties across all projects -->
   <Import Project="..\..\Global.props" />
-  
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
@@ -15,7 +15,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StudioLE.Verify.NUnit" Version="0.6.0" />
+    <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.7.0" />
+    <PackageReference Include="StudioLE.Verify" Version="0.7.0" />
   </ItemGroup>
 
 </Project>

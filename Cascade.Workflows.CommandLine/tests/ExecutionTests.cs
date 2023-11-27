@@ -8,15 +8,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using StudioLE.Extensions.System;
+using StudioLE.Diagnostics;
+using StudioLE.Diagnostics.NUnit;
 using StudioLE.Verify;
-using StudioLE.Verify.NUnit;
 
 namespace Cascade.Workflows.CommandLine.Tests;
 
 [SuppressMessage("ReSharper", "StringLiteralTypo")]
 internal sealed class ExecutionTests
 {
-    private readonly IVerify _verify = new NUnitVerify();
+    private readonly IContext _context = new NUnitContext();
     private readonly TestLogger _logger = TestLogger.GetInstance();
     private RedirectConsoleToLogger _console = null!;
     private RootCommand _command = null!;
@@ -62,7 +63,7 @@ internal sealed class ExecutionTests
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
             Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(2), "Error count");
         });
-        await _verify.AsString(_logger);
+        await _context.Verify(_logger);
     }
 
     [Test]
@@ -125,7 +126,7 @@ internal sealed class ExecutionTests
         _console.Flush();
         Assert.Multiple(async () =>
         {
-            await _verify.AsString(_logger);
+            await _context.Verify(_logger);
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
             Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(3), "Error count");
         });
@@ -155,7 +156,7 @@ internal sealed class ExecutionTests
         _console.Flush();
         Assert.Multiple(async () =>
         {
-            await _verify.AsString(_logger);
+            await _context.Verify(_logger);
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
             Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(4), "Error count");
         });
@@ -210,7 +211,7 @@ internal sealed class ExecutionTests
             Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
         });
         string output = _logger.Logs.Where(x => x.LogLevel == LogLevel.Information).Select(x => x.Message).Join();
-        await _verify.String(output);
+        await _context.Verify(output);
     }
 
     [Test]
@@ -235,7 +236,7 @@ internal sealed class ExecutionTests
             Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
         });
         string output = _logger.Logs.Where(x => x.LogLevel == LogLevel.Information).Select(x => x.Message).Join();
-        await _verify.String(output);
+        await _context.Verify(output);
     }
 
     [Test]

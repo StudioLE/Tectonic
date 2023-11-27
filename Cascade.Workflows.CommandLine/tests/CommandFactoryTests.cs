@@ -3,8 +3,8 @@ using Cascade.Workflows.CommandLine.Tests.Resources;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
-using StudioLE.Verify;
-using StudioLE.Verify.NUnit;
+using StudioLE.Diagnostics;
+using StudioLE.Diagnostics.NUnit;
 using StudioLE.Verify.Yaml;
 
 namespace Cascade.Workflows.CommandLine.Tests;
@@ -14,7 +14,7 @@ internal sealed class CommandFactoryTests
     internal const int ExpectedArgumentsCount = 0;
     internal const int ExpectedOptionsCount = 8;
     internal const int ExpectedChildrenCount = ExpectedArgumentsCount + ExpectedOptionsCount;
-    private readonly IVerify _verify = new NUnitVerify();
+    private readonly IContext _context = new NUnitContext();
 
     [Test]
     public async Task CommandFactory_Build()
@@ -34,7 +34,7 @@ internal sealed class CommandFactoryTests
         Command command = factory.Create(activity);
 
         // Assert
-        await _verify.AsYaml(command
+        await _context.VerifyAsYaml(command
             .Options
             .Select(x => new
             {

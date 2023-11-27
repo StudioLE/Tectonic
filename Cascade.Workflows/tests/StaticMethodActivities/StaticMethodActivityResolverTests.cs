@@ -4,14 +4,15 @@ using NUnit.Framework;
 using StudioLE.Results;
 using StudioLE.Extensions.System;
 using StudioLE.Extensions.System.Reflection;
+using StudioLE.Diagnostics;
+using StudioLE.Diagnostics.NUnit;
 using StudioLE.Verify;
-using StudioLE.Verify.NUnit;
 
 namespace Cascade.Workflows.Tests.StaticMethodActivities;
 
 internal sealed class StaticMethodActivityResolverTests
 {
-    private readonly IVerify _verify = new NUnitVerify();
+    private readonly IContext _context = new NUnitContext();
     private const string AssemblyPath = "Cascade.Workflows.Samples.dll";
     private const string ActivityKey = "StaticMethodActivityExample.Execute";
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
@@ -26,7 +27,7 @@ internal sealed class StaticMethodActivityResolverTests
         string[] activities = resolver.AllActivityKeysInAssembly(_assembly).ToArray();
 
         // Assert
-        await _verify.String(activities.Join());
+        await _context.Verify(activities.Join());
         Assert.That(activities.Count, Is.EqualTo(1), "Activity count");
     }
 

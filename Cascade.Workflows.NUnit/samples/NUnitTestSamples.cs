@@ -1,12 +1,13 @@
 using NUnit.Framework;
+using StudioLE.Diagnostics;
+using StudioLE.Diagnostics.NUnit;
 using StudioLE.Verify;
-using StudioLE.Verify.NUnit;
 
 namespace Cascade.Workflows.NUnit.Samples;
 
 internal sealed class NUnitTestSamples
 {
-    private readonly IVerify _verify = new NUnitVerify();
+    private readonly IContext _context = new NUnitContext();
 
     [Test]
     public void NUnitTestSamples_Test()
@@ -24,7 +25,7 @@ internal sealed class NUnitTestSamples
     [Test]
     public async Task NUnitTestSamples_Test_Verify()
     {
-        await _verify.String("Hello, world!");
+        await _context.Verify("Hello, world!");
     }
 
     [TestCase("actual", "expected")]
