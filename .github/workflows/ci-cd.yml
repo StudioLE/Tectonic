@@ -2,47 +2,51 @@
 
 on:
   push:
-  pull_request:
-    branches:
-      - alpha
 
 jobs:
 
-  analysis:
-    name: Analysis
-    uses: StudioLE/Actions/.github/workflows/01-analysis.yml@main
-    secrets: inherit
-
-  build-and-test-ubuntu:
+  test-ubuntu:
     name: Ubuntu
-    needs: analysis
-    uses: StudioLE/Actions/.github/workflows/02-build-and-test.yml@main
+    uses: StudioLE/Actions/.github/workflows/01-test.yml@v3
     with:
-      solution: ""
+      project: ""
       os: ubuntu-latest
-      version: ${{ needs.analysis.outputs.version }}
-    secrets:
-      PACKAGES_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
-
-  build-and-test-windows:
-    name: Windows
-    if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/alpha", "refs/heads/beta"]'), github.ref) }}
-    needs: analysis
-    uses: StudioLE/Actions/.github/workflows/02-build-and-test.yml@main
-    with:
-      solution: ""
-      os: windows-latest
-      version: ${{ needs.analysis.outputs.version }}
-    secrets:
-      PACKAGES_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
-
-  publish-nuget:
-    name: Publish NuGet
-    if: ${{ contains(fromJSON('["refs/heads/main", "refs/heads/alpha", "refs/heads/beta"]'), github.ref) }}
-    needs:
-      - analysis
-      - build-and-test-ubuntu
-    uses: StudioLE/Actions/.github/workflows/03-publish-nuget.yml@main
-    with:
-      version: ${{ needs.analysis.outputs.version }}
     secrets: inherit
+
+  test-windows:
+    name: Windows
+    if: ${{ github.ref_type == 'branch' && contains(fromJSON('["main", "beta"]'), github.ref_name) }}
+    uses: StudioLE/Actions/.github/workflows/01-test.yml@v3
+    with:
+      project: ""
+      os: windows-latest
+    secrets: inherit
+
+  release:
+    name: Release
+    if: ${{ github.ref_type == 'branch' && contains(fromJSON('["main", "alpha", "beta"]'), github.ref_name) }}
+    needs:
+    - test-ubuntu
+    uses: StudioLE/Actions/.github/workflows/02-release.yml@v3
+    secrets: inherit
+
+  push:
+    name: Push
+    needs:
+    - release
+    uses: StudioLE/Actions/.github/workflows/03-push.yml@v3
+    with:
+      project: ""
+      version: ${{ needs.release.outputs.version }}
+    secrets: inherit
+
+  environment:
+    name: Environment
+    needs:
+    - release
+    - push
+    runs-on: ubuntu-latest
+    environment: ${{ needs.release.outputs.environment }}
+    steps:
+    - run: |
+        echo "Environment: ${{ needs.release.outputs.environment }}"
