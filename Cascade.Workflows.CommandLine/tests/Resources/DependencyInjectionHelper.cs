@@ -1,13 +1,13 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using StudioLE.Extensions.Logging.Cache;
 using StudioLE.Extensions.Logging.Console;
 
-namespace Cascade.Workflows.CommandLine.Utils;
+namespace Cascade.Workflows.CommandLine.Tests.Resources;
 
 public static class DependencyInjectionHelper
 {
-
-    public static IHostBuilder RegisterCustomLoggingProviders(this IHostBuilder builder)
+    public static IHostBuilder RegisterTestLoggingProviders(this IHostBuilder builder)
     {
         return builder
             .ConfigureLogging((hostingContext, logging) =>
@@ -17,6 +17,7 @@ public static class DependencyInjectionHelper
                 logging.AddDebug();
                 // logging.AddConsole();
                 logging.AddBasicConsole();
+                logging.AddCache();
             });
     }
 }

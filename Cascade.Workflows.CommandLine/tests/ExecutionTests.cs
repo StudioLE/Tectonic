@@ -2,14 +2,14 @@ using System.CommandLine;
 using System.Diagnostics.CodeAnalysis;
 using Cascade.Workflows.CommandLine.Logging;
 using Cascade.Workflows.CommandLine.Tests.Resources;
-using Cascade.Workflows.CommandLine.Utils.Logging.TestLogger;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
-using StudioLE.Extensions.System;
 using StudioLE.Diagnostics;
 using StudioLE.Diagnostics.NUnit;
+using StudioLE.Extensions.Logging.Cache;
+using StudioLE.Extensions.System;
 using StudioLE.Verify;
 
 namespace Cascade.Workflows.CommandLine.Tests;
@@ -18,22 +18,24 @@ namespace Cascade.Workflows.CommandLine.Tests;
 internal sealed class ExecutionTests
 {
     private readonly IContext _context = new NUnitContext();
-    private readonly TestLogger _logger = TestLogger.GetInstance();
     private RedirectConsoleToLogger _console = null!;
     private RootCommand _command = null!;
+    private IServiceProvider _services = null!;
 
     [SetUp]
     public void SetUp()
     {
-        _console = new(_logger);
         IHost host = Host
             .CreateDefaultBuilder()
-            .ConfigureLogging(logging => logging.AddTestLogger())
+            .ConfigureLogging(logging => logging.AddCache())
             .ConfigureServices(services => services
                 .AddCommandBuilderServices()
                 .AddTransient<ExampleActivity>()
                 .AddTransient<ExampleErrorActivity>())
             .Build();
+        _services = host.Services;
+        ILogger logger = _services.GetRequiredService<ILogger<ExecutionTests>>();
+        _console = new(logger);
         CommandBuilder builder = host
             .Services
             .GetRequiredService<CommandBuilder>();
@@ -42,7 +44,6 @@ internal sealed class ExecutionTests
             .Register<ExampleErrorActivity>()
             .Build();
         _command.Name = "RootCommand";
-        _logger.Clear();
     }
 
     [Test]
@@ -58,12 +59,13 @@ internal sealed class ExecutionTests
 
         // Assert
         _console.Flush();
+        IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(() =>
         {
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
-            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(2), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(2), "Error count");
         });
-        await _context.Verify(_logger);
+        await _context.Verify(logs);
     }
 
     [Test]
@@ -80,10 +82,11 @@ internal sealed class ExecutionTests
 
         // Assert
         _console.Flush();
+        IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(() =>
         {
             Assert.That(exitCode, Is.EqualTo(0), "Exit code");
-            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
         });
     }
 
@@ -101,10 +104,11 @@ internal sealed class ExecutionTests
 
         // Assert
         _console.Flush();
+        IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(() =>
         {
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
-            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(3), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(3), "Error count");
         });
     }
 
@@ -124,11 +128,12 @@ internal sealed class ExecutionTests
 
         // Assert
         _console.Flush();
+        IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(async () =>
         {
-            await _context.Verify(_logger);
+            await _context.Verify(logs);
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
-            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(3), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(3), "Error count");
         });
     }
 
@@ -154,11 +159,12 @@ internal sealed class ExecutionTests
 
         // Assert
         _console.Flush();
+        IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(async () =>
         {
-            await _context.Verify(_logger);
+            await _context.Verify(logs);
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
-            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(4), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(4), "Error count");
         });
     }
 
@@ -184,10 +190,11 @@ internal sealed class ExecutionTests
 
         // Assert
         _console.Flush();
+        IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(() =>
         {
             Assert.That(exitCode, Is.EqualTo(0), "Exit code");
-            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
         });
     }
 
@@ -205,12 +212,13 @@ internal sealed class ExecutionTests
 
         // Assert
         _console.Flush();
+        IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(() =>
         {
             Assert.That(exitCode, Is.EqualTo(0), "Exit code");
-            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
         });
-        string output = _logger.Logs.Where(x => x.LogLevel == LogLevel.Information).Select(x => x.Message).Join();
+        string output = logs.Where(x => x.LogLevel == LogLevel.Information).Select(x => x.Message).Join();
         await _context.Verify(output);
     }
 
@@ -230,12 +238,13 @@ internal sealed class ExecutionTests
 
         // Assert
         _console.Flush();
+        IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(() =>
         {
             Assert.That(exitCode, Is.EqualTo(0), "Exit code");
-            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
         });
-        string output = _logger.Logs.Where(x => x.LogLevel == LogLevel.Information).Select(x => x.Message).Join();
+        string output = logs.Where(x => x.LogLevel == LogLevel.Information).Select(x => x.Message).Join();
         await _context.Verify(output);
     }
 
@@ -253,10 +262,11 @@ internal sealed class ExecutionTests
 
         // Assert
         _console.Flush();
+        IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(() =>
         {
             Assert.That(exitCode, Is.EqualTo(99), "Exit code");
-            Assert.That(_logger.Logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
         });
     }
 }
