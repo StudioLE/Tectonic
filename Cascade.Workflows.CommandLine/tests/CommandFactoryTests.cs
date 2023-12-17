@@ -27,8 +27,9 @@ internal sealed class CommandFactoryTests
                 .AddTransient<ExampleActivity>())
             .Build();
 
-        CommandFactory factory = host.Services.GetRequiredService<CommandFactory>();
-        IActivity activity = host.Services.GetRequiredService<ExampleActivity>();
+        IServiceScope scope = host.Services.CreateScope();
+        CommandFactory factory = scope.ServiceProvider.GetRequiredService<CommandFactory>();
+        IActivity activity = scope.ServiceProvider.GetRequiredService<ExampleActivity>();
 
         // Act
         Command command = factory.Create(activity);
