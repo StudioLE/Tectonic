@@ -8,14 +8,10 @@
   <Import Project="..\..\Global.props" />
 
   <ItemGroup>
-    <Using Include="NUnit.Framework" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.14.0" />
-    <PackageReference Include="NUnit.Engine" Version="3.16.3" />
-    <PackageReference Include="StudioLE.Extensions.System" Version="0.9.0" />
-    <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.7.0" />
+    <PackageReference Include="NUnit" Version="4.0.1" />
+    <PackageReference Include="NUnit.Engine" Version="3.17.0" />
+    <PackageReference Include="StudioLE.Extensions.System" Version="0.10.0" />
+    <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.8.0" />
   </ItemGroup>
 
   <ItemGroup>
