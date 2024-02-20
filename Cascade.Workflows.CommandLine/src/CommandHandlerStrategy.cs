@@ -28,7 +28,7 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
             throw new("Expected input tree to be set.");
         return async context =>
         {
-            SetInputTreeValueFromOptions(context.BindingContext, commandFactory);
+            SetInputTreeValue(context.BindingContext, commandFactory);
             object input = commandFactory.InputTree.Instance;
             try
             {
@@ -43,24 +43,44 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
         };
     }
 
-    private void SetInputTreeValueFromOptions(BindingContext context, CommandFactory commandFactory)
+    private void SetInputTreeValue(BindingContext context, CommandFactory commandFactory)
     {
-        ObjectTreeProperty[] propertyFactories = commandFactory
+        ObjectTreeProperty[] objectTreeProperties = commandFactory
             .InputTree!
             .FlattenProperties()
             .ToArray();
-        foreach (ObjectTreeProperty factory in propertyFactories)
+        foreach (ObjectTreeProperty tree in objectTreeProperties)
         {
-            if (!_isParsableStrategy.Execute(factory.Type))
+            if (!_isParsableStrategy.Execute(tree.Type))
                 continue;
-            if (!commandFactory.Options.TryGetValue(factory.FullKey.ToLongOption(), out Option? option))
-                continue;
-            object? value = context.ParseResult.GetValueForOption(option);
-            if (value is null)
-                continue;
-            if (!factory.Type.IsInstanceOfType(value))
-                continue;
-            factory.SetValue(value);
+            if(tree.HasArgumentAttribute())
+                SetInputTreeValueForArgument(context, commandFactory, tree);
+            else
+                SetInputTreeValueForOption(context, commandFactory, tree);
         }
+    }
+
+    private static void SetInputTreeValueForArgument(BindingContext context, CommandFactory commandFactory, ObjectTreeProperty tree)
+    {
+        if (!commandFactory.Arguments.TryGetValue(tree.Key.ToArgument(), out Argument? option))
+            return;
+        object? value = context.ParseResult.GetValueForArgument(option);
+        if (value is null)
+            return;
+        if (!tree.Type.IsInstanceOfType(value))
+            return;
+        tree.SetValue(value);
+    }
+
+    private static void SetInputTreeValueForOption(BindingContext context, CommandFactory commandFactory, ObjectTreeProperty tree)
+    {
+        if (!commandFactory.Options.TryGetValue(tree.FullKey.ToLongOption(), out Option? option))
+            return;
+        object? value = context.ParseResult.GetValueForOption(option);
+        if (value is null)
+            return;
+        if (!tree.Type.IsInstanceOfType(value))
+            return;
+        tree.SetValue(value);
     }
 }

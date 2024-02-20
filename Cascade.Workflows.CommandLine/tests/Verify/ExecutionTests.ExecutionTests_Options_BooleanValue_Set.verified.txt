@@ -2,6 +2,7 @@
 integer_value: 0
 double_value: 0
 boolean_value: true
+hello_world: HELLO_WORLD
 nested:
   string_value: ''
   integer_value: 0

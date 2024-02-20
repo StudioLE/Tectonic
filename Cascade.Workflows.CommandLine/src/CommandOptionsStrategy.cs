@@ -28,6 +28,7 @@ public class CommandOptionsStrategy : ICommandOptionsStrategy
         return commandFactory
             .InputTree
             .FlattenProperties()
+            .Where(x => !x.HasArgumentAttribute())
             .Where(x => _isParsableStrategy.Execute(x.Type))
             .Select(CreateOptionForProperty)
             .ToDictionary(option => option.Aliases.First(), option => option);
@@ -63,10 +64,12 @@ public class CommandOptionsStrategy : ICommandOptionsStrategy
 
     private static Option CreateInstanceOfOption(ObjectTreeProperty tree, IReadOnlyCollection<string> aliases)
     {
+        string[] aliasesArray = aliases.ToArray();
+        string description = tree.HelperText;
         Type optionType = typeof(Option<>).MakeGenericType(tree.Type);
-        object instance = Activator.CreateInstance(optionType, aliases.ToArray(), tree.HelperText) ?? throw new("Failed to construct option. Activator returned null.");
+        object? instance = Activator.CreateInstance(optionType, aliasesArray, description);
         if (instance is not Option option)
-            throw new("Failed to construct option. Activator didn't return an Option.");
+            throw new($"Failed to construct {nameof(Option)}. Activator returned a {instance.GetType()}.");
         return option;
     }
 

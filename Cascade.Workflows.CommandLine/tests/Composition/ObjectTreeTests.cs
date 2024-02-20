@@ -27,7 +27,7 @@ internal sealed class ObjectTreeTests
     }
 
     [Test]
-    public void ObjectTree_ValidateValue()
+    public async Task ObjectTree_ValidateValue()
     {
         // Arrange
         ObjectTree objectTree = ObjectTree.Create<ExampleClass>();
@@ -39,10 +39,6 @@ internal sealed class ObjectTreeTests
             .ToArray();
 
         // Assert
-        Assert.Multiple(async () =>
-        {
-            Assert.That(errors.Length, Is.EqualTo(4));
-            await _context.Verify(errors.Join());
-        });
+        await _context.Verify(errors.Join());
     }
 }

@@ -1,4 +1,5 @@
-﻿Required argument missing for command: 'exampleactivity'.
+Unrecognized command or argument '--nope'.
+Unrecognized command or argument '1'.
 
 Description:
 

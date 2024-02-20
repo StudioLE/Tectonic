@@ -7,6 +7,7 @@ namespace Cascade.Workflows.CommandLine;
 
 public class CommandFactory : IFactory<IActivity, Command>
 {
+    private readonly ICommandArgumentsStrategy _argumentsStrategy;
     private readonly ICommandOptionsStrategy _optionsStrategy;
     private readonly ICommandHandlerStrategy _handlerStrategy;
 
@@ -16,23 +17,33 @@ public class CommandFactory : IFactory<IActivity, Command>
 
     public ObjectTree? InputTree { get; private set; }
 
+    public IReadOnlyDictionary<string, Argument> Arguments { get; private set; } = new Dictionary<string, Argument>();
+
     public IReadOnlyDictionary<string, Option> Options { get; private set; } = new Dictionary<string, Option>();
 
-    public CommandFactory(ICommandOptionsStrategy optionsStrategy, ICommandHandlerStrategy handlerStrategy, CommandContext context)
+    public CommandFactory(
+        ICommandArgumentsStrategy argumentsStrategy,
+        ICommandOptionsStrategy optionsStrategy,
+        ICommandHandlerStrategy handlerStrategy,
+        CommandContext context)
     {
-        Context = context;
+        _argumentsStrategy = argumentsStrategy;
         _optionsStrategy = optionsStrategy;
         _handlerStrategy = handlerStrategy;
+        Context = context;
     }
 
     public Command Create(IActivity activity)
     {
         Activity = activity;
         InputTree = CreateObjectTree();
+        Arguments = _argumentsStrategy.Execute(this);
         Options = _optionsStrategy.Execute(this);
         string commandName = GetCommandName();
         string description = GetDescription();
         Command command = new(commandName, description);
+        foreach (KeyValuePair<string, Argument> pair in Arguments)
+            command.AddArgument(pair.Value);
         foreach (KeyValuePair<string, Option> pair in Options)
             command.AddOption(pair.Value);
         Func<InvocationContext, Task> handler = _handlerStrategy.Execute(this);

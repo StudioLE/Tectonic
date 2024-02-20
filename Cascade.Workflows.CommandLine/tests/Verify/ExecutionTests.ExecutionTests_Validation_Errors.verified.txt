@@ -5,7 +5,10 @@ The --stringvalue field is required.
 Description:
 
 Usage:
-  RootCommand exampleactivity [options]
+  RootCommand exampleactivity <helloworld> [options]
+
+Arguments:
+  <helloworld>  HelloWorld
 
 Options:
   --stringvalue <stringvalue>                          StringValue
@@ -17,4 +20,5 @@ Options:
   --nested.doublevalue <nested.doublevalue>            DoubleValue
   --nested.booleanvalue                                BooleanValue
   -?, -h, --help                                       Show help and usage information
+
 

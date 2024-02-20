@@ -10,5 +10,5 @@ Options:
   -?, -h, --help  Show help and usage information
 
 Commands:
-  exampleactivity
-  exampleerroractivity
+  exampleactivity <helloworld>
+  exampleerroractivity <helloworld>

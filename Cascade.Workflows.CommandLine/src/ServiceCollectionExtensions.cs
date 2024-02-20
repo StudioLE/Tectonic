@@ -11,6 +11,8 @@ public static class ServiceCollectionExtensions
             .AddTransient<CommandBuilder>()
             .AddTransient<CommandFactory>()
             .AddTransient<IIsParseableStrategy, IsParseableStrategy>()
+            // TODO: CommandArgumentsStrategy is a factory?
+            .AddTransient<ICommandArgumentsStrategy, CommandArgumentsStrategy>()
             .AddTransient<ICommandOptionsStrategy, CommandOptionsStrategy>()
             .AddTransient<ICommandHandlerStrategy, CommandHandlerStrategy>();
     }

@@ -9,6 +9,7 @@ using NUnit.Framework;
 using StudioLE.Diagnostics;
 using StudioLE.Diagnostics.NUnit;
 using StudioLE.Extensions.Logging.Cache;
+using StudioLE.Extensions.Logging.Console;
 using StudioLE.Extensions.System;
 using StudioLE.Verify;
 
@@ -27,7 +28,10 @@ internal sealed class ExecutionTests
     {
         IHost host = Host
             .CreateDefaultBuilder()
-            .ConfigureLogging(logging => logging.AddCache())
+            .ConfigureLogging(logging => logging
+                .ClearProviders()
+                .AddBasicConsole()
+                .AddCache())
             .ConfigureServices(services => services
                 .AddCommandBuilderServices()
                 .AddTransient<ExampleActivity>()
@@ -74,7 +78,8 @@ internal sealed class ExecutionTests
         // Arrange
         string[] arguments =
         {
-            "exampleactivity"
+            "exampleactivity",
+            "HELLO_WORLD"
         };
 
         // Act
@@ -118,7 +123,31 @@ internal sealed class ExecutionTests
         // Arrange
         string[] arguments =
         {
+            "exampleactivity"
+        };
+
+        // Act
+        int exitCode = _command.Invoke(arguments, _console);
+
+        // Assert
+        _console.Flush();
+        IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
+        Assert.Multiple(async () =>
+        {
+            await _context.Verify(logs);
+            Assert.That(exitCode, Is.EqualTo(1), "Exit code");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(2), "Error count");
+        });
+    }
+
+    [Test]
+    public void ExecutionTests_Invalid_Option()
+    {
+        // Arrange
+        string[] arguments =
+        {
             "exampleactivity",
+            "HELLO_WORLD",
             "--nope",
             "1"
         };
@@ -145,6 +174,7 @@ internal sealed class ExecutionTests
         {
             // ReSharper disable StringLiteralTypo
             "exampleactivity",
+            "HELLO_WORLD",
             "--integervalue",
             "1",
             "--nested.integervalue",
@@ -176,6 +206,7 @@ internal sealed class ExecutionTests
         {
             // ReSharper disable StringLiteralTypo
             "exampleactivity",
+            "HELLO_WORLD",
             "--integervalue",
             "15",
             "--nested.integervalue",
@@ -191,8 +222,9 @@ internal sealed class ExecutionTests
         // Assert
         _console.Flush();
         IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
-        Assert.Multiple(() =>
+        Assert.Multiple(async () =>
         {
+            await _context.Verify(logs);
             Assert.That(exitCode, Is.EqualTo(0), "Exit code");
             Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
         });
@@ -204,7 +236,8 @@ internal sealed class ExecutionTests
         // Arrange
         string[] arguments =
         {
-            "exampleactivity"
+            "exampleactivity",
+            "HELLO_WORLD"
         };
 
         // Act
@@ -229,6 +262,7 @@ internal sealed class ExecutionTests
         string[] arguments =
         {
             "exampleactivity",
+            "HELLO_WORLD",
             "--booleanvalue",
             "--nested.booleanvalue"
         };
@@ -254,7 +288,8 @@ internal sealed class ExecutionTests
         // Arrange
         string[] arguments =
         {
-            "exampleerroractivity"
+            "exampleerroractivity",
+            "HELLO_WORLD"
         };
 
         // Act

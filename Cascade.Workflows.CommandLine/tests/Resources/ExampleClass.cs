@@ -18,6 +18,10 @@ public class ExampleClass
     [Required]
     public bool BooleanValue { get; set; }
 
+    [Required]
+    [Argument]
+    public string HelloWorld { get; set; } = string.Empty;
+
     [ValidateComplexType]
     public ExampleNestedClass Nested { get; set; } = new();
 }

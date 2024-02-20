@@ -1,10 +1,10 @@
-﻿string_value: ''
-integer_value: 0
+string_value: Hello, world!
+integer_value: 15
 double_value: 0
 boolean_value: false
 hello_world: HELLO_WORLD
 nested:
   string_value: ''
-  integer_value: 0
+  integer_value: 10
   double_value: 0
   boolean_value: false
