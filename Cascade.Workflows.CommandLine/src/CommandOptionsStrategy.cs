@@ -35,15 +35,15 @@ public class CommandOptionsStrategy : ICommandOptionsStrategy
 
     private Option CreateOptionForProperty(ObjectTreeProperty tree)
     {
-        IReadOnlyCollection<string> aliases = GetAliases(tree);
-        Option option = CreateInstanceOfOption(tree);
+        HashSet<string> aliases = GetAliases(tree);
+        Option option = CreateInstanceOfOption(tree, aliases);
         SetOptionValidator(tree, option);
         foreach (string alias in aliases)
             _optionAliases.Add(alias);
         return option;
     }
 
-    private IReadOnlyCollection<string> GetAliases(ObjectTreeProperty tree)
+    private HashSet<string> GetAliases(ObjectTreeProperty tree)
     {
         HashSet<string> aliases = new()
         {
@@ -61,9 +61,8 @@ public class CommandOptionsStrategy : ICommandOptionsStrategy
         return aliases;
     }
 
-    private Option CreateInstanceOfOption(ObjectTreeProperty tree)
+    private static Option CreateInstanceOfOption(ObjectTreeProperty tree, IReadOnlyCollection<string> aliases)
     {
-        IReadOnlyCollection<string> aliases = GetAliases(tree);
         Type optionType = typeof(Option<>).MakeGenericType(tree.Type);
         object instance = Activator.CreateInstance(optionType, aliases.ToArray(), tree.HelperText) ?? throw new("Failed to construct option. Activator returned null.");
         if (instance is not Option option)
