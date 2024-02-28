@@ -27,6 +27,7 @@ public class CommandArgumentsStrategy : ICommandArgumentsStrategy
         return commandFactory
             .InputTree
             .FlattenProperties()
+            .Where(x => x.CanSet())
             .Where(x => x.HasArgumentAttribute())
             .Where(x => _isParsableStrategy.Execute(x.Type))
             .Select(CreateArgumentForProperty)

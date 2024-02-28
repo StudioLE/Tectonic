@@ -19,13 +19,4 @@ public static class ObjectTreePropertyExtensions
     {
         return tree.Property.GetCustomAttribute<ArgumentAttribute>() is not null;
     }
-
-    public static IEnumerable<ObjectTreeProperty> FlattenProperties(this IObjectTreeComponent component)
-    {
-        return component
-            .Properties
-            .SelectMany(property => Array.Empty<ObjectTreeProperty>()
-                .Append(property)
-                .Concat(property.FlattenProperties()));
-    }
 }

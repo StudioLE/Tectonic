@@ -63,16 +63,7 @@ public class ObjectTreeProperty : IObjectTreeComponent
             : Key;
         // TODO: Get the HelperText from DescriptionAttribute
         HelperText = property.Name;
-        Properties = CreateProperties();
-    }
-
-    private IReadOnlyCollection<ObjectTreeProperty> CreateProperties()
-    {
-        PropertyInfo[] childProperties = Type.GetProperties();
-        return childProperties
-            .Where(x => x.SetMethod is not null)
-            .Select(property => new ObjectTreeProperty(property, this))
-            .ToArray();
+        Properties = ObjectTreeComponentHelpers.CreateProperties(this);
     }
 
     private object GetParentInstance()
@@ -83,6 +74,14 @@ public class ObjectTreeProperty : IObjectTreeComponent
             ObjectTreeProperty parentProperty => parentProperty.GetValue(),
             _ => throw new TypeSwitchException<IObjectTreeComponent>(Parent)
         };
+    }
+
+    /// <summary>
+    /// Can the property value be set?
+    /// </summary>
+    public bool CanSet()
+    {
+        return Property.SetMethod is not null;
     }
 
     /// <summary>

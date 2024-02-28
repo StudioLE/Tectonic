@@ -19,9 +19,10 @@ internal static class Program
         ObjectTree objectTree = new(inputs);
 
         // Act
-        ObjectTreeProperty[] properties = objectTree.FlattenProperties().ToArray();
-
-
+        ObjectTreeProperty[] properties = objectTree
+            .FlattenProperties()
+            .Where(x => x.CanSet())
+            .ToArray();
         foreach (ObjectTreeProperty property in properties)
         {
             int attemptCount = 0;

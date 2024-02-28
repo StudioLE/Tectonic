@@ -1,16 +1,14 @@
-using System.Reflection;
-
 namespace Cascade.Workflows.CommandLine.Composition;
 
 public class ObjectTree : IObjectTreeComponent
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public Type Type { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public bool IsNullable { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public IReadOnlyCollection<ObjectTreeProperty> Properties { get; }
 
     /// <summary>
@@ -28,15 +26,6 @@ public class ObjectTree : IObjectTreeComponent
         IsNullable = underlyingType is not null;
         Type = underlyingType ?? type;
         Instance = instance;
-        Properties = CreateProperties();
-    }
-
-    private ObjectTreeProperty[] CreateProperties()
-    {
-        PropertyInfo[] childProperties = Type.GetProperties();
-        return childProperties
-            .Where(x => x.SetMethod is not null)
-            .Select(property => new ObjectTreeProperty(property, this))
-            .ToArray();
+        Properties = ObjectTreeComponentHelpers.CreateProperties(this);
     }
 }

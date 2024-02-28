@@ -80,7 +80,7 @@ internal sealed class ExecutionTests
         {
             "exampleactivity",
             "ARG_1",
-            "ARG_2",
+            "ARG_2"
         };
 
         // Act

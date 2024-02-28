@@ -48,6 +48,7 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
         ObjectTreeProperty[] objectTreeProperties = commandFactory
             .InputTree!
             .FlattenProperties()
+            .Where(x => x.CanSet())
             .ToArray();
         foreach (ObjectTreeProperty tree in objectTreeProperties)
         {
