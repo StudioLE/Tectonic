@@ -1,25 +1,42 @@
+using System.Reflection;
+
 namespace Cascade.Workflows.CommandLine.Composition;
 
-public class ObjectTree : ObjectTreeBase
+public class ObjectTree : IObjectTreeComponent
 {
+    /// <inheritdoc />
+    public Type Type { get; }
+
+    /// <inheritdoc />
+    public bool IsNullable { get; }
+
+    /// <inheritdoc />
+    public IReadOnlyCollection<ObjectTreeProperty> Properties { get; }
+
+    /// <summary>
+    /// The instance the <see cref="ObjectTree"/> represents.
+    /// </summary>
     public object Instance { get; }
 
-    public ObjectTree(object instance) : this(instance.GetType())
+    /// <summary>
+    /// Creates a new instance of <see cref="ObjectTree"/>.
+    /// </summary>
+    public ObjectTree(object instance)
     {
-        Instance = instance;
-    }
-
-    public ObjectTree(Type type)
-    {
-        Instance = Activator.CreateInstance(type) ?? throw new("Failed to create ObjectTree instance. Type does not have a parameterless constructor.");
+        Type type = instance.GetType();
         Type? underlyingType = Nullable.GetUnderlyingType(type);
-        if (underlyingType is not null)
-            type = underlyingType;
-        SetProperties(type, this);
+        IsNullable = underlyingType is not null;
+        Type = underlyingType ?? type;
+        Instance = instance;
+        Properties = CreateProperties();
     }
 
-    public static ObjectTree Create<T>()
+    private ObjectTreeProperty[] CreateProperties()
     {
-        return new(typeof(T));
+        PropertyInfo[] childProperties = Type.GetProperties();
+        return childProperties
+            .Where(x => x.SetMethod is not null)
+            .Select(property => new ObjectTreeProperty(property, this))
+            .ToArray();
     }
 }

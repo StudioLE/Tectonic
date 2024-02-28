@@ -15,7 +15,8 @@ internal static class Program
         const int maxAttemptCount = 3;
         bool exceededMaxAttempts = false;
         ConverterResolver resolver = ConverterResolver.Default();
-        ObjectTree objectTree = ObjectTree.Create<ExampleClass>();
+        ExampleClass inputs = new();
+        ObjectTree objectTree = new(inputs);
 
         // Act
         ObjectTreeProperty[] properties = objectTree.FlattenProperties().ToArray();

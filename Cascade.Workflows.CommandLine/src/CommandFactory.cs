@@ -54,7 +54,11 @@ public class CommandFactory : IFactory<IActivity, Command>
     private ObjectTree CreateObjectTree()
     {
         Type inputType = Activity.GetInputType();
-        return new(inputType);
+        object? inputs = Activator.CreateInstance(inputType);
+        if (inputs is null)
+            throw new($"Failed to create inputs for activity: {Activity.GetName()}."
+                      + "The input type {inputType} does not have a parameterless constructor.");
+        return new(inputs);
     }
 
     private string GetCommandName()

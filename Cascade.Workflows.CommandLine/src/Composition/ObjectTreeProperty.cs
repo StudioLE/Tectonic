@@ -4,34 +4,75 @@ using StudioLE.Extensions.System.Exceptions;
 
 namespace Cascade.Workflows.CommandLine.Composition;
 
-public class ObjectTreeProperty : ObjectTreeBase
+public class ObjectTreeProperty : IObjectTreeComponent
 {
+    /// <inheritdoc/>
+    public Type Type { get; }
+
+    /// <inheritdoc />
+    public bool IsNullable { get; }
+
+    /// <inheritdoc />
+    public IReadOnlyCollection<ObjectTreeProperty> Properties { get; }
+
+    /// <summary>
+    /// The <see cref="PropertyInfo"/> of the property.
+    /// </summary>
     public PropertyInfo Property { get; }
 
-    public ObjectTreeBase Parent { get; }
+    /// <summary>
+    /// The parent of the property.
+    /// </summary>
+    public IObjectTreeComponent Parent { get; }
 
-    public Type Type { get; private set; }
-
+    /// <summary>
+    /// The key of the property.
+    /// </summary>
+    /// <remarks>
+    /// The key is the name of the property.
+    /// </remarks>
     public string Key { get; }
 
+    /// <summary>
+    /// The fully qualified key of the property.
+    /// </summary>
+    /// <remarks>
+    /// The fully qualified key is the name of the property, prefixed by the fully qualified key of the parent.
+    /// </remarks>
     public string FullKey { get; }
 
+    /// <summary>
+    /// The helper text of the property.
+    /// </summary>
+    /// <remarks>
+    /// The helper text is the description of the property, or just the name if that's not set.
+    /// </remarks>
     public string HelperText { get; private set; }
 
-    internal ObjectTreeProperty(PropertyInfo property, ObjectTreeBase parent, string? parentFullKey)
+    internal ObjectTreeProperty(PropertyInfo property, IObjectTreeComponent parent)
     {
         Property = property;
         Parent = parent;
         Type? underlyingType = Nullable.GetUnderlyingType(property.PropertyType);
+        IsNullable = underlyingType is not null;
         Type type = underlyingType ?? property.PropertyType;
         Type = type;
         Key = property.Name;
-        FullKey = parentFullKey is null
-            ? Key
-            : $"{parentFullKey}.{Key}";
+        FullKey = parent is ObjectTreeProperty parentProperty
+            ? $"{parentProperty.FullKey}.{Key}"
+            : Key;
         // TODO: Get the HelperText from DescriptionAttribute
         HelperText = property.Name;
-        SetProperties(type, this);
+        Properties = CreateProperties();
+    }
+
+    private IReadOnlyCollection<ObjectTreeProperty> CreateProperties()
+    {
+        PropertyInfo[] childProperties = Type.GetProperties();
+        return childProperties
+            .Where(x => x.SetMethod is not null)
+            .Select(property => new ObjectTreeProperty(property, this))
+            .ToArray();
     }
 
     private object GetParentInstance()
@@ -40,7 +81,7 @@ public class ObjectTreeProperty : ObjectTreeBase
         {
             ObjectTree tree => tree.Instance ?? throw new("Parent value isn't set."),
             ObjectTreeProperty parentProperty => parentProperty.GetValue(),
-            _ => throw new TypeSwitchException<ObjectTreeBase>(Parent)
+            _ => throw new TypeSwitchException<IObjectTreeComponent>(Parent)
         };
     }
 
@@ -59,6 +100,8 @@ public class ObjectTreeProperty : ObjectTreeBase
     /// <param name="value">The value.</param>
     public void SetValue(object value)
     {
+        if(Property.SetMethod is null)
+            throw new("Property doesn't have a setter.");
         object parentInstance = GetParentInstance();
         Property.SetValue(parentInstance, value);
     }

@@ -16,7 +16,8 @@ internal sealed class ObjectTreeTests
     public async Task ObjectTree_FlattenProperties()
     {
         // Arrange
-        ObjectTree objectTree = ObjectTree.Create<ExampleClass>();
+        ExampleClass inputs = new();
+        ObjectTree objectTree = new(inputs);
 
         // Act
         ObjectTreeProperty[] properties = objectTree.FlattenProperties().ToArray();
@@ -30,7 +31,8 @@ internal sealed class ObjectTreeTests
     public async Task ObjectTree_ValidateValue()
     {
         // Arrange
-        ObjectTree objectTree = ObjectTree.Create<ExampleClass>();
+        ExampleClass inputs = new();
+        ObjectTree objectTree = new(inputs);
 
         // Act
         ObjectTreeProperty[] properties = objectTree.FlattenProperties().ToArray();
