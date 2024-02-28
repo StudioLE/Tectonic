@@ -11,3 +11,5 @@ nested:
 record_struct:
   record_struct_string_value: ''
   record_struct_arg_value: ARG_2
+  nested_record_struct:
+    integer_value: 0

@@ -12,15 +12,16 @@ Arguments:
   <recordstructargvalue>  RecordStructArgValue
 
 Options:
-  --stringvalue <stringvalue>                                                                                               StringValue
-  --integervalue <integervalue>                                                                                             IntegerValue
-  --doublevalue <doublevalue>                                                                                               DoubleValue
-  --booleanvalue                                                                                                            BooleanValue
-  --nested, --nested.stringvalue <nested.stringvalue>                                                                       StringValue
-  --nested.integervalue <nested.integervalue>                                                                               IntegerValue
-  --nested.doublevalue <nested.doublevalue>                                                                                 DoubleValue
-  --nested.booleanvalue                                                                                                     BooleanValue
-  --recordstruct, --recordstruct.recordstructstringvalue, --recordstructstringvalue <recordstruct.recordstructstringvalue>  RecordStructStringValue
-  -?, -h, --help                                                                                                            Show help and usage information
+  --stringvalue <stringvalue>                                                                                                                             StringValue
+  --integervalue <integervalue>                                                                                                                           IntegerValue
+  --doublevalue <doublevalue>                                                                                                                             DoubleValue
+  --booleanvalue                                                                                                                                          BooleanValue
+  --nested, --nested.stringvalue <nested.stringvalue>                                                                                                     StringValue
+  --nested.integervalue <nested.integervalue>                                                                                                             IntegerValue
+  --nested.doublevalue <nested.doublevalue>                                                                                                               DoubleValue
+  --nested.booleanvalue                                                                                                                                   BooleanValue
+  --recordstruct, --recordstruct.recordstructstringvalue, --recordstructstringvalue <recordstruct.recordstructstringvalue>                                RecordStructStringValue
+  --nestedrecordstruct, --recordstruct.nestedrecordstruct, --recordstruct.nestedrecordstruct.integervalue <recordstruct.nestedrecordstruct.integervalue>  IntegerValue
+  -?, -h, --help                                                                                                                                          Show help and usage information
 
 

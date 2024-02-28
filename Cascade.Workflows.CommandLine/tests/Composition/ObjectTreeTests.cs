@@ -114,4 +114,30 @@ internal sealed class ObjectTreeTests
         // Assert
         await _context.Verify(output.Join());
     }
+
+    [Test]
+    public async Task ObjectTreeProperty_SetValue_NestedNestedRecordStruct()
+    {
+        // Arrange
+        ExampleClass inputs = new();
+        ObjectTree objectTree = new(inputs);
+        ObjectTreeProperty recordProperty = objectTree
+            .Properties
+            .First(x => x.Type == typeof(ExampleRecordStruct));
+        ObjectTreeProperty nestedRecordProperty = recordProperty
+            .Properties
+            .First(x => x.Type == typeof(ExampleNestedRecordStruct));
+
+        // Act
+        nestedRecordProperty.Properties.ElementAt(0).SetValue(9);
+        ObjectTreeProperty[] properties = objectTree
+            .FlattenProperties()
+            .ToArray();
+        string[] output = properties
+            .Select(x => $"{x.Type} {x.FullKey}: {x.GetValue()}")
+            .ToArray();
+
+        // Assert
+        await _context.Verify(output.Join());
+    }
 }

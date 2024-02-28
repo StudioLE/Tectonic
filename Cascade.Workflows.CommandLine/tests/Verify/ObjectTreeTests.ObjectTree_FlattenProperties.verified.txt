@@ -16,3 +16,5 @@ RecordStruct.RecordStructStringValue: System.String
 RecordStruct.RecordStructStringValue.Length: System.Int32
 RecordStruct.RecordStructArgValue: System.String
 RecordStruct.RecordStructArgValue.Length: System.Int32
+RecordStruct.NestedRecordStruct: Cascade.Workflows.CommandLine.Tests.Resources.ExampleNestedRecordStruct
+RecordStruct.NestedRecordStruct.IntegerValue: System.Int32

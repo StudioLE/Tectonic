@@ -37,3 +37,9 @@
   - --recordstruct.recordstructstringvalue
   - --recordstructstringvalue
   - --recordstruct
+- Description: IntegerValue
+  Type: Int32
+  Aliases:
+  - --recordstruct.nestedrecordstruct.integervalue
+  - --recordstruct.nestedrecordstruct
+  - --nestedrecordstruct
