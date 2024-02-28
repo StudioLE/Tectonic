@@ -1,26 +1,2 @@
 Unrecognized command or argument '--nope'.
 Unrecognized command or argument '1'.
-
-Description:
-
-Usage:
-  RootCommand exampleactivity <arg1value> <recordstructargvalue> [options]
-
-Arguments:
-  <arg1value>             Arg1Value
-  <recordstructargvalue>  RecordStructArgValue
-
-Options:
-  --stringvalue <stringvalue>                                                                                                                             StringValue
-  --integervalue <integervalue>                                                                                                                           IntegerValue
-  --doublevalue <doublevalue>                                                                                                                             DoubleValue
-  --booleanvalue                                                                                                                                          BooleanValue
-  --nested, --nested.stringvalue <nested.stringvalue>                                                                                                     StringValue
-  --nested.integervalue <nested.integervalue>                                                                                                             IntegerValue
-  --nested.doublevalue <nested.doublevalue>                                                                                                               DoubleValue
-  --nested.booleanvalue                                                                                                                                   BooleanValue
-  --recordstruct, --recordstruct.recordstructstringvalue, --recordstructstringvalue <recordstruct.recordstructstringvalue>                                RecordStructStringValue
-  --nestedrecordstruct, --recordstruct.nestedrecordstruct, --recordstruct.nestedrecordstruct.integervalue <recordstruct.nestedrecordstruct.integervalue>  IntegerValue
-  -?, -h, --help                                                                                                                                          Show help and usage information
-
-

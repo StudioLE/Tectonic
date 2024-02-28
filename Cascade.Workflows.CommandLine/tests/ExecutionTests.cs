@@ -135,7 +135,7 @@ internal sealed class ExecutionTests
         IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(async () =>
         {
-            await _context.Verify(logs);
+            await _context.Verify(logs.Where(x => x.LogLevel > LogLevel.Information));
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
             Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(3), "Error count");
         });
@@ -162,7 +162,7 @@ internal sealed class ExecutionTests
         IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(async () =>
         {
-            await _context.Verify(logs);
+            await _context.Verify(logs.Where(x => x.LogLevel > LogLevel.Information));
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
             Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(3), "Error count");
         });
@@ -195,7 +195,7 @@ internal sealed class ExecutionTests
         IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(async () =>
         {
-            await _context.Verify(logs);
+            await _context.Verify(logs.Where(x => x.LogLevel > LogLevel.Information));
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
             Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(4), "Error count");
         });

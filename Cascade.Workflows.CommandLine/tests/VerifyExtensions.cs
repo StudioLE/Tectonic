@@ -7,7 +7,7 @@ namespace Cascade.Workflows.CommandLine.Tests;
 
 public static class VerifyExtensions
 {
-    public static Task Verify(this IContext context, IReadOnlyCollection<LogEntry> logs)
+    public static Task Verify(this IContext context, IEnumerable<LogEntry> logs)
     {
         string value = logs
             .Select(x => x.Message)
