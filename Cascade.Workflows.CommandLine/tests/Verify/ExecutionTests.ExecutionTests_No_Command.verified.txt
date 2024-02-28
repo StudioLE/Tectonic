@@ -10,5 +10,5 @@ Options:
   -?, -h, --help  Show help and usage information
 
 Commands:
-  exampleactivity <helloworld>
-  exampleerroractivity <helloworld>
+  exampleactivity <arg1value> <recordstructargvalue>
+  exampleerroractivity <arg1value> <recordstructargvalue>

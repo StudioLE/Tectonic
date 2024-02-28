@@ -45,7 +45,8 @@ internal sealed class ExecutionExceptionTests
         {
             // ReSharper disable StringLiteralTypo
             "examplethatthrowsactivity",
-            "HELLO_WORLD",
+            "ARG_1",
+            "ARG_2",
             "--integervalue",
             "15",
             "--nested.integervalue",

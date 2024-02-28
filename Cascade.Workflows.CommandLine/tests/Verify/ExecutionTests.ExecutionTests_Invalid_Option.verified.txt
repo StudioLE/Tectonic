@@ -4,20 +4,22 @@ Unrecognized command or argument '1'.
 Description:
 
 Usage:
-  RootCommand exampleactivity <helloworld> [options]
+  RootCommand exampleactivity <arg1value> <recordstructargvalue> [options]
 
 Arguments:
-  <helloworld>  HelloWorld
+  <arg1value>             Arg1Value
+  <recordstructargvalue>  RecordStructArgValue
 
 Options:
-  --stringvalue <stringvalue>                          StringValue
-  --integervalue <integervalue>                        IntegerValue
-  --doublevalue <doublevalue>                          DoubleValue
-  --booleanvalue                                       BooleanValue
-  --nested, --nested.stringvalue <nested.stringvalue>  StringValue
-  --nested.integervalue <nested.integervalue>          IntegerValue
-  --nested.doublevalue <nested.doublevalue>            DoubleValue
-  --nested.booleanvalue                                BooleanValue
-  -?, -h, --help                                       Show help and usage information
+  --stringvalue <stringvalue>                                                                                               StringValue
+  --integervalue <integervalue>                                                                                             IntegerValue
+  --doublevalue <doublevalue>                                                                                               DoubleValue
+  --booleanvalue                                                                                                            BooleanValue
+  --nested, --nested.stringvalue <nested.stringvalue>                                                                       StringValue
+  --nested.integervalue <nested.integervalue>                                                                               IntegerValue
+  --nested.doublevalue <nested.doublevalue>                                                                                 DoubleValue
+  --nested.booleanvalue                                                                                                     BooleanValue
+  --recordstruct, --recordstruct.recordstructstringvalue, --recordstructstringvalue <recordstruct.recordstructstringvalue>  RecordStructStringValue
+  -?, -h, --help                                                                                                            Show help and usage information
 
 

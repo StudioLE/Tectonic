@@ -11,8 +11,8 @@ namespace Cascade.Workflows.CommandLine.Tests;
 
 internal sealed class CommandFactoryTests
 {
-    internal const int ExpectedArgumentsCount = 1;
-    internal const int ExpectedOptionsCount = 8;
+    internal const int ExpectedArgumentsCount = 2;
+    internal const int ExpectedOptionsCount = 9;
     internal const int ExpectedChildrenCount = ExpectedArgumentsCount + ExpectedOptionsCount;
     private readonly IContext _context = new NUnitContext();
 

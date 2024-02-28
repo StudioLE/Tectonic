@@ -1,10 +1,13 @@
 string_value: Hello, world!
 integer_value: 15
-double_value: 0
-boolean_value: false
-hello_world: HELLO_WORLD
+double_value: 0.147
+boolean_value: true
+arg1_value: ARG_1
 nested:
-  string_value: ''
+  string_value: Good morning!
   integer_value: 10
-  double_value: 0
-  boolean_value: false
+  double_value: 0.118
+  boolean_value: true
+record_struct:
+  record_struct_string_value: ''
+  record_struct_arg_value: ''

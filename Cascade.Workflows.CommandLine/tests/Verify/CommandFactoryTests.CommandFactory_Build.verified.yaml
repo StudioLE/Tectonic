@@ -31,3 +31,9 @@
   Type: Boolean
   Aliases:
   - --nested.booleanvalue
+- Description: RecordStructStringValue
+  Type: String
+  Aliases:
+  - --recordstruct.recordstructstringvalue
+  - --recordstructstringvalue
+  - --recordstruct

@@ -79,7 +79,8 @@ internal sealed class ExecutionTests
         string[] arguments =
         {
             "exampleactivity",
-            "HELLO_WORLD"
+            "ARG_1",
+            "ARG_2",
         };
 
         // Act
@@ -136,7 +137,7 @@ internal sealed class ExecutionTests
         {
             await _context.Verify(logs);
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
-            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(2), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(3), "Error count");
         });
     }
 
@@ -147,7 +148,8 @@ internal sealed class ExecutionTests
         string[] arguments =
         {
             "exampleactivity",
-            "HELLO_WORLD",
+            "ARG_1",
+            "ARG_2",
             "--nope",
             "1"
         };
@@ -174,7 +176,8 @@ internal sealed class ExecutionTests
         {
             // ReSharper disable StringLiteralTypo
             "exampleactivity",
-            "HELLO_WORLD",
+            "ARG_1",
+            "ARG_2",
             "--integervalue",
             "1",
             "--nested.integervalue",
@@ -206,13 +209,26 @@ internal sealed class ExecutionTests
         {
             // ReSharper disable StringLiteralTypo
             "exampleactivity",
-            "HELLO_WORLD",
+            "ARG_1",
+            "ARG_2",
+            "--stringvalue",
+            "Hello, world!",
             "--integervalue",
             "15",
+            "--doublevalue",
+            "0.147",
+            "--booleanvalue",
+            "true",
+            "--nested.stringvalue",
+            "Good morning!",
             "--nested.integervalue",
             "10",
-            "--stringvalue",
-            "Hello, world!"
+            "--nested.doublevalue",
+            "0.118",
+            "--nested.booleanvalue",
+            "true",
+            "--recordstruct.recordstructstringvalue",
+            "Hello, record struct!"
             // ReSharper restore StringLiteralTypo
         };
 
@@ -237,7 +253,8 @@ internal sealed class ExecutionTests
         string[] arguments =
         {
             "exampleactivity",
-            "HELLO_WORLD"
+            "ARG_1",
+            "ARG_2"
         };
 
         // Act
@@ -262,7 +279,8 @@ internal sealed class ExecutionTests
         string[] arguments =
         {
             "exampleactivity",
-            "HELLO_WORLD",
+            "ARG_1",
+            "ARG_2",
             "--booleanvalue",
             "--nested.booleanvalue"
         };
@@ -289,7 +307,8 @@ internal sealed class ExecutionTests
         string[] arguments =
         {
             "exampleerroractivity",
-            "HELLO_WORLD"
+            "ARG_1",
+            "ARG_2"
         };
 
         // Act

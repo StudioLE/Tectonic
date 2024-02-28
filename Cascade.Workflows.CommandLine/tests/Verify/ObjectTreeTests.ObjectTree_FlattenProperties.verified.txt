@@ -2,9 +2,12 @@
 IntegerValue: System.Int32
 DoubleValue: System.Double
 BooleanValue: System.Boolean
-HelloWorld: System.String
+Arg1Value: System.String
 Nested: Cascade.Workflows.CommandLine.Tests.Resources.ExampleNestedClass
 Nested.StringValue: System.String
 Nested.IntegerValue: System.Int32
 Nested.DoubleValue: System.Double
 Nested.BooleanValue: System.Boolean
+RecordStruct: Cascade.Workflows.CommandLine.Tests.Resources.ExampleRecordStruct
+RecordStruct.RecordStructStringValue: System.String
+RecordStruct.RecordStructArgValue: System.String

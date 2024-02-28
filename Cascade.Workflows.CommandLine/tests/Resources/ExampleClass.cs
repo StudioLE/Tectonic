@@ -20,8 +20,11 @@ public class ExampleClass
 
     [Required]
     [Argument]
-    public string HelloWorld { get; set; } = string.Empty;
+    public string Arg1Value { get; set; } = string.Empty;
 
     [ValidateComplexType]
     public ExampleNestedClass Nested { get; set; } = new();
+
+    [ValidateComplexType]
+    public ExampleRecordStruct RecordStruct { get; set; } = new();
 }
