@@ -96,6 +96,9 @@ public class ObjectTreeProperty : IObjectTreeComponent
     /// <summary>
     /// Set the value of the property.
     /// </summary>
+    /// <remarks>
+    /// If the parent is a value type, the parent will be recursively set to the new value.
+    /// </remarks>
     /// <param name="value">The value.</param>
     public void SetValue(object value)
     {
@@ -103,6 +106,14 @@ public class ObjectTreeProperty : IObjectTreeComponent
             throw new("Property doesn't have a setter.");
         object parentInstance = GetParentInstance();
         Property.SetValue(parentInstance, value);
+        if(!Parent.Type.IsValueType)
+            return;
+        if(Parent is ObjectTreeProperty parentProperty)
+            parentProperty.SetValue(parentInstance);
+        else if(Parent is ObjectTree parentTree)
+            parentTree.Instance = parentInstance;
+        else
+            throw new TypeSwitchException<IObjectTreeComponent>(Parent);
     }
 
     public IReadOnlyCollection<string> ValidateValue()

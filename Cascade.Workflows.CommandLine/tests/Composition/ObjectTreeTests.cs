@@ -67,4 +67,51 @@ internal sealed class ObjectTreeTests
         // Assert
         await _context.Verify(output.Join());
     }
+
+    [Test]
+    public async Task ObjectTreeProperty_SetValue_RecordStruct()
+    {
+        // Arrange
+        ExampleRecordStruct obj = new()
+        {
+            RecordStructStringValue = "This is a string value.",
+            RecordStructArgValue = "This is an argument value."
+        };
+        ObjectTree objectTree = new(obj);
+
+        // Act
+        objectTree.Properties.ElementAt(0).SetValue("This is a new string value.");
+        ObjectTreeProperty[] properties = objectTree
+            .FlattenProperties()
+            .ToArray();
+        string[] output = properties
+            .Select(x => $"{x.Type} {x.FullKey}: {x.GetValue()}")
+            .ToArray();
+
+        // Assert
+        await _context.Verify(output.Join());
+    }
+
+    [Test]
+    public async Task ObjectTreeProperty_SetValue_NestedRecordStruct()
+    {
+        // Arrange
+        ExampleClass inputs = new();
+        ObjectTree objectTree = new(inputs);
+        ObjectTreeProperty recordProperty = objectTree
+            .Properties
+            .First(x => x.Type == typeof(ExampleRecordStruct));
+
+        // Act
+        recordProperty.Properties.ElementAt(0).SetValue("This is a new string value.");
+        ObjectTreeProperty[] properties = objectTree
+            .FlattenProperties()
+            .ToArray();
+        string[] output = properties
+            .Select(x => $"{x.Type} {x.FullKey}: {x.GetValue()}")
+            .ToArray();
+
+        // Assert
+        await _context.Verify(output.Join());
+    }
 }

@@ -14,7 +14,7 @@ public class ObjectTree : IObjectTreeComponent
     /// <summary>
     /// The instance the <see cref="ObjectTree"/> represents.
     /// </summary>
-    public object Instance { get; }
+    public object Instance { get; internal set; }
 
     /// <summary>
     /// Creates a new instance of <see cref="ObjectTree"/>.

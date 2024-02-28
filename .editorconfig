@@ -17,6 +17,9 @@ trim_trailing_whitespace = true
 [*.{cmd,bat}]
 end_of_line = crlf
 
+[*.verified.{yaml,yml,txt,json}]
+trim_trailing_whitespace = false
+
 # C# files
 [*.cs]
 indent_size = 4
@@ -173,5 +176,3 @@ csharp_style_unused_value_expression_statement_preference = discard_variable:sug
 csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
 csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true:silent
 csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true:silent
-
-

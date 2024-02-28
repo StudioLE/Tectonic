@@ -1,0 +1,18 @@
+System.String StringValue: 
+System.Int32 StringValue.Length: 0
+System.Int32 IntegerValue: 0
+System.Double DoubleValue: 0
+System.Boolean BooleanValue: False
+System.String Arg1Value: 
+System.Int32 Arg1Value.Length: 0
+Cascade.Workflows.CommandLine.Tests.Resources.ExampleNestedClass Nested: Cascade.Workflows.CommandLine.Tests.Resources.ExampleNestedClass
+System.String Nested.StringValue: 
+System.Int32 Nested.StringValue.Length: 0
+System.Int32 Nested.IntegerValue: 0
+System.Double Nested.DoubleValue: 0
+System.Boolean Nested.BooleanValue: False
+Cascade.Workflows.CommandLine.Tests.Resources.ExampleRecordStruct RecordStruct: ExampleRecordStruct { RecordStructStringValue = This is a new string value., RecordStructArgValue =  }
+System.String RecordStruct.RecordStructStringValue: This is a new string value.
+System.Int32 RecordStruct.RecordStructStringValue.Length: 27
+System.String RecordStruct.RecordStructArgValue: 
+System.Int32 RecordStruct.RecordStructArgValue.Length: 0

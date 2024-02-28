@@ -10,4 +10,4 @@ nested:
   boolean_value: false
 record_struct:
   record_struct_string_value: ''
-  record_struct_arg_value: ''
+  record_struct_arg_value: ARG_2

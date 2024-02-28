@@ -9,5 +9,5 @@ nested:
   double_value: 0.118
   boolean_value: true
 record_struct:
-  record_struct_string_value: ''
-  record_struct_arg_value: ''
+  record_struct_string_value: Hello, record struct!
+  record_struct_arg_value: ARG_2
