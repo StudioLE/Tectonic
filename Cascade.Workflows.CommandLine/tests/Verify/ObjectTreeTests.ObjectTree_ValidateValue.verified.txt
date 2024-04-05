@@ -1,7 +1,0 @@
-﻿The StringValue field is required.
-The field IntegerValue must be between 10 and 20.
-The Arg1Value field is required.
-The Nested.StringValue field is required.
-The field Nested.IntegerValue must be between 10 and 20.
-The RecordStruct.RecordStructStringValue field is required.
-The RecordStruct.RecordStructArgValue field is required.

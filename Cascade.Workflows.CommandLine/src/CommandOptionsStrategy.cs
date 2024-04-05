@@ -1,9 +1,10 @@
 using System.CommandLine;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using Cascade.Workflows.CommandLine.Composition;
 using StudioLE.Extensions.System;
 using StudioLE.Patterns;
+using StudioLE.Serialization.Composition;
+using StudioLE.Serialization.Parsing;
 
 namespace Cascade.Workflows.CommandLine;
 
@@ -14,11 +15,11 @@ public interface ICommandOptionsStrategy : IStrategy<CommandFactory, IReadOnlyDi
 public class CommandOptionsStrategy : ICommandOptionsStrategy
 {
     private readonly HashSet<string> _optionAliases = new();
-    private readonly IIsParseableStrategy _isParsableStrategy;
+    private readonly IParser _parser;
 
-    public CommandOptionsStrategy(IIsParseableStrategy isParsableStrategy)
+    public CommandOptionsStrategy(IParser parser)
     {
-        _isParsableStrategy = isParsableStrategy;
+        _parser = parser;
     }
 
     public IReadOnlyDictionary<string, Option> Execute(CommandFactory commandFactory)
@@ -30,30 +31,30 @@ public class CommandOptionsStrategy : ICommandOptionsStrategy
             .FlattenProperties()
             .Where(x => x.CanSet())
             .Where(x => !x.HasArgumentAttribute())
-            .Where(x => _isParsableStrategy.Execute(x.Type))
+            .Where(x => _parser.CanParse(x.Type))
             .Select(CreateOptionForProperty)
             .ToDictionary(option => option.Aliases.First(), option => option);
     }
 
-    private Option CreateOptionForProperty(ObjectTreeProperty tree)
+    private Option CreateOptionForProperty(ObjectProperty property)
     {
-        HashSet<string> aliases = GetAliases(tree);
-        Option option = CreateInstanceOfOption(tree, aliases);
-        SetOptionValidator(tree, option);
+        HashSet<string> aliases = GetAliases(property);
+        Option option = CreateInstanceOfOption(property, aliases);
+        SetOptionValidator(property, option);
         foreach (string alias in aliases)
             _optionAliases.Add(alias);
         return option;
     }
 
-    private HashSet<string> GetAliases(ObjectTreeProperty tree)
+    private HashSet<string> GetAliases(ObjectProperty property)
     {
         HashSet<string> aliases = new()
         {
-            tree.FullKey.ToLongOption()
+            property.FullKey.ToLongOption()
         };
-        if (!_optionAliases.Contains(tree.Key.ToLongOption()))
-            aliases.Add(tree.Key.ToLongOption());
-        if (tree.Parent is ObjectTreeProperty parent)
+        if (!_optionAliases.Contains(property.Key.ToLongOption()))
+            aliases.Add(property.Key.ToLongOption());
+        if (property.Parent is ObjectProperty parent)
         {
             if (!_optionAliases.Contains(parent.FullKey.ToLongOption()))
                 aliases.Add(parent.FullKey.ToLongOption());
@@ -63,20 +64,20 @@ public class CommandOptionsStrategy : ICommandOptionsStrategy
         return aliases;
     }
 
-    private static Option CreateInstanceOfOption(ObjectTreeProperty tree, IReadOnlyCollection<string> aliases)
+    private static Option CreateInstanceOfOption(ObjectProperty property, IReadOnlyCollection<string> aliases)
     {
         string[] aliasesArray = aliases.ToArray();
-        string description = tree.HelperText;
-        Type optionType = typeof(Option<>).MakeGenericType(tree.Type);
+        string description = property.HelperText;
+        Type optionType = typeof(Option<>).MakeGenericType(property.Type);
         object? instance = Activator.CreateInstance(optionType, aliasesArray, description);
         if (instance is not Option option)
-            throw new($"Failed to construct {nameof(Option)}. Activator returned a {instance.GetType()}.");
+            throw new($"Failed to construct {nameof(Option)}. Activator returned a {instance!.GetType()}.");
         return option;
     }
 
-    private static void SetOptionValidator(ObjectTreeProperty tree, Option option)
+    private static void SetOptionValidator(ObjectProperty property, Option option)
     {
-        ValidationAttribute[] validationAttributes = tree
+        ValidationAttribute[] validationAttributes = property
             .Property
             .GetCustomAttributes<ValidationAttribute>()
             .ToArray();

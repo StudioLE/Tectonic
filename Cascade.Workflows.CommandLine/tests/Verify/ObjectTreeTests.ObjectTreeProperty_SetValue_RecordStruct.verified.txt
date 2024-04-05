@@ -1,6 +1,0 @@
-System.String RecordStructStringValue: This is a new string value.
-System.Int32 RecordStructStringValue.Length: 27
-System.String RecordStructArgValue: This is an argument value.
-System.Int32 RecordStructArgValue.Length: 26
-Cascade.Workflows.CommandLine.Tests.Resources.ExampleNestedRecordStruct NestedRecordStruct: ExampleNestedRecordStruct { IntegerValue = 0 }
-System.Int32 NestedRecordStruct.IntegerValue: 0

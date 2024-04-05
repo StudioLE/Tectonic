@@ -1,9 +1,9 @@
 using System.Reflection;
-using Cascade.Workflows.CommandLine.Composition;
+using StudioLE.Serialization.Composition;
 
 namespace Cascade.Workflows.CommandLine;
 
-public static class ObjectTreePropertyExtensions
+public static class ObjectPropertyExtensions
 {
     public static string ToLongOption(this string str)
     {
@@ -15,8 +15,8 @@ public static class ObjectTreePropertyExtensions
         return str.ToLower();
     }
 
-    public static bool HasArgumentAttribute(this ObjectTreeProperty tree)
+    public static bool HasArgumentAttribute(this ObjectProperty property)
     {
-        return tree.Property.GetCustomAttribute<ArgumentAttribute>() is not null;
+        return property.Property.GetCustomAttribute<ArgumentAttribute>() is not null;
     }
 }

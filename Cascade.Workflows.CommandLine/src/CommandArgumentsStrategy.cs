@@ -1,9 +1,10 @@
 using System.CommandLine;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using Cascade.Workflows.CommandLine.Composition;
 using StudioLE.Extensions.System;
 using StudioLE.Patterns;
+using StudioLE.Serialization.Composition;
+using StudioLE.Serialization.Parsing;
 
 namespace Cascade.Workflows.CommandLine;
 
@@ -13,11 +14,11 @@ public interface ICommandArgumentsStrategy : IStrategy<CommandFactory, IReadOnly
 
 public class CommandArgumentsStrategy : ICommandArgumentsStrategy
 {
-    private readonly IIsParseableStrategy _isParsableStrategy;
+    private readonly IParser _parser;
 
-    public CommandArgumentsStrategy(IIsParseableStrategy isParsableStrategy)
+    public CommandArgumentsStrategy(IParser parser)
     {
-        _isParsableStrategy = isParsableStrategy;
+        _parser = parser;
     }
 
     public IReadOnlyDictionary<string, Argument> Execute(CommandFactory commandFactory)
@@ -29,32 +30,32 @@ public class CommandArgumentsStrategy : ICommandArgumentsStrategy
             .FlattenProperties()
             .Where(x => x.CanSet())
             .Where(x => x.HasArgumentAttribute())
-            .Where(x => _isParsableStrategy.Execute(x.Type))
+            .Where(x => _parser.CanParse(x.Type))
             .Select(CreateArgumentForProperty)
             .ToDictionary(x => x.Name, x => x);
     }
 
-    private static Argument CreateArgumentForProperty(ObjectTreeProperty tree)
+    private static Argument CreateArgumentForProperty(ObjectProperty property)
     {
-        Argument option = CreateInstanceOfArgument(tree);
-        SetArgumentValidator(tree, option);
+        Argument option = CreateInstanceOfArgument(property);
+        SetArgumentValidator(property, option);
         return option;
     }
 
-    private static Argument CreateInstanceOfArgument(ObjectTreeProperty tree)
+    private static Argument CreateInstanceOfArgument(ObjectProperty property)
     {
-        string name = tree.Key.ToArgument();
-        string description = tree.HelperText;
-        Type optionType = typeof(Argument<>).MakeGenericType(tree.Type);
+        string name = property.Key.ToArgument();
+        string description = property.HelperText;
+        Type optionType = typeof(Argument<>).MakeGenericType(property.Type);
         object? instance = Activator.CreateInstance(optionType, name, description);
         if (instance is not Argument argument)
-            throw new($"Failed to construct {nameof(Argument)}. Activator returned a {instance.GetType()}.");
+            throw new($"Failed to construct {nameof(Argument)}. Activator returned a {instance!.GetType()}.");
         return argument;
     }
 
-    private static void SetArgumentValidator(ObjectTreeProperty tree, Argument option)
+    private static void SetArgumentValidator(ObjectProperty property, Argument option)
     {
-        ValidationAttribute[] validationAttributes = tree
+        ValidationAttribute[] validationAttributes = property
             .Property
             .GetCustomAttributes<ValidationAttribute>()
             .ToArray();

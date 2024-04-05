@@ -1,7 +1,7 @@
-using Cascade.Workflows.CommandLine.Composition;
 using Cascade.Workflows.CommandLine.Tests.Resources;
 using StudioLE.Conversion;
 using StudioLE.Extensions.System;
+using StudioLE.Serialization.Composition;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -19,11 +19,11 @@ internal static class Program
         ObjectTree objectTree = new(inputs);
 
         // Act
-        ObjectTreeProperty[] properties = objectTree
+        ObjectProperty[] properties = objectTree
             .FlattenProperties()
             .Where(x => x.CanSet())
             .ToArray();
-        foreach (ObjectTreeProperty property in properties)
+        foreach (ObjectProperty property in properties)
         {
             int attemptCount = 0;
             while (true)
@@ -59,7 +59,8 @@ internal static class Program
         ISerializer serializer = new SerializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .Build();
-        string yaml = serializer.Serialize(objectTree.Instance);
+        object? value = objectTree.GetValue();
+        string yaml = serializer.Serialize(value);
         Console.WriteLine(yaml);
     }
 }

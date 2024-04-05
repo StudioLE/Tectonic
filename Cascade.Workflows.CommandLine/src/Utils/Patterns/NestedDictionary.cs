@@ -1,6 +1,6 @@
 namespace Cascade.Workflows.CommandLine.Utils.Patterns;
 
-public class NestedDictionary<TKey, TValue> where TValue : class
+public class NestedDictionary<TKey, TValue> where TValue : class where TKey : notnull
 {
     private readonly Dictionary<TKey, NestedDictionary<TKey, TValue>> _children = new();
 
@@ -13,9 +13,7 @@ public class NestedDictionary<TKey, TValue> where TValue : class
 
     private NestedDictionary<TKey, TValue>? GetByKey(TKey key)
     {
-        return _children.TryGetValue(key, out NestedDictionary<TKey, TValue> child)
-            ? child
-            : null;
+        return _children.GetValueOrDefault(key);
     }
 
     public NestedDictionary<TKey, TValue>? GetByKeys(IReadOnlyCollection<TKey> keys)

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using StudioLE.Serialization.Parsing;
 
 namespace Cascade.Workflows.CommandLine;
 
@@ -10,7 +11,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<CommandContext>()
             .AddTransient<CommandBuilder>()
             .AddTransient<CommandFactory>()
-            .AddTransient<IIsParseableStrategy, IsParseableStrategy>()
+            .AddTransient<IParser, Parser>()
             // TODO: CommandArgumentsStrategy is a factory?
             .AddTransient<ICommandArgumentsStrategy, CommandArgumentsStrategy>()
             .AddTransient<ICommandOptionsStrategy, CommandOptionsStrategy>()

@@ -1,7 +1,7 @@
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using Cascade.Workflows.CommandLine.Composition;
 using StudioLE.Patterns;
+using StudioLE.Serialization.Composition;
 
 namespace Cascade.Workflows.CommandLine;
 
