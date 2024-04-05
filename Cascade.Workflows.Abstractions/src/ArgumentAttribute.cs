@@ -1,4 +1,4 @@
-namespace Cascade.Workflows.CommandLine;
+namespace Cascade.Workflows;
 
 public class ArgumentAttribute : Attribute
 {
