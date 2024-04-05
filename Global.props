@@ -3,9 +3,9 @@
   <PropertyGroup>
     <Authors>StudioLE</Authors>
     <Copyright>Copyright © Laurence Elsdon 2023</Copyright>
-    <PackageProjectUrl>https://geometrician.io</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/StudioLE/Cascade.Libraries</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>hypar elements element geometric geometry aec architecture engineering construction building bim lineweights lineweight drawing drawings sheet geometrician</PackageTags>
+    <PackageTags>cascade workflows</PackageTags>
     <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
@@ -14,7 +14,6 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
-    <!--    <GenerateDocumentationFile>true</GenerateDocumentationFile>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +35,7 @@
 
   <PropertyGroup Condition="$(IsExecutable)">
     <TargetFramework>net8.0</TargetFramework>
+    <PackAsTool>true</PackAsTool>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsTestLibrary)">
@@ -45,7 +45,12 @@
   <PropertyGroup Condition="$(IsLibrary)">
     <TargetFramework Condition="'$(TargetFramework)' == ''">netstandard2.0</TargetFramework>
     <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup Condition="$(IsExecutable) OR $(IsLibrary)">
+    <PackageReference Include="Surveyor.BuildVersioning" Version="0.4.0-alpha.6" PrivateAssets="All" Condition="'$(CI)' == 'true'" />
+  </ItemGroup>
 
   <ItemGroup Condition="$(IsLibrary)">
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
