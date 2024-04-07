@@ -32,7 +32,7 @@
 
   <PropertyGroup Condition="$(IsExecutable)">
     <TargetFramework Condition="'$(TargetFramework)' == '' AND '$(TargetFrameworks)' == ''">net8.0</TargetFramework>
-    <PackAsTool>true</PackAsTool>
+    <PackAsTool Condition="'$(PackAsTool)' == ''">true</PackAsTool>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsTestLibrary)">
@@ -41,7 +41,7 @@
 
   <PropertyGroup Condition="$(IsLibrary)">
     <TargetFramework Condition="'$(TargetFramework)' == '' AND '$(TargetFrameworks)' == ''">netstandard2.0</TargetFramework>
-    <IsPackable>true</IsPackable>
+    <IsPackable Condition="'$(IsPackable)' == ''">true</IsPackable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
