@@ -4,7 +4,7 @@
     <Authors>StudioLE</Authors>
     <Copyright>Copyright © Laurence Elsdon 2023-2024</Copyright>
     <PackageProjectUrl>https://github.com/StudioLE/Tectonic</PackageProjectUrl>
-    <PackageTags>tectonic workflows activities</PackageTags>
+    <PackageTags>tectonic workflows activities execution engine inputs outputs</PackageTags>
     <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
