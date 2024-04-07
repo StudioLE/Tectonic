@@ -2,9 +2,8 @@
 
   <PropertyGroup>
     <Authors>StudioLE</Authors>
-    <Copyright>Copyright © Laurence Elsdon 2023</Copyright>
+    <Copyright>Copyright © Laurence Elsdon 2023-2024</Copyright>
     <PackageProjectUrl>https://github.com/StudioLE/Cascade.Libraries</PackageProjectUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>cascade workflows</PackageTags>
     <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -16,13 +15,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath="\" Visible="false"/>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Remove="System.IO"/>
-  </ItemGroup>
+  <PropertyGroup>
+    <RepositoryReadmeFilePath>../../README.md</RepositoryReadmeFilePath>
+    <ProjectReadmeFilePath>README.md</ProjectReadmeFilePath>
+    <PackageReadMeFile Condition="Exists('$(RepositoryReadmeFilePath)') OR Exists('$(ProjectReadmeFilePath)')">README.md</PackageReadMeFile>
+  </PropertyGroup>
 
   <PropertyGroup>
     <IsExecutable>false</IsExecutable>
@@ -34,26 +31,31 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsExecutable)">
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework Condition="'$(TargetFramework)' == '' AND '$(TargetFrameworks)' == ''">net8.0</TargetFramework>
     <PackAsTool>true</PackAsTool>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsTestLibrary)">
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework Condition="'$(TargetFramework)' == '' AND '$(TargetFrameworks)' == ''">net8.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsLibrary)">
-    <TargetFramework Condition="'$(TargetFramework)' == ''">netstandard2.0</TargetFramework>
+    <TargetFramework Condition="'$(TargetFramework)' == '' AND '$(TargetFrameworks)' == ''">netstandard2.0</TargetFramework>
     <IsPackable>true</IsPackable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup Condition="$(IsExecutable) OR $(IsLibrary)">
-    <PackageReference Include="Surveyor.BuildVersioning" Version="0.4.0-alpha.6" PrivateAssets="All" Condition="'$(CI)' == 'true'" />
+    <PackageReference Include="Surveyor.BuildVersioning" Version="0.4.0" PrivateAssets="All" Condition="'$(CI)' == 'true'" />
   </ItemGroup>
 
   <ItemGroup Condition="$(IsLibrary)">
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+
+  <ItemGroup Condition="$(IsLibrary) OR $(IsExecutable)">
+    <Content Condition="Exists('$(ProjectReadmeFilePath)')" Include="$(PackageReadmeFile)" Pack="true" PackagePath="/" />
+    <None Condition="Exists('$(RepositoryReadmeFilePath)') AND ! Exists('$(ProjectReadmeFilePath)')" Include="$(RepositoryReadmeFilePath)" Pack="true" PackagePath="/" Visible="false" />
   </ItemGroup>
 
 </Project>
