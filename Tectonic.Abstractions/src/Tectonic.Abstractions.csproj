@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Visualise and verify the results of Elements logic.</Description>
+    <Description>Abstractions of `Tectonic.Core`, a standardized approach for resolving and executing activity based workflows.</Description>
     <RootNamespace>Tectonic</RootNamespace>
   </PropertyGroup>
 

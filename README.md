@@ -1,34 +1,34 @@
-﻿## Geometrician.Cascade
+﻿## Contents
 
-Geometrician.Cascade is an application to execute and visualise the results of geometric workflows using Hypar's Elements library.
+### [Tectonic.Abstractions](Tectonic.Abstractions/src)
 
-The application can run client-side directly in the browser using [Blazor WebAssembly](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-server), or as a [Blazor Server](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-server). Soon it will also be available as a [Blazor Hybrid](https://docs.microsoft.com/en-gb/aspnet/core/blazor/hosting-models?view=aspnetcore-6.0#blazor-hybrid) app using either .NET MAUI or WPF, and via a command line interface.
+Abstractions of `Tectonic.Core`, a standardized approach for resolving and executing activity based workflows.
 
-*Live demos of the WebAssembly App:*
+### [Tectonic.Core](Tectonic.Core/src)
 
-*→ [Production (main branch)](https://geometrician.io/)*
+A library providing a standardized approach for resolving and executing activity based workflows.
 
-*→ [Staging (alpha branch)](https://next.geometrician.io/)*
+### [Tectonic.Extensions.CommandLine](Tectonic.Extensions.CommandLine/src)
 
-## Geometrician
+An implementation of `Tectonic.Core` for executing Tectonic activities and workflows on the command line using `System.CommandLine`.
 
-Geometrician is a collection of modular libraries for automating architecture, engineering, and construction (AEC) workflows.
+### [Tectonic.Extensions.CommandLine.Sample](Tectonic.Extensions.CommandLine/samples)
 
-*The components are written in C# using Hypar's Elements library. They are designed to be cross-platform for use in standard industry software and cloud platforms such as Hypar, Dynamo, Revit, Grasshopper, and Rhino.*
+An example of a CLI application using `Tectonic.Extensions.CommandLine`.
 
-*Rather than solving specific AEC automation problems the intention of these libraries is to provide a base from which developers can build upon to solve AEC automation problems quicker, easier, and more reliably. The libraries are heavily documented, unit tested, and with specific samples demonstrating the use.*
+### [Tectonic.Extensions.NUnit](Tectonic.Extensions.NUnit/src)
 
-## Documentation
-
-*→ [Documentation](https://docs.geometrician.io/latest/index.html)*
+An implementation of `Tectonic.Core` for executing NUnit tests as Tectonic activities and workflows.
 
 ## License
 
-Geometrician are dual-licensed under open and closed source licenses.
+This repository and its libraries are provided open source with the [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) license that requires you must disclose your source code when you distribute, publish, or provide access to modified or derivative software.
 
-Copyright © Laurence Elsdon 2023
+Developers who wish to keep modified or derivative software proprietary or closed source can [get in touch for a commercial license agreements](https://studiole.uk/contact/)
 
-### Open Source
+---
+
+Copyright © Laurence Elsdon 2023-2024
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -36,12 +36,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-→ [GNU Affero General Public License](https://github.com/StudioLE/Geometrician/tree/main/COPYING.md)
+---
 
-### Proprietary
-
-The GNU Affero General Public License requires that you must disclose your source code when you distribute, publish or provide access to modified or derivative software therefore developers who wish to keep their projects proprietary or closed source under these circumstances should:
-
-→ [Get in touch regarding commercial license agreements](https://studiole.uk/contact/)
-
-
+→ [GNU Affero General Public License](LICENSE.md)

@@ -1,5 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <Description>Examples that can be executed with `Tectonic.Extensions.NUnit`.</Description>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
   <!-- Use consistent properties across all projects -->
   <Import Project="..\..\Global.props" />
 

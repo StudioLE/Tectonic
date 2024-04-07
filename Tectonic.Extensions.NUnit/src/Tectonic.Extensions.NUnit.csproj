@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Visualise and verify the results of Elements logic in NUnit tests.</Description>
+    <Description>An implementation of `Tectonic.Core` for executing NUnit tests as Tectonic activities and workflows.</Description>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 

@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <!-- Use consistent properties across all projects -->
-  <Import Project="..\..\Global.props" />
-
   <PropertyGroup>
+    <Description>An implementation of `Tectonic.Core` for executing Tectonic activities and workflows on the command line using `System.CommandLine`.</Description>
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
+
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props" />
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />

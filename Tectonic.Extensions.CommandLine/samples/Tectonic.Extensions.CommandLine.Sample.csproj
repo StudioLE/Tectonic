@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Hello, world!</Description>
+    <Description>An example of a CLI application using `Tectonic.Extensions.CommandLine`.</Description>
     <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <!-- Use consistent properties across all projects -->
