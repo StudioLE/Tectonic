@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StudioLE.Conversion" Version="0.10.0" />
+    <PackageReference Include="StudioLE.Conversion" Version="0.11.0" />
   </ItemGroup>
 
 </Project>

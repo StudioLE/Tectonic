@@ -2,16 +2,17 @@
 
   <PropertyGroup>
     <Description>Visualise and verify the results of Elements logic in NUnit tests.</Description>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <!-- Use consistent properties across all projects -->
   <Import Project="..\..\Global.props" />
 
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="4.0.1" />
+    <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="NUnit.Engine" Version="3.17.0" />
-    <PackageReference Include="StudioLE.Extensions.System" Version="0.10.0" />
-    <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.8.0" />
+    <PackageReference Include="StudioLE.Extensions.System" Version="0.11.0" />
+    <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.10.0" />
   </ItemGroup>
 
   <ItemGroup>
