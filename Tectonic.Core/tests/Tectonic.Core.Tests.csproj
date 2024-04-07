@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\samples\Tectonic.Core.Samples.csproj" />
+    <ProjectReference Include="..\src\Tectonic.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="NUnit" Version="4.0.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.8.0" />
+    <PackageReference Include="StudioLE.Extensions.System" Version="0.10.0" />
+    <PackageReference Include="StudioLE.Verify" Version="0.8.0" />
+  </ItemGroup>
+
+</Project>

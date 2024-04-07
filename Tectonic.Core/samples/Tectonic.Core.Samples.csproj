@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Use consistent properties across all projects -->
+  <Import Project="..\..\Global.props"/>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Tectonic.Core.csproj"/>
+  </ItemGroup>
+
+</Project>

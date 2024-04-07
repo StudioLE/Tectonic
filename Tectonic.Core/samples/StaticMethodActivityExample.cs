@@ -1,0 +1,20 @@
+using Tectonic.Core.Samples.Resources;
+
+namespace Tectonic.Core.Samples;
+
+public static class StaticMethodActivityExample
+{
+    public sealed class Inputs : ExampleClass
+    {
+    }
+
+    public sealed class Outputs
+    {
+        public bool IsValid { get; set; } = true;
+    }
+
+    public static Outputs Execute(Inputs inputs)
+    {
+        return new();
+    }
+}

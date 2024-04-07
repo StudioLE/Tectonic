@@ -1,0 +1,4 @@
+﻿Tectonic.Extensions.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test
+Tectonic.Extensions.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test_Async
+Tectonic.Extensions.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test_Verify
+Tectonic.Extensions.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_TestCase("actual","expected")

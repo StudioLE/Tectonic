@@ -3,8 +3,8 @@
   <PropertyGroup>
     <Authors>StudioLE</Authors>
     <Copyright>Copyright © Laurence Elsdon 2023-2024</Copyright>
-    <PackageProjectUrl>https://github.com/StudioLE/Cascade.Libraries</PackageProjectUrl>
-    <PackageTags>cascade workflows</PackageTags>
+    <PackageProjectUrl>https://github.com/StudioLE/Tectonic</PackageProjectUrl>
+    <PackageTags>tectonic workflows activities</PackageTags>
     <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
