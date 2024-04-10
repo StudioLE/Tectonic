@@ -31,7 +31,7 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
         {
             SetInputTreeValue(context.BindingContext, commandFactory);
             object? input = commandFactory.InputTree.GetValue();
-            if(input is null)
+            if (input is null)
                 throw new("Expected input to be set.");
             try
             {
@@ -57,7 +57,7 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
         {
             if (!_parser.CanParse(property.Type))
                 continue;
-            if(property.HasArgumentAttribute())
+            if (property.HasArgumentAttribute())
                 SetInputTreeValueForArgument(context, commandFactory, property);
             else
                 SetInputTreeValueForOption(context, commandFactory, property);
