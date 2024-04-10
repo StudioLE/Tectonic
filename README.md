@@ -1,4 +1,4 @@
-﻿﻿## Contents
+﻿## Contents
 
 ### [Tectonic.Abstractions](Tectonic.Abstractions/src)
 
