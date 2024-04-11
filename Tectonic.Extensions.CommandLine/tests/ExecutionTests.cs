@@ -230,7 +230,9 @@ internal sealed class ExecutionTests
             "--recordstruct.recordstructstringvalue",
             "Hello, record struct!",
             "--nestedrecordstruct",
-            "5"
+            "5",
+            "--privatestruct",
+            "1234"
             // ReSharper restore StringLiteralTypo
         };
 

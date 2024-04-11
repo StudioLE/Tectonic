@@ -1,6 +1,7 @@
 using System.CommandLine;
 using System.CommandLine.Binding;
 using System.CommandLine.Invocation;
+using System.CommandLine.Parsing;
 using Microsoft.Extensions.Logging;
 using StudioLE.Patterns;
 using StudioLE.Serialization.Composition;
@@ -64,27 +65,36 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
         }
     }
 
-    private static void SetInputTreeValueForArgument(BindingContext context, CommandFactory commandFactory, ObjectProperty property)
+    private void SetInputTreeValueForArgument(BindingContext context, CommandFactory commandFactory, ObjectProperty property)
     {
         if (!commandFactory.Arguments.TryGetValue(property.Key.ToArgument(), out Argument? option))
             return;
         object? value = context.ParseResult.GetValueForArgument(option);
-        if (value is null)
-            return;
-        if (!property.Type.IsInstanceOfType(value))
-            return;
-        property.SetValue(value);
+        SetInputTreeValue(property, value);
     }
 
-    private static void SetInputTreeValueForOption(BindingContext context, CommandFactory commandFactory, ObjectProperty property)
+    private void SetInputTreeValueForOption(BindingContext context, CommandFactory commandFactory, ObjectProperty property)
     {
         if (!commandFactory.Options.TryGetValue(property.FullKey.ToLongOption(), out Option? option))
             return;
         object? value = context.ParseResult.GetValueForOption(option);
+        SetInputTreeValue(property, value);
+    }
+
+    private void SetInputTreeValue(ObjectProperty property, object? value)
+    {
         if (value is null)
             return;
-        if (!property.Type.IsInstanceOfType(value))
+        if (property.Type.IsInstanceOfType(value))
+        {
+            property.SetValue(value);
             return;
+        }
+        if (value is not Token token)
+            return;
+        if(token.Value is not string stringValue)
+            return;
+        value = _parser.Parse(stringValue, property.Type);
         property.SetValue(value);
     }
 }

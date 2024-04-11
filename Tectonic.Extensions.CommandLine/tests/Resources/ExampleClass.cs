@@ -27,4 +27,7 @@ public class ExampleClass
 
     [ValidateComplexType]
     public ExampleRecordStruct RecordStruct { get; set; } = new();
+
+    [ValidateComplexType]
+    public ExampleStructWithPrivateValue PrivateStruct { get; set; } = new();
 }

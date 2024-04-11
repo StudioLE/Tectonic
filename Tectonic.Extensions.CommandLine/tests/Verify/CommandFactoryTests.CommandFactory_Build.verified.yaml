@@ -43,3 +43,7 @@
   - --recordstruct.nestedrecordstruct.integervalue
   - --recordstruct.nestedrecordstruct
   - --nestedrecordstruct
+- Description: PrivateStruct
+  Type: ExampleStructWithPrivateValue
+  Aliases:
+  - --privatestruct
