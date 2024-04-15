@@ -24,7 +24,7 @@ public record struct ExternalAsset : IAsset
     /// <remarks>
     /// The format of the path is dependent on the storage implementation.
     /// </remarks>
-    public string AbsolutePath { get; init; } = string.Empty;
+    public string AbsolutePath { get; set; } = string.Empty;
 
     /// <summary>
     /// Create a new instance of <see cref="ExternalAsset"/>.
