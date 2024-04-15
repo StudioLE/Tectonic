@@ -12,20 +12,20 @@ public interface IAsset
     /// <summary>
     /// Identifier that uniquely identifies a document.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; }
 
     /// <summary>
     /// The name.
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; }
 
     /// <summary>
     /// The description.
     /// </summary>
-    public string Description { get; set; }
+    public string Description { get; }
 
     /// <summary>
     /// The <see href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">MIME type</see>.
     /// </summary>
-    public string ContentType { get; set; }
+    public string ContentType { get; }
 }

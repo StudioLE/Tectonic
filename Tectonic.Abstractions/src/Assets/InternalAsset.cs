@@ -4,24 +4,24 @@ namespace Tectonic.Assets;
 /// A uniquely identified document and its <see cref="Content"/>.
 /// </summary>
 /// <inheritdoc cref="IAsset"/>
-public record struct InternalAsset : IAsset
+public readonly record struct InternalAsset : IAsset
 {
     /// <inheritdoc/>
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; init; } = Guid.NewGuid();
 
     /// <inheritdoc/>
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
 
     /// <inheritdoc/>
-    public string Description { get; set; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
 
     /// <inheritdoc/>
-    public string ContentType { get; set; } = string.Empty;
+    public string ContentType { get; init; } = string.Empty;
 
     /// <summary>
     /// The content of the asset.
     /// </summary>
-    public string Content { get; set; } = string.Empty;
+    public string Content { get; init; } = string.Empty;
 
     /// <summary>
     /// Create a new instance of <see cref="InternalAsset"/>.
