@@ -30,4 +30,6 @@ public class ExampleClass
 
     [ValidateComplexType]
     public ExampleStructWithPrivateValue PrivateStruct { get; set; } = new();
+
+    public Status Status { get; set; }
 }

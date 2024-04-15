@@ -11,8 +11,6 @@ public class CommandFactory : IFactory<IActivity, Command>
     private readonly ICommandOptionsStrategy _optionsStrategy;
     private readonly ICommandHandlerStrategy _handlerStrategy;
 
-    public CommandContext Context { get; }
-
     public IActivity Activity { get; private set; } = null!;
 
     public ObjectTree? InputTree { get; private set; }
@@ -24,13 +22,11 @@ public class CommandFactory : IFactory<IActivity, Command>
     public CommandFactory(
         ICommandArgumentsStrategy argumentsStrategy,
         ICommandOptionsStrategy optionsStrategy,
-        ICommandHandlerStrategy handlerStrategy,
-        CommandContext context)
+        ICommandHandlerStrategy handlerStrategy)
     {
         _argumentsStrategy = argumentsStrategy;
         _optionsStrategy = optionsStrategy;
         _handlerStrategy = handlerStrategy;
-        Context = context;
     }
 
     public Command Create(IActivity activity)

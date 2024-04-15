@@ -15,3 +15,7 @@ record_struct:
     integer_value: 0
 private_struct:
   read_only_value: 0
+status:
+  status_code: 0
+  exit_code: 0
+  message: 

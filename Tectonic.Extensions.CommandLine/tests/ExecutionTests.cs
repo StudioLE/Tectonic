@@ -323,7 +323,7 @@ internal sealed class ExecutionTests
         IReadOnlyCollection<LogEntry> logs = _services.GetCachedLogs();
         Assert.Multiple(() =>
         {
-            Assert.That(exitCode, Is.EqualTo(99), "Exit code");
+            Assert.That(exitCode, Is.EqualTo(100), "Exit code");
             Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
         });
     }

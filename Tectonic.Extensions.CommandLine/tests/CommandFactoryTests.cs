@@ -12,7 +12,7 @@ namespace Tectonic.Extensions.CommandLine.Tests;
 internal sealed class CommandFactoryTests
 {
     internal const int ExpectedArgumentsCount = 2;
-    internal const int ExpectedOptionsCount = 11;
+    internal const int ExpectedOptionsCount = 14;
     internal const int ExpectedChildrenCount = ExpectedArgumentsCount + ExpectedOptionsCount;
     private readonly IContext _context = new NUnitContext();
 

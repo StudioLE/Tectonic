@@ -47,3 +47,19 @@
   Type: ExampleStructWithPrivateValue
   Aliases:
   - --privatestruct
+- Description: StatusCode
+  Type: HttpStatusCode
+  Aliases:
+  - --status.statuscode
+  - --statuscode
+  - --status
+- Description: ExitCode
+  Type: Byte
+  Aliases:
+  - --status.exitcode
+  - --exitcode
+- Description: Message
+  Type: String
+  Aliases:
+  - --status.message
+  - --message

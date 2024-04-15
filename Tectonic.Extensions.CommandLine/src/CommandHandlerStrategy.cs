@@ -2,6 +2,7 @@ using System.CommandLine;
 using System.CommandLine.Binding;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
+using System.Reflection;
 using Microsoft.Extensions.Logging;
 using StudioLE.Patterns;
 using StudioLE.Serialization.Composition;
@@ -36,8 +37,18 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
                 throw new("Expected input to be set.");
             try
             {
-                await commandFactory.Activity.Execute(input);
-                context.ExitCode = commandFactory.Context.ExitCode;
+                object output = await commandFactory.Activity.Execute(input);
+                Type outputType = output.GetType();
+                foreach (PropertyInfo property in outputType.GetProperties())
+                {
+                    if (property.PropertyType != typeof(Status))
+                        continue;
+                    object? value = property.GetValue(output);
+                    if (value is not Status status)
+                        throw new($"Expected a {nameof(Status)} but received {value?.GetType()}.");
+                    context.ExitCode = status.ExitCode;
+                    break;
+                }
             }
             catch (Exception e)
             {
@@ -92,7 +103,7 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
         }
         if (value is not Token token)
             return;
-        if(token.Value is not string stringValue)
+        if (token.Value is not string stringValue)
             return;
         value = _parser.Parse(stringValue, property.Type);
         property.SetValue(value);
