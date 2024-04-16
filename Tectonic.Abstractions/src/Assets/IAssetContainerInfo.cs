@@ -1,11 +1,10 @@
 namespace Tectonic.Assets;
 
 /// <summary>
-/// A uniquely identified document.
+/// A unique id based on asset metadata.
 /// </summary>
 /// <remarks>
-/// The metadata of the document is loosely based on the information container of ISO 19650 and the IFC schema
-/// <see href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/link/ifcdocumentinformation.htm">IfcDocumentInformation</see>.
+/// Based on Information container identification from the National Annex to BS EN ISO 19650‑2:2018.
 /// </remarks>
 public interface IAssetContainerInfo
 {

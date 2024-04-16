@@ -7,26 +7,26 @@ using Tectonic.Assets;
 
 namespace Tectonic.Core.Tests.Assets;
 
-internal sealed class ExternalAssetTests
+internal sealed class AssetFileInfoTests
 {
     private readonly IContext _context = new NUnitContext();
 
     [Test]
-    public void ExternalAsset_Serialization_Newtonsoft()
+    public void AssetFileInfo_Serialization_Newtonsoft()
     {
         // Arrange
         JsonSerializerSettings settings = new();
-        ExternalAsset asset = new()
+        AssetFileInfo asset = new()
         {
             Name = "An example document",
             Description = "A description of the document.",
-            ContentType = "text/plain",
-            AbsolutePath = "https://localhost/my/file.txt"
+            MediaType = "text/plain",
+            Location = "https://localhost/my/file.txt"
         };
 
         // Act
         string json = JsonConvert.SerializeObject(asset, settings);
-        ExternalAsset? deserialized = JsonConvert.DeserializeObject<ExternalAsset>(json, settings);
+        IAssetFileInfo? deserialized = JsonConvert.DeserializeObject<AssetFileInfo>(json, settings);
         string json2 = JsonConvert.SerializeObject(deserialized, settings);
 
         // Assert
@@ -34,11 +34,11 @@ internal sealed class ExternalAssetTests
         {
             await _context.Verify(json, json2);
             Assert.That(deserialized, Is.Not.Null, "Not null");
-            Assert.That(deserialized?.Name, Is.EqualTo(asset.Name), "Name");
             Assert.That(deserialized?.Id, Is.EqualTo(asset.Id), "Id");
+            Assert.That(deserialized?.Name, Is.EqualTo(asset.Name), "Name");
             Assert.That(deserialized?.Description, Is.EqualTo(asset.Description), "Description");
-            Assert.That(deserialized?.ContentType, Is.EqualTo(asset.ContentType), "ContentType");
-            Assert.That(deserialized?.AbsolutePath, Is.EqualTo(asset.AbsolutePath), "AbsolutePath");
+            Assert.That(deserialized?.MediaType, Is.EqualTo(asset.MediaType), "MediaType");
+            Assert.That(deserialized?.Location, Is.EqualTo(asset.Location), "Location");
         });
     }
 }

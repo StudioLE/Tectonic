@@ -4,9 +4,9 @@ namespace Tectonic.Assets;
 /// A uniquely identified document.
 /// </summary>
 /// <remarks>
-/// The metadata of the document is loosely based on the information container of ISO 19650 and the IFC schema
-/// <see href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/link/ifcdocumentinformation.htm">IfcDocumentInformation</see>.
+/// The properties are based on the standards of ISO 19650:2018 and <c>IfcDocumentInformation</c>.
 /// </remarks>
+/// <seealso href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/link/ifcdocumentinformation.htm"/>
 public interface IAssetFileInfo
 {
     /// <summary>
@@ -56,4 +56,9 @@ public interface IAssetFileInfo
     /// </remarks>
     /// <seealso href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.fileproviders.ifileinfo.exists?view=dotnet-plat-ext-8.0#microsoft-extensions-fileproviders-ifileinfo-exists"/>
     public bool Exists { get; init; }
+
+    /// <summary>
+    /// The optional container information.
+    /// </summary>
+    public IAssetContainerInfo? ContainerInformation { get; init; }
 }
