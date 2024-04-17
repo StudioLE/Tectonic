@@ -8,7 +8,7 @@ namespace Tectonic.Assets;
 public static class AssetFileInfoHelpers
 {
     /// <summary>
-    /// Determine if the asset includes inline data encoded is a data URI.
+    /// Determine if the asset includes inline data encoded as a data URI.
     /// </summary>
     /// <param name="asset">The asset.</param>
     /// <returns>
