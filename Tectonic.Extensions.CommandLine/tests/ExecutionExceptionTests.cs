@@ -67,7 +67,7 @@ internal sealed class ExecutionExceptionTests
         {
             // TODO: Set the exit code if an exception is thrown?
             Assert.That(exitCode, Is.EqualTo(1), "Exit code");
-            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(0), "Error count");
+            Assert.That(logs.Count(x => x.LogLevel == LogLevel.Error), Is.EqualTo(1), "Error count");
             Assert.That(logs.Count(x => x.LogLevel == LogLevel.Critical), Is.EqualTo(1), "Critical count");
         });
     }
