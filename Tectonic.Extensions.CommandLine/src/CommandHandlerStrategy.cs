@@ -35,9 +35,20 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
             object? input = commandFactory.InputTree.GetValue();
             if (input is null)
                 throw new("Expected input to be set.");
+            object output;
             try
             {
-                object output = await commandFactory.Activity.Execute(input);
+                output = await commandFactory.Activity.Execute(input);
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical(e, "An unhandled exception was thrown by the activity.");
+                _logger.LogError(e.GetType() + ": " + e.Message);
+                context.ExitCode = 1;
+                return;
+            }
+            try
+            {
                 Type outputType = output.GetType();
                 foreach (PropertyInfo property in outputType.GetProperties())
                 {
@@ -52,7 +63,8 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
             }
             catch (Exception e)
             {
-                _logger.LogCritical(e, "An unhandled exception was thrown by the activity.");
+                _logger.LogCritical(e, "An unhandled exception was thrown when processing the the activity outputs.");
+                _logger.LogError(e.GetType() + ": " + e.Message);
                 context.ExitCode = 1;
             }
         };
