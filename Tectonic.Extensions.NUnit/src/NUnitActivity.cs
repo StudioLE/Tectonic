@@ -7,7 +7,7 @@ namespace Tectonic.Extensions.NUnit;
 /// <summary>
 /// An <see cref="IActivity"/> based on a static <see cref="MethodInfo"/> in an <see cref="Assembly"/>.
 /// </summary>
-public sealed class NUnitActivity : IActivity<object, object>, IActivityMetadata
+public sealed class NUnitActivity : ActivityBase<object, XmlNode?>, IActivityMetadata, IDisposable
 {
     private readonly ITestRunner _runner;
     private readonly TestFilter _filter;
@@ -31,24 +31,15 @@ public sealed class NUnitActivity : IActivity<object, object>, IActivityMetadata
     }
 
     /// <inheritdoc/>
-    public Task<object> Execute(object input)
+    public override Task<XmlNode?> Execute(object input)
     {
-        // Before invocation
-        // bool wasVerifyEnabled = Verify.IsEnabled;
-        // Verify.IsEnabled = false;
-        NUnitActivityResolver.IsExecuting = true;
-
         XmlNode? testResult = _runner.Run(null, _filter);
+        return Task.FromResult<XmlNode?>(testResult);
+    }
 
-        // After invocation
-        NUnitActivityResolver.IsExecuting = false;
-        // Verify.IsEnabled = wasVerifyEnabled;
-
-        // TODO: NUnitActivityResolver.TestOutput has been intentionally disabled as it's too complex. Investigate an alternative.
-        object output = NUnitActivityResolver.TestOutput ?? true;
-        NUnitActivityResolver.TestOutput = null;
-        return output is Task<object> task
-            ? task
-            : Task.FromResult(output);
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        _runner.Dispose();
     }
 }

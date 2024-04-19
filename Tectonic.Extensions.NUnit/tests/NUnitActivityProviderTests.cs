@@ -4,26 +4,33 @@ using StudioLE.Diagnostics;
 using StudioLE.Diagnostics.NUnit;
 using StudioLE.Extensions.System;
 using StudioLE.Extensions.System.Reflection;
-using StudioLE.Results;
 using StudioLE.Verify;
 
 namespace Tectonic.Extensions.NUnit.Tests;
 
-internal sealed class NUnitActivityResolverTests
+internal sealed class NUnitActivityProviderTests
 {
-    private readonly IContext _context = new NUnitContext();
     private const string AssemblyPath = "Tectonic.Extensions.NUnit.Samples.dll";
     private const string ActivityKey = "Tectonic.Extensions.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test_Verify";
+    private readonly IContext _context = new NUnitContext();
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
+    private NUnitActivityProvider _provider;
+
+    [SetUp]
+    public void SetUp()
+    {
+        _provider = new NUnitActivityProviderBuilder()
+            .Add(_assembly)
+            .Build();
+    }
 
     [Test]
-    public async Task NUnitActivityResolver_AllActivityKeysInAssembly()
+    public async Task NUnitActivityProvider_GetKeys()
     {
         // Arrange
-        NUnitActivityResolver resolver = new();
 
         // Act
-        string[] activities = resolver.AllActivityKeysInAssembly(_assembly).ToArray();
+        string[] activities = _provider.GetKeys().ToArray();
 
         // Assert
         await _context.Verify(activities.Join());
@@ -31,19 +38,14 @@ internal sealed class NUnitActivityResolverTests
     }
 
     [TestCase(ActivityKey)]
-    public void NUnitActivityResolver_Resolve(string activityKey)
+    public void NUnitActivityProvider_Get(string activityKey)
     {
         // Arrange
-        NUnitActivityResolver resolver = new();
-
         // Act
-        IResult<IActivity> result = resolver.Resolve(_assembly, activityKey);
-        IActivity activity = result.GetValueOrThrow();
+        IActivity? activity = _provider.Get(activityKey);
 
         // Assert
-        Assert.That(activity, Is.Not.Null, "Command");
-        Assert.That(activity.GetName(), Is.Not.Empty, "Name");
-        // Assert.That(activity.Inputs, Is.Not.Null, "Inputs");
-        // Assert.That(activity.Inputs.Length, Is.EqualTo(0), "Inputs count");
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity, Is.InstanceOf<NUnitActivity>());
     }
 }

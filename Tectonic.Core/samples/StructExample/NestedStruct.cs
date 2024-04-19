@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Tectonic.Core.Samples.Resources;
+namespace Tectonic.Core.Samples.StructExample;
 
-public class ExampleNestedClass
+public class NestedStruct
 {
     [Required]
     public string StringValue { get; set; } = string.Empty;

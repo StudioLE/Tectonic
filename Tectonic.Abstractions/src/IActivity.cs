@@ -2,24 +2,24 @@ namespace Tectonic;
 
 public interface IActivity
 {
-}
-
-public interface IActivityMetadata
-{
     /// <summary>
-    /// The unique key to identify the activity.
+    /// The input type.
     /// </summary>
-    public string Key { get; }
+    public Type InputType { get; }
 
     /// <summary>
-    /// The name of the activity.
+    /// The output type.
     /// </summary>
-    public string Name { get; }
+    public Type OutputType { get; }
 
     /// <summary>
-    /// The description of the activity.
+    /// Execute the activity.
     /// </summary>
-    public string Description { get; }
+    /// <param name="input">The input.</param>
+    /// <returns>
+    /// The output as a Task.
+    /// </returns>
+    public Task<object?> ExecuteNonGeneric(object input);
 }
 
 public interface IActivity<in TInput, TOutput> : IActivity
@@ -28,5 +28,5 @@ public interface IActivity<in TInput, TOutput> : IActivity
     /// The execution method of the activity.
     /// </summary>
     /// <returns>The outputs of the activity execution.</returns>
-    public Task<TOutput> Execute(TInput input);
+    public Task<TOutput?> Execute(TInput input);
 }

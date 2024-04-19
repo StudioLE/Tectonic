@@ -49,7 +49,7 @@ public class CommandFactory : IFactory<IActivity, Command>
 
     private ObjectTree CreateObjectTree()
     {
-        Type inputType = Activity.GetInputType();
+        Type inputType = Activity.InputType;
         object? inputs = Activator.CreateInstance(inputType);
         if (inputs is null)
             throw new($"Failed to create inputs for activity: {Activity.GetName()}."

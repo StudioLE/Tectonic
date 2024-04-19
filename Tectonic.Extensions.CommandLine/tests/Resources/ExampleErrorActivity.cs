@@ -2,12 +2,12 @@ using System.Net;
 
 namespace Tectonic.Extensions.CommandLine.Tests.Resources;
 
-public class ExampleErrorActivity : IActivity<ExampleClass, ExampleClass>
+public class ExampleErrorActivity : ActivityBase<ExampleClass, ExampleClass>
 {
 
-    public Task<ExampleClass> Execute(ExampleClass example)
+    public override Task<ExampleClass?> Execute(ExampleClass example)
     {
         example.Status = new(HttpStatusCode.BadRequest);
-        return Task.FromResult(example);
+        return Task.FromResult<ExampleClass?>(example);
     }
 }

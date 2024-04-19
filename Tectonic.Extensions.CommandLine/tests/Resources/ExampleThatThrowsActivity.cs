@@ -1,8 +1,8 @@
 namespace Tectonic.Extensions.CommandLine.Tests.Resources;
 
-public class ExampleThatThrowsActivity : IActivity<ExampleClass, ExampleClass>
+public class ExampleThatThrowsActivity : ActivityBase<ExampleClass, ExampleClass>
 {
-    public Task<ExampleClass> Execute(ExampleClass example)
+    public override Task<ExampleClass?> Execute(ExampleClass example)
     {
         throw new("This activity intentionally throws an exception.");
     }

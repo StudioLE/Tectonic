@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Tectonic.Core.Samples.Resources;
+namespace Tectonic.Core.Samples.StructExample;
 
-public class ExampleClass
+public class InputsStruct
 {
     [Required]
     public string StringValue { get; set; } = string.Empty;
@@ -15,5 +15,7 @@ public class ExampleClass
     [Range(0, 1)]
     public double DoubleValue { get; set; }
 
-    public ExampleNestedClass Nested { get; set; } = new();
+    public ClassExample.ExampleEnum EnumValue { get; set; }
+
+    public NestedStruct Nested { get; set; } = new();
 }

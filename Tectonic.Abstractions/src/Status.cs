@@ -3,7 +3,7 @@ using System.Net;
 namespace Tectonic;
 
 /// <summary>
-/// The status of an <see cref="IActivity{TInput,TOutput}"/>.
+/// The status of an <see cref="IActivity"/>.
 /// </summary>
 public record struct Status
 {

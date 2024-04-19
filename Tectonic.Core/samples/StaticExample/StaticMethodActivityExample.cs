@@ -1,10 +1,10 @@
-using Tectonic.Core.Samples.Resources;
+using Tectonic.Core.Samples.ClassExample;
 
-namespace Tectonic.Core.Samples;
+namespace Tectonic.Core.Samples.StaticExample;
 
 public static class StaticMethodActivityExample
 {
-    public sealed class Inputs : ExampleClass
+    public sealed class Inputs : InputsClass
     {
     }
 
