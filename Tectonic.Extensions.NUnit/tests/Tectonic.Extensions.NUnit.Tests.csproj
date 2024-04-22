@@ -16,7 +16,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.10.0" />
+    <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.10.2" />
   </ItemGroup>
 
 </Project>
