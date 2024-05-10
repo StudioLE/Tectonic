@@ -67,6 +67,7 @@ public class CommandHandlerStrategy : ICommandHandlerStrategy
             {
                 _logger.LogCritical(e, "An unhandled exception was thrown when processing the the activity outputs.");
                 _logger.LogError($"{e.GetType()}: {e.Message}");
+                _logger.LogTrace(e.StackTrace);
                 context.ExitCode = 1;
             }
         };
