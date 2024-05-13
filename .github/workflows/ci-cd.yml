@@ -39,7 +39,7 @@ jobs:
       nuget_feed: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
       nuget_username: ${{ github.repository_owner }}
       latest: ${{ github.ref_type == 'branch' && contains(fromJSON('["main"]'), github.ref_name) }}
-      source: "*/src/bin/Release/*/StudioLE.*.dll"
+      source: "*/src/bin/Release/*/Tectonic.*.dll"
       section: "tectonic"
     secrets:
       nuget_password: ${{ secrets.PACKAGES_TOKEN }}
