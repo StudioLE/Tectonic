@@ -19,7 +19,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="NUnit" Version="4.3.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
-    <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.10.2" />
+    <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.10.4" />
     <PackageReference Include="StudioLE.Extensions.Logging.Cache" Version="0.11.4" />
     <PackageReference Include="StudioLE.Verify.Yaml" Version="0.10.4" />
   </ItemGroup>
