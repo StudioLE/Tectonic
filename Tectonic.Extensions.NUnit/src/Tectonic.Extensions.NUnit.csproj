@@ -10,7 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="4.3.2" />
-    <PackageReference Include="NUnit.Engine" Version="3.19.2" />
+    <!-- NUnit.Engine MUST be pinned to v3.17.0 as later versions are not compatible  -->
+    <PackageReference Include="NUnit.Engine" Version="3.17.0" />
     <PackageReference Include="StudioLE.Extensions.System" Version="0.11.0" />
     <PackageReference Include="StudioLE.Diagnostics.NUnit" Version="0.10.4" />
   </ItemGroup>
