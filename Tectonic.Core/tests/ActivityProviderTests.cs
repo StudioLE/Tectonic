@@ -17,8 +17,8 @@ internal sealed class ActivityProviderTests
     private const string ClassActivityKey = "class-activity";
     private const string StructActivityKey = "struct-activity";
     private readonly IContext _context = new NUnitContext();
-    private ActivityProvider _provider;
-    private IReadOnlyCollection<LogEntry> _logs;
+    private ActivityProvider _provider = null!;
+    private IReadOnlyCollection<LogEntry> _logs = null!;
 
     [SetUp]
     public void SetUp()

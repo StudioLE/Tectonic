@@ -13,8 +13,8 @@ internal sealed class ActivityTests
 {
     private const string ClassActivityKey = "class-activity";
     private const string StructActivityKey = "struct-activity";
-    private ActivityProvider _provider;
-    private IReadOnlyCollection<LogEntry> _logs;
+    private ActivityProvider _provider = null!;
+    private IReadOnlyCollection<LogEntry> _logs = null!;
 
     [SetUp]
     public void SetUp()

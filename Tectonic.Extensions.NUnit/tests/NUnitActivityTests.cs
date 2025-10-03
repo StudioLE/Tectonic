@@ -10,7 +10,7 @@ internal sealed class NUnitActivityTests
     private const string AssemblyPath = "Tectonic.Extensions.NUnit.Samples.dll";
     private const string ActivityKey = "Tectonic.Extensions.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test_Verify";
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
-    private NUnitActivityProvider _provider;
+    private NUnitActivityProvider _provider = null!;
 
     [SetUp]
     public void SetUp()

@@ -14,7 +14,7 @@ internal sealed class NUnitActivityProviderTests
     private const string ActivityKey = "Tectonic.Extensions.NUnit.Samples.NUnitTestSamples.NUnitTestSamples_Test_Verify";
     private readonly IContext _context = new NUnitContext();
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
-    private NUnitActivityProvider _provider;
+    private NUnitActivityProvider _provider = null!;
 
     [SetUp]
     public void SetUp()

@@ -17,9 +17,9 @@ internal sealed class StaticMethodActivityProviderTests
     private const string ActivityKey = "Tectonic.Core.Samples.StaticExample.StaticMethodActivityExample.Execute";
     private readonly IContext _context = new NUnitContext();
     private readonly Assembly _assembly = AssemblyHelpers.LoadFileByRelativePath(AssemblyPath);
-    private CacheLoggerProvider _cache;
-    private ILoggerFactory _loggerFactory;
-    private StaticMethodActivityProvider _provider;
+    private CacheLoggerProvider _cache = null!;
+    private ILoggerFactory _loggerFactory = null!;
+    private StaticMethodActivityProvider _provider = null!;
 
     [SetUp]
     public void SetUp()
