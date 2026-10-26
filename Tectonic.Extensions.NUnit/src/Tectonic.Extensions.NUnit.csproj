@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <Description>An implementation of `Tectonic.Core` for executing NUnit tests as Tectonic activities and workflows.</Description>
-    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <!-- Use consistent properties across all projects -->
