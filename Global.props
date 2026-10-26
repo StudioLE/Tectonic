@@ -49,10 +49,6 @@
     <PackageReference Include="Surveyor.BuildVersioning" Version="0.7.2" PrivateAssets="All" Condition="'$(CI)' == 'true'" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(IsLibrary)">
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
-  </ItemGroup>
-
   <ItemGroup Condition="$(IsLibrary) OR $(IsExecutable)">
     <Content Condition="Exists('$(ProjectReadmeFilePath)')" Include="$(PackageReadmeFile)" Pack="true" PackagePath="/" />
     <None Condition="Exists('$(RepositoryReadmeFilePath)') AND ! Exists('$(ProjectReadmeFilePath)')" Include="$(RepositoryReadmeFilePath)" Pack="true" PackagePath="/" Visible="false" />
