@@ -4,6 +4,7 @@
     <Description>An example of a CLI application using `Tectonic.Extensions.CommandLine`.</Description>
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
+    <IsTestingPlatformApplication>false</IsTestingPlatformApplication>
   </PropertyGroup>
 
   <!-- Use consistent properties across all projects -->
@@ -15,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StudioLE.Conversion" Version="0.11.0" />
+    <PackageReference Include="StudioLE.Conversion" Version="0.12.0" />
   </ItemGroup>
 
 </Project>
